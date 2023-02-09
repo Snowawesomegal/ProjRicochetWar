@@ -548,8 +548,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.99999994
-    height: 0.999496
+    width: 0.9993265
+    height: 0.99865407
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -685,19 +685,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 10
-  fallSpeed: 10
-  fallAccel: 10
-  friction: 0.1
-  airSpeed: 10
-  airAccel: 10
-  groundSpeed: 10
-  groundAccel: 20
-  jumpHeight: 200
-  minJumpHeight: 20
-  jumpSpeed: 2
-  initialJumpForce: 10
-  jumpSquat: 0.2
+  gravity: 10
+  fallSpeed: 100
+  fallAccel: 50
+  friction: 8
+  airSpeed: 40
+  airAccel: 30
+  groundSpeed: 30
+  groundAccel: 60
+  maxJumpTime: 0.4
+  minJumpTime: 0.15
+  jumpSpeed: 4
+  initialJumpForce: 400
+  jumpSquat: 0.1
   bufferLength: 5
+  grounded: 0
 --- !u!61 &1695154404
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -739,7 +741,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

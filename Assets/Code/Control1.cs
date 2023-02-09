@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Control1 : MonoBehaviour
 {
+    //Summary
+    //
+
+
+
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
     [SerializeField] float weight = 10;
+    [SerializeField] float gravity = 10;
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
@@ -16,8 +22,8 @@ public class Control1 : MonoBehaviour
     [SerializeField] float airAccel = 10;
     [SerializeField] float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
-    [SerializeField] float jumpHeight = 10;
-    [SerializeField] float minJumpHeight = 10;
+    [SerializeField] float maxJumpTime = 10;
+    [SerializeField] float minJumpTime = 10;
     [SerializeField] float jumpSpeed = 10;
     [SerializeField] float initialJumpForce = 10;
 
@@ -30,25 +36,27 @@ public class Control1 : MonoBehaviour
 
     //input
     Vector2 dirInput = new Vector2(0, 0); //contains the directional inputs (x,y) -1 to 1 on last update frame
-    float spaceBuffer = 0;
 
     //buffer
-    public float bufferLength = 5;
+    public float bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
+    float spaceBuffer = 0; //stores buffer for spacebar, also stores input for spacebar between Update and FixedUpdate
 
     //conditions
-    bool grounded = true;
+    [SerializeField] bool grounded = false;
     bool inHitstun;
     bool wallcling;
     bool inAnimation;
-    bool canMoveDir = true;
-    bool canButtons = true;
+    bool canMoveDir = true; //can move directionally - whether to recognize or buffer directional inputs
+    bool canButtons = true; //can input buttons - whether to recognize or buffer button inputs
+    bool jumping = false;
+    float jumpTimer = 0;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<Collider2D>();
 
-        friction /= 100;
+        friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
     }
 
     void Update() //records inputs every update frame, and changes buffer to reflect new input
@@ -61,9 +69,16 @@ public class Control1 : MonoBehaviour
         dirInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // if an input is recorded, reset the buffer for that input
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             spaceBuffer = bufferLength;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (spaceBuffer < 0.1f)
+            {
+                spaceBuffer = 0.1f;
+            }
         }
 
         if (grounded)
@@ -76,7 +91,7 @@ public class Control1 : MonoBehaviour
                 }
                 else
                 {
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
                 }
             }
         }
@@ -91,6 +106,22 @@ public class Control1 : MonoBehaviour
         if (canButtons)
         {
             ButtonResponse();
+        }
+        if (jumping)
+        {
+            Jump();
+        }
+
+        ManageGravity();
+
+        void ManageGravity()
+        {
+            if (!grounded)
+            {
+                rb.AddForce(Vector2.down * fallAccel);
+                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
+                //this is a placeholder, see directional response's explanation below
+            }
         }
 
         void DirectionalResponse()
@@ -120,28 +151,39 @@ public class Control1 : MonoBehaviour
                 {
                     Debug.Log("Jump");
                     spaceBuffer = 0;
+                    jumping = true;
                     StartCoroutine("Jump");
                 }
             }
         }
+
+        void JumpRework() //in progress rework of jump mechanic, feel free to delete or change this, it is not functional.
+        {
+            if (jumpTimer == 0)
+            {
+                canButtons = false; //disables control during jumpsquat
+                canMoveDir = false;
+            }
+            else if (jumpTimer > jumpSquat)
+            {
+                float timer = 0;
+                if (timer < jumpSquat) // waits for jumpsquat timer
+                {
+                    timer += Time.deltaTime;
+                }
+                rb.AddForce(new Vector2(0, initialJumpForce)); // adds initial jump force
+                grounded = false;
+                canButtons = true; //enables control after jumpsquat. If canceled before this, but after disabled, things could get fucked
+                canMoveDir = true;
+            }
+
+            jumpTimer += Time.deltaTime;
+        }
     }
 
-    int CheckBuffer(int input)
+    IEnumerator Jump() //Needs rework - applies force during update frames, making jump speeds inconsistent depending on framerate //TODO
     {
-        if (input > 0)
-        {
-            input -= 1;
-            return input;
-        }
-        else
-        {
-            return input;
-        }
-    }
-
-    IEnumerator Jump()
-    {
-        canButtons = false;
+        canButtons = false; //disables control during jumpsquat
         canMoveDir = false;
         float timer = 0;
         while (timer < jumpSquat) // waits for jumpsquat timer
@@ -149,25 +191,22 @@ public class Control1 : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-
-        float jumpTime = 0; // how long as jump been active
         rb.AddForce(new Vector2(0, initialJumpForce)); // adds initial jump force
         grounded = false;
-        canButtons = true;
+        canButtons = true; //enables control after jumpsquat. If canceled before this, but after disabled, things could get fucked
         canMoveDir = true;
 
-        for (int i = 0; i < jumpHeight; i++) //applies jumpSpeed boost until: jump height is maxed out || space is released
+        float jumpTime = 0; // how long as jump been active
+        while (jumpTime < maxJumpTime) //applies jumpSpeed boost until jump height is: (maxed out || space is released) && > mintime
         {
             rb.AddForce(new Vector2(0, jumpSpeed));
-            if (spaceBuffer == 0 && jumpTime > minJumpHeight)
+            if (spaceBuffer <= 0 && jumpTime > minJumpTime)
             {
                 break;
             }
-            jumpTime += Time.deltaTime; ;
+            jumpTime += Time.deltaTime;
             yield return null;
         }
-
-        Debug.Log("jump end");
         spaceBuffer = 0;
         yield break;
     }

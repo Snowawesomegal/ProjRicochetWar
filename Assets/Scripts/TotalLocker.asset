@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TotalLocker
   m_EditorClassIdentifier: 
   controlLock:
-    locks: 0
-    priority: 0
+    locks: -1
+    priority: 10

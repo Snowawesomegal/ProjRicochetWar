@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class ControlLockManager : MonoBehaviour
 {
+    // TODO (maybe?): Change StandardControlLocker to ControlLocker... it's StandardControlLocker right now
+    // because that one shows up in the inspector so it's easier to debug, but we should make it
+    // ControlLocker because that's an interface which more classes can easily implement.
+
     /// <summary>
     /// Used to track the active ControlLockers for this manager.
     /// </summary>
-    [SerializeField] private List<ControlLocker> activeLockers = new List<ControlLocker>();
+    [SerializeField] private List<StandardControlLocker> activeLockers = new List<StandardControlLocker>();
     /// <summary>
     /// Used to reference the composite of control locks made by
     /// combining the locks from all active ControlLockers.
@@ -15,7 +19,7 @@ public class ControlLockManager : MonoBehaviour
     public ControlLock.Controls CompositeLock { 
         get { 
             ControlLock.Controls controls = ControlLock.Controls.NONE;
-            foreach (ControlLocker cl in activeLockers)
+            foreach (StandardControlLocker cl in activeLockers)
             {
                 controls |= cl.Lock.Locks;
             }
@@ -29,7 +33,7 @@ public class ControlLockManager : MonoBehaviour
     /// to the CompositeLock of this object.
     /// </summary>
     /// <param name="cl"> the ControlLocker to add </param>
-    public void AddLocker(ControlLocker cl)
+    public void AddLocker(StandardControlLocker cl)
     {
         activeLockers.Add(cl);
     }
@@ -43,7 +47,7 @@ public class ControlLockManager : MonoBehaviour
     /// </summary>
     /// <param name="cl"> the ControlLocker to remove </param>
     /// <returns> true if the ControlLocker was successfully removed </returns>
-    public bool RemoveLocker(ControlLocker cl)
+    public bool RemoveLocker(StandardControlLocker cl)
     {
         return activeLockers.Remove(cl);
     }

@@ -195,19 +195,67 @@ MonoBehaviour:
     m_ActionId: 1ada2b17-99bd-4a32-b8f8-1f1295c26e3b
     m_ActionName: Playing/Horizontal[/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8974023464829012037}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnVertical
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: dded2bce-ae90-4746-bf8e-7ce44e19988c
     m_ActionName: Playing/Vertical[/Keyboard/w,/Keyboard/s]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8974023464829012037}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a1250ac1-f2d6-402f-a627-438e2de77668
     m_ActionName: Playing/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8974023464829012037}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 64bc9741-a9ac-49cb-89fd-9e0073fa171d
     m_ActionName: Playing/Attack[/Keyboard/j]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8974023464829012037}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnSpecial
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f8857a73-3383-4e31-99b2-e62a686e04bd
     m_ActionName: Playing/Special[/Keyboard/k]
   m_NeverAutoSwitchControlSchemes: 0
@@ -262,9 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6824af34388bb884a95bc38834a8afa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlLock:
-    locks: 0
-    priority: 0
 --- !u!114 &3362557640806826437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,3 +322,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06183bbb0dfbe9448bf47f7f24169bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeLockers: []

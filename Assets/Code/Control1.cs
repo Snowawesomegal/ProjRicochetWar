@@ -22,13 +22,14 @@ public class Control1 : MonoBehaviour
     [SerializeField] float airAccel = 10;
     [SerializeField] float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
-    [SerializeField] float maxJumpTime = 10;
-    [SerializeField] float minJumpTime = 10;
+    [SerializeField] float maxJumpFrames = 10;
+    [SerializeField] float minJumpFrames = 10;
     [SerializeField] float jumpSpeed = 10;
     [SerializeField] float initialJumpForce = 10;
 
     //delays
     [SerializeField] float jumpSquat = 3;
+    [SerializeField] float wallJumpSquat = 3;
 
     //components
     Rigidbody2D rb;
@@ -38,18 +39,70 @@ public class Control1 : MonoBehaviour
     Vector2 dirInput = new Vector2(0, 0); //contains the directional inputs (x,y) -1 to 1 on last update frame
 
     //buffer
-    public float bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
-    float spaceBuffer = 0; //stores buffer for spacebar, also stores input for spacebar between Update and FixedUpdate
+    public int bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
 
-    //conditions
-    [SerializeField] bool grounded = false;
-    bool inHitstun;
-    bool wallcling;
-    bool inAnimation;
-    bool canMoveDir = true; //can move directionally - whether to recognize or buffer directional inputs
-    bool canButtons = true; //can input buttons - whether to recognize or buffer button inputs
+    //states
+    List<State> activeStates = new List<State>();
+    State grounded = new State();
+    State touchingWall = new State();
+    State inHitstun = new State(false, false, false, false, false, false);
+    State inAnim = new State(false, false, false, false, false, false);
+    State wallcling = new State();
+    Collider2D wallTouching;
     bool jumping = false;
-    float jumpTimer = 0;
+    bool wallJumping = false;
+    int jumpFrames = 0;
+    bool jumpHeldContinuously;
+
+    //buttons
+    List<Button> allButtons = new List<Button>();
+    Button space;
+
+    //Wall Collision
+    int collidedWallSide;
+    float collidedWallSlope;
+
+    public class Button
+    {
+        public Button(KeyCode keyCode2, int newDefaultBuffer)
+        {
+            defaultBuffer = newDefaultBuffer;
+            keyCode = keyCode2;
+        }
+        public int defaultBuffer = 5;
+        public bool pressed = false;
+        public int buffer = 0;
+        public int consecutive = 0;
+        public KeyCode keyCode;
+    }
+
+    public class State
+    {
+        public State
+            (
+            bool jump2 = true, bool dir2 = true, bool light2 = true, bool heavy2 = true,
+            bool special2 = true, bool wallCling2 = true, bool dash2 = true
+            )
+        {
+            jump = jump2;
+            dir = dir2;
+            light = light2;
+            heavy = heavy2;
+            special = special2;
+            wallCling = wallCling2;
+            dash = dash2;
+        }
+
+        public bool jump = true;
+        public bool dir = true;
+        public bool light = true;
+        public bool heavy = true;
+        public bool special = true;
+        public bool wallCling = true;
+        public bool dash = true;
+    }
+
+
 
     void Start()
     {
@@ -57,165 +110,221 @@ public class Control1 : MonoBehaviour
         bc = GetComponent<Collider2D>();
 
         friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
+
+        space = new Button(KeyCode.Space, bufferLength);
+
+        allButtons.Add(space);
     }
 
     void Update() //records inputs every update frame, and changes buffer to reflect new input
     {
-        if (spaceBuffer > 0) // this should be reworked into a function that controls all buffering
-        {
-            spaceBuffer -= Time.deltaTime;
-        }
-
         dirInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // if an input is recorded, reset the buffer for that input
-        if (Input.GetKeyDown(KeyCode.Space))
+        foreach (Button i in allButtons)
         {
-            spaceBuffer = bufferLength;
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (spaceBuffer < 0.1f)
+            if (Input.GetKeyDown(i.keyCode))
             {
-                spaceBuffer = 0.1f;
+                i.buffer = i.defaultBuffer;
+                Debug.Log(i.keyCode + " buffer set");
             }
-        }
-
-        if (grounded)
-        {
-            if ((Mathf.Sign(dirInput.x) != Mathf.Sign(rb.velocity.x)) || (dirInput.x == 0)) //if grounded + not holding the direction of motion;
+            if (Input.GetKey(i.keyCode))
             {
-                if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
-                {
-                    rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
-                }
-                else
-                {
-                    rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
-                }
+                i.pressed = true;
+            }
+            else
+            {
+                i.pressed = false;
             }
         }
     }
 
     private void FixedUpdate()
     {
-        if (canMoveDir)
+
+        if (CheckDir())
         {
             DirectionalResponse();
         }
-        if (canButtons)
+        if (CheckJump())
         {
-            ButtonResponse();
+            JumpResponse();
         }
         if (jumping)
         {
             Jump();
         }
-
-        ManageGravity();
-
-        void ManageGravity()
+        if (wallJumping)
         {
-            if (!grounded)
+            WallJump();
+        }
+
+        ManageForces();
+
+        void ManageForces()
+        {
+            if (activeStates.Contains(grounded))
             {
-                rb.AddForce(Vector2.down * fallAccel);
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
-                //this is a placeholder, see directional response's explanation below
+                if ((Mathf.Sign(dirInput.x) != Mathf.Sign(rb.velocity.x)) || (dirInput.x == 0)) //if grounded + not holding the direction of motion;
+                {
+                    if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                    {
+                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                    }
+                }
+            }
+            else
+            {
+                if (!activeStates.Contains(wallcling))
+                {
+                    rb.AddForce(Vector2.down * fallAccel);
+                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
+                    //this is a placeholder, see directional response's explanation below
+                }
+
             }
         }
 
         void DirectionalResponse()
         {
-            if (grounded)
+            if (!activeStates.Contains(wallcling))
             {
-                rb.AddForce(dirInput * groundAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
-                //above line caps horizontal speed at groundspeed every frame
-                //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
-                //best solution is to constantly reduce speed until speed is within desired parameters while touching ground and not in hitstun
+                if (activeStates.Contains(grounded))
+                {
+                    rb.AddForce(dirInput * groundAccel);
+                    rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
+                    //above line caps horizontal speed at groundspeed every frame
+                    //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
+                    //best solution is to constantly reduce speed until speed is within desired parameters while touching ground and not in hitstun
 
+                }
+                else
+                {
+                    if (activeStates.Contains(touchingWall))
+                    {
+                        if (collidedWallSide == dirInput.x)
+                        {
+                            activeStates.Add(wallcling);
+                            rb.velocity = Vector2.zero;
+                        }
+                    }
+
+                    rb.AddForce(dirInput * airAccel);
+                    rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
+                    //same as grounded
+                }
             }
             else
             {
-                rb.AddForce(dirInput * airAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
-                //same as grounded
+                if (dirInput.x != collidedWallSide)
+                {
+                    activeStates.Remove(wallcling);
+                }
             }
+
         }
 
-        void ButtonResponse()
+        void JumpResponse()
         {
-            if (grounded)
+            if (activeStates.Contains(grounded))
             {
-                if (spaceBuffer > 0)
+                if (space.buffer > 0)
                 {
-                    Debug.Log("Jump");
-                    spaceBuffer = 0;
+                    activeStates.Add(inAnim);
+                    space.buffer = 0;
                     jumping = true;
-                    StartCoroutine("Jump");
+                    jumpFrames = 1;
                 }
             }
-        }
-
-        void JumpRework() //in progress rework of jump mechanic, feel free to delete or change this, it is not functional.
-        {
-            if (jumpTimer == 0)
+            else if (activeStates.Contains(wallcling))
             {
-                canButtons = false; //disables control during jumpsquat
-                canMoveDir = false;
-            }
-            else if (jumpTimer > jumpSquat)
-            {
-                float timer = 0;
-                if (timer < jumpSquat) // waits for jumpsquat timer
+                if (space.buffer > 0)
                 {
-                    timer += Time.deltaTime;
+                    activeStates.Add(inAnim);
+                    space.buffer = 0;
+                    wallJumping = true;
+                    jumpFrames = 1;
                 }
-                rb.AddForce(new Vector2(0, initialJumpForce)); // adds initial jump force
-                grounded = false;
-                canButtons = true; //enables control after jumpsquat. If canceled before this, but after disabled, things could get fucked
-                canMoveDir = true;
             }
 
-            jumpTimer += Time.deltaTime;
         }
-    }
 
-    IEnumerator Jump() //Needs rework - applies force during update frames, making jump speeds inconsistent depending on framerate //TODO
-    {
-        canButtons = false; //disables control during jumpsquat
-        canMoveDir = false;
-        float timer = 0;
-        while (timer < jumpSquat) // waits for jumpsquat timer
+        void WallJump()
         {
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        rb.AddForce(new Vector2(0, initialJumpForce)); // adds initial jump force
-        grounded = false;
-        canButtons = true; //enables control after jumpsquat. If canceled before this, but after disabled, things could get fucked
-        canMoveDir = true;
-
-        float jumpTime = 0; // how long as jump been active
-        while (jumpTime < maxJumpTime) //applies jumpSpeed boost until jump height is: (maxed out || space is released) && > mintime
-        {
-            rb.AddForce(new Vector2(0, jumpSpeed));
-            if (spaceBuffer <= 0 && jumpTime > minJumpTime)
+            switch (jumpFrames)
             {
-                break;
+                case int n when (n < wallJumpSquat):
+                    break;
+                case int n when (n == wallJumpSquat):
+                    if (space.consecutive <= 2)
+                    {
+                        rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 1.3f);
+                    }
+                    else
+                    {
+                        rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 2f);
+                    }
+                    wallJumping = false;
+                    activeStates.Remove(inAnim);
+                    break;
             }
-            jumpTime += Time.deltaTime;
-            yield return null;
+            jumpFrames += 1;
         }
-        spaceBuffer = 0;
-        yield break;
+
+        void Jump() //if we were using some kind of animation cue this if statement would be that instead
+        {
+            switch (jumpFrames)
+            {
+                case int n when (n < jumpSquat):
+                    break;
+                case int n when (n == jumpSquat):
+                    if (space.consecutive <= 3)
+                    {
+                        rb.AddForce(Vector2.up * initialJumpForce);
+                    }
+                    else
+                    {
+                        rb.AddForce(Vector2.up * initialJumpForce * 1.5f);
+                    }
+                    activeStates.Remove(inAnim);
+                    jumping = false;
+                    break;
+            }
+            jumpFrames += 1;
+        }
+
+        foreach (Button i in allButtons)
+        {
+            if (Input.GetKey(i.keyCode))
+            {
+                i.consecutive += 1;
+            }
+            else
+            {
+                i.consecutive = 0;
+            }
+
+            if (i.buffer > 0)
+            {
+                i.buffer -= 1;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "BottomWall" && !inHitstun)
+        if (collision.gameObject.name == "BottomWall" && !activeStates.Contains(inHitstun))
         {
-            grounded = true;
+            activeStates.Add(grounded);
+        }
+        else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
+        {
+            collidedWallSide = (int)Mathf.Sign(collision.GetContact(0).point.x - transform.position.x);
+            activeStates.Add(touchingWall);
+            wallTouching = collision.collider;
         }
     }
 
@@ -223,8 +332,57 @@ public class Control1 : MonoBehaviour
     {
         if (collision.gameObject.name == "BottomWall")
         {
-            grounded = false;
-            Debug.Log("airborne");
+            activeStates.Remove(grounded);
         }
+        else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
+        {
+            activeStates.Remove(touchingWall);
+            collidedWallSide = 0;
+            wallTouching = null;
+        }
+    }
+
+
+    bool CheckDir() //these work but god they're stupid
+    {
+        if (activeStates.Count > 0)
+        {
+            foreach (State i in activeStates)
+            {
+                if (!i.dir)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool CheckJump()
+    {
+        if (activeStates.Count > 0)
+        {
+            foreach (State i in activeStates)
+            {
+                if (!i.jump)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool CheckWallCling()
+    {
+        if (activeStates.Count > 0)
+        {
+            foreach (State i in activeStates)
+            {
+                if (!i.wallCling)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

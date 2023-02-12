@@ -73,7 +73,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         ControlLock.Controls control = ControlLock.Controls.HORIZONTAL;
         AcceptBufferInput(control, ctxt);
-        //inputBuffers[control] = new Pair<int, InputAction.CallbackContext>(inputBufferDuration, ctxt);
     }
 
     public void InputHorizontal(InputAction.CallbackContext ctxt)
@@ -92,7 +91,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         ControlLock.Controls control = ControlLock.Controls.VERTICAL;
         AcceptBufferInput(control, ctxt);
-        //inputBuffers[control] = new Pair<int, InputAction.CallbackContext>(inputBufferDuration, ctxt);
     }
 
     public void InputVertical(InputAction.CallbackContext ctxt)
@@ -111,7 +109,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         ControlLock.Controls control = ControlLock.Controls.JUMP;
         AcceptBufferInput(control, ctxt);
-        //inputBuffers[control] = new Pair<int, InputAction.CallbackContext>(inputBufferDuration, ctxt);
     }
 
     public void InputJump(InputAction.CallbackContext ctxt)
@@ -130,7 +127,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         ControlLock.Controls control = ControlLock.Controls.ATTACK;
         AcceptBufferInput(control, ctxt);
-        //inputBuffers[control] = new Pair<int, InputAction.CallbackContext>(inputBufferDuration, ctxt);
     }
 
     public void InputAttack(InputAction.CallbackContext ctxt)
@@ -149,7 +145,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         ControlLock.Controls control = ControlLock.Controls.SPECIAL;
         AcceptBufferInput(control, ctxt);
-        //inputBuffers[control] = new Pair<int, InputAction.CallbackContext>(inputBufferDuration, ctxt);
     }
 
     public void InputSpecial(InputAction.CallbackContext ctxt)

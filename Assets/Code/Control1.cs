@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Control1 : MonoBehaviour
 {
-    //Summary
-    //
-
+    //February 11, 2023, 5:13PM
 
 
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
-    [SerializeField] float weight = 10;
-    [SerializeField] float gravity = 10;
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
@@ -22,9 +19,6 @@ public class Control1 : MonoBehaviour
     [SerializeField] float airAccel = 10;
     [SerializeField] float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
-    [SerializeField] float maxJumpFrames = 10;
-    [SerializeField] float minJumpFrames = 10;
-    [SerializeField] float jumpSpeed = 10;
     [SerializeField] float initialJumpForce = 10;
 
     //delays
@@ -34,6 +28,7 @@ public class Control1 : MonoBehaviour
     //components
     Rigidbody2D rb;
     Collider2D bc;
+    Animator anim;
 
     //input
     Vector2 dirInput = new Vector2(0, 0); //contains the directional inputs (x,y) -1 to 1 on last update frame
@@ -42,25 +37,28 @@ public class Control1 : MonoBehaviour
     public int bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
 
     //states
-    List<State> activeStates = new List<State>();
+    public List<State> activeStates = new List<State>();
     State grounded = new State();
     State touchingWall = new State();
     State inHitstun = new State(false, false, false, false, false, false);
-    State inAnim = new State(false, false, false, false, false, false);
+    public State inAnim = new State(false, false, false, false, false, false);
     State wallcling = new State();
     Collider2D wallTouching;
     bool jumping = false;
     bool wallJumping = false;
     int jumpFrames = 0;
-    bool jumpHeldContinuously;
 
     //buttons
     List<Button> allButtons = new List<Button>();
     Button space;
+    Button ebutton;
 
     //Wall Collision
     int collidedWallSide;
     float collidedWallSlope;
+
+    //objects
+    public GameObject ball;
 
     public class Button
     {
@@ -108,12 +106,18 @@ public class Control1 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<Collider2D>();
+        anim = GetComponent<Animator>();
+
+        rb.sharedMaterial.bounciness = 0;
 
         friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
 
         space = new Button(KeyCode.Space, bufferLength);
+        ebutton = new Button(KeyCode.E, bufferLength);
+
 
         allButtons.Add(space);
+        allButtons.Add(ebutton);
     }
 
     void Update() //records inputs every update frame, and changes buffer to reflect new input
@@ -140,14 +144,21 @@ public class Control1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (CheckDir())
         {
             DirectionalResponse();
         }
+        if (CheckHeavy())
+        {
+            HeavyResponse();
+        }
         if (CheckJump())
         {
             JumpResponse();
+        }
+        if (activeStates.Contains(inHitstun))
+        {
+            HitstunResponse();
         }
         if (jumping)
         {
@@ -227,6 +238,23 @@ public class Control1 : MonoBehaviour
 
         }
 
+        void HeavyResponse()
+        {
+            if (ebutton.buffer > 0)
+            {
+                anim.SetBool("HeavyAttack", true);
+                ebutton.buffer = 0;
+            }
+        }
+
+        void HitstunResponse()
+        {
+            if (rb.velocity.magnitude < 200)
+            {
+                Hit(null, false);
+            }
+        }
+
         void JumpResponse()
         {
             if (activeStates.Contains(grounded))
@@ -276,6 +304,7 @@ public class Control1 : MonoBehaviour
 
         void Jump() //if we were using some kind of animation cue this if statement would be that instead
         {
+            Debug.Log("jump");
             switch (jumpFrames)
             {
                 case int n when (n < jumpSquat):
@@ -290,6 +319,7 @@ public class Control1 : MonoBehaviour
                         rb.AddForce(Vector2.up * initialJumpForce * 1.5f);
                     }
                     activeStates.Remove(inAnim);
+                    activeStates.Remove(grounded);
                     jumping = false;
                     break;
             }
@@ -314,17 +344,50 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    void Hit(Collision2D collision, bool enterOrExitHitstun = true)
+    {
+        Debug.Log("Hitstun");
+        if (enterOrExitHitstun)
+        {
+            activeStates.Add(inHitstun);
+            rb.sharedMaterial.bounciness = 0.7f;
+            HitboxInfo hi = collision.gameObject.GetComponent<HitboxInfo>();
+            Debug.Log(hi);
+            Vector2 objectVelocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
+
+            Vector2 angleOfForce;
+            angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle) * Mathf.Sign(objectVelocity.x));
+            if (!hi.angleIndependentOfMovement)
+            {
+                angleOfForce = (angleOfForce + objectVelocity).normalized;
+            }
+
+            Debug.Log(angleOfForce);
+            rb.AddForce(angleOfForce * hi.knockback);
+        }
+        else
+        {
+            activeStates.Remove(inHitstun);
+            rb.sharedMaterial.bounciness = 0;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "BottomWall" && !activeStates.Contains(inHitstun))
         {
             activeStates.Add(grounded);
+            anim.SetBool("Grounded", true);
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             collidedWallSide = (int)Mathf.Sign(collision.GetContact(0).point.x - transform.position.x);
             activeStates.Add(touchingWall);
             wallTouching = collision.collider;
+        }
+        else if (collision.gameObject.tag == "Hitbox")
+        {
+            Hit(collision);
         }
     }
 
@@ -333,6 +396,7 @@ public class Control1 : MonoBehaviour
         if (collision.gameObject.name == "BottomWall")
         {
             activeStates.Remove(grounded);
+            anim.SetBool("Grounded", false);
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
@@ -378,6 +442,20 @@ public class Control1 : MonoBehaviour
             foreach (State i in activeStates)
             {
                 if (!i.wallCling)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool CheckHeavy()
+    {
+        if (activeStates.Count > 0)
+        {
+            foreach (State i in activeStates)
+            {
+                if (!i.special)
                 {
                     return false;
                 }

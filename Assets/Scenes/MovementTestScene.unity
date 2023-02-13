@@ -548,8 +548,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.9993265
-    height: 0.99865407
+    width: 0.9991054
+    height: 0.9985694
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -598,6 +598,8 @@ GameObject:
   - component: {fileID: 1695154405}
   - component: {fileID: 1695154404}
   - component: {fileID: 1695154403}
+  - component: {fileID: 1695154407}
+  - component: {fileID: 1695154408}
   m_Layer: 0
   m_Name: TestChar1
   m_TagString: Untagged
@@ -646,7 +648,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9826ff0e522ab472da1fc3c7d3ac9136, type: 3}
+  m_Sprite: {fileID: 759428676, guid: 37970ab4634bb42bead66781b4c6b182, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -684,8 +686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0aa78a01e1b4196a1dbeabbb419773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 10
-  gravity: 10
   fallSpeed: 100
   fallAccel: 50
   friction: 50
@@ -693,13 +693,11 @@ MonoBehaviour:
   airAccel: 30
   groundSpeed: 30
   groundAccel: 60
-  maxJumpFrames: 10
-  minJumpFrames: 10
-  jumpSpeed: 4
   initialJumpForce: 800
   jumpSquat: 5
   wallJumpSquat: 10
   bufferLength: 5
+  ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
 --- !u!61 &1695154404
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -713,7 +711,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.003477931, y: -0.04913211}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -724,7 +722,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4, y: 2.4}
+  m_Size: {x: 0.8208122, y: 2.3017359}
   m_EdgeRadius: 0
 --- !u!50 &1695154405
 Rigidbody2D:
@@ -742,8 +740,43 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!95 &1695154407
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695154400}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 44d974d0f80d641858cb2c119de7cecc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1695154408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695154400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571b1ad21ae44802bf5b50beeb44993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 1695154407}
+  hitboxPrefab: {fileID: 7077028884510980537, guid: f2cd01884393941c1b1fbdf1559ad4ab, type: 3}
+  c1: {fileID: 1695154403}

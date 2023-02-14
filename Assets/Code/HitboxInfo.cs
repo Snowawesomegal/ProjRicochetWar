@@ -6,6 +6,8 @@ public class HitboxInfo : MonoBehaviour
 {
     public float damage = 10;
     public float knockback = 100;
-    public bool angleIndependentOfMovement = false;
+    public bool angleIndependentOfMovement = true;
     public float angle = 0;
+    public GameObject owner;
+    public bool facingRight = true;
 }

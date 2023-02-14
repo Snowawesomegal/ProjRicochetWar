@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Control1 : MonoBehaviour
 {
-    //February 11, 2023, 5:13PM
+    //February 14, 2023, 10:08PM
 
 
     //physics
@@ -29,6 +29,10 @@ public class Control1 : MonoBehaviour
     Rigidbody2D rb;
     Collider2D bc;
     Animator anim;
+    SpriteRenderer sr;
+
+    public PhysicsMaterial2D bouncy;
+    public PhysicsMaterial2D notBouncy;
 
     //input
     Vector2 dirInput = new Vector2(0, 0); //contains the directional inputs (x,y) -1 to 1 on last update frame
@@ -47,6 +51,9 @@ public class Control1 : MonoBehaviour
     bool jumping = false;
     bool wallJumping = false;
     int jumpFrames = 0;
+    public float minimumSpeedForHitstun = 50;
+    public int framesInHitstun = 0;
+    public bool facingRight = true;
 
     //buttons
     List<Button> allButtons = new List<Button>();
@@ -107,8 +114,9 @@ public class Control1 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
 
-        rb.sharedMaterial.bounciness = 0;
+        rb.sharedMaterial = notBouncy;
 
         friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
 
@@ -227,6 +235,17 @@ public class Control1 : MonoBehaviour
                     rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
                     //same as grounded
                 }
+
+                if (dirInput.x > 0)
+                {
+                    facingRight = true;
+                    sr.flipX = false;
+                }
+                else if (dirInput.x < 0)
+                {
+                    facingRight = false;
+                    sr.flipX = true;
+                }
             }
             else
             {
@@ -249,10 +268,12 @@ public class Control1 : MonoBehaviour
 
         void HitstunResponse()
         {
-            if (rb.velocity.magnitude < 200)
+            if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > 10)
             {
                 Hit(null, false);
+                framesInHitstun = 0;
             }
+            framesInHitstun += 1;
         }
 
         void JumpResponse()
@@ -304,7 +325,6 @@ public class Control1 : MonoBehaviour
 
         void Jump() //if we were using some kind of animation cue this if statement would be that instead
         {
-            Debug.Log("jump");
             switch (jumpFrames)
             {
                 case int n when (n < jumpSquat):
@@ -344,22 +364,28 @@ public class Control1 : MonoBehaviour
         }
     }
 
-    void Hit(Collision2D collision, bool enterOrExitHitstun = true)
+    void Hit(Collider2D collider, bool enterOrExitHitstun = true)
     {
-        Debug.Log("Hitstun");
         if (enterOrExitHitstun)
         {
             activeStates.Add(inHitstun);
-            rb.sharedMaterial.bounciness = 0.7f;
-            HitboxInfo hi = collision.gameObject.GetComponent<HitboxInfo>();
-            Debug.Log(hi);
-            Vector2 objectVelocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
+            rb.sharedMaterial = bouncy;
+            HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+            Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
 
             Vector2 angleOfForce;
             angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle) * Mathf.Sign(objectVelocity.x));
+            if (hi.facingRight)
+            {
+                angleOfForce.x *= -1;
+            }
             if (!hi.angleIndependentOfMovement)
             {
-                angleOfForce = (angleOfForce + objectVelocity).normalized;
+                angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
+            }
+            else
+            {
+                angleOfForce = angleOfForce.normalized;
             }
 
             Debug.Log(angleOfForce);
@@ -368,13 +394,13 @@ public class Control1 : MonoBehaviour
         else
         {
             activeStates.Remove(inHitstun);
-            rb.sharedMaterial.bounciness = 0;
+            rb.sharedMaterial = notBouncy;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "BottomWall" && !activeStates.Contains(inHitstun))
+        if (collision.gameObject.name == "BottomWall")
         {
             activeStates.Add(grounded);
             anim.SetBool("Grounded", true);
@@ -385,10 +411,11 @@ public class Control1 : MonoBehaviour
             activeStates.Add(touchingWall);
             wallTouching = collision.collider;
         }
-        else if (collision.gameObject.tag == "Hitbox")
-        {
-            Hit(collision);
-        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Hit(collision);
     }
 
     private void OnCollisionExit2D(Collision2D collision)

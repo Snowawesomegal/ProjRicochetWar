@@ -546,10 +546,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 2.2334943
     y: 0
-    width: 0.9991054
-    height: 0.9985694
+    width: 0.17176597
+    height: 0.17167382
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -696,7 +696,12 @@ MonoBehaviour:
   initialJumpForce: 800
   jumpSquat: 5
   wallJumpSquat: 10
+  bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
+  notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   bufferLength: 5
+  minimumSpeedForHitstun: 20
+  framesInHitstun: 0
+  facingRight: 1
   ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
 --- !u!61 &1695154404
 BoxCollider2D:
@@ -740,10 +745,10 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
+  m_Material: {fileID: 6200000, guid: b2f55495ccaa04b34adbb489a628535f, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1695154407
 Animator:

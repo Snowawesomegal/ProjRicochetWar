@@ -17,8 +17,8 @@ MonoBehaviour:
   xoffset: 0
   yoffset: 0
   changeToVertical: 0
-  knockback: 0
-  kbAngleNeg90to90: 0
-  angleIndependentOfMovement: 0
+  knockback: 3000
+  kbAngleNeg90to90: 45
+  angleIndependentOfMovement: 1
   damage: 0
-  activeFrames: 100
+  activeFrames: 3

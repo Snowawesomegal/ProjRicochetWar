@@ -26,6 +26,8 @@ public class ActivateHitbox : MonoBehaviour
         newHBInfo.knockback = hitboxData.knockback;
         newHBInfo.angle = hitboxData.kbAngleNeg90to90;
         newHBInfo.angleIndependentOfMovement = hitboxData.angleIndependentOfMovement;
+        newHBInfo.owner = gameObject;
+        newHBInfo.facingRight = newHBInfo.owner.GetComponent<Control1>().facingRight;
 
         toBeDestroyed.Add(newHitbox, hitboxData.activeFrames);
     }

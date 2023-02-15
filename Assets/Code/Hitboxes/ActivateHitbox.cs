@@ -46,9 +46,6 @@ public class ActivateHitbox : MonoBehaviour
             {
                 toBeDestroyed[i.Key] -= 1;
             }
-
-            
-
         }
     }
 

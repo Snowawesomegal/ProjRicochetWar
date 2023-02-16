@@ -12,6 +12,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
 
+    [SerializeField] Control1 c1;
+
     //[SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
     [SerializeField] Dictionary<ControlLock.Controls, Action<CharacterInput>> inputEvents = new Dictionary<ControlLock.Controls, Action<CharacterInput>>();
     ControlLock.Controls[] controlPriorityList = { 
@@ -89,7 +91,8 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDirectional(CharacterInput input)
     {
-        // call directional input in player controller
+        c1.HorizontalResponse(input);
+        c1.VerticalResponse(input);
     }
 
     public void OnDash(InputAction.CallbackContext ctxt)
@@ -99,7 +102,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDash(CharacterInput input)
     {
-        // call dash in player controller
+      //dash
     }
 
     public void OnJump(InputAction.CallbackContext ctxt)
@@ -110,7 +113,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputJump(CharacterInput input)
     {
-        // call jump in player controller
+        c1.JumpResponse(input);
     }
 
     public void OnAttack(InputAction.CallbackContext ctxt)

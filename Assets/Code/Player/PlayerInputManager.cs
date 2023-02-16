@@ -12,6 +12,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
 
+    [SerializeField] Control1 c1;
+
     //[SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
     [SerializeField] Dictionary<ControlLock.Controls, Action<CharacterInput>> inputEvents = new Dictionary<ControlLock.Controls, Action<CharacterInput>>();
     ControlLock.Controls[] controlPriorityList = { 
@@ -85,7 +87,8 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDirectional(CharacterInput input)
     {
-        // move!
+        c1.HorizontalResponse(input);
+        c1.VerticalResponse(input);
     }
 
     public void OnDash(InputAction.CallbackContext ctxt)
@@ -95,7 +98,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDash(CharacterInput input)
     {
-        // dash!
+        // I don't actually have any of the dash mechanics done, so nothing is here
     }
 
     public void OnJump(InputAction.CallbackContext ctxt)
@@ -106,7 +109,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputJump(CharacterInput input)
     {
-        // jump!
+        c1.JumpResponse(input);
     }
 
     public void OnAttack(InputAction.CallbackContext ctxt)
@@ -117,6 +120,8 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputAttack(CharacterInput input)
     {
+        c1.FTilt();
+
         // TODO: logic to implement directional attack call
         // basically if elses testing the input.Direction value
     }

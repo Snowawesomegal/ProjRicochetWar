@@ -918,11 +918,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbccccb63fca97418e8dba5bc8d2478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  control1: {fileID: 1695154403}
+  playerController: {fileID: 0}
   controlLockManager: {fileID: 1695154411}
-  debugMessages: 1
-  controlPriorityList: 0400000008000000100000000200000001000000
+  debugMessages: 0
+  c1: {fileID: 1695154403}
   inputBufferDuration: 10
+  inputBufferDebugMessages: 0
 --- !u!114 &1695154411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -965,39 +966,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1695154410}
         m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: InputHorizontal
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 1ada2b17-99bd-4a32-b8f8-1f1295c26e3b
-    m_ActionName: Playing/Horizontal[/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1695154410}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: InputVertical
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: dded2bce-ae90-4746-bf8e-7ce44e19988c
-    m_ActionName: Playing/Vertical[/Keyboard/w,/Keyboard/s]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1695154410}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: InputJump
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1013,7 +982,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1695154410}
         m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: InputAttack
+        m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1029,7 +998,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1695154410}
         m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: InputSpecial
+        m_MethodName: OnSpecial
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1041,6 +1010,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f8857a73-3383-4e31-99b2-e62a686e04bd
     m_ActionName: Playing/Special[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1695154410}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnDirectional
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b7f96922-f047-42d5-a1b4-478684d3eb9b
+    m_ActionName: Playing/Directional[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e120126c-b953-4a4c-990f-a2758291ac7f
+    m_ActionName: Playing/Dash[/Keyboard/l]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: DefaultControls
   m_DefaultActionMap: Playing

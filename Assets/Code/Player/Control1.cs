@@ -32,9 +32,6 @@ public class Control1 : MonoBehaviour
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
 
-    //input
-    public Vector2 dirInput = new Vector2(0, 0); //contains the directional inputs (x,y) -1 to 1 on last update frame
-
     //buffer
     public int bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
 
@@ -72,17 +69,16 @@ public class Control1 : MonoBehaviour
         friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
     }
 
-    public void VerticalResponse()
+    public void VerticalResponse(CharacterInput input)
     {
 
     }
 
-    public void HorizontalResponse()
+    public void HorizontalResponse(CharacterInput input)
     {
-        Debug.Log("horizontal response");
         if (clm.activeLockers.Contains(wallcling))
         {
-            if (dirInput.x != collidedWallSide)
+            if (input.Direction.x != collidedWallSide)
             {
                 clm.RemoveLocker(wallcling);
             }
@@ -91,8 +87,7 @@ public class Control1 : MonoBehaviour
         {
             if (grounded)
             {
-                Debug.Log("grounded and moving");
-                rb.AddForce(dirInput * groundAccel);
+                rb.AddForce(input.Direction * groundAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
                 //above line caps horizontal speed at groundspeed every frame
                 //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
@@ -102,28 +97,85 @@ public class Control1 : MonoBehaviour
             {
                 if (touchingWall)
                 {
-                    if (collidedWallSide == dirInput.x)
+                    if (collidedWallSide == input.Direction.x)
                     {
                         clm.AddLocker(wallcling);
                         rb.velocity = Vector2.zero;
                     }
                 }
-                rb.AddForce(dirInput * airAccel);
+                rb.AddForce(input.Direction * airAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
                 //same as grounded
             }
 
-            if (dirInput.x > 0)
+            if (input.Direction.x > 0)
             {
                 facingRight = true;
                 sr.flipX = false;
             }
-            else if (dirInput.x < 0)
+            else if (input.Direction.x < 0)
             {
                 facingRight = false;
                 sr.flipX = true;
             }
         }
+    }
+
+    void HitstunResponse()
+    {
+        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > 10)
+        {
+            Hit(null, false);
+            framesInHitstun = 0;
+        }
+        framesInHitstun += 1;
+    }
+
+    public void FTilt()
+    {
+        anim.SetBool("HeavyAttack", true);
+        clm.AddLocker(inAnim);
+    }
+
+    public void WallJump() // called by walljump animation
+    {
+        if (3 <= 2) //TODO change "3" to consecutive held frames of jump input
+        {
+            rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 1.3f);
+        }
+        else
+        {
+            rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 2f);
+        }
+        clm.RemoveLocker(inAnim);
+    }
+
+    public void JumpResponse(CharacterInput input)
+    {
+        if (clm.activeLockers.Contains(grounded))
+        {
+            clm.AddLocker(inAnim);
+            anim.SetBool("Jumpsquat", true);
+        }
+        else if (clm.activeLockers.Contains(wallcling))
+        {
+            clm.AddLocker(inAnim);
+        }
+    }
+
+    public void Jump() // called by jump animation
+    {
+        if (3 <= 3) //TODO change "4" to consecutive held frames of jump input, but i can't do that until porter changes the file
+        {
+            rb.AddForce(Vector2.up * initialJumpForce);
+        }
+        else
+        {
+            rb.AddForce(Vector2.up * initialJumpForce * 1.5f);
+        }
+        anim.SetBool("Jumpsquat", false);
+        clm.RemoveLocker(inAnim);
+        clm.RemoveLocker(grounded);
     }
 
     private void FixedUpdate()
@@ -139,7 +191,8 @@ public class Control1 : MonoBehaviour
         {
             if (clm.activeLockers.Contains(grounded))
             {
-                if ((Mathf.Sign(dirInput.x) != Mathf.Sign(rb.velocity.x)) || (dirInput.x == 0)) //if grounded + not holding the direction of motion;
+                // 7 was input.x                                  false was input.x == 0
+                if ((Mathf.Sign(7) != Mathf.Sign(rb.velocity.x)) || (false)) //if grounded + not holding the direction of motion;
                 {
                     if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
                     {
@@ -162,60 +215,6 @@ public class Control1 : MonoBehaviour
 
             }
         }
-    }
-
-    void HeavyResponse()
-    {
-        anim.SetBool("HeavyAttack", true);
-    }
-
-    void HitstunResponse()
-    {
-        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > 10)
-        {
-            Hit(null, false);
-            framesInHitstun = 0;
-        }
-        framesInHitstun += 1;
-    }
-
-    void JumpResponse()
-    {
-        if (clm.activeLockers.Contains(grounded))
-        {
-            clm.AddLocker(inAnim);
-        }
-        else if (clm.activeLockers.Contains(wallcling))
-        {
-            clm.AddLocker(inAnim);
-        }
-    }
-
-    public void WallJump() // called by walljump animation
-    {
-        if (3 <= 2) //TODO change "3" to consecutive held frames of jump input
-        {
-            rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 1.3f);
-        }
-        else
-        {
-            rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 2f);
-        }
-        clm.RemoveLocker(inAnim);
-    }
-
-    public void Jump() // called by jump animation
-    {
-        if (4 <= 3) //TODO change "4" to consecutive held frames of jump input
-        {
-            rb.AddForce(Vector2.up * initialJumpForce);
-        }
-        else
-        {
-            rb.AddForce(Vector2.up * initialJumpForce * 1.5f);
-        }
-        clm.RemoveLocker(inAnim);
-        clm.RemoveLocker(grounded);
     }
 
     void Hit(Collider2D collider, bool enterOrExitHitstun = true)

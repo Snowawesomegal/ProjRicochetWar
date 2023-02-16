@@ -51,6 +51,8 @@ public class PlayerInputManager : MonoBehaviour
     void FixedUpdate()
     {
         pib.debugMessages = inputBufferDebugMessages;
+        pib.CacheCurrentDirectional();
+
         foreach (ControlLock.Controls control in controlPriorityList)
         {
             if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
@@ -138,7 +140,7 @@ public class PlayerInputManager : MonoBehaviour
         // basically if elses testing the input.Direction value
     }
 
-    private bool CanInput(ControlLock.Controls controls, out string debugStr)
+    public bool CanInput(ControlLock.Controls controls, out string debugStr)
     {
         bool controlsAllowed = controlLockManager.ControlsAllowed(controls);
         if (debugMessages)
@@ -151,6 +153,16 @@ public class PlayerInputManager : MonoBehaviour
             debugStr = "";
         }
         return controlsAllowed;
+    }
+
+    public CharacterInput.DirectedInput GetCurrentDirectional()
+    {
+        return pib.CachedDirectional;
+    }
+
+    public Vector2 GetCurrentDirection()
+    {
+        return pib.CachedDirectional.current;
     }
 
     private void DebugAllowedInput(string debugStart, CharacterInput input)

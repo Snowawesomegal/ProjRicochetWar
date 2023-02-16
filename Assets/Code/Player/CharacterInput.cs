@@ -17,6 +17,111 @@ public class CharacterInput
         DIRECTIONAL = 1,
         BUTTON = 2
     }
+
+    public enum CardinalDirection
+    {
+        UP,
+        UP_RIGHT,
+        RIGHT,
+        DOWN_RIGHT,
+        DOWN,
+        DOWN_LEFT,
+        LEFT,
+        UP_LEFT,
+        NONE
+    }
+
+
+
+    [Serializable]
+    public struct DirectedInput
+    {
+        [SerializeField] public CardinalDirection cardinalInput;
+        [SerializeField] public Vector2 starting;
+        [SerializeField] public Vector2 current;
+
+        public DirectedInput(Vector2 starting)
+        {
+            this.cardinalInput = GetDirectionFromVector2(starting);
+            this.starting = starting;
+            this.current = starting;
+        }
+
+        public DirectedInput(CardinalDirection cardinalInput, Vector2 starting)
+        {
+            this.cardinalInput = cardinalInput;
+            this.starting = starting;
+            this.current = starting;
+        }
+
+        public DirectedInput(CardinalDirection cardinalInput, Vector2 starting, Vector2 current)
+        {
+            this.cardinalInput = cardinalInput;
+            this.starting = starting;
+            this.current = current;
+        }
+
+        public static DirectedInput Directionless()
+        {
+            return new DirectedInput(CardinalDirection.NONE, Vector2.zero);
+        }
+
+        public static CardinalDirection GetDirectionFromVector2(Vector2 dir)
+        {
+            if (dir.x == 0)
+            {
+                if (dir.y == 0)
+                {
+                    // both y and x are 0
+                    return CardinalDirection.NONE;
+                }
+
+                // x is 0 but y is up or down
+                return dir.y < 0 ? CardinalDirection.DOWN : CardinalDirection.UP;
+            }
+
+            if (dir.y == 0)
+            {
+                // x is not 0 but y is, so left or right
+                return dir.x < 0 ? CardinalDirection.LEFT : CardinalDirection.RIGHT;
+            }
+
+            if (dir.y > 0)
+            {
+                // x is not 0 and y is up
+                return dir.x < 0 ? CardinalDirection.UP_LEFT : CardinalDirection.UP_RIGHT;
+            }
+
+            // x is not 0 and y is down
+            return dir.x < 0 ? CardinalDirection.DOWN_LEFT : CardinalDirection.DOWN_RIGHT;
+        }
+
+        public static Vector2 GetVectorFromDirection(CardinalDirection dir)
+        {
+            switch (dir)
+            {
+                case CardinalDirection.UP:
+                    return Vector2.up;
+                case CardinalDirection.UP_RIGHT:
+                    return Vector2.up + Vector2.right;
+                case CardinalDirection.RIGHT:
+                    return Vector2.right;
+                case CardinalDirection.DOWN_RIGHT:
+                    return Vector2.down + Vector2.right;
+                case CardinalDirection.DOWN:
+                    return Vector2.down;
+                case CardinalDirection.DOWN_LEFT:
+                    return Vector2.down + Vector2.left;
+                case CardinalDirection.LEFT:
+                    return Vector2.left;
+                case CardinalDirection.UP_LEFT:
+                    return Vector2.up + Vector2.left;
+                default:
+                    return Vector2.zero;
+            }
+        }
+    }
+
     public const InputType COMPOSITE_INPUT_TYPE = (InputType.DIRECTIONAL | InputType.BUTTON);
 
     [SerializeField] private ControlLock.Controls control;
@@ -49,8 +154,8 @@ public class CharacterInput
     [SerializeField] private InputStage phase;
     public InputStage Phase { get { return phase; } private set { phase = value; } }
 
-    [SerializeField] private Vector2 direction = Vector2.zero;
-    public Vector2 Direction { get { return direction; } private set { direction = value; } }
+    [SerializeField] private DirectedInput direction;
+    public DirectedInput Direction { get { return direction; } private set { direction = value; } }
 
     [SerializeField] private InputType controlType;
     public InputType ControlType { get { return controlType; } private set { controlType = value; } }
@@ -61,6 +166,7 @@ public class CharacterInput
         Phase = phase;
         ControlType = InputType.BUTTON;
         InputTime = Time.fixedTime;
+        Direction = DirectedInput.Directionless();
     }
 
     public CharacterInput(ControlLock.Controls control, InputStage phase, Vector2 direction)
@@ -68,10 +174,12 @@ public class CharacterInput
         // check the control type
         if (IsDirectionalControl(control) && !IsButtonControl(control))
         {
+            // if this is strictly a directional control, ensure that
             ControlType = InputType.DIRECTIONAL;
         }
         else
         {
+            // otherwise, become directional only if given a direction
             ControlType = direction == Vector2.zero ? InputType.BUTTON : InputType.DIRECTIONAL;
         }
 
@@ -82,12 +190,23 @@ public class CharacterInput
 
         Control = control;
         Phase = phase;
-        Direction = direction;
+        Direction = new DirectedInput(direction);
 
         // if it's composite input, fix the control type flags
         if (CompositeInput)
             ControlType = COMPOSITE_INPUT_TYPE;
 
+        InputTime = Time.fixedTime;
+    }
+
+    // used to create an exact character input (such as when combining inputs)
+    // does not adjust given values
+    public CharacterInput(ControlLock.Controls control, InputStage phase, DirectedInput direction, InputType controlType)
+    {
+        Control = control;
+        Phase = phase;
+        Direction = direction;
+        ControlType = controlType;
         InputTime = Time.fixedTime;
     }
 
@@ -151,6 +270,11 @@ public class CharacterInput
         DurationTime = durationTime;
     }
 
+    public void UpdateDirection(Vector2 dir)
+    {
+        direction.current = dir;
+    }
+
     public bool IsDirectional()
     {
         return (ControlType | InputType.DIRECTIONAL) > 0;
@@ -205,9 +329,14 @@ public class CharacterInput
 
     public CharacterInput CombineWith(CharacterInput input)
     {
-        // take the time and Direction values of this object and the phase of the given object
-        // both objects have the same Control
-        CharacterInput target = new CharacterInput(Control, input.Phase, Direction);
+        // account for the direction changing
+        DirectedInput dir = Direction;
+        dir.current = input.Direction.current;
+
+        // create another input with same controls, the new phase, adjusted dir, and the same control type
+        CharacterInput target = new CharacterInput(Control, input.Phase, dir, ControlType);
+
+        // fix time variables to match this object's time variables
         target.InputTime = InputTime;
         target.Duration = Duration;
         target.DurationTime = DurationTime;

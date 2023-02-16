@@ -26,6 +26,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool inputBufferDebugMessages = false;
     PlayerInputBuffer pib = new PlayerInputBuffer();
 
+    [SerializeField] public float playerVerticalAttackThreshold = 70f;
+
     private void Awake()
     {
         if (playerController == null)
@@ -87,7 +89,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDirectional(CharacterInput input)
     {
-        // move!
+        // call directional input in player controller
     }
 
     public void OnDash(InputAction.CallbackContext ctxt)
@@ -97,7 +99,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDash(CharacterInput input)
     {
-        // dash!
+        // call dash in player controller
     }
 
     public void OnJump(InputAction.CallbackContext ctxt)
@@ -108,7 +110,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputJump(CharacterInput input)
     {
-        // jump!
+        // call jump in player controller
     }
 
     public void OnAttack(InputAction.CallbackContext ctxt)
@@ -119,8 +121,30 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputAttack(CharacterInput input)
     {
-        // TODO: logic to implement directional attack call
-        // basically if elses testing the input.Direction value
+        CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
+        switch (snappedDirection)
+        {
+            case CharacterInput.CardinalDirection.UP:
+                if (debugMessages)
+                    Debug.Log("Attacking upwards");
+                // call up attack in player controller
+                break;
+            case CharacterInput.CardinalDirection.DOWN:
+                if (debugMessages)
+                    Debug.Log("Attacking down");
+                // call down attack in player controller
+                break;
+            case CharacterInput.CardinalDirection.LEFT:
+            case CharacterInput.CardinalDirection.RIGHT:
+            case CharacterInput.CardinalDirection.NONE:
+                if (debugMessages)
+                    Debug.Log("Attacking sideways");
+                // call forward/side attack in player controller
+                break;
+            default:
+                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
+                break;
+        }
     }
 
     public void OnSpecial(InputAction.CallbackContext ctxt)
@@ -131,8 +155,24 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputSpecial(CharacterInput input)
     {
-        // TODO: logic to implement directional attack call
-        // basically if elses testing the input.Direction value
+        CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
+        switch (snappedDirection)
+        {
+            case CharacterInput.CardinalDirection.UP:
+                // call up special in player controller
+                break;
+            case CharacterInput.CardinalDirection.DOWN:
+                // call down special in player controller
+                break;
+            case CharacterInput.CardinalDirection.LEFT:
+            case CharacterInput.CardinalDirection.RIGHT:
+            case CharacterInput.CardinalDirection.NONE:
+                // call forward/side special in player controller
+                break;
+            default:
+                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
+                break;
+        }
     }
 
     public bool CanInput(ControlLock.Controls controls, out string debugStr)

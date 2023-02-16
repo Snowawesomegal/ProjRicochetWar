@@ -120,6 +120,39 @@ public class CharacterInput
                     return Vector2.zero;
             }
         }
+
+        public static CardinalDirection GetSnappedDirectionFromVector2(Vector2 dir, float verticalThresholdDegrees)
+        {
+            if (dir == Vector2.zero)
+                return CardinalDirection.NONE;
+
+            verticalThresholdDegrees = Mathf.Clamp(verticalThresholdDegrees, 0, 90);
+            float verticalThreshold = Mathf.Deg2Rad * verticalThresholdDegrees;
+
+            float rad = Mathf.Atan2(dir.y, dir.x);
+            float upMax = Mathf.PI - verticalThreshold;
+            float upMin = verticalThreshold;
+            float downMin = -Mathf.PI + verticalThreshold;
+            float downMax = -verticalThreshold;
+
+            if (rad >= upMin && rad <= upMax)
+                return CardinalDirection.UP;
+            if (rad >= downMin && rad <= downMax)
+                return CardinalDirection.DOWN;
+            if (rad <= Mathf.PI / 2 && rad >= -Mathf.PI / 2)
+                return CardinalDirection.RIGHT;
+            return CardinalDirection.LEFT;
+        }
+
+        public CardinalDirection GetSnappedStartingDirection(float verticalThresholdDegrees)
+        {
+            return GetSnappedDirectionFromVector2(starting, verticalThresholdDegrees);
+        }
+
+        public CardinalDirection GetSnappedCurrentDirection(float verticalThresholdDegrees)
+        {
+            return GetSnappedDirectionFromVector2(current, verticalThresholdDegrees);
+        }
     }
 
     public const InputType COMPOSITE_INPUT_TYPE = (InputType.DIRECTIONAL | InputType.BUTTON);

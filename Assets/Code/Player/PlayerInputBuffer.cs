@@ -8,6 +8,19 @@ public class PlayerInputBuffer
     private List<Pair<int, CharacterInput>>[] inputBuffers;
     public bool debugMessages = false;
 
+    public float previousDirectionalCache;
+    private CharacterInput.DirectedInput cachedDirectional;
+    public CharacterInput.DirectedInput CachedDirectional { 
+        get { 
+            if (Time.fixedTime != previousDirectionalCache)
+            {
+                CacheCurrentDirectional();
+                previousDirectionalCache = Time.fixedTime;
+            }
+            return cachedDirectional;
+        }
+    }
+
     public static int GetBitNumb(ControlLock.Controls control)
     {
         int numb = -1;
@@ -71,7 +84,7 @@ public class PlayerInputBuffer
                 direction = ctxt.ReadValue<Vector2>();
             } else
             {
-                direction = GetCurrentDirectional();
+                direction = CachedDirectional.current;
             }
             CharacterInput.InputStage phase = ctxt.started || ctxt.performed ? CharacterInput.InputStage.HELD : CharacterInput.InputStage.RELEASED;
             CharacterInput characterInput = new CharacterInput(control, phase, direction);
@@ -86,14 +99,28 @@ public class PlayerInputBuffer
         return false;
     }
 
-    public Vector2 GetCurrentDirectional()
+    public CharacterInput.DirectedInput GetCurrentDirectional()
     {
         if (TryGetBuffer(ControlLock.DIRECTIONAL_CONTROLS, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
         {
             Pair<int, CharacterInput> latestEntry = buffer[buffer.Count - 1];
-            return latestEntry.right.Direction;
+            if (latestEntry.right.Phase == CharacterInput.InputStage.HELD)
+            {
+                Vector2 dir = latestEntry.right.Direction.current;
+                return new CharacterInput.DirectedInput(dir);
+            } else
+            {
+                Vector2 prevDir = latestEntry.right.Direction.current;
+                Vector2 currentDir = Vector2.zero;
+                return new CharacterInput.DirectedInput(CharacterInput.CardinalDirection.NONE, prevDir, currentDir);
+            }
         }
-        return Vector2.zero;
+        return CharacterInput.DirectedInput.Directionless();
+    }
+
+    public void CacheCurrentDirectional()
+    {
+        cachedDirectional = GetCurrentDirectional();
     }
 
     public bool AcceptBufferInput(ControlLock.Controls control, int bufferTime, CharacterInput input)
@@ -129,6 +156,12 @@ public class PlayerInputBuffer
         for (int i = buffer.Count - 1; i >= 0; i--)
         {
             Pair<int, CharacterInput> current = buffer[i];
+            // for only the latest value, if it's still held down
+            if (i == buffer.Count - 1 && current.right.Phase == CharacterInput.InputStage.HELD)
+            {
+                // update the current direction of the input to match the current directional
+                current.right.UpdateDirection(CachedDirectional.current);
+            }
             if (current.right.TryIncrementFrames() && current.right.Phase == CharacterInput.InputStage.RELEASED && canExpire)
             {
                 current.left = current.left - 1;

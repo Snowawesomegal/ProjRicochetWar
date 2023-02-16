@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(ControlLockManager), typeof(PlayerController))]
 public class PlayerInputManager : MonoBehaviour
 {
-    [SerializeField] PlayerController playerController;
+    [SerializeField] Control1 control1;
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
 
@@ -25,9 +25,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Awake()
     {
-        if (playerController == null)
+        if (control1 == null)
         {
-            playerController = GetComponent<PlayerController>();
+            control1 = GetComponent<Control1>();
         }
         if (controlLockManager == null)
         {
@@ -79,11 +79,13 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (ctxt.started || ctxt.performed)
         {
-            playerController.SetHorizontal((float)(ctxt.ReadValue<float>()));
+            control1.dirInput.x = ctxt.ReadValue<float>();
+            Debug.Log(ctxt.ReadValue<float>());
+            control1.HorizontalResponse();
         }
         else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
         {
-            playerController.SetHorizontal(0);
+            control1.dirInput.x = 0;
         }
     }
 
@@ -97,11 +99,12 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (ctxt.started || ctxt.performed)
         {
-
+            control1.dirInput.y = ctxt.ReadValue<float>();
+            control1.VerticalResponse();
         }
         else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
         {
-
+            control1.dirInput.y = 0;
         }
     }
 
@@ -115,7 +118,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (ctxt.started || ctxt.performed)
         {
-
+            control1.Jump();
         }
         else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
         {

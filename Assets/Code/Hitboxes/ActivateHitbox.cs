@@ -7,7 +7,9 @@ public class ActivateHitbox : MonoBehaviour
     public Animator anim;
     public GameObject hitboxPrefab;
     public Control1 c1;
+    public ControlLockManager clm;
     Dictionary<GameObject, int> toBeDestroyed = new Dictionary<GameObject, int>();
+
 
     public void CreateHitbox(string hitboxPath)
     {
@@ -51,7 +53,7 @@ public class ActivateHitbox : MonoBehaviour
 
     public void EndAnimation() //placeholder
     {
-        c1.activeStates.Remove(c1.inAnim);
+        clm.activeLockers.Remove(c1.inAnim);
         anim.SetBool("HeavyAttack", false);
     }
 }

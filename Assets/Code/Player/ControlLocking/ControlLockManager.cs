@@ -11,7 +11,8 @@ public class ControlLockManager : MonoBehaviour
     /// <summary>
     /// Used to track the active ControlLockers for this manager.
     /// </summary>
-    [SerializeField] private List<StandardControlLocker> activeLockers = new List<StandardControlLocker>();
+    public List<StandardControlLocker> activeLockers = new List<StandardControlLocker>();
+
     /// <summary>
     /// Used to reference the composite of control locks made by
     /// combining the locks from all active ControlLockers.

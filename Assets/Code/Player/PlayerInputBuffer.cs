@@ -20,13 +20,13 @@ public class PlayerInputBuffer
         return false;
     }
 
-    public void AcceptBufferInput(Queue<Pair<int, InputAction.CallbackContext>> buffer, Pair<int, InputAction.CallbackContext> input)
-    {
+    //public void AcceptBufferInput(Queue<Pair<int, InputAction.CallbackContext>> buffer, Pair<int, InputAction.CallbackContext> input)
+    //{
 
-    }
+    //}
 
-    public void CleanBuffer(Queue<Pair<int, InputAction.CallbackContext>> buffer)
-    {
+    //public void CleanBuffer(Queue<Pair<int, InputAction.CallbackContext>> buffer)
+    //{
 
-    }
+    //}
 }

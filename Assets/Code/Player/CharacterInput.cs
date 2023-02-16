@@ -360,21 +360,35 @@ public class CharacterInput
         return Phase != InputStage.RELEASED;
     }
 
+    /// <summary>
+    /// This method is volatile -- it returns this object, updating the values of this object to
+    /// combine with the other given input object.
+    /// </summary>
+    /// <param name="input"> The input to combine this one with. </param>
+    /// <returns> This object. </returns>
     public CharacterInput CombineWith(CharacterInput input)
     {
         // account for the direction changing
         DirectedInput dir = Direction;
         dir.current = input.Direction.current;
 
+        /*
         // create another input with same controls, the new phase, adjusted dir, and the same control type
         CharacterInput target = new CharacterInput(Control, input.Phase, dir, ControlType);
+        */
 
+        // update the direction and phase of this input to match the recent update
+        Phase = input.Phase;
+        Direction = direction;
+
+        /*
         // fix time variables to match this object's time variables
         target.InputTime = InputTime;
         target.Duration = Duration;
         target.DurationTime = DurationTime;
         target.latestFrameIncrement = latestFrameIncrement;
-        return target;
+        */
+        return this;
     }
 
     public static Pair<int, CharacterInput> CombineInputPair(Pair<int, CharacterInput> current, Pair<int, CharacterInput> next)

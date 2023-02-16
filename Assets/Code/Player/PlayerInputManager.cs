@@ -12,16 +12,19 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
 
-    [SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
-    [SerializeField] Dictionary<ControlLock.Controls, Action<InputAction.CallbackContext>> inputEvents = new Dictionary<ControlLock.Controls, Action<InputAction.CallbackContext>>();
-    [SerializeField] ControlLock.Controls[] controlPriorityList = { 
-        ControlLock.Controls.JUMP, 
+    //[SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
+    [SerializeField] Dictionary<ControlLock.Controls, Action<CharacterInput>> inputEvents = new Dictionary<ControlLock.Controls, Action<CharacterInput>>();
+    ControlLock.Controls[] controlPriorityList = { 
+        ControlLock.Controls.JUMP,
+        ControlLock.Controls.DASH,
         ControlLock.Controls.ATTACK, 
         ControlLock.Controls.SPECIAL, 
-        ControlLock.Controls.VERTICAL, 
-        ControlLock.Controls.HORIZONTAL
+        ControlLock.DIRECTIONAL_CONTROLS
     };
     [SerializeField] int inputBufferDuration = 10;
+
+    [SerializeField] bool inputBufferDebugMessages = false;
+    PlayerInputBuffer pib = new PlayerInputBuffer();
 
     private void Awake()
     {
@@ -34,27 +37,26 @@ public class PlayerInputManager : MonoBehaviour
             controlLockManager = GetComponent<ControlLockManager>();
         }
 
-        inputEvents[ControlLock.Controls.HORIZONTAL] = InputHorizontal;
-        inputEvents[ControlLock.Controls.VERTICAL] = InputVertical;
+        pib.InitializeBuffers(controlPriorityList);
+
         inputEvents[ControlLock.Controls.JUMP] = InputJump;
         inputEvents[ControlLock.Controls.ATTACK] = InputAttack;
         inputEvents[ControlLock.Controls.SPECIAL] = InputSpecial;
+        inputEvents[ControlLock.Controls.DASH] = InputDash;
+        inputEvents[ControlLock.DIRECTIONAL_CONTROLS] = InputDirectional;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
+        pib.debugMessages = inputBufferDebugMessages;
         foreach (ControlLock.Controls control in controlPriorityList)
         {
-            if (inputBuffers.TryGetValue(control, out Pair<int, InputAction.CallbackContext> val) && val.left > 0)
+            if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
             {
-                if (CanInput(control, val.right))
+                pib.MaintainBuffer(buffer, control);
+                if (pib.GrabImmediateInput(buffer, out CharacterInput input) && CanInput(control, input))
                 {
-                    val.left = 0;
-                    inputEvents[control].Invoke(val.right);
-                }
-                else if (val.right.canceled)
-                {
-                    val.left--;
+                    inputEvents[control].Invoke(input);
                 }
             }
         }
@@ -62,47 +64,34 @@ public class PlayerInputManager : MonoBehaviour
 
     private void AcceptBufferInput(ControlLock.Controls control, InputAction.CallbackContext ctxt)
     {
-        if (ctxt.started || ctxt.performed || ctxt.canceled)
+        if (ctxt.started || ctxt.canceled) //ctxt.performed || 
         {
-            Debug.Log("Current context phase: " + ctxt.phase.ToString());
-            inputBuffers[control] = new Pair<int, InputAction.CallbackContext>(inputBufferDuration, ctxt);
+            pib.AcceptInput(control, inputBufferDuration, ctxt);
+            if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer))
+            {
+                pib.CleanBuffer(buffer, control);
+            }
         }
     }
 
-    public void OnHorizontal(InputAction.CallbackContext ctxt)
+    public void OnDirectional(InputAction.CallbackContext ctxt)
     {
-        ControlLock.Controls control = ControlLock.Controls.HORIZONTAL;
+        ControlLock.Controls control = ControlLock.DIRECTIONAL_CONTROLS;
         AcceptBufferInput(control, ctxt);
     }
-
-    public void InputHorizontal(InputAction.CallbackContext ctxt)
+    public void InputDirectional(CharacterInput input)
     {
-        if (ctxt.started || ctxt.performed)
-        {
-            playerController.SetHorizontal((float)(ctxt.ReadValue<float>()));
-        }
-        else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
-        {
-            playerController.SetHorizontal(0);
-        }
+        // move!
     }
 
-    public void OnVertical(InputAction.CallbackContext ctxt)
+    public void OnDash(InputAction.CallbackContext ctxt)
     {
-        ControlLock.Controls control = ControlLock.Controls.VERTICAL;
+        ControlLock.Controls control = ControlLock.Controls.DASH;
         AcceptBufferInput(control, ctxt);
     }
-
-    public void InputVertical(InputAction.CallbackContext ctxt)
+    public void InputDash(CharacterInput input)
     {
-        if (ctxt.started || ctxt.performed)
-        {
-
-        }
-        else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
-        {
-
-        }
+        // dash!
     }
 
     public void OnJump(InputAction.CallbackContext ctxt)
@@ -111,16 +100,9 @@ public class PlayerInputManager : MonoBehaviour
         AcceptBufferInput(control, ctxt);
     }
 
-    public void InputJump(InputAction.CallbackContext ctxt)
+    public void InputJump(CharacterInput input)
     {
-        if (ctxt.started || ctxt.performed)
-        {
-
-        }
-        else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
-        {
-
-        }
+        // jump!
     }
 
     public void OnAttack(InputAction.CallbackContext ctxt)
@@ -129,16 +111,10 @@ public class PlayerInputManager : MonoBehaviour
         AcceptBufferInput(control, ctxt);
     }
 
-    public void InputAttack(InputAction.CallbackContext ctxt)
+    public void InputAttack(CharacterInput input)
     {
-        if (ctxt.started || ctxt.performed)
-        {
-
-        }
-        else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
-        {
-
-        }
+        // TODO: logic to implement directional attack call
+        // basically if elses testing the input.Direction value
     }
 
     public void OnSpecial(InputAction.CallbackContext ctxt)
@@ -147,25 +123,19 @@ public class PlayerInputManager : MonoBehaviour
         AcceptBufferInput(control, ctxt);
     }
 
-    public void InputSpecial(InputAction.CallbackContext ctxt)
+    public void InputSpecial(CharacterInput input)
     {
-        if (ctxt.started || ctxt.performed)
-        {
-
-        }
-        else if (ctxt.canceled || ctxt.phase == InputActionPhase.Waiting)
-        {
-
-        }
+        // TODO: logic to implement directional attack call
+        // basically if elses testing the input.Direction value
     }
 
-    private bool CanInput(ControlLock.Controls controls, InputAction.CallbackContext ctxt)
+    private bool CanInput(ControlLock.Controls controls, CharacterInput input)
     {
         bool controlsAllowed = controlLockManager.ControlsAllowed(controls);
         if (debugMessages)
         {
             string output = "Control \"" + controls.ToString() + (controlsAllowed ? "\" allowed." : "\" not allowed.");
-            output += " Context phase: " + ctxt.phase.ToString();
+            output += " Input phase: " + input.Phase.ToString();
             Debug.Log(output);
         }
         return controlsAllowed;

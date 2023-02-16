@@ -14,8 +14,11 @@ public class ControlLock
         VERTICAL = 2,
         JUMP = 4,
         ATTACK = 8,
-        SPECIAL = 16
+        SPECIAL = 16,
+        DASH = 32
     }
+    public const Controls DIRECTIONAL_CONTROLS = (Controls.HORIZONTAL | Controls.VERTICAL);
+    public const Controls BUTTON_CONTROLS = (Controls.JUMP | Controls.ATTACK | Controls.SPECIAL);
 
     /// <summary>
     ///  Locks property is used to track which controls this ControlLock corresponds to.

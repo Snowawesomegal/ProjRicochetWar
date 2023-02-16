@@ -1,57 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ActivateHitbox : MonoBehaviour
 {
     public Animator anim;
     public GameObject hitboxPrefab;
     public Control1 c1;
-    Dictionary<GameObject, int> toBeDestroyed = new Dictionary<GameObject, int>();
+    public ControlLockManager clm;
+    public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
 
-    public void CreateHitbox(string hitboxPath)
+
+
+    public void CreateHitbox(string hitboxName)
     {
-        ScriptableHitbox hitboxData = (ScriptableHitbox) Resources.Load(hitboxPath);
+        var allKids = GetComponentsInChildren<Transform>();
+        GameObject hitboxObject = allKids.Where(k => k.gameObject.name == hitboxName).FirstOrDefault().gameObject;
 
-        GameObject newHitbox = Instantiate(hitboxPrefab, transform.position, Quaternion.identity);
+        hitboxObject.SetActive(true);
 
-        CapsuleCollider2D hbCollider = newHitbox.GetComponent<CapsuleCollider2D>();
-        HitboxInfo newHBInfo = newHitbox.GetComponent<HitboxInfo>();
+        HitboxInfo HBInfo = hitboxObject.GetComponent<HitboxInfo>();
 
-        hbCollider.offset = new Vector2(hitboxData.xoffset, hitboxData.yoffset);
-        hbCollider.direction = hitboxData.changeToVertical ? CapsuleDirection2D.Vertical : CapsuleDirection2D.Horizontal;
-        hbCollider.size = new Vector2(hitboxData.xsize, hitboxData.ysize);
+        HBInfo.owner = gameObject;
+        HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
 
-        newHBInfo.damage = hitboxData.damage;
-        newHBInfo.knockback = hitboxData.knockback;
-        newHBInfo.angle = hitboxData.kbAngleNeg90to90;
-        newHBInfo.angleIndependentOfMovement = hitboxData.angleIndependentOfMovement;
-        newHBInfo.owner = gameObject;
-        newHBInfo.facingRight = newHBInfo.owner.GetComponent<Control1>().facingRight;
-
-        toBeDestroyed.Add(newHitbox, hitboxData.activeFrames);
+        toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
     }
 
     private void FixedUpdate()
     {
-        Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDestroyed);
+        Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
 
         foreach(KeyValuePair<GameObject, int> i in copyDict)
         {
             if (i.Value <= 0)
             {
-                Destroy(i.Key);
+                i.Key.SetActive(false);
             }
             else
             {
-                toBeDestroyed[i.Key] -= 1;
+                toBeDisabled[i.Key] -= 1;
             }
         }
     }
 
-    public void EndAnimation() //placeholder
+    public void EndAnimation() //placeholder //TODO
     {
-        c1.activeStates.Remove(c1.inAnim);
+        clm.activeLockers.Remove(c1.inAnim);
         anim.SetBool("HeavyAttack", false);
     }
 }

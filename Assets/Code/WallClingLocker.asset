@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f538d6d7c2dd51b41a4cde73d369adec, type: 3}
-  m_Name: AttackLocker
+  m_Name: WallClingLocker
   m_EditorClassIdentifier: 
   controlLock:
-    locks: 8
+    locks: 28
     priority: 0

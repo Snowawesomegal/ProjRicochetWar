@@ -10,4 +10,5 @@ public class HitboxInfo : MonoBehaviour
     public float angle = 0;
     public GameObject owner;
     public bool facingRight = true;
+    public int activeFrames = 2;
 }

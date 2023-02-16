@@ -123,13 +123,13 @@ public class PlayerInputBuffer
         }
     }
 
-    public void MaintainBuffer(List<Pair<int, CharacterInput>> buffer, ControlLock.Controls control)
+    public void MaintainBuffer(List<Pair<int, CharacterInput>> buffer, ControlLock.Controls control, bool canExpire)
     {
         CleanBuffer(buffer, control);
         for (int i = buffer.Count - 1; i >= 0; i--)
         {
             Pair<int, CharacterInput> current = buffer[i];
-            if (current.right.TryIncrementFrames() && current.right.Phase == CharacterInput.InputStage.RELEASED)
+            if (current.right.TryIncrementFrames() && current.right.Phase == CharacterInput.InputStage.RELEASED && canExpire)
             {
                 current.left = current.left - 1;
             }

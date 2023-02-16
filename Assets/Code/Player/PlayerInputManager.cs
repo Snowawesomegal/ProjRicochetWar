@@ -53,11 +53,15 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
             {
-                pib.MaintainBuffer(buffer, control);
-                if (pib.GrabImmediateInput(buffer, out CharacterInput input) && CanInput(control, input))
+                bool canInput = CanInput(control, out string debugStr);
+                pib.MaintainBuffer(buffer, control, canInput);
+                if (canInput && pib.GrabImmediateInput(buffer, out CharacterInput input))
                 {
                     inputEvents[control].Invoke(input);
+                    DebugAllowedInput(debugStr, input);
                 }
+                else
+                    DebugAllowedInput(debugStr, null);
             }
         }
     }
@@ -129,15 +133,28 @@ public class PlayerInputManager : MonoBehaviour
         // basically if elses testing the input.Direction value
     }
 
-    private bool CanInput(ControlLock.Controls controls, CharacterInput input)
+    private bool CanInput(ControlLock.Controls controls, out string debugStr)
     {
         bool controlsAllowed = controlLockManager.ControlsAllowed(controls);
         if (debugMessages)
         {
             string output = "Control \"" + controls.ToString() + (controlsAllowed ? "\" allowed." : "\" not allowed.");
-            output += " Input phase: " + input.Phase.ToString();
-            Debug.Log(output);
+            debugStr = output;
+        }
+        else
+        {
+            debugStr = "";
         }
         return controlsAllowed;
+    }
+
+    private void DebugAllowedInput(string debugStart, CharacterInput input)
+    {
+        if (!debugMessages)
+            return;
+        if (input == null)
+            Debug.Log(debugStart);
+        else
+            Debug.Log(debugStart + " Input phase: " + input.Phase.ToString());
     }
 }

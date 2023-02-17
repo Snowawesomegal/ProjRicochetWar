@@ -157,6 +157,9 @@ public class CharacterInput
 
     public const InputType COMPOSITE_INPUT_TYPE = (InputType.DIRECTIONAL | InputType.BUTTON);
 
+    [SerializeField] private ControlLock.Controls cacheControl;
+    public ControlLock.Controls CacheControl { get { return cacheControl; } private set { cacheControl = value; } }
+
     [SerializeField] private ControlLock.Controls control;
     public ControlLock.Controls Control {
         get { return control; }
@@ -193,8 +196,9 @@ public class CharacterInput
     [SerializeField] private InputType controlType;
     public InputType ControlType { get { return controlType; } private set { controlType = value; } }
 
-    public CharacterInput(ControlLock.Controls control, InputStage phase)
+    public CharacterInput(ControlLock.Controls inputControl, ControlLock.Controls control, InputStage phase)
     {
+        CacheControl = inputControl;
         Control = control;
         Phase = phase;
         ControlType = InputType.BUTTON;
@@ -202,8 +206,10 @@ public class CharacterInput
         Direction = DirectedInput.Directionless();
     }
 
-    public CharacterInput(ControlLock.Controls control, InputStage phase, Vector2 direction)
+    public CharacterInput(ControlLock.Controls cacheControl, ControlLock.Controls control, InputStage phase, Vector2 direction)
     {
+        CacheControl = cacheControl;
+
         // check the control type
         if (IsDirectionalControl(control) && !IsButtonControl(control))
         {
@@ -234,8 +240,9 @@ public class CharacterInput
 
     // used to create an exact character input (such as when combining inputs)
     // does not adjust given values
-    public CharacterInput(ControlLock.Controls control, InputStage phase, DirectedInput direction, InputType controlType)
+    public CharacterInput(ControlLock.Controls cacheControl, ControlLock.Controls control, InputStage phase, DirectedInput direction, InputType controlType)
     {
+        CacheControl = cacheControl;
         Control = control;
         Phase = phase;
         Direction = direction;

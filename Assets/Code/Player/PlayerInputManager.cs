@@ -203,6 +203,26 @@ public class PlayerInputManager : MonoBehaviour
         return pib.CachedDirectional.current;
     }
 
+    public bool CacheInput(CharacterInput input)
+    {
+        pib.CacheInput(input);
+        return true;
+    }
+
+    public CharacterInput GetCachedInput(ControlLock.Controls control)
+    {
+        if (CharacterInput.IsDirectionalControl(control))
+            control = ControlLock.DIRECTIONAL_CONTROLS;
+        return pib.GetCachedInput(control);
+    }
+
+    public bool TryGetCachedInput(ControlLock.Controls control, out CharacterInput input)
+    {
+        if (CharacterInput.IsDirectionalControl(control))
+            control = ControlLock.DIRECTIONAL_CONTROLS;
+        return pib.TryGetCachedInput(control, out input);
+    }
+
     private void DebugAllowedInput(string debugStart, CharacterInput input)
     {
         if (!debugMessages)

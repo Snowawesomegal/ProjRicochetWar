@@ -21,6 +21,8 @@ public class PlayerInputBuffer
         }
     }
 
+    private CharacterInput[] cachedInputs;
+
     public static int GetBitNumb(ControlLock.Controls control)
     {
         int numb = -1;
@@ -54,6 +56,11 @@ public class PlayerInputBuffer
             }
             inputBuffers[index] = new List<Pair<int, CharacterInput>>();
         }
+        cachedInputs = new CharacterInput[max + 1];
+        for (int i = 0; i < cachedInputs.Length; i++)
+        {
+            cachedInputs[i] = null;
+        }
     }
 
     public bool TryGetBuffer(ControlLock.Controls control, out List<Pair<int, CharacterInput>> buffer)
@@ -68,6 +75,27 @@ public class PlayerInputBuffer
         buffer = null;
         Debug.LogError("Error - tried accessing input buffer with controls: " + control.ToString() + ". Buffer does not exist.");
         return false;
+    }
+
+    public void CacheInput(CharacterInput input)
+    {
+        cachedInputs[GetBitNumb(input.CacheControl)] = input;
+    }
+
+    public void ClearCachedInput(ControlLock.Controls control)
+    {
+        cachedInputs[GetBitNumb(control)] = null;
+    }
+
+    public bool TryGetCachedInput(ControlLock.Controls control, out CharacterInput input)
+    {
+        input = cachedInputs[GetBitNumb(control)];
+        return input != null;
+    }
+
+    public CharacterInput GetCachedInput(ControlLock.Controls control)
+    {
+        return cachedInputs[GetBitNumb(control)];
     }
 
     public bool AcceptInput(ControlLock.Controls control, int bufferTime, InputAction.CallbackContext ctxt)
@@ -86,8 +114,15 @@ public class PlayerInputBuffer
             {
                 direction = CachedDirectional.current;
             }
+
+            ControlLock.Controls inputSpecificControl = control;
+            if (direction.x != 0)
+                inputSpecificControl |= ControlLock.Controls.HORIZONTAL;
+            if (direction.y != 0)
+                inputSpecificControl |= ControlLock.Controls.VERTICAL;
+
             CharacterInput.InputStage phase = ctxt.started || ctxt.performed ? CharacterInput.InputStage.HELD : CharacterInput.InputStage.RELEASED;
-            CharacterInput characterInput = new CharacterInput(control, phase, direction);
+            CharacterInput characterInput = new CharacterInput(control, inputSpecificControl, phase, direction);
             buffer.Add(new Pair<int, CharacterInput>(bufferTime, characterInput));
             if (debugMessages)
                 Debug.Log("Accepted input to buffer: " + control.ToString() + " with phase: " + characterInput.Phase.ToString());

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestPunch1
+  m_Name: TestFLight
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -136,15 +136,15 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.23333333
-    functionName: CreateHitbox
-    data: Hitboxes/TCHBs/TestPunch1Hitbox
+    functionName: EnableHitbox
+    data: FLight
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.38333333
-    functionName: EndAnimation
-    data: 
+    functionName: StopAnimation
+    data: LightAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

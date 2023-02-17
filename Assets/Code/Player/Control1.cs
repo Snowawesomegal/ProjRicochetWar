@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class Control1 : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Control1 : MonoBehaviour
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
+    [SerializeField] float wallJumpVerticalOoOne = 0.5f;
 
     //speeds
     [SerializeField] float airSpeed = 10;
@@ -21,13 +23,18 @@ public class Control1 : MonoBehaviour
     [SerializeField] float groundAccel = 10;
     [SerializeField] float initialJumpForce = 10;
 
+    //windows
+    [SerializeField] float shorthopWindow = 3;
+    [SerializeField] float walljumpShorthopWindow = 3;
+
     //components
     Rigidbody2D rb;
     Collider2D bc;
     Animator anim;
     SpriteRenderer sr;
     ControlLockManager clm;
-    PlayerInputManager pir;
+    PlayerInputManager pim;
+    ActivateHitbox ah;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -61,8 +68,9 @@ public class Control1 : MonoBehaviour
         bc = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        pir = GetComponent<PlayerInputManager>();
+        pim = GetComponent<PlayerInputManager>();
         clm = GetComponent<ControlLockManager>();
+        ah = GetComponent<ActivateHitbox>();
 
         rb.sharedMaterial = notBouncy;
 
@@ -78,16 +86,16 @@ public class Control1 : MonoBehaviour
     {
         if (clm.activeLockers.Contains(wallcling))
         {
-            if (input.Direction.x != collidedWallSide)
+            if (input.Direction.current.x != collidedWallSide)
             {
                 clm.RemoveLocker(wallcling);
             }
         }
         else
         {
-            if (grounded)
+            if (clm.activeLockers.Contains(grounded))
             {
-                rb.AddForce(input.Direction * groundAccel);
+                rb.AddForce(Vector2.right * input.Direction.current.x * groundAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
                 //above line caps horizontal speed at groundspeed every frame
                 //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
@@ -97,23 +105,26 @@ public class Control1 : MonoBehaviour
             {
                 if (touchingWall)
                 {
-                    if (collidedWallSide == input.Direction.x)
+                    if (collidedWallSide == pim.GetCurrentDirectional().current.x)
                     {
                         clm.AddLocker(wallcling);
                         rb.velocity = Vector2.zero;
+                        Debug.Log("Velocity: " + rb.velocity + ", touchingWall: " +
+                            touchingWall + ", currentdirinput" + pim.GetCurrentDirectional().current.x + ", collidedWallSide " + collidedWallSide);
                     }
                 }
-                rb.AddForce(input.Direction * airAccel);
+
+                rb.AddForce(Vector2.right * input.Direction.current.x * airAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
                 //same as grounded
             }
 
-            if (input.Direction.x > 0)
+            if (input.Direction.current.x > 0)
             {
                 facingRight = true;
                 sr.flipX = false;
             }
-            else if (input.Direction.x < 0)
+            else if (input.Direction.current.x < 0)
             {
                 facingRight = false;
                 sr.flipX = true;
@@ -131,27 +142,19 @@ public class Control1 : MonoBehaviour
         framesInHitstun += 1;
     }
 
-    public void FTilt()
+    public void FLightResponse(CharacterInput input)
     {
-        anim.SetBool("HeavyAttack", true);
-        clm.AddLocker(inAnim);
-    }
-
-    public void WallJump() // called by walljump animation
-    {
-        if (3 <= 2) //TODO change "3" to consecutive held frames of jump input
+        if (input.IsHeld())
         {
-            rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 1.3f);
+            anim.SetBool("LightAttack", true);
+            clm.AddLocker(inAnim);
         }
-        else
-        {
-            rb.AddForce(new Vector2(-0.75f * collidedWallSide, 0.75f) * initialJumpForce * 2f);
-        }
-        clm.RemoveLocker(inAnim);
     }
 
     public void JumpResponse(CharacterInput input)
     {
+        pim.CacheInput(input);
+
         if (clm.activeLockers.Contains(grounded))
         {
             clm.AddLocker(inAnim);
@@ -160,18 +163,44 @@ public class Control1 : MonoBehaviour
         else if (clm.activeLockers.Contains(wallcling))
         {
             clm.AddLocker(inAnim);
+            anim.SetBool("WallJumpSquat", true);
         }
     }
 
-    public void Jump() // called by jump animation
+    public void ApplyWallJumpForce() // called by walljump animation
     {
-        if (3 <= 3) //TODO change "4" to consecutive held frames of jump input, but i can't do that until porter changes the file
+        rb.velocity = Vector2.zero;
+
+        CharacterInput initialJumpInput = pim.GetCachedInput(ControlLock.Controls.JUMP);
+        if ((pim.GetCachedInput(ControlLock.Controls.JUMP).Duration >= walljumpShorthopWindow) && initialJumpInput.IsHeld())
         {
-            rb.AddForce(Vector2.up * initialJumpForce);
+            rb.AddForce(1.8f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
         }
         else
         {
-            rb.AddForce(Vector2.up * initialJumpForce * 1.5f);
+            rb.AddForce(1.4f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
+        }
+        clm.RemoveLocker(inAnim);
+        clm.RemoveLocker(wallcling);
+        anim.SetBool("WallJumpSquat", false);
+        collidedWallSide = 0;
+        touchingWall = false;
+        wallTouching = null;
+
+        // it is ridiculous how many things I have to set here, something about wall mechanics should probably be reworked
+    }
+
+    public void ApplyJumpForce() // called by jump animation
+    {
+        CharacterInput initialJumpInput = pim.GetCachedInput(ControlLock.Controls.JUMP);
+
+        if ((initialJumpInput.Duration >= shorthopWindow) && initialJumpInput.IsHeld())
+        {
+            rb.AddForce(1.5f * initialJumpForce * Vector2.up);
+        }
+        else
+        {
+            rb.AddForce(initialJumpForce * Vector2.up);
         }
         anim.SetBool("Jumpsquat", false);
         clm.RemoveLocker(inAnim);
@@ -180,6 +209,12 @@ public class Control1 : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this
+            // The reason this is called at all is because stopping all momentum on the frame I grab the wall sometimes just doesn't work
+        {
+            rb.velocity = Vector2.zero;
+        }
+
         if (clm.activeLockers.Contains(hitstun))
         {
             HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
@@ -191,8 +226,8 @@ public class Control1 : MonoBehaviour
         {
             if (clm.activeLockers.Contains(grounded))
             {
-                // 7 was input.x                                  false was input.x == 0
-                if ((Mathf.Sign(7) != Mathf.Sign(rb.velocity.x)) || (false)) //if grounded + not holding the direction of motion;
+                if ((Mathf.Sign(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x))
+                    || (pim.GetCurrentDirectional().current.x == 0)) //if grounded + not holding the direction of motion;
                 {
                     if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
                     {
@@ -268,20 +303,28 @@ public class Control1 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Hit(collision);
+        if (collision.TryGetComponent(out HitboxInfo HBInfo))
+        {
+            if (HBInfo.owner != gameObject)
+            {
+                Debug.Log("Touched collider with owner: " + HBInfo.owner.name);
+                Hit(collision);
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "BottomWall")
         {
-            touchingWall = false;
+            clm.RemoveLocker(grounded);
             anim.SetBool("Grounded", false);
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
-            touchingWall = true;
+            clm.RemoveLocker(wallcling);
             collidedWallSide = 0;
+            touchingWall = false;
             wallTouching = null;
         }
     }

@@ -141,8 +141,8 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.RIGHT:
             case CharacterInput.CardinalDirection.NONE:
                 if (debugMessages)
-                    Debug.Log("Attacking sideways");
-                // call forward/side attack in player controller
+                    Debug.Log("Attacking sideways " + input.Phase);
+                    c1.FLightResponse(input);
                 break;
             default:
                 Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());

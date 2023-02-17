@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestCharJumpsquat
+  m_Name: TestWallJumpSquat
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 2118598622, guid: 850be5307b8fe4b68bd2bcf861417646, type: 3}
+      value: {fileID: -1585543597, guid: 37970ab4634bb42bead66781b4c6b182, type: 3}
     - time: 0.05
-      value: {fileID: 2118598622, guid: 850be5307b8fe4b68bd2bcf861417646, type: 3}
+      value: {fileID: -1585543597, guid: 37970ab4634bb42bead66781b4c6b182, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,8 +42,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 2118598622, guid: 850be5307b8fe4b68bd2bcf861417646, type: 3}
-    - {fileID: 2118598622, guid: 850be5307b8fe4b68bd2bcf861417646, type: 3}
+    - {fileID: -1585543597, guid: 37970ab4634bb42bead66781b4c6b182, type: 3}
+    - {fileID: -1585543597, guid: 37970ab4634bb42bead66781b4c6b182, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -70,7 +70,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.05
-    functionName: ApplyJumpForce
+    functionName: ApplyWallJumpForce
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

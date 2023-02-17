@@ -7,24 +7,50 @@ public class ActivateHitbox : MonoBehaviour
 {
     public Animator anim;
     public GameObject hitboxPrefab;
-    public Control1 c1;
-    public ControlLockManager clm;
+    Control1 c1;
+    ControlLockManager clm;
     public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
 
-
-
-    public void CreateHitbox(string hitboxName)
+    private void Start()
     {
-        var allKids = GetComponentsInChildren<Transform>();
-        GameObject hitboxObject = allKids.Where(k => k.gameObject.name == hitboxName).FirstOrDefault().gameObject;
+        clm = GetComponent<ControlLockManager>();
+        c1 = GetComponent<Control1>();
+    }
+
+    public void EnableHitbox(string hitboxName)
+    {
+
+        GameObject hitboxObject = null;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform currentChild = transform.GetChild(i);
+            if (currentChild.name == hitboxName)
+            {
+                hitboxObject = currentChild.gameObject;
+                break;
+            }
+        }
+
+        if (hitboxObject == null)
+        {
+            Debug.Log("There is no hitbox object with the name " + hitboxName + " on " + gameObject.name);
+            return;
+        }
 
         hitboxObject.SetActive(true);
 
         HitboxInfo HBInfo = hitboxObject.GetComponent<HitboxInfo>();
 
         HBInfo.owner = gameObject;
+
+        if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
+        {
+            hitboxObject.transform.localPosition *= new Vector2(-1, 1);
+        }
         HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
 
+        Debug.Log("tobedisabled.add");
         toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
     }
 
@@ -32,11 +58,14 @@ public class ActivateHitbox : MonoBehaviour
     {
         Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
 
+        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
         foreach(KeyValuePair<GameObject, int> i in copyDict)
         {
             if (i.Value <= 0)
             {
                 i.Key.SetActive(false);
+                toBeDisabled.Remove(i.Key);
             }
             else
             {
@@ -45,9 +74,9 @@ public class ActivateHitbox : MonoBehaviour
         }
     }
 
-    public void EndAnimation() //placeholder //TODO
+    public void StopAnimation(string boolToSetFalse)
     {
-        clm.activeLockers.Remove(c1.inAnim);
-        anim.SetBool("HeavyAttack", false);
+        clm.RemoveLocker(c1.inAnim);
+        anim.SetBool(boolToSetFalse, false);
     }
 }

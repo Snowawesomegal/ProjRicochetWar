@@ -191,16 +191,31 @@ public class PlayerInputBuffer
         for (int i = buffer.Count - 1; i >= 0; i--)
         {
             Pair<int, CharacterInput> current = buffer[i];
+            // check to see if this input is interrupted and released
+            // if so, remove it from the inputs
+            if (current.right.IsInterrupted() && current.right.IsReleased())
+            {
+                if (debugMessages)
+                    Debug.Log("Removing interrupted input from buffer: " + control.ToString());
+                buffer.RemoveAt(i);
+                continue;
+            }
+
             // for only the latest value, if it's still held down
             if (i == buffer.Count - 1 && current.right.Phase == CharacterInput.InputStage.HELD)
             {
                 // update the current direction of the input to match the current directional
                 current.right.UpdateDirection(CachedDirectional.current);
             }
+
+            // increment the current frame held number
             if (current.right.TryIncrementFrames() && current.right.Phase == CharacterInput.InputStage.RELEASED && canExpire)
             {
+                // decrease the time left in buffer if it's held down and allowed to expire
                 current.left = current.left - 1;
             }
+
+            // if the current has expired, remove it
             if (current.left <= 0)
             {
                 if (debugMessages)

@@ -11,6 +11,13 @@ public class CharacterInput
         RELEASED
     }
 
+    public enum InputProcessStage
+    {
+        PENDING,
+        PROCESSING,
+        INTERRUPTED
+    }
+
     [Flags]
     public enum InputType
     {
@@ -190,6 +197,9 @@ public class CharacterInput
     [SerializeField] private InputStage phase;
     public InputStage Phase { get { return phase; } private set { phase = value; } }
 
+    [SerializeField] private InputProcessStage processingStage = InputProcessStage.PENDING;
+    public InputProcessStage ProcessingStage { get { return processingStage; } set { processingStage = value; } }
+
     [SerializeField] private DirectedInput direction;
     public DirectedInput Direction { get { return direction; } private set { direction = value; } }
 
@@ -338,6 +348,21 @@ public class CharacterInput
     public bool IsReleased()
     {
         return Phase == InputStage.RELEASED;
+    }
+
+    public bool IsPending()
+    {
+        return ProcessingStage == InputProcessStage.PENDING;
+    }
+
+    public bool IsProcessing()
+    {
+        return ProcessingStage == InputProcessStage.PROCESSING;
+    }
+
+    public bool IsInterrupted()
+    {
+        return ProcessingStage == InputProcessStage.INTERRUPTED;
     }
 
     public bool IncrementFrames()

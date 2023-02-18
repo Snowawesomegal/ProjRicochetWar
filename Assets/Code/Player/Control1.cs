@@ -146,7 +146,25 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld())
         {
-            anim.SetBool("LightAttack", true);
+            anim.SetBool("FLightAttack", true);
+            clm.AddLocker(inAnim);
+        }
+    }
+
+    public void UpLightResponse(CharacterInput input)
+    {
+        if (input.IsHeld())
+        {
+            anim.SetBool("UpLightAttack", true);
+            clm.AddLocker(inAnim);
+        }
+    }
+
+    public void DownLightResponse(CharacterInput input)
+    {
+        if (input.IsHeld())
+        {
+            anim.SetBool("DownLightAttack", true);
             clm.AddLocker(inAnim);
         }
     }
@@ -220,14 +238,16 @@ public class Control1 : MonoBehaviour
             HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
         }
 
+
+
         ManageForces();
 
         void ManageForces()
         {
             if (clm.activeLockers.Contains(grounded))
             {
-                if ((Mathf.Sign(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x))
-                    || (pim.GetCurrentDirectional().current.x == 0)) //if grounded + not holding the direction of motion;
+                if (    pim.GetCurrentDirectional().current.x != Mathf.Sign(rb.velocity.x) ||  !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
+                    || (pim.GetCurrentDirectional().current.x == 0)) //if grounded/can't move/not holding the direction of motion;
                 {
                     if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
                     {

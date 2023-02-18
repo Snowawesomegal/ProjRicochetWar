@@ -58,8 +58,6 @@ public class ActivateHitbox : MonoBehaviour
     {
         Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
 
-        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
-
         foreach(KeyValuePair<GameObject, int> i in copyDict)
         {
             if (i.Value <= 0)

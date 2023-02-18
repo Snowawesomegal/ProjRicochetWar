@@ -7,6 +7,11 @@ public class MainMenu : MonoBehaviour
 {
     public void OpenScene(string name)
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(name));
+        SceneManager.LoadScene(name);
+    }
+
+    public void Close()
+    {
+        Application.Quit();
     }
 }

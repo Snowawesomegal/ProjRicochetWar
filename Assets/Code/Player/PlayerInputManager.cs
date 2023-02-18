@@ -52,19 +52,42 @@ public class PlayerInputManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        // update debug messages variable
         pib.debugMessages = inputBufferDebugMessages;
+        // cache the current directional input
         pib.CacheCurrentDirectional();
 
+        // iterate over each control in the priority list (in the priority order)
         foreach (ControlLock.Controls control in controlPriorityList)
         {
+            // try to get the buffer for each control (and check if buffer has any inputs)
             if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
             {
+                // check if the input is locked
                 bool canInput = CanInput(control, out string debugStr);
+                // run the maintenance method for the buffer (merging sequential inputs, removing expired and interrupted inputs)
                 pib.MaintainBuffer(buffer, control, canInput);
-                if (canInput && pib.GrabImmediateInput(buffer, out CharacterInput input))
+                // attempt to grab the earliest buffered input
+                if (pib.GrabImmediateInput(buffer, out CharacterInput input))
                 {
-                    inputEvents[control].Invoke(input);
-                    DebugAllowedInput(debugStr, input);
+                    // if the input is allowed and not interrupted
+                    if (canInput && !input.IsInterrupted())
+                    {
+                        // invoke the input event
+                        inputEvents[control].Invoke(input);
+                        // assign the input process stage to be processing
+                        input.ProcessingStage = CharacterInput.InputProcessStage.PROCESSING;
+                        DebugAllowedInput(debugStr, input);
+                    } else
+                    {
+                        // if it was processing before (and isn't directional, bc directionals can't be interrupted)
+                        if (input.IsProcessing() && input.CacheControl != ControlLock.DIRECTIONAL_CONTROLS)
+                        {
+                            // update the processing stage to be interrupted
+                            input.ProcessingStage = CharacterInput.InputProcessStage.INTERRUPTED;
+                        }
+                        DebugAllowedInput(debugStr, input);
+                    }
                 }
                 else
                     DebugAllowedInput(debugStr, null);
@@ -74,12 +97,13 @@ public class PlayerInputManager : MonoBehaviour
 
     private void AcceptBufferInput(ControlLock.Controls control, InputAction.CallbackContext ctxt)
     {
-        if (ctxt.started || ctxt.canceled) //ctxt.performed || 
+        // accept only start and canceled inputs (press and release)
+        if (ctxt.started || ctxt.canceled)
         {
             pib.AcceptInput(control, inputBufferDuration, ctxt);
             if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer))
             {
-                pib.CleanBuffer(buffer, control);
+                pib.CleanBuffer(buffer, control); // attempt to merge continuous inputs
             }
         }
     }

@@ -50,6 +50,8 @@ public class ActivateHitbox : MonoBehaviour
         }
         HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
 
+        HBInfo.active = true;
+
         Debug.Log("tobedisabled.add");
         toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
     }

@@ -16,6 +16,8 @@ public class Control1 : MonoBehaviour
     [SerializeField] float friction = 10;
     [SerializeField] float wallJumpVerticalOoOne = 0.5f;
 
+    List<Collision2D> triggersThisFrame;
+
     //speeds
     [SerializeField] float airSpeed = 10;
     [SerializeField] float airAccel = 10;
@@ -325,6 +327,8 @@ public class Control1 : MonoBehaviour
     {
         if (collision.TryGetComponent(out HitboxInfo HBInfo))
         {
+            
+
             if (HBInfo.owner != gameObject)
             {
                 Debug.Log("Touched collider with owner: " + HBInfo.owner.name);

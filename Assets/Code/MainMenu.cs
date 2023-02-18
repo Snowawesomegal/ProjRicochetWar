@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void OpenSettings()
+    public void OpenScene(string name)
     {
-        SceneManager.LoadScene("SettingsScreen");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(name));
     }
 }

@@ -80,8 +80,8 @@ public class PlayerInputManager : MonoBehaviour
                         DebugAllowedInput(debugStr, input);
                     } else
                     {
-                        // if it was processing before
-                        if (input.IsProcessing())
+                        // if it was processing before (and isn't directional, bc directionals can't be interrupted)
+                        if (input.IsProcessing() && input.CacheControl != ControlLock.DIRECTIONAL_CONTROLS)
                         {
                             // update the processing stage to be interrupted
                             input.ProcessingStage = CharacterInput.InputProcessStage.INTERRUPTED;

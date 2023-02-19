@@ -16,8 +16,6 @@ public class Control1 : MonoBehaviour
     [SerializeField] float friction = 10;
     [SerializeField] float wallJumpVerticalOoOne = 0.5f;
 
-    List<Collision2D> triggersThisFrame;
-
     //speeds
     [SerializeField] float airSpeed = 10;
     [SerializeField] float airAccel = 10;
@@ -37,6 +35,7 @@ public class Control1 : MonoBehaviour
     ControlLockManager clm;
     PlayerInputManager pim;
     ActivateHitbox ah;
+    HitboxInteractionManager him;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -73,6 +72,8 @@ public class Control1 : MonoBehaviour
         pim = GetComponent<PlayerInputManager>();
         clm = GetComponent<ControlLockManager>();
         ah = GetComponent<ActivateHitbox>();
+
+        him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
 
@@ -274,23 +275,23 @@ public class Control1 : MonoBehaviour
         }
     }
 
-    void Hit(Collider2D collider, bool enterOrExitHitstun = true)
+    public void Hit(Collider2D collider, bool enterOrExitHitstun = true) // add to calculation for direction
     {
         if (enterOrExitHitstun)
         {
             clm.AddLocker(hitstun);
             rb.sharedMaterial = bouncy;
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
-            Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
 
             Vector2 angleOfForce;
-            angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle) * Mathf.Sign(objectVelocity.x));
+            angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle));
             if (hi.facingRight)
             {
                 angleOfForce.x *= -1;
             }
             if (!hi.angleIndependentOfMovement)
             {
+                Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
                 angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
             }
             else
@@ -325,14 +326,15 @@ public class Control1 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out HitboxInfo HBInfo))
+        if (collision.TryGetComponent(out HitboxInfo _))
         {
-            
-
-            if (HBInfo.owner != gameObject)
+            if (!him.triggersThisFrame.Contains(collision))
             {
-                Debug.Log("Touched collider with owner: " + HBInfo.owner.name);
-                Hit(collision);
+                him.triggersThisFrame.Add(collision);
+            }
+            if (!him.triggersThisFrame.Contains(bc))
+            {
+                him.triggersThisFrame.Add(bc);
             }
         }
     }

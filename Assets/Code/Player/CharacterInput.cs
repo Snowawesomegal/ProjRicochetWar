@@ -429,5 +429,10 @@ public class CharacterInput
         CharacterInput rightVal = current.right.CombineWith(next.right);
         return new Pair<int, CharacterInput>(leftVal, rightVal);
     }
+
+    public override string ToString()
+    {
+        return "CharacterInput: [control=" + cacheControl + "], [direction=" + Direction.current + "], [phase=" + Phase + "], [processStage=" + processingStage + "]";
+    }
         
 }

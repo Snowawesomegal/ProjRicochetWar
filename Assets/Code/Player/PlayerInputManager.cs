@@ -12,6 +12,32 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
 
+    [SerializeField] StandardControlLocker testLock;
+    int addedLock = 0;
+    [SerializeField] int testLockDuration = 10;
+    private void AddLock()
+    {
+        if (addedLock <= 0)
+        {
+            controlLockManager.AddLocker(testLock);
+            addedLock = testLockDuration;
+        } else
+        {
+            addedLock = testLockDuration;
+        }
+    }
+    private void RemoveLock()
+    {
+        if (addedLock > 0)
+        {
+            addedLock--;
+            if (addedLock == 0)
+            {
+                controlLockManager.RemoveLocker(testLock);
+            }
+        }
+    }
+
     //[SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
     [SerializeField] Dictionary<ControlLock.Controls, Action<CharacterInput>> inputEvents = new Dictionary<ControlLock.Controls, Action<CharacterInput>>();
     ControlLock.Controls[] controlPriorityList = { 
@@ -50,6 +76,7 @@ public class PlayerInputManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        RemoveLock();
         // update debug messages variable
         pib.debugMessages = inputBufferDebugMessages;
         // cache the current directional input
@@ -66,18 +93,18 @@ public class PlayerInputManager : MonoBehaviour
                 // check if the input is locked
                 bool canInput = CanInput(control, out string debugStr);
                 // run the maintenance method for the buffer (merging sequential inputs, removing expired and interrupted inputs)
-                pib.MaintainBuffer(buffer, control, canInput);
+                pib.MaintainBuffer(buffer, control, true);
                 // attempt to grab the earliest buffered input
-                if (pib.GrabImmediateInput(buffer, out CharacterInput input))
+                if (pib.PeekNextInput(buffer, out CharacterInput input))
                 {
                     // if the input is allowed and not interrupted
-                    if (canInput && !input.IsInterrupted())
+                    if (canInput && !input.IsInterrupted() && pib.TryPopNextInput(buffer, out input))
                     {
                         // invoke the input event
                         inputEvents[control].Invoke(input);
                         // assign the input process stage to be processing
                         input.ProcessingStage = CharacterInput.InputProcessStage.PROCESSING;
-                        DebugAllowedInput(debugStr, input);
+                        DebugAllowedInput(debugStr + ", marking input as processed, " + input.ToString(), input);
                     } else
                     {
                         // if it was processing before (and isn't directional, bc directionals can't be interrupted)
@@ -86,7 +113,7 @@ public class PlayerInputManager : MonoBehaviour
                             // update the processing stage to be interrupted
                             input.ProcessingStage = CharacterInput.InputProcessStage.INTERRUPTED;
                         }
-                        DebugAllowedInput(debugStr, input);
+                        DebugAllowedInput(debugStr + ", " + input.ToString(), input);
                     }
                 }
                 else
@@ -246,6 +273,29 @@ public class PlayerInputManager : MonoBehaviour
         if (CharacterInput.IsDirectionalControl(control))
             control = ControlLock.DIRECTIONAL_CONTROLS;
         return pib.TryGetCachedInput(control, out input);
+    }
+
+    public bool BufferInputExists(ControlLock.Controls control)
+    {
+        if (CharacterInput.IsDirectionalControl(control))
+            control = ControlLock.DIRECTIONAL_CONTROLS;
+        if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool BufferInputExists(ControlLock.Controls control, out CharacterInput input)
+    {
+        if (CharacterInput.IsDirectionalControl(control))
+            control = ControlLock.DIRECTIONAL_CONTROLS;
+        if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer) && buffer.Count > 0)
+        {
+            input = buffer[0].right;
+            return true;
+        }
+        input = null;
+        return false;
     }
 
     private void DebugAllowedInput(string debugStart, CharacterInput input)

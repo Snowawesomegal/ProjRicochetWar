@@ -163,12 +163,16 @@ public class PlayerInputBuffer
 
     public void CleanBuffer(List<Pair<int, CharacterInput>> buffer, ControlLock.Controls control)
     {
+        if (debugMessages)
+            Debug.Log("Start - cleaning buffer. Current buffer size: " + buffer.Count);
         for (int i = 0; i < buffer.Count - 1; i++)
         {
             Pair<int, CharacterInput> current = buffer[i];
             Pair<int, CharacterInput> next = buffer[i + 1];
             if (current.right.CanCombineInputs(next.right))
             {
+                if (debugMessages)
+                    Debug.Log("Merging " + current.right.ToString() + " with " + next.right.ToString());
                 Pair<int, CharacterInput> combined = CharacterInput.CombineInputPair(current, next);
                 buffer[i] = combined;
                 buffer.RemoveAt(i + 1);
@@ -176,6 +180,8 @@ public class PlayerInputBuffer
                     Debug.Log("Combining inputs in buffer: " + control.ToString() + ", new Count: " + buffer.Count);
             }
         }
+        if (debugMessages)
+            Debug.Log("Done - cleaning buffer. Current buffer size: " + buffer.Count);
     }
 
     public void MaintainBuffer(List<Pair<int, CharacterInput>> buffer, ControlLock.Controls control, bool canExpire)
@@ -218,7 +224,7 @@ public class PlayerInputBuffer
         }
     }
 
-    public bool GrabImmediateInput(List<Pair<int, CharacterInput>> buffer, out CharacterInput input)
+    public bool TryPopNextInput(List<Pair<int, CharacterInput>> buffer, out CharacterInput input)
     {
         if (buffer.Count > 0)
         {
@@ -227,8 +233,19 @@ public class PlayerInputBuffer
             {
                 buffer.RemoveAt(0);
                 if (debugMessages)
-                    Debug.Log("Popped released input from buffer.");
+                    Debug.Log("Popped released input from buffer. Current buffer size: " + buffer.Count);
             }
+            return true;
+        }
+        input = null;
+        return false;
+    }
+
+    public bool PeekNextInput(List<Pair<int, CharacterInput>> buffer, out CharacterInput input)
+    {
+        if (buffer.Count > 0)
+        {
+            input = buffer[0].right;
             return true;
         }
         input = null;

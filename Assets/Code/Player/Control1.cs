@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
@@ -27,6 +28,10 @@ public class Control1 : MonoBehaviour
     [SerializeField] float shorthopWindow = 3;
     [SerializeField] float walljumpShorthopWindow = 3;
 
+    //resources
+    [SerializeField] float maxHealth = 100;
+    [SerializeField] float currentHealth;
+
     //components
     Rigidbody2D rb;
     Collider2D bc;
@@ -36,6 +41,7 @@ public class Control1 : MonoBehaviour
     PlayerInputManager pim;
     ActivateHitbox ah;
     HitboxInteractionManager him;
+    Slider healthBar;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -72,10 +78,14 @@ public class Control1 : MonoBehaviour
         pim = GetComponent<PlayerInputManager>();
         clm = GetComponent<ControlLockManager>();
         ah = GetComponent<ActivateHitbox>();
+        healthBar = ((Canvas)GameObject.FindAnyObjectByType(typeof(Canvas))).transform.GetChild(1).GetComponent<Slider>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
+
+        currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
 
         friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
     }
@@ -87,6 +97,7 @@ public class Control1 : MonoBehaviour
 
     public void HorizontalResponse(CharacterInput input)
     {
+        Debug.Log("here");
         if (clm.activeLockers.Contains(wallcling))
         {
             if (input.Direction.current.x != collidedWallSide)
@@ -98,6 +109,7 @@ public class Control1 : MonoBehaviour
         {
             if (clm.activeLockers.Contains(grounded))
             {
+                Debug.Log(input.Direction.current.x);
                 rb.AddForce(Vector2.right * input.Direction.current.x * groundAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
                 //above line caps horizontal speed at groundspeed every frame
@@ -241,8 +253,16 @@ public class Control1 : MonoBehaviour
             HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
         }
 
+        if (healthBar.value != currentHealth)
+        {
+            healthBar.value -= (healthBar.value - currentHealth)/10;
 
-
+            if (healthBar.value - currentHealth < 0.5f)
+            {
+                healthBar.value = currentHealth;
+            }
+        }
+        
         ManageForces();
 
         void ManageForces()
@@ -282,6 +302,8 @@ public class Control1 : MonoBehaviour
             clm.AddLocker(hitstun);
             rb.sharedMaterial = bouncy;
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+
+            currentHealth -= hi.damage;
 
             Vector2 angleOfForce;
             angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle));

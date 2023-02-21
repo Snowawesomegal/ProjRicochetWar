@@ -98,7 +98,7 @@ public class PlayerInputManager : MonoBehaviour
     private void AcceptBufferInput(ControlLock.Controls control, InputAction.CallbackContext ctxt)
     {
         // accept only start and canceled inputs (press and release)
-        if (ctxt.started || ctxt.canceled)
+        if (ctxt.started || ctxt.canceled || ctxt.performed)
         {
             pib.AcceptInput(control, inputBufferDuration, ctxt);
             if (pib.TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer))
@@ -154,6 +154,7 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.UP:
                 if (debugMessages)
                     Debug.Log("Attacking upwards");
+                c1.UpLightResponse(input);
                 // call up attack in player controller
                 break;
             case CharacterInput.CardinalDirection.DOWN:

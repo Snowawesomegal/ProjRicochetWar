@@ -55,6 +55,7 @@ public class Control1 : MonoBehaviour
     public StandardControlLocker hitstun;
     public StandardControlLocker inAnim;
     public StandardControlLocker wallcling;
+    public StandardControlLocker onlyAttack;
 
     Collider2D wallTouching;
     bool touchingWall = false;
@@ -97,10 +98,9 @@ public class Control1 : MonoBehaviour
 
     public void HorizontalResponse(CharacterInput input)
     {
-        Debug.Log("here");
         if (clm.activeLockers.Contains(wallcling))
         {
-            if (input.Direction.current.x != collidedWallSide)
+            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
             {
                 clm.RemoveLocker(wallcling);
             }
@@ -109,8 +109,8 @@ public class Control1 : MonoBehaviour
         {
             if (clm.activeLockers.Contains(grounded))
             {
-                Debug.Log(input.Direction.current.x);
-                rb.AddForce(Vector2.right * input.Direction.current.x * groundAccel);
+                Debug.Log(Mathf.RoundToInt(input.Direction.current.x));
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
                 //above line caps horizontal speed at groundspeed every frame
                 //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
@@ -129,17 +129,17 @@ public class Control1 : MonoBehaviour
                     }
                 }
 
-                rb.AddForce(Vector2.right * input.Direction.current.x * airAccel);
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
                 //same as grounded
             }
 
-            if (input.Direction.current.x > 0)
+            if (Mathf.Round(input.Direction.current.x) > 0)
             {
                 facingRight = true;
                 sr.flipX = false;
             }
-            else if (input.Direction.current.x < 0)
+            else if (Mathf.Round(input.Direction.current.x) < 0)
             {
                 facingRight = false;
                 sr.flipX = true;
@@ -161,6 +161,8 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld())
         {
+            facingRight = input.Direction.cardinalInput == CharacterInput.CardinalDirection.RIGHT;
+            sr.flipX = !facingRight;
             anim.SetBool("FLightAttack", true);
             clm.AddLocker(inAnim);
         }
@@ -269,8 +271,8 @@ public class Control1 : MonoBehaviour
         {
             if (clm.activeLockers.Contains(grounded))
             {
-                if (    pim.GetCurrentDirectional().current.x != Mathf.Sign(rb.velocity.x) ||  !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
-                    || (pim.GetCurrentDirectional().current.x == 0)) //if grounded/can't move/not holding the direction of motion;
+                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) ||  !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
+                    || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded/can't move/not holding the direction of motion;
                 {
                     if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
                     {

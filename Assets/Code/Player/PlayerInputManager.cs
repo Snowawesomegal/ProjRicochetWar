@@ -149,6 +149,7 @@ public class PlayerInputManager : MonoBehaviour
     public void InputAttack(CharacterInput input)
     {
         CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
+
         switch (snappedDirection)
         {
             case CharacterInput.CardinalDirection.UP:

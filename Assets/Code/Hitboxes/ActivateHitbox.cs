@@ -76,7 +76,9 @@ public class ActivateHitbox : MonoBehaviour
 
     public void StopAnimation(string boolToSetFalse)
     {
+        Debug.Log("here");
         clm.RemoveLocker(c1.inAnim);
+        clm.RemoveLocker(c1.onlyAttack);
         anim.SetBool(boolToSetFalse, false);
     }
 }

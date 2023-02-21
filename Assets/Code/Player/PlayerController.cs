@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Debug.Log("here");
+        // Debug.Log("here");
         rb.velocity = new Vector2(moving, 0);
     }
 

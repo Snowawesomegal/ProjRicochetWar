@@ -5,14 +5,12 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(ControlLockManager), typeof(PlayerController))]
+[RequireComponent(typeof(ControlLockManager), typeof(Control1))]
 public class PlayerInputManager : MonoBehaviour
 {
-    [SerializeField] PlayerController playerController;
+    [SerializeField] Control1 playerController;
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
-
-    [SerializeField] Control1 c1;
 
     //[SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
     [SerializeField] Dictionary<ControlLock.Controls, Action<CharacterInput>> inputEvents = new Dictionary<ControlLock.Controls, Action<CharacterInput>>();
@@ -34,7 +32,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (playerController == null)
         {
-            playerController = GetComponent<PlayerController>();
+            playerController = GetComponent<Control1>();
         }
         if (controlLockManager == null)
         {
@@ -56,6 +54,8 @@ public class PlayerInputManager : MonoBehaviour
         pib.debugMessages = inputBufferDebugMessages;
         // cache the current directional input
         pib.CacheCurrentDirectional();
+
+        //Debug.Log("Current directional: " + pib.CachedDirectional.current);
 
         // iterate over each control in the priority list (in the priority order)
         foreach (ControlLock.Controls control in controlPriorityList)
@@ -115,8 +115,8 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDirectional(CharacterInput input)
     {
-        c1.HorizontalResponse(input);
-        c1.VerticalResponse(input);
+        playerController.HorizontalResponse(input);
+        playerController.VerticalResponse(input);
     }
 
     public void OnDash(InputAction.CallbackContext ctxt)
@@ -137,7 +137,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InputJump(CharacterInput input)
     {
-        c1.JumpResponse(input);
+        playerController.JumpResponse(input);
     }
 
     public void OnAttack(InputAction.CallbackContext ctxt)
@@ -154,7 +154,7 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.UP:
                 if (debugMessages)
                     Debug.Log("Attacking upwards");
-                c1.UpLightResponse(input);
+                playerController.UpLightResponse(input);
                 // call up attack in player controller
                 break;
             case CharacterInput.CardinalDirection.DOWN:
@@ -167,7 +167,7 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.NONE:
                 if (debugMessages)
                     Debug.Log("Attacking sideways " + input.Phase);
-                    c1.FLightResponse(input);
+                    playerController.FLightResponse(input);
                 break;
             default:
                 Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());

@@ -411,7 +411,7 @@ public class CharacterInput
 
         // update the direction and phase of this input to match the recent update
         Phase = input.Phase;
-        Direction = direction;
+        Direction = dir;
 
         /*
         // fix time variables to match this object's time variables

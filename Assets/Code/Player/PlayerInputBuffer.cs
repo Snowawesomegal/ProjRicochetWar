@@ -100,10 +100,6 @@ public class PlayerInputBuffer
 
     public bool AcceptInput(ControlLock.Controls control, int bufferTime, InputAction.CallbackContext ctxt)
     {
-        return AcceptInput(control, bufferTime, ctxt, false);
-    }
-    public bool AcceptInput(ControlLock.Controls control, int bufferTime, InputAction.CallbackContext ctxt, bool retrying)
-    {
         if (TryGetBuffer(control, out List<Pair<int, CharacterInput>> buffer))
         {
             Vector2 direction;
@@ -125,11 +121,8 @@ public class PlayerInputBuffer
             CharacterInput characterInput = new CharacterInput(control, inputSpecificControl, phase, direction);
             buffer.Add(new Pair<int, CharacterInput>(bufferTime, characterInput));
             if (debugMessages)
-                Debug.Log("Accepted input to buffer: " + control.ToString() + " with phase: " + characterInput.Phase.ToString());
+                Debug.Log("Accepted input to buffer: " + control.ToString() + " with phase: " + characterInput.Phase.ToString() + " and direction: " + direction);
             return true;
-        } else if (!retrying)
-        {
-            AcceptInput(control, bufferTime, ctxt, true);
         }
         return false;
     }

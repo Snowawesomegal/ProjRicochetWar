@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 74bdc858abb584bf8a8ec13b0b9c838a
+guid: c2dba3fdb84364faf878f5334ba40fec
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GhostFLight_0
+      name: GhostFLightHit1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,140 +113,140 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e01548db8846443e93f69db334b4090
-      internalID: 1879490958
+      spriteID: 7d8dc03906a464558b740800a7bfe4cf
+      internalID: 382560689
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GhostFLight_1
+      name: GhostFLightHit1_1
       rect:
         serializedVersion: 2
         x: 48
         y: 96
         width: 48
         height: 48
-      alignment: 9
-      pivot: {x: 0.45, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41e91cc787ae849ba851edb6043b28d8
-      internalID: 1640276558
+      spriteID: 74db9bc26ccf74a518737d2c022c3a31
+      internalID: -1380396296
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GhostFLight_2
+      name: GhostFLightHit1_2
       rect:
         serializedVersion: 2
         x: 96
         y: 96
         width: 48
         height: 48
-      alignment: 9
-      pivot: {x: 0.45, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6334b7c593cf49da8bf21246f771f3d
-      internalID: -567785179
+      spriteID: 2c807d49c66fb42db85534b92d289ef3
+      internalID: -1110087837
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GhostFLight_3
+      name: GhostFLightHit1_3
       rect:
         serializedVersion: 2
         x: 0
         y: 48
         width: 48
         height: 48
-      alignment: 9
-      pivot: {x: 0.45, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 755be52f217f8405c8a7618f0b96aa40
-      internalID: -767707227
+      spriteID: f032cc9d6d5a44a1990793b1d27cfeab
+      internalID: 558954437
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GhostFLight_4
+      name: GhostFLightHit1_4
       rect:
         serializedVersion: 2
         x: 48
         y: 48
         width: 48
         height: 48
-      alignment: 9
-      pivot: {x: 0.45, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40715cf92c26f47dfb961848ce4ca3b5
-      internalID: 1848582305
+      spriteID: 2788eab1324784c49923c6f07c701831
+      internalID: 1836654747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GhostFLight_5
+      name: GhostFLightHit1_5
       rect:
         serializedVersion: 2
         x: 96
         y: 48
         width: 48
         height: 48
-      alignment: 9
-      pivot: {x: 0.45, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d110ffd0087d494bbefaa859522067d
-      internalID: -552250645
+      spriteID: 4884b277454ba4c3f9e6d330583cb11d
+      internalID: -1005043722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GhostFLight_6
+      name: GhostFLightHit1_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 48
         height: 48
-      alignment: 9
-      pivot: {x: 0.45, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d7384bd727704ac9ab2f9a9b266c955
-      internalID: -210146852
+      spriteID: ca32302035ddf4a4d939dff7f3ffcf1b
+      internalID: -1257003495
       vertices: []
       indices: 
       edges: []
@@ -262,13 +262,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      GhostFLight_3: -767707227
-      GhostFLight_5: -552250645
-      GhostFLight_1: 1640276558
-      GhostFLight_6: -210146852
-      GhostFLight_4: 1848582305
-      GhostFLight_2: -567785179
-      GhostFLight_0: 1879490958
+      GhostFLightHit1_3: 558954437
+      GhostFLightHit1_5: -1005043722
+      GhostFLightHit1_0: 382560689
+      GhostFLightHit1_4: 1836654747
+      GhostFLightHit1_6: -1257003495
+      GhostFLightHit1_1: -1380396296
+      GhostFLightHit1_2: -1110087837
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

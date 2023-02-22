@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GhostFLight
+  m_Name: GhostFLightHit2
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -86,7 +86,7 @@ AnimationClip:
   m_Events:
   - time: 0.2
     functionName: EnableHitbox
-    data: FLightAttack
+    data: FLightAttackHit2
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

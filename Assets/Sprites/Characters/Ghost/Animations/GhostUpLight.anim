@@ -30,25 +30,7 @@ AnimationClip:
     - time: 0.4
       value: {fileID: 518190471, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
     - time: 0.5
-      value: {fileID: -1421568476, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 0.6
-      value: {fileID: 892573881, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 0.7
-      value: {fileID: 1301494039, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 0.8
-      value: {fileID: 224633655, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 0.9
-      value: {fileID: -629923208, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 1
-      value: {fileID: -779662091, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 1.1
-      value: {fileID: -1741582667, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 1.2
-      value: {fileID: -1036901553, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 1.3
-      value: {fileID: -1479778662, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - time: 1.4
-      value: {fileID: -1479778662, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
+      value: {fileID: 518190471, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -73,22 +55,13 @@ AnimationClip:
     - {fileID: 980065510, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
     - {fileID: -612969343, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
     - {fileID: 518190471, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -1421568476, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: 892573881, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: 1301494039, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: 224633655, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -629923208, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -779662091, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -1741582667, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -1036901553, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -1479778662, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
-    - {fileID: -1479778662, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
+    - {fileID: 518190471, guid: 9de8e342486c243e686ef4bdc1ef68ce, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.4166666
+    m_StopTime: 0.51666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -108,7 +81,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1.4
+  - time: 0.2
+    functionName: EnableHitbox
+    data: UpLightAttack1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
     functionName: StopAnimation
     data: UpLightAttack
     objectReferenceParameter: {fileID: 0}

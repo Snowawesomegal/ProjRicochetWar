@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 290150013}
   - component: {fileID: 290150014}
   m_Layer: 0
-  m_Name: FLightAttack
+  m_Name: FLightAttackHit2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,12 +561,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290150011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1695154402}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &290150013
 CapsuleCollider2D:
@@ -581,8 +581,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3, y: 2.4}
+  m_Offset: {x: 0.0000000047058393, y: 0.039475445}
+  m_Size: {x: 2.749733, y: 2.478954}
   m_Direction: 1
 --- !u!114 &290150014
 MonoBehaviour:
@@ -604,6 +604,75 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   activeHitbox: 1
+--- !u!1 &320657881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 320657882}
+  - component: {fileID: 320657884}
+  - component: {fileID: 320657883}
+  m_Layer: 0
+  m_Name: FLightAttackHit1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &320657882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320657881}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695154402}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &320657883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320657881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knockback: 100
+  angleIndependentOfMovement: 1
+  angle: 0
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  activeHitbox: 1
+--- !u!70 &320657884
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320657881}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.19465256}
+  m_Size: {x: 1.7882371, y: 2.7893095}
+  m_Direction: 0
 --- !u!1 &405526796
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +858,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &522320801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522320802}
+  - component: {fileID: 522320804}
+  - component: {fileID: 522320803}
+  m_Layer: 0
+  m_Name: UpLightAttack1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &522320802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522320801}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.14, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695154402}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522320803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522320801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knockback: 100
+  angleIndependentOfMovement: 1
+  angle: 0
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  activeHitbox: 1
+--- !u!70 &522320804
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522320801}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.21857095}
+  m_Size: {x: 4.034669, y: 2.9053376}
+  m_Direction: 1
 --- !u!1 &660009337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,10 +1200,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 1.4211287
-    width: 0.9297912
-    height: 1.1966352
+    x: 0.1315623
+    y: 0
+    width: 1.7429194
+    height: 2.243126
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1326,11 +1464,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695154400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 320657882}
   - {fileID: 290150012}
+  - {fileID: 522320802}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1361,12 +1501,13 @@ MonoBehaviour:
   currentHealth: 0
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
-  bufferLength: 5
+  bufferLength: 30
   grounded: {fileID: 11400000, guid: 748e80c1e61624f2d9238535930e41fc, type: 2}
   airborne: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
   hitstun: {fileID: 11400000, guid: 2836bc8b5de41ef418c0cb92db0922e5, type: 2}
   inAnim: {fileID: 11400000, guid: 6e871cd89094bde4a8fd0774148fe9cb, type: 2}
   wallcling: {fileID: 11400000, guid: 9de46684201334b0bb1963733b8bc2b7, type: 2}
+  onlyAttack: {fileID: 11400000, guid: 468f03c3a8f114abc91524bfd93b05dc, type: 2}
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
   facingRight: 1
@@ -1387,7 +1528,7 @@ BoxCollider2D:
   m_Offset: {x: -0.003477931, y: -0.04913211}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.45, y: 0.5}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4.8, y: 4.8}
     newSize: {x: 0.24, y: 0.24}
     adaptiveTilingThreshold: 0.5
@@ -1476,10 +1617,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbccccb63fca97418e8dba5bc8d2478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  playerController: {fileID: 1695154403}
   controlLockManager: {fileID: 1695154411}
   debugMessages: 0
-  c1: {fileID: 1695154403}
+  testLock: {fileID: 0}
+  testLockDuration: 10
   inputBufferDuration: 10
   inputBufferDebugMessages: 0
   playerVerticalAttackThreshold: 70

@@ -159,7 +159,7 @@ public class Control1 : MonoBehaviour
 
     public void FLightResponse(CharacterInput input)
     {
-        if (input.IsHeld())
+        if (input.IsHeld() || input.IsPending())
         {
             facingRight = input.Direction.cardinalInput == CharacterInput.CardinalDirection.RIGHT;
             sr.flipX = !facingRight;
@@ -170,7 +170,7 @@ public class Control1 : MonoBehaviour
 
     public void UpLightResponse(CharacterInput input)
     {
-        if (input.IsHeld())
+        if (input.IsHeld() || input.IsPending())
         {
             anim.SetBool("UpLightAttack", true);
             clm.AddLocker(inAnim);
@@ -179,7 +179,7 @@ public class Control1 : MonoBehaviour
 
     public void DownLightResponse(CharacterInput input)
     {
-        if (input.IsHeld())
+        if (input.IsHeld() || input.IsPending())
         {
             anim.SetBool("DownLightAttack", true);
             clm.AddLocker(inAnim);
@@ -199,6 +199,14 @@ public class Control1 : MonoBehaviour
         {
             clm.AddLocker(inAnim);
             anim.SetBool("WallJumpSquat", true);
+        }
+    }
+
+    public void SwitchIfAttacking(string newAnimBool)
+    {
+        if (pim.BufferInputExists(ControlLock.Controls.ATTACK))
+        {
+            anim.SetBool(newAnimBool, true);
         }
     }
 

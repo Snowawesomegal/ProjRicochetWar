@@ -208,7 +208,8 @@ public class PlayerInputBuffer
             }
 
             // increment the current frame held number
-            if ((current.right.TryIncrementFrames() || current.right.IsReleased()) && canExpire)
+            bool incFrames = current.right.TryIncrementFrames();
+            if (current.right.IsReleased() && canExpire)
             {
                 // decrease the time left in buffer if it's held down and allowed to expire
                 current.left = current.left - 1;

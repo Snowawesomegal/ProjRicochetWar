@@ -16,6 +16,8 @@ public class Control1 : MonoBehaviour
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
     [SerializeField] float wallJumpVerticalOoOne = 0.5f;
+    public bool ignoreGravity = false;
+    public bool intangible = false;
 
     //speeds
     [SerializeField] float airSpeed = 10;
@@ -31,6 +33,9 @@ public class Control1 : MonoBehaviour
     //resources
     [SerializeField] float maxHealth = 100;
     [SerializeField] float currentHealth;
+    [SerializeField] float maxDashCharge = 100;
+    [SerializeField] float dashCharge;
+    [SerializeField] float dashForce = 10;
 
     //components
     Rigidbody2D rb;
@@ -42,6 +47,7 @@ public class Control1 : MonoBehaviour
     ActivateHitbox ah;
     HitboxInteractionManager him;
     Slider healthBar;
+    ParticleSystem trailps;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -70,6 +76,9 @@ public class Control1 : MonoBehaviour
     //objects
     public GameObject ball;
 
+    //frame counter
+    public int frame = 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -80,6 +89,7 @@ public class Control1 : MonoBehaviour
         clm = GetComponent<ControlLockManager>();
         ah = GetComponent<ActivateHitbox>();
         healthBar = ((Canvas)GameObject.FindAnyObjectByType(typeof(Canvas))).transform.GetChild(1).GetComponent<Slider>();
+        trailps = GetComponent<ParticleSystem>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -87,6 +97,8 @@ public class Control1 : MonoBehaviour
 
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
+        dashCharge = maxDashCharge;
+        //_________
 
         friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
     }
@@ -109,7 +121,6 @@ public class Control1 : MonoBehaviour
         {
             if (clm.activeLockers.Contains(grounded))
             {
-                Debug.Log(Mathf.RoundToInt(input.Direction.current.x));
                 rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel);
                 rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
                 //above line caps horizontal speed at groundspeed every frame
@@ -124,8 +135,6 @@ public class Control1 : MonoBehaviour
                     {
                         clm.AddLocker(wallcling);
                         rb.velocity = Vector2.zero;
-                        Debug.Log("Velocity: " + rb.velocity + ", touchingWall: " +
-                            touchingWall + ", currentdirinput" + pim.GetCurrentDirectional().current.x + ", collidedWallSide " + collidedWallSide);
                     }
                 }
 
@@ -134,16 +143,7 @@ public class Control1 : MonoBehaviour
                 //same as grounded
             }
 
-            if (Mathf.Round(input.Direction.current.x) > 0)
-            {
-                facingRight = true;
-                sr.flipX = false;
-            }
-            else if (Mathf.Round(input.Direction.current.x) < 0)
-            {
-                facingRight = false;
-                sr.flipX = true;
-            }
+            Flip(input);
         }
     }
 
@@ -157,12 +157,33 @@ public class Control1 : MonoBehaviour
         framesInHitstun += 1;
     }
 
+    public void DashResponse(CharacterInput input)
+    {
+        if (dashCharge >= maxDashCharge)
+        {
+            clm.AddLocker(inAnim);
+            anim.SetBool("Dash", true);
+
+            rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            // sound effect placeholder
+        }
+    }
+
+    public void Dash()
+    {
+        rb.AddForce(pim.GetCurrentDirectional().current * dashForce);
+        StartStopTrail(1);
+    }
+
     public void FLightResponse(CharacterInput input)
     {
         if (input.IsHeld() || input.IsPending())
         {
-            facingRight = input.Direction.cardinalInput == CharacterInput.CardinalDirection.RIGHT;
-            sr.flipX = !facingRight;
+            Flip(input);
+
             anim.SetBool("FLightAttack", true);
             clm.AddLocker(inAnim);
         }
@@ -202,12 +223,46 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    public void SlowSpeed(float magnitude)
+    {
+        float relevantSpeed = clm.activeLockers.Contains(grounded) ? groundSpeed : airSpeed / 5;
+
+        if (Mathf.Abs(rb.velocity.x) > relevantSpeed)
+        {
+
+            rb.AddForce(new Vector2 (rb.velocity.x / -magnitude, 0));
+        }
+        if (Mathf.Abs(rb.velocity.y) > relevantSpeed)
+        {
+            Debug.Log("applied force: " + new Vector2(rb.velocity.y / -magnitude, 0));
+            rb.AddForce(new Vector2 (0, rb.velocity.y / -magnitude));
+        }
+
+
+    }
+
     public void SwitchIfAttacking(string newAnimBool)
     {
         if (pim.BufferInputExists(ControlLock.Controls.ATTACK))
         {
             anim.SetBool(newAnimBool, true);
         }
+    }
+
+    void Flip(CharacterInput input)
+    {
+        if (Mathf.Round(input.Direction.current.x) > 0)
+        {
+            facingRight = true;
+            sr.flipX = false;
+        }
+        else if (Mathf.Round(input.Direction.current.x) < 0)
+        {
+            facingRight = false;
+            sr.flipX = true;
+        }
+
+        bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
     }
 
     public void ApplyWallJumpForce() // called by walljump animation
@@ -250,8 +305,37 @@ public class Control1 : MonoBehaviour
         clm.RemoveLocker(grounded);
     }
 
+    //<Summary>
+    //Returns toChange incremented toward goal by maxDelta, after scaling to move farther at greater differences relative to degree.
+    //</Summary>
+    float MoveTowardNumber(float toChange, float goal, float delta, float degree = 100)
+    {
+        float difference = goal - toChange;
+        float scaler = difference / degree;
+        float changeAmount = delta * scaler;
+        float output = toChange + changeAmount;
+
+        if (Mathf.Abs(difference) < Mathf.Abs(changeAmount))
+        {
+            Debug.Log("Difference (" + difference + ") < change amount (" + changeAmount + "), so will be changed by " + goal);
+            return goal;
+        }
+
+        return output;
+    }
+
+    public void StartStopTrail(int startstop)
+    {
+        if (startstop == 1) { trailps.Play(); }
+        else { trailps.Stop(); }
+
+    }
+
     private void FixedUpdate()
     {
+        frame += 1;
+        if (frame > 60) { frame = 1; }
+
         if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this
             // The reason this is called at all is because stopping all momentum on the frame I grab the wall sometimes just doesn't work
         {
@@ -294,7 +378,7 @@ public class Control1 : MonoBehaviour
             }
             else
             {
-                if (!clm.activeLockers.Contains(wallcling))
+                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity)
                 {
                     rb.AddForce(Vector2.down * fallAccel);
                     rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));

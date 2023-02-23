@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class ActivateHitbox : MonoBehaviour
 {
@@ -52,7 +53,6 @@ public class ActivateHitbox : MonoBehaviour
 
         HBInfo.activeHitbox = true;
 
-        Debug.Log("tobedisabled.add");
         toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
     }
 
@@ -76,6 +76,8 @@ public class ActivateHitbox : MonoBehaviour
 
     public void StopAnimation(string boolToSetFalse)
     {
+        Debug.Log("Freed controls: " + c1.frame);
+
         clm.RemoveLocker(c1.inAnim);
         anim.SetBool(boolToSetFalse, false);
         anim.SetBool("ContinueAttack", false);

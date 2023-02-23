@@ -153,7 +153,8 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDash(CharacterInput input)
     {
-      //dash
+        Debug.Log("dashinput");
+        playerController.DashResponse(input);
     }
 
     public void OnJump(InputAction.CallbackContext ctxt)

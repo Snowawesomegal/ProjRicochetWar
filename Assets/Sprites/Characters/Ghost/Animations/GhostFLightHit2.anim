@@ -91,7 +91,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
+  - time: 0.6166667
     functionName: StopAnimation
     data: FLightAttack
     objectReferenceParameter: {fileID: 0}

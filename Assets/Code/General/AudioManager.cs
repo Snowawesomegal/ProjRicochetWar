@@ -37,8 +37,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    [SerializeField] public Sound[] sounds;
-    [SerializeField] public Sound[] music;
+    [SerializeField] public List<Sound> sounds;
+    [SerializeField] public List<Sound> music;
 
     [HideInInspector] public Dictionary<string, Sound> soundMap;
     [HideInInspector] public Dictionary<string, Sound> musicMap;
@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
         // prepare music source and map
         musicMap = new Dictionary<string, Sound>();
         musicSource = soundSourceTarget.AddComponent<AudioSource>();
-        if (music.Length > 0)
+        if (music.Count > 0)
             music[0].EstablishSource(musicSource, true);
         foreach (Sound s in music)
         {

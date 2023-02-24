@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class AudioManager : MonoBehaviour
 {
     // Singleton design pattern - only 1 per scene
-    private AudioManager instance;
-    public AudioManager Instance { get { if (instance == null) instance = FindObjectOfType<AudioManager>(); return instance; } private set { instance = value; } }
+    private static AudioManager instance;
+    public static AudioManager Instance { get { if (instance == null) instance = FindObjectOfType<AudioManager>(); return instance; } private set { instance = value; } }
 
     [SerializeField] private float effectVolume;
     public float EffectVolume { 
@@ -45,6 +45,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] public GameObject soundSourceTarget;
     [HideInInspector] public AudioSource musicSource;
+    [HideInInspector] public Sound currentMusic;
 
     private void Awake()
     {
@@ -69,8 +70,12 @@ public class AudioManager : MonoBehaviour
         // prepare music source and map
         musicMap = new Dictionary<string, Sound>();
         musicSource = soundSourceTarget.AddComponent<AudioSource>();
+        musicSource.ignoreListenerPause = true;
         if (music.Count > 0)
-            music[0].EstablishSource(musicSource, true);
+        {
+            currentMusic = music[0];
+            currentMusic.EstablishSource(musicSource, true);
+        }
         foreach (Sound s in music)
         {
             musicMap[s.name] = s;
@@ -101,9 +106,15 @@ public class AudioManager : MonoBehaviour
         if (musicMap.TryGetValue(name, out Sound sound))
         {
             sound.EstablishSource(musicSource, true);
+            currentMusic = sound;
             return true;
         }
         Debug.LogWarning("Attempted to play music by name: " + name + ". Music Sound not found in AudioManager.");
         return false;
+    }
+
+    private void FixedUpdate()
+    {
+        currentMusic?.UpdateLoop();
     }
 }

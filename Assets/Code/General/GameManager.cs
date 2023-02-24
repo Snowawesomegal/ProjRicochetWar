@@ -49,7 +49,9 @@ public class GameManager : MonoBehaviour
         // check to see if another GameManager already assigned itself or got assigned
         } else if (instance != this)
         {
-            Debug.LogError("ERROR - Duplicate GameManager instantiated... cannot set static instance to this GameManager.");
+            Debug.LogError("ERROR - Duplicate GameManager instantiated... cannot set static instance to this GameManager. Destroying this GameManager...");
+            Destroy(gameObject);
+            return;
         }
     }
 

@@ -45,7 +45,7 @@ public class GameSettings : MonoBehaviour
     void FixedUpdate()
     {
         UpdateAudioManager();
-        Debug.Log("Sound is played: " + audioManager.musicSource.isPlaying);
+        //Debug.Log("Sound is played: " + audioManager.musicSource.isPlaying);
     }
 
     private void UpdateAudioManager()

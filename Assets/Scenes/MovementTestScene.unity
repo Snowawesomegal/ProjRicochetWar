@@ -806,7 +806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &460799271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1133,6 +1133,7 @@ GameObject:
   - component: {fileID: 1246496603}
   - component: {fileID: 1246496607}
   - component: {fileID: 1246496608}
+  - component: {fileID: 1246496609}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1200,10 +1201,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.65781146
+    x: 1.7635092
     y: 0
-    width: 1.3965844
-    height: 1.797395
+    width: 0.13562195
+    height: 0.17366135
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1276,6 +1277,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggersThisFrame: []
   hitboxDamageDifferenceToWin: 10
+--- !u!114 &1246496609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246496601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad814b95af094ab89ffac32aa376fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toFollow:
+  - {fileID: 1695154400}
+  - {fileID: 460799270}
+  highestX: 8
+  lowestX: -8
+  highestY: 3
+  lowestY: -3
+  baseCameraSpeed: 8
+  reduceMoveSpeedScaling: 3
+  baseZoomSpeed: 2
+  reduceZoomSpeedScaling: 7
+  minCameraSize: 6
+  maxCameraSize: 10
+  zoomSpaceScale: 0.5
 --- !u!1 &1507579591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallSpeed: 100
   fallAccel: 70
-  friction: 150
+  friction: 200
   wallJumpVerticalOoOne: 0.5
   ignoreGravity: 0
   intangible: 0
@@ -1506,6 +1533,7 @@ MonoBehaviour:
   maxDashCharge: 100
   dashCharge: 0
   dashForce: 4000
+  am: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   bufferLength: 30

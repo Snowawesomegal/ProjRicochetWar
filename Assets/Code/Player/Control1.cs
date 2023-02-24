@@ -48,6 +48,7 @@ public class Control1 : MonoBehaviour
     HitboxInteractionManager him;
     Slider healthBar;
     ParticleSystem trailps;
+    [SerializeField] AudioManager am;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -234,7 +235,6 @@ public class Control1 : MonoBehaviour
         }
         if (Mathf.Abs(rb.velocity.y) > relevantSpeed)
         {
-            Debug.Log("applied force: " + new Vector2(rb.velocity.y / -magnitude, 0));
             rb.AddForce(new Vector2 (0, rb.velocity.y / -magnitude));
         }
 
@@ -303,25 +303,6 @@ public class Control1 : MonoBehaviour
         anim.SetBool("Jumpsquat", false);
         clm.RemoveLocker(inAnim);
         clm.RemoveLocker(grounded);
-    }
-
-    //<Summary>
-    //Returns toChange incremented toward goal by maxDelta, after scaling to move farther at greater differences relative to degree.
-    //</Summary>
-    float MoveTowardNumber(float toChange, float goal, float delta, float degree = 100)
-    {
-        float difference = goal - toChange;
-        float scaler = difference / degree;
-        float changeAmount = delta * scaler;
-        float output = toChange + changeAmount;
-
-        if (Mathf.Abs(difference) < Mathf.Abs(changeAmount))
-        {
-            Debug.Log("Difference (" + difference + ") < change amount (" + changeAmount + "), so will be changed by " + goal);
-            return goal;
-        }
-
-        return output;
     }
 
     public void StartStopTrail(int startstop)

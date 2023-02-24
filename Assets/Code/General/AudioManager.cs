@@ -94,7 +94,6 @@ public class AudioManager : MonoBehaviour
     {
         if (soundMap.TryGetValue(name, out Sound sound))
         {
-            sound.source.Play();
             return true;
         }
         Debug.LogWarning("Attempted to play Sound by name: " + name + ". Sound not found in AudioManager.");

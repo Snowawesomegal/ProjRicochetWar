@@ -39,6 +39,8 @@ public class GameSettings : MonoBehaviour
         {
             audioManager = GetComponent<AudioManager>();
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

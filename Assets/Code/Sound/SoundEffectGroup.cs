@@ -7,6 +7,11 @@ public class SoundEffectGroup
     public string groupName;
 
     public List<EffectSound> sounds = new List<EffectSound>();
+
+    public SoundEffectGroup(string groupName)
+    {
+        this.groupName = groupName;
+    }
     
     public bool PlaySound()
     {

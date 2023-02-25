@@ -14,7 +14,7 @@ public class AudioManagerCustomInspector : Editor
 
         EditorGUILayout.Space(10);
 
-        foreach (Sound s in myTarget.music)
+        foreach (MusicSound s in myTarget.music)
         {
             if (s != null)
             {
@@ -27,8 +27,24 @@ public class AudioManagerCustomInspector : Editor
         }
 
         EditorGUILayout.Space(10);
+        if (myTarget.soundGroupMap != null)
+        {
+            foreach (SoundEffectGroup group in myTarget.soundGroupMap.Values)
+            {
+                if (group != null)
+                {
+                    EditorGUILayout.Space(10);
+                    if (GUILayout.Button("Play Sound from Group: " + group.groupName))
+                    {
+                        group.PlaySound();
+                    }
+                }
+            }
+        }
 
-        foreach (Sound s in myTarget.sounds)
+        EditorGUILayout.Space(10);
+
+        foreach (EffectSound s in myTarget.sounds)
         {
             if (s != null)
             {

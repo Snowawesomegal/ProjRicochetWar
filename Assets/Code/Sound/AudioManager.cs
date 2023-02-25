@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
         set
         {
             effectVolume = value;
-            foreach (Sound s in sounds)
+            foreach (AbstractSound s in sounds)
             {
                 s.volume = effectVolume;
                 s.RefreshSourceSettings();
@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
         set
         {
             musicVolume = value;
-            foreach (Sound s in music)
+            foreach (AbstractSound s in music)
             {
                 s.volume = musicVolume;
                 s.RefreshSourceSettings();
@@ -37,15 +37,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    [SerializeField] public List<Sound> sounds;
-    [SerializeField] public List<Sound> music;
+    [SerializeField] public List<EffectSound> sounds;
+    [SerializeField] public List<MusicSound> music;
 
-    [HideInInspector] public Dictionary<string, Sound> soundMap;
-    [HideInInspector] public Dictionary<string, Sound> musicMap;
+    [HideInInspector] public Dictionary<string, EffectSound> soundMap;
+    [HideInInspector] public Dictionary<string, SoundEffectGroup> soundGroupMap;
+    [HideInInspector] public Dictionary<string, MusicSound> musicMap;
 
     [SerializeField] public GameObject soundSourceTarget;
     [HideInInspector] public AudioSource musicSource;
-    [HideInInspector] public Sound currentMusic;
+    [HideInInspector] public MusicSound currentMusic;
 
     private void Awake()
     {
@@ -67,8 +68,14 @@ public class AudioManager : MonoBehaviour
 
     private void PrepareSoundSources()
     {
+        PrepareMusicSoundSources();
+        PrepareEffectSoundSources();
+    }
+
+    private void PrepareMusicSoundSources()
+    {
         // prepare music source and map
-        musicMap = new Dictionary<string, Sound>();
+        musicMap = new Dictionary<string, MusicSound>();
         musicSource = soundSourceTarget.AddComponent<AudioSource>();
         musicSource.ignoreListenerPause = true;
         if (music.Count > 0)
@@ -76,23 +83,40 @@ public class AudioManager : MonoBehaviour
             currentMusic = music[0];
             currentMusic.EstablishSource(musicSource, true);
         }
-        foreach (Sound s in music)
+        foreach (MusicSound s in music)
         {
             musicMap[s.name] = s;
         }
+    }
 
+    private void PrepareEffectSoundSources()
+    {
         // prepare sound sources and map
-        soundMap = new Dictionary<string, Sound>();
-        foreach (Sound s in sounds)
+        soundMap = new Dictionary<string, EffectSound>();
+        soundGroupMap = new Dictionary<string, SoundEffectGroup>();
+        foreach (EffectSound s in sounds)
         {
             s.EstablishSource(soundSourceTarget.AddComponent<AudioSource>());
             soundMap[s.name] = s;
+            if (s.TryGetGroupName(out string groupName))
+            {
+                if (soundGroupMap.TryGetValue(groupName, out SoundEffectGroup effectGroup))
+                {
+                    effectGroup.sounds.Add(s);
+                } else
+                {
+                    Debug.Log("Making new sound effect group: " + groupName);
+                    SoundEffectGroup newEffectGroup = new SoundEffectGroup();
+                    newEffectGroup.sounds.Add(s);
+                    soundGroupMap.Add(groupName, newEffectGroup);
+                }
+            }
         }
     }
 
     public bool PlaySound(string name)
     {
-        if (soundMap.TryGetValue(name, out Sound sound))
+        if (soundMap.TryGetValue(name, out EffectSound sound))
         {
             sound.source.Play();
             return true;
@@ -101,9 +125,20 @@ public class AudioManager : MonoBehaviour
         return false;
     }
 
+    public bool PlaySoundGroup(string groupName)
+    {
+        if (soundGroupMap.TryGetValue(groupName, out SoundEffectGroup group))
+        {
+            group.PlaySound();
+            return true;
+        }
+        Debug.LogWarning("Attempted to play Sound Group by name: " + name + ". Sound Group not found in AudioManager.");
+        return false;
+    }
+
     public bool SetMusic(string name)
     {
-        if (musicMap.TryGetValue(name, out Sound sound))
+        if (musicMap.TryGetValue(name, out MusicSound sound))
         {
             sound.EstablishSource(musicSource, true);
             currentMusic = sound;

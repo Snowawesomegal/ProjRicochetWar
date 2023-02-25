@@ -73,6 +73,7 @@ public class Control1 : MonoBehaviour
     //Wall Collision
     int collidedWallSide;
     float collidedWallSlope;
+    [SerializeField] GameObject platformCollider;
 
     //objects
     public GameObject ball;
@@ -106,7 +107,14 @@ public class Control1 : MonoBehaviour
 
     public void VerticalResponse(CharacterInput input)
     {
-
+        if (input.Direction.current.y < -0.5)
+        {
+            platformCollider.SetActive(false);
+        }
+        else
+        {
+            platformCollider.SetActive(true);
+        }
     }
 
     public void HorizontalResponse(CharacterInput input)
@@ -169,7 +177,7 @@ public class Control1 : MonoBehaviour
         }
         else
         {
-            // sound effect placeholder
+            // sound effect for no dash charge goes here
         }
     }
 
@@ -177,6 +185,7 @@ public class Control1 : MonoBehaviour
     {
         rb.AddForce(pim.GetCurrentDirectional().current * dashForce);
         StartStopTrail(1);
+        clm.RemoveLocker(wallcling);
     }
 
     public void FLightResponse(CharacterInput input)
@@ -224,6 +233,11 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    public void ReduceVelocityByFactor(int factor)
+    {
+        rb.velocity /= factor;
+    }
+
     public void SlowSpeed(float magnitude)
     {
         float relevantSpeed = clm.activeLockers.Contains(grounded) ? groundSpeed : airSpeed / 5;
@@ -237,8 +251,6 @@ public class Control1 : MonoBehaviour
         {
             rb.AddForce(new Vector2 (0, rb.velocity.y / -magnitude));
         }
-
-
     }
 
     public void SwitchIfAttacking(string newAnimBool)
@@ -278,9 +290,7 @@ public class Control1 : MonoBehaviour
         {
             rb.AddForce(1.4f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
         }
-        clm.RemoveLocker(inAnim);
         clm.RemoveLocker(wallcling);
-        anim.SetBool("WallJumpSquat", false);
         collidedWallSide = 0;
         touchingWall = false;
         wallTouching = null;
@@ -300,8 +310,6 @@ public class Control1 : MonoBehaviour
         {
             rb.AddForce(initialJumpForce * Vector2.up);
         }
-        anim.SetBool("Jumpsquat", false);
-        clm.RemoveLocker(inAnim);
         clm.RemoveLocker(grounded);
     }
 
@@ -370,6 +378,11 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    public void PlaySoundFromAnimator(string name)
+    {
+        am.PlaySound(name);
+    }
+
     public void Hit(Collider2D collider, bool enterOrExitHitstun = true) // add to calculation for direction
     {
         if (enterOrExitHitstun)
@@ -408,10 +421,13 @@ public class Control1 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "BottomWall")
+        if (collision.gameObject.tag == "Standable")
         {
-            clm.AddLocker(grounded);
-            anim.SetBool("Grounded", true);
+            if (rb.velocity.y <= 0) // this is 100% a problem. idk how but def a problem
+            {
+                clm.AddLocker(grounded);
+                anim.SetBool("Grounded", true);
+            }
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
@@ -438,10 +454,11 @@ public class Control1 : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "BottomWall")
+        if (collision.gameObject.tag == "Standable")
         {
             clm.RemoveLocker(grounded);
             anim.SetBool("Grounded", false);
+
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {

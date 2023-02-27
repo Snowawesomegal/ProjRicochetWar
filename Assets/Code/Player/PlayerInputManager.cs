@@ -12,38 +12,14 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] ControlLockManager controlLockManager;
     [SerializeField] bool debugMessages = false;
 
-    [SerializeField] StandardControlLocker testLock;
-    int addedLock = 0;
-    [SerializeField] int testLockDuration = 10;
-    private void AddLock()
-    {
-        if (addedLock <= 0)
-        {
-            controlLockManager.AddLocker(testLock);
-            addedLock = testLockDuration;
-        } else
-        {
-            addedLock = testLockDuration;
-        }
-    }
-    private void RemoveLock()
-    {
-        if (addedLock > 0)
-        {
-            addedLock--;
-            if (addedLock == 0)
-            {
-                controlLockManager.RemoveLocker(testLock);
-            }
-        }
-    }
-
     //[SerializeField] Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>> inputBuffers = new Dictionary<ControlLock.Controls, Pair<int, InputAction.CallbackContext>>();
     [SerializeField] Dictionary<ControlLock.Controls, Action<CharacterInput>> inputEvents = new Dictionary<ControlLock.Controls, Action<CharacterInput>>();
     ControlLock.Controls[] controlPriorityList = { 
         ControlLock.Controls.JUMP,
         ControlLock.Controls.DASH,
+        ControlLock.Controls.MOVEMENT,
         ControlLock.Controls.ATTACK, 
+        ControlLock.Controls.HEAVY,
         ControlLock.Controls.SPECIAL, 
         ControlLock.DIRECTIONAL_CONTROLS
     };
@@ -72,11 +48,12 @@ public class PlayerInputManager : MonoBehaviour
         inputEvents[ControlLock.Controls.SPECIAL] = InputSpecial;
         inputEvents[ControlLock.Controls.DASH] = InputDash;
         inputEvents[ControlLock.DIRECTIONAL_CONTROLS] = InputDirectional;
+        inputEvents[ControlLock.Controls.HEAVY] = InputHeavy;
+        inputEvents[ControlLock.Controls.MOVEMENT] = InputMovement;
     }
 
     void FixedUpdate()
     {
-        RemoveLock();
         // update debug messages variable
         pib.debugMessages = inputBufferDebugMessages;
         // cache the current directional input
@@ -228,6 +205,60 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.RIGHT:
             case CharacterInput.CardinalDirection.NONE:
                 // call forward/side special in player controller
+                break;
+            default:
+                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
+                break;
+        }
+    }
+
+    public void OnHeavy(InputAction.CallbackContext ctxt)
+    {
+        ControlLock.Controls control = ControlLock.Controls.HEAVY;
+        AcceptBufferInput(control, ctxt);
+    }
+    public void InputHeavy(CharacterInput input)
+    {
+        CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
+        switch (snappedDirection)
+        {
+            case CharacterInput.CardinalDirection.UP:
+                // call up heavy in player controller
+                break;
+            case CharacterInput.CardinalDirection.DOWN:
+                // call down heavy in player controller
+                break;
+            case CharacterInput.CardinalDirection.LEFT:
+            case CharacterInput.CardinalDirection.RIGHT:
+            case CharacterInput.CardinalDirection.NONE:
+                // call forward/side heavy in player controller
+                break;
+            default:
+                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
+                break;
+        }
+    }
+
+    public void OnMovement(InputAction.CallbackContext ctxt)
+    {
+        ControlLock.Controls control = ControlLock.Controls.MOVEMENT;
+        AcceptBufferInput(control, ctxt);
+    }
+    public void InputMovement(CharacterInput input)
+    {
+        CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
+        switch (snappedDirection)
+        {
+            case CharacterInput.CardinalDirection.UP:
+                // call up movement in player controller
+                break;
+            case CharacterInput.CardinalDirection.DOWN:
+                // call down movement in player controller
+                break;
+            case CharacterInput.CardinalDirection.LEFT:
+            case CharacterInput.CardinalDirection.RIGHT:
+            case CharacterInput.CardinalDirection.NONE:
+                // call forward/side movement in player controller
                 break;
             default:
                 Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());

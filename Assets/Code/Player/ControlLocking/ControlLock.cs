@@ -15,7 +15,9 @@ public class ControlLock
         JUMP = 4,
         ATTACK = 8,
         SPECIAL = 16,
-        DASH = 32
+        DASH = 32,
+        HEAVY = 64,
+        MOVEMENT = 128
     }
     public const Controls DIRECTIONAL_CONTROLS = (Controls.HORIZONTAL | Controls.VERTICAL);
     public const Controls BUTTON_CONTROLS = (Controls.JUMP | Controls.ATTACK | Controls.SPECIAL);

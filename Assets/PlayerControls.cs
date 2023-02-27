@@ -71,6 +71,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heavy Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3502153-134c-4efc-be88-a71187d52821"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Button"",
+                    ""id"": ""359ab731-0107-4a45-8dae-b3ba007159bc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -264,11 +282,55 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""14e1b5c7-7efe-4331-9607-776a8026142f"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad262d02-d255-4c0f-b53f-821ea40292df"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""399c41ba-2b04-4e83-9e91-4399d06e9a7f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""677fafe7-30f5-484b-a63c-1094b99ef6c3"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b12dd2ec-ab78-4746-ba3a-c85a258c3c4a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -301,6 +363,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Playing_Special = m_Playing.FindAction("Special", throwIfNotFound: true);
         m_Playing_Directional = m_Playing.FindAction("Directional", throwIfNotFound: true);
         m_Playing_Dash = m_Playing.FindAction("Dash", throwIfNotFound: true);
+        m_Playing_HeavyAttack = m_Playing.FindAction("Heavy Attack", throwIfNotFound: true);
+        m_Playing_Movement = m_Playing.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -365,6 +429,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Playing_Special;
     private readonly InputAction m_Playing_Directional;
     private readonly InputAction m_Playing_Dash;
+    private readonly InputAction m_Playing_HeavyAttack;
+    private readonly InputAction m_Playing_Movement;
     public struct PlayingActions
     {
         private @PlayerControls m_Wrapper;
@@ -374,6 +440,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Special => m_Wrapper.m_Playing_Special;
         public InputAction @Directional => m_Wrapper.m_Playing_Directional;
         public InputAction @Dash => m_Wrapper.m_Playing_Dash;
+        public InputAction @HeavyAttack => m_Wrapper.m_Playing_HeavyAttack;
+        public InputAction @Movement => m_Wrapper.m_Playing_Movement;
         public InputActionMap Get() { return m_Wrapper.m_Playing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -398,6 +466,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayingActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayingActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayingActionsCallbackInterface.OnDash;
+                @HeavyAttack.started -= m_Wrapper.m_PlayingActionsCallbackInterface.OnHeavyAttack;
+                @HeavyAttack.performed -= m_Wrapper.m_PlayingActionsCallbackInterface.OnHeavyAttack;
+                @HeavyAttack.canceled -= m_Wrapper.m_PlayingActionsCallbackInterface.OnHeavyAttack;
+                @Movement.started -= m_Wrapper.m_PlayingActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_PlayingActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_PlayingActionsCallbackInterface.OnMovement;
             }
             m_Wrapper.m_PlayingActionsCallbackInterface = instance;
             if (instance != null)
@@ -417,6 +491,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @HeavyAttack.started += instance.OnHeavyAttack;
+                @HeavyAttack.performed += instance.OnHeavyAttack;
+                @HeavyAttack.canceled += instance.OnHeavyAttack;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
             }
         }
     }
@@ -437,5 +517,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSpecial(InputAction.CallbackContext context);
         void OnDirectional(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
     }
 }

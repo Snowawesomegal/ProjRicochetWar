@@ -33,6 +33,7 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
 
+            foreach (Collider2D i in triggersThisFrame) { Debug.Log(i); }
             RunHitBoxManagement();
             triggersThisFrame.Clear();
         }
@@ -73,39 +74,7 @@ public class HitboxInteractionManager : MonoBehaviour
                     hitboxes.Clear();
                 }
             }
-            else if (hitboxes.Count == 2)
-            {
-                HitboxInfo oneHitboxInfo = hitboxes[0].GetComponent<HitboxInfo>();
-                HitboxInfo twoHitboxInfo = hitboxes[1].GetComponent<HitboxInfo>();
-                if (hitboxes[0].IsTouching(hitboxes[1]) && oneHitboxInfo.activeHitbox && twoHitboxInfo.activeHitbox) // if hitboxes are colliding + both active
-                {
-                    if (Mathf.Abs(oneHitboxInfo.damage - twoHitboxInfo.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to win
-                    {
-                        if (oneHitboxInfo.damage > twoHitboxInfo.damage) // disable the weaker hitbox, because it must be much weaker
-                        {
-                            oneHitboxInfo.activeHitbox = false;
-                            hitboxes.Remove(hitboxes[0]);
-                            DisableConnectedHitboxes(hitboxes[0].gameObject);
-                        }
-                        else
-                        {
-                            twoHitboxInfo.activeHitbox = false;
-                            hitboxes.Remove(hitboxes[1]);
-                            DisableConnectedHitboxes(hitboxes[1].gameObject);
-                        }
-                    }
-                    else // hitboxes are similar damages, disable both
-                    {
-                        DisableConnectedHitboxes(hitboxes[0].gameObject);
-                        DisableConnectedHitboxes(hitboxes[1].gameObject);
-                        oneHitboxInfo.activeHitbox = false;
-                        twoHitboxInfo.activeHitbox = false;
-                        hitboxes.Remove(hitboxes[0]); // remove hitboxes from list
-                        hitboxes.Remove(hitboxes[1]);
-                    }
-                }
-            }
-            else if (hitboxes.Count > 2)
+            else
             {
                 foreach (Collider2D one in hitboxesCopy) // run through every hitbox that collided this frame
                 {
@@ -168,7 +137,7 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 foreach (Collider2D hitbox in hitboxes)
                 {
-                    if (hurtbox.IsTouching(hitbox))
+                    if (hurtbox.IsTouching(hitbox) && hitbox.GetComponent<HitboxInfo>().owner != hurtbox.gameObject)
                     {
                         Debug.Log("Hurtbox: " + hurtbox.name + " was touching: " + hitbox.name);
 

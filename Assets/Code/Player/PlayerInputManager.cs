@@ -130,8 +130,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDash(CharacterInput input)
     {
-        //playerController.DashResponse(input);
-        playerController.UpHeavyResponse(input); // just for testing, obviously
+        playerController.DashResponse(input);
     }
 
     public void OnJump(InputAction.CallbackContext ctxt)
@@ -223,7 +222,7 @@ public class PlayerInputManager : MonoBehaviour
         switch (snappedDirection)
         {
             case CharacterInput.CardinalDirection.UP:
-                // call up heavy in player controller
+                playerController.UpHeavyResponse(input);
                 break;
             case CharacterInput.CardinalDirection.DOWN:
                 // call down heavy in player controller

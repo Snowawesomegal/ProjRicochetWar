@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using System.Drawing;
+using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
@@ -76,6 +77,8 @@ public class Control1 : MonoBehaviour
     int collidedWallSide;
     float collidedWallSlope;
     [SerializeField] GameObject platformCollider;
+
+    List<Collider2D> currentOverlaps = new List<Collider2D>();
 
     //objects
     public GameObject ball;
@@ -329,7 +332,7 @@ public class Control1 : MonoBehaviour
         {
             rb.AddForce(initialJumpForce * Vector2.up);
         }
-        clm.RemoveLocker(grounded);
+        BecomeGrounded(false);
     }
 
     public void StartStopTrail(int startstop)
@@ -419,15 +422,39 @@ public class Control1 : MonoBehaviour
         am.PlaySound(name);
     }
 
-    void ifStillGroundedSetGrounded()
+    void BecomeGrounded(bool enterexit = true)
     {
-        if (!clm.activeLockers.Contains(grounded))
+        if (enterexit)
         {
             clm.AddLocker(grounded);
+            anim.SetBool("Grounded", true);
+            gameObject.layer = 9;
+        }
+        else
+        {
+            clm.RemoveLocker(grounded);
+            anim.SetBool("Grounded", false);
+            gameObject.layer = 8;
         }
     }
 
-    public void Hit(Collider2D collider, bool enterOrExitHitstun = true) // add to calculation for direction
+    //Is called at the start of every frame following a frame in which the player is touching the ground, but not grounded.
+    void ifStillGroundedSetGrounded()
+    {
+        foreach (Collider2D i in currentOverlaps)
+        {
+            if (i.CompareTag("Standable"))
+            {
+                if (!clm.activeLockers.Contains(grounded))
+                {
+                    BecomeGrounded();
+                    return;
+                }
+            }
+        }
+    }
+
+    public void Hit(Collider2D collider, bool enterOrExitHitstun = true)
     {
         if (enterOrExitHitstun)
         {
@@ -435,6 +462,7 @@ public class Control1 : MonoBehaviour
             rb.sharedMaterial = bouncy;
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
 
+            rb.velocity = Vector2.zero;
             currentHealth -= hi.damage;
             Vector2 angleOfForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * hi.angle), Mathf.Sin(Mathf.Deg2Rad * hi.angle));
 
@@ -466,10 +494,9 @@ public class Control1 : MonoBehaviour
     {
         if (collision.gameObject.tag == "Standable")
         {
-            if (rb.velocity.y <= 0) // this is 100% a problem. idk how but def a problem
+            if (rb.velocity.y <= 0) // this causes me to have to do some weird stuff to cover for edge cases
             {
-                clm.AddLocker(grounded);
-                anim.SetBool("Grounded", true);
+                BecomeGrounded();
             }
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
@@ -478,6 +505,8 @@ public class Control1 : MonoBehaviour
             touchingWall = true;
             wallTouching = collision.collider;
         }
+
+        if (!currentOverlaps.Contains(collision.otherCollider)) { currentOverlaps.Add(collision.otherCollider); };
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -493,14 +522,15 @@ public class Control1 : MonoBehaviour
                 him.triggersThisFrame.Add(bc);
             }
         }
+
+        if (!currentOverlaps.Contains(collision)) { currentOverlaps.Add(collision); };
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Standable")
         {
-            clm.RemoveLocker(grounded);
-            anim.SetBool("Grounded", false);
+            BecomeGrounded(false);
 
         }
         else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
@@ -510,15 +540,23 @@ public class Control1 : MonoBehaviour
             touchingWall = false;
             wallTouching = null;
         }
+
+        if (currentOverlaps.Contains(collision.otherCollider)) { currentOverlaps.Remove(collision.otherCollider); };
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (currentOverlaps.Contains(collision)) { currentOverlaps.Remove(collision); };
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Standable")
+        if (collision.gameObject.tag == "Standable") // This logic thread covers for cases in which the player touches the ground without moving downward
         {
-            if (!clm.activeLockers.Contains(grounded))
+            if (!clm.activeLockers.Contains(grounded)) // and not grounded
             {
-                toCallNextFrame.Add(ifStillGroundedSetGrounded);
+                toCallNextFrame.Add(ifStillGroundedSetGrounded); // next frame if still grounded, become grounded.
+                // This is done next frame, not this frame, to prevent being immediately regrounded after jumping.
             }
         }
     }

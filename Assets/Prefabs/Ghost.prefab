@@ -64,7 +64,7 @@ MonoBehaviour:
   damage: 10
   knockback: 2000
   angleIndependentOfMovement: 1
-  angle: 90
+  angle: 110
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
@@ -711,8 +711,6 @@ MonoBehaviour:
   playerController: {fileID: 7259446613053437898}
   controlLockManager: {fileID: 7259446613053437890}
   debugMessages: 0
-  testLock: {fileID: 0}
-  testLockDuration: 10
   inputBufferDuration: 10
   inputBufferDebugMessages: 0
   playerVerticalAttackThreshold: 70
@@ -821,6 +819,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e120126c-b953-4a4c-990f-a2758291ac7f
     m_ActionName: Playing/Dash[/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7259446613053437891}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnHeavy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e3502153-134c-4efc-be88-a71187d52821
+    m_ActionName: Playing/Heavy Attack[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7259446613053437891}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 359ab731-0107-4a45-8dae-b3ba007159bc
+    m_ActionName: Playing/Movement[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: DefaultControls
   m_DefaultActionMap: Playing

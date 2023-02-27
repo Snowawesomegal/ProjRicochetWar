@@ -6,11 +6,25 @@ public class HitboxInteractionManager : MonoBehaviour
 {
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
     public float hitboxDamageDifferenceToWin = 10;
+    ActivateHitbox ah;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(nameof(AfterPhysicsUpdate));
+        ah = GetComponent<ActivateHitbox>();
+    }
+
+    void DisableConnectedHitboxes(GameObject hbi)
+    {
+        if (ah.currentConnectedHitboxes.Contains(hbi))
+        {
+            foreach (GameObject i in ah.currentConnectedHitboxes)
+            {
+                i.GetComponent<HitboxInfo>().activeHitbox = false;
+            }
+        }
+
     }
 
     public IEnumerator AfterPhysicsUpdate() // Using WaitForFixedUpdate is the only way to run something AFTER the Collision calls
@@ -52,7 +66,46 @@ public class HitboxInteractionManager : MonoBehaviour
             List<Collider2D> hitboxesCopy = new List<Collider2D>(hitboxes);
 
             // Don't open this lmao it has 50 lines of logic, removes and deactives hitboxes as necessary
-            if (hitboxes.Count > 1)
+            if (hitboxes.Count == 1)
+            {
+                if (!hitboxes[0].GetComponent<HitboxInfo>().activeHitbox)
+                {
+                    hitboxes.Clear();
+                }
+            }
+            else if (hitboxes.Count == 2)
+            {
+                HitboxInfo oneHitboxInfo = hitboxes[0].GetComponent<HitboxInfo>();
+                HitboxInfo twoHitboxInfo = hitboxes[1].GetComponent<HitboxInfo>();
+                if (hitboxes[0].IsTouching(hitboxes[1]) && oneHitboxInfo.activeHitbox && twoHitboxInfo.activeHitbox) // if hitboxes are colliding + both active
+                {
+                    if (Mathf.Abs(oneHitboxInfo.damage - twoHitboxInfo.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to win
+                    {
+                        if (oneHitboxInfo.damage > twoHitboxInfo.damage) // disable the weaker hitbox, because it must be much weaker
+                        {
+                            oneHitboxInfo.activeHitbox = false;
+                            hitboxes.Remove(hitboxes[0]);
+                            DisableConnectedHitboxes(hitboxes[0].gameObject);
+                        }
+                        else
+                        {
+                            twoHitboxInfo.activeHitbox = false;
+                            hitboxes.Remove(hitboxes[1]);
+                            DisableConnectedHitboxes(hitboxes[1].gameObject);
+                        }
+                    }
+                    else // hitboxes are similar damages, disable both
+                    {
+                        DisableConnectedHitboxes(hitboxes[0].gameObject);
+                        DisableConnectedHitboxes(hitboxes[1].gameObject);
+                        oneHitboxInfo.activeHitbox = false;
+                        twoHitboxInfo.activeHitbox = false;
+                        hitboxes.Remove(hitboxes[0]); // remove hitboxes from list
+                        hitboxes.Remove(hitboxes[1]);
+                    }
+                }
+            }
+            else if (hitboxes.Count > 2)
             {
                 foreach (Collider2D one in hitboxesCopy) // run through every hitbox that collided this frame
                 {
@@ -87,15 +140,19 @@ public class HitboxInteractionManager : MonoBehaviour
                                 {
                                     oneHitboxInfo.activeHitbox = false;
                                     hitboxes.Remove(one);
+                                    DisableConnectedHitboxes(one.gameObject);
                                 }
                                 else
                                 {
                                     twoHitboxInfo.activeHitbox = false;
                                     hitboxes.Remove(two);
+                                    DisableConnectedHitboxes(two.gameObject);
                                 }
                             }
                             else // hitboxes are similar damages, disable both
                             {
+                                DisableConnectedHitboxes(one.gameObject);
+                                DisableConnectedHitboxes(two.gameObject);
                                 oneHitboxInfo.activeHitbox = false;
                                 twoHitboxInfo.activeHitbox = false;
                                 hitboxes.Remove(one); // remove hitboxes from list
@@ -105,13 +162,7 @@ public class HitboxInteractionManager : MonoBehaviour
                     }
                 }
             }
-            else if (hitboxes.Count == 1)
-            {
-                if (!hitboxes[0].GetComponent<HitboxInfo>().activeHitbox)
-                {
-                    hitboxes.Clear();
-                }
-            }
+
 
             foreach(Collider2D hurtbox in hurtboxes)
             {

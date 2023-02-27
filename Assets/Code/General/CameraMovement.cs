@@ -25,10 +25,14 @@ public class CameraMovement : MonoBehaviour
 
     private Camera cam;
 
-
+    public GameObject Ghost;
 
     void Start()
     {
+        Debug.Log("Camera has spawned the players.");
+        toFollow.Add(Instantiate(Ghost));
+        toFollow.Add(Instantiate(Ghost));
+
         if (toFollow.Count < 1)
         {
             Debug.Log("no objects have been added to the camera.");

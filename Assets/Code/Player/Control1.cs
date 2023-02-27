@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using System.Drawing;
 
 public class Control1 : MonoBehaviour
 {
@@ -48,7 +49,8 @@ public class Control1 : MonoBehaviour
     HitboxInteractionManager him;
     Slider healthBar;
     ParticleSystem trailps;
-    [SerializeField] AudioManager am;
+    AudioManager am;
+    GameObject sm;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -78,8 +80,10 @@ public class Control1 : MonoBehaviour
     //objects
     public GameObject ball;
 
-    //frame counter
+    //frames
     public int frame = 0;
+    int dropPlatformFrames = 0;
+    List<System.Action> toCallNextFrame = new List<System.Action>();
 
     void Start()
     {
@@ -90,8 +94,10 @@ public class Control1 : MonoBehaviour
         pim = GetComponent<PlayerInputManager>();
         clm = GetComponent<ControlLockManager>();
         ah = GetComponent<ActivateHitbox>();
-        healthBar = ((Canvas)GameObject.FindAnyObjectByType(typeof(Canvas))).transform.GetChild(1).GetComponent<Slider>();
+        healthBar = ((Canvas)GameObject.FindAnyObjectByType(typeof(Canvas))).transform.GetChild(0).GetComponent<Slider>();
         trailps = GetComponent<ParticleSystem>();
+        sm = GameObject.Find("SettingsManager");
+        am = sm.GetComponent<AudioManager>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -110,6 +116,10 @@ public class Control1 : MonoBehaviour
         if (input.Direction.current.y < -0.5)
         {
             platformCollider.SetActive(false);
+            if (clm.activeLockers.Contains(grounded))
+            {
+                dropPlatformFrames = 0; //implement this doing something
+            }
         }
         else
         {
@@ -213,6 +223,15 @@ public class Control1 : MonoBehaviour
         if (input.IsHeld() || input.IsPending())
         {
             anim.SetBool("DownLightAttack", true);
+            clm.AddLocker(inAnim);
+        }
+    }
+
+    public void UpHeavyResponse(CharacterInput input)
+    {
+        if (input.IsHeld() || input.IsPending())
+        {
+            anim.SetBool("UpHeavyAttack", true);
             clm.AddLocker(inAnim);
         }
     }
@@ -336,17 +355,34 @@ public class Control1 : MonoBehaviour
             HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
         }
 
-        if (healthBar.value != currentHealth)
+        if (healthBar != null)
         {
-            healthBar.value -= (healthBar.value - currentHealth)/10;
-
-            if (healthBar.value - currentHealth < 0.5f)
+            if (healthBar.value != currentHealth)
             {
-                healthBar.value = currentHealth;
+                healthBar.value -= (healthBar.value - currentHealth) / 10;
+
+                if (healthBar.value - currentHealth < 0.5f)
+                {
+                    healthBar.value = currentHealth;
+                }
             }
         }
-        
+
         ManageForces();
+
+        ExecuteRunNextFrames();
+
+        void ExecuteRunNextFrames()
+        {
+            if (toCallNextFrame.Count != 0)
+            {
+                foreach (System.Action i in toCallNextFrame)
+                {
+                    i();
+                }
+                toCallNextFrame.Clear();
+            }
+        }
 
         void ManageForces()
         {
@@ -383,6 +419,14 @@ public class Control1 : MonoBehaviour
         am.PlaySound(name);
     }
 
+    void ifStillGroundedSetGrounded()
+    {
+        if (!clm.activeLockers.Contains(grounded))
+        {
+            clm.AddLocker(grounded);
+        }
+    }
+
     public void Hit(Collider2D collider, bool enterOrExitHitstun = true) // add to calculation for direction
     {
         if (enterOrExitHitstun)
@@ -392,13 +436,13 @@ public class Control1 : MonoBehaviour
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
 
             currentHealth -= hi.damage;
+            Vector2 angleOfForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * hi.angle), Mathf.Sin(Mathf.Deg2Rad * hi.angle));
 
-            Vector2 angleOfForce;
-            angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle));
-            if (hi.facingRight)
+            if (!hi.facingRight)
             {
                 angleOfForce.x *= -1;
             }
+
             if (!hi.angleIndependentOfMovement)
             {
                 Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
@@ -409,7 +453,6 @@ public class Control1 : MonoBehaviour
                 angleOfForce = angleOfForce.normalized;
             }
 
-            Debug.Log(angleOfForce);
             rb.AddForce(angleOfForce * hi.knockback);
         }
         else
@@ -468,4 +511,16 @@ public class Control1 : MonoBehaviour
             wallTouching = null;
         }
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Standable")
+        {
+            if (!clm.activeLockers.Contains(grounded))
+            {
+                toCallNextFrame.Add(ifStillGroundedSetGrounded);
+            }
+        }
+    }
+
 }

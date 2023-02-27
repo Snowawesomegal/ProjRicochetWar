@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using System;
 
 public class ActivateHitbox : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class ActivateHitbox : MonoBehaviour
     public GameObject hitboxPrefab;
     Control1 c1;
     ControlLockManager clm;
+
+
     public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
+    public List<GameObject> currentConnectedHitboxes = new List<GameObject>();
 
     private void Start()
     {
@@ -18,9 +22,23 @@ public class ActivateHitbox : MonoBehaviour
         c1 = GetComponent<Control1>();
     }
 
+    public void ConnectHitboxes(string hitboxesSeparatedBySlashes)
+    {
+        string[] boxes = hitboxesSeparatedBySlashes.Split('/');
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform currentChild = transform.GetChild(i);
+            if (Array.Exists(boxes, element => element == currentChild.name))
+            {
+                currentConnectedHitboxes.Add(currentChild.gameObject);
+                break;
+            }
+        }
+    }
+
     public void EnableHitbox(string hitboxName)
     {
-
         GameObject hitboxObject = null;
 
         for (int i = 0; i < transform.childCount; i++)
@@ -51,8 +69,6 @@ public class ActivateHitbox : MonoBehaviour
         }
         HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
 
-        HBInfo.activeHitbox = true;
-
         toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
     }
 
@@ -65,6 +81,7 @@ public class ActivateHitbox : MonoBehaviour
             if (i.Value <= 0)
             {
                 i.Key.SetActive(false);
+                i.Key.GetComponent<HitboxInfo>().activeHitbox = true;
                 toBeDisabled.Remove(i.Key);
             }
             else
@@ -79,5 +96,6 @@ public class ActivateHitbox : MonoBehaviour
         clm.RemoveLocker(c1.inAnim);
         anim.SetBool(boolToSetFalse, false);
         anim.SetBool("ContinueAttack", false);
+        currentConnectedHitboxes.Clear();
     }
 }

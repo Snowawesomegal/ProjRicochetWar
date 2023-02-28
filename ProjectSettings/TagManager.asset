@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Hitbox
+  - Wall
+  - Standable
   layers:
   - Default
   - TransparentFX
@@ -11,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Platforms
+  - Platform Colliders
   - 
   - 
   - 
@@ -38,6 +41,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: -4
+    uniqueID: 2924202911
+    locked: 0
+  - name: -3
+    uniqueID: 4290294687
+    locked: 0
+  - name: -2
+    uniqueID: 1751215343
+    locked: 0
+  - name: -1
+    uniqueID: 694947319
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: +1
+    uniqueID: 635364375
+    locked: 0
+  - name: +2
+    uniqueID: 1554648813
+    locked: 0
+  - name: +3
+    uniqueID: 572752539
+    locked: 0
+  - name: +4
+    uniqueID: 1397932135
     locked: 0

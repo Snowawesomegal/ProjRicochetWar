@@ -41,4 +41,24 @@ Material:
     - _Hurt: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _SampleColor1: {r: 1, g: 1, b: 1, a: 1}
+    - _SampleColor10: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor2: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor3: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor4: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor5: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor6: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor7: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor8: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor9: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor1: {r: 0.1510084, g: 1, b: 0, a: 0}
+    - _TargetColor10: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor2: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor3: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor4: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor5: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor6: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor7: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor8: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor9: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

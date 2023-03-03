@@ -7,6 +7,8 @@ public class PlayerShaderController : MonoBehaviour
     [SerializeField] Renderer renderer;
     [HideInInspector] Material material;
 
+    [HideInInspector] public bool color_selector_dropdown;
+
     private void Awake()
     {
         if (renderer == null)
@@ -51,5 +53,9 @@ public class PlayerShaderController : MonoBehaviour
     public Color ShaderColor { 
         get { return ValidateMaterial() ? material.GetColor("_Color") : Color.black; } 
         set { if (!ValidateMaterial()) return; material.SetColor("_Color", value); } 
+    }
+    public Material ShaderMaterial
+    {
+        get { return ValidateMaterial() ? material : null; }
     }
 }

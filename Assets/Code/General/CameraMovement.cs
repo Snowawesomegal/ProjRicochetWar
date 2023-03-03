@@ -29,9 +29,9 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Camera has spawned the players.");
-        toFollow.Add(Instantiate(Ghost));
-        toFollow.Add(Instantiate(Ghost));
+        //Debug.Log("Camera has spawned the players.");
+        //toFollow.Add(Instantiate(Ghost));
+        //toFollow.Add(Instantiate(Ghost));
 
         if (toFollow.Count < 1)
         {

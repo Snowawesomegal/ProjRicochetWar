@@ -12,7 +12,6 @@ public class ActivateHitbox : MonoBehaviour
     Control1 c1;
     ControlLockManager clm;
 
-
     public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
     public List<GameObject> currentConnectedHitboxes = new List<GameObject>();
 
@@ -89,13 +88,5 @@ public class ActivateHitbox : MonoBehaviour
                 toBeDisabled[i.Key] -= 1;
             }
         }
-    }
-
-    public void StopAnimation(string boolToSetFalse)
-    {
-        clm.RemoveLocker(c1.inAnim);
-        anim.SetBool(boolToSetFalse, false);
-        anim.SetBool("ContinueAttack", false);
-        currentConnectedHitboxes.Clear();
     }
 }

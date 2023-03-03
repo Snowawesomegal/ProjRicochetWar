@@ -55,12 +55,10 @@ public class HitboxInteractionManager : MonoBehaviour
                 if (i.TryGetComponent(out HitboxInfo hbi))
                 {
                     hitboxes.Add(i);
-                    Debug.Log("Detected hitbox collision, added the hitbox collision to hitboxes");
                 }
                 else if (i.TryGetComponent(out Control1 c1)) // THIS WILL BREAK IF WE USE A DIFFERENT SCRIPT FOR CONTROL (or Hit()) //TODO
                 {
                     hurtboxes.Add(i);
-                    Debug.Log("Added hurtbox to hurtboxes");
                 }
             }
 
@@ -139,14 +137,13 @@ public class HitboxInteractionManager : MonoBehaviour
                 {
                     if (hurtbox.IsTouching(hitbox) && hitbox.GetComponent<HitboxInfo>().owner != hurtbox.gameObject)
                     {
-                        Debug.Log("Hurtbox: " + hurtbox.name + " was touching: " + hitbox.name);
-
                         hurtbox.GetComponent<Control1>().Hit(hitbox, true);
                         hitbox.GetComponent<HitboxInfo>().activeHitbox = false;
                     }
                 }
             }
-        }
 
+        }
     }
+
 }

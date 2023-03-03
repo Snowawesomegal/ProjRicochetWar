@@ -202,7 +202,7 @@ MonoBehaviour:
   damage: 10
   knockback: 500
   angleIndependentOfMovement: 1
-  angle: 120
+  angle: 77
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 7259446613053437892}
   - component: {fileID: 7259446613053437894}
   - component: {fileID: 7259446613053437895}
+  - component: {fileID: 1819866637689971553}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Player
@@ -625,7 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallSpeed: 20
   fallAccel: 50
-  friction: 200
+  friction: 250
   wallJumpVerticalOoOne: 0.5
   ignoreGravity: 0
   intangible: 0
@@ -634,13 +635,10 @@ MonoBehaviour:
   groundSpeed: 30
   groundAccel: 100
   initialJumpForce: 950
+  dashForce: 4000
+  dashCost: 50
   shorthopWindow: 2
   walljumpShorthopWindow: 2
-  maxHealth: 100
-  currentHealth: 0
-  maxDashCharge: 100
-  dashCharge: 0
-  dashForce: 4000
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   bufferLength: 30
@@ -5661,3 +5659,22 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1819866637689971553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7259446613053437897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da169b4ea2628491daf6d2006050233f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  maxCharge: 100
+  currentCharge: 100
+  ghostBars: {fileID: 7422511886786561567, guid: 64a9efc59909e48acb20c85d893905e9, type: 3}
+  maxChargeDelay: 2
+  chargeRecoverySpeed: 5

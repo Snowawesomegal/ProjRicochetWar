@@ -22,10 +22,31 @@ public class PlayerShaderControllerInspector : Editor
         EditorGUILayout.Space(10);
 
         myTarget.ShaderColor = EditorGUILayout.ColorField("Shader Flash Color", myTarget.ShaderColor);
+        myTarget.ShaderStrength = EditorGUILayout.Slider("Shader Flash Strength", myTarget.ShaderStrength, 0, 1);
 
         EditorGUILayout.Space(10);
 
-        myTarget.ShaderStrength = EditorGUILayout.Slider("Shader Flash Strength", myTarget.ShaderStrength, 0, 1);
+        myTarget.palette_selector_dropdown = EditorGUILayout.Foldout(myTarget.palette_selector_dropdown, "Palette Selector");
+        if (myTarget.palette_selector_dropdown)
+        {
+            EditorGUI.indentLevel = EditorGUI.indentLevel + 1;
+            if (myTarget.samplePalette != null && GUILayout.Button("Refresh Sample Palette: " + myTarget.samplePalette.name))
+            {
+                myTarget.RefreshSamplePalette();
+            }
+            if (myTarget.samplePalette != null && GUILayout.Button("Reset Target Palette to Sample"))
+            {
+                myTarget.SetTargetPalette(myTarget.samplePalette);
+            }
+            foreach (ColorPalette palette in myTarget.targetPalettes)
+            {
+                if (palette != null && GUILayout.Button("Set Target Palette: " + palette.name))
+                {
+                    myTarget.SetTargetPalette(palette);
+                }
+            }
+            EditorGUI.indentLevel = EditorGUI.indentLevel - 1;
+        }
 
         EditorGUILayout.Space(10);
 
@@ -44,7 +65,7 @@ public class PlayerShaderControllerInspector : Editor
                 Color targetColorValue = EditorGUILayout.ColorField("Target Color " + i, myTarget.ShaderMaterial.GetColor(targetColor));
                 myTarget.ShaderMaterial.SetColor(targetColor, targetColorValue);
 
-                EditorGUILayout.Space(10);
+                EditorGUILayout.Space(5);
             }
             EditorGUI.indentLevel = EditorGUI.indentLevel - 1;
         }

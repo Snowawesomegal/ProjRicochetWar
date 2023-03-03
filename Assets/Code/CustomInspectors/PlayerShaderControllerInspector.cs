@@ -14,6 +14,13 @@ public class PlayerShaderControllerInspector : Editor
 
         EditorGUILayout.Space(10);
 
+        if (GUILayout.Button("Reset Material"))
+        {
+            myTarget.ResetMaterial();
+        }
+
+        EditorGUILayout.Space(10);
+
         myTarget.ShaderColor = EditorGUILayout.ColorField(myTarget.ShaderColor);
 
         EditorGUILayout.Space(10);

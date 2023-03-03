@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerShaderController : MonoBehaviour
 {
     [SerializeField] Renderer renderer;
-    [SerializeField] Material material;
+    [HideInInspector] Material material;
 
     private void Awake()
     {
@@ -15,20 +15,41 @@ public class PlayerShaderController : MonoBehaviour
             material = renderer.material;
     }
 
-    public void SetupMaterial()
+    // Ensure that the material is present
+    public bool ValidateMaterial()
     {
         if (renderer == null)
+        {
             renderer = GetComponent<Renderer>();
+            if (renderer == null)
+                return false;
+        }
         if (material == null)
-            material = renderer.material;
+        {
+            if (renderer == null)
+                return false;
+            ResetMaterial();
+        }
+        return true;
+    }
+
+    public void ResetMaterial()
+    {
+        // Reset the material being used
+        bool removeTossedMaterial = (material != null);
+        material = renderer.material;
+        // This is called in order to clean up random materials that generated and lost their last reference.
+        // Without this, we get a material leak in the editor: https://answers.unity.com/questions/283271/material-leak-in-editor.html
+        if (removeTossedMaterial)
+            Resources.UnloadUnusedAssets();
     }
 
     public float ShaderStrength { 
-        get { if (material == null) SetupMaterial(); return material.GetFloat("_Hurt"); } 
-        set { if (material == null) SetupMaterial(); material.SetFloat("_Hurt", value); } 
+        get { return ValidateMaterial() ? material.GetFloat("_Hurt") : 0f; } 
+        set { if (!ValidateMaterial()) return; material.SetFloat("_Hurt", value); } 
     }
     public Color ShaderColor { 
-        get { if (material == null) SetupMaterial(); return material.GetColor("_Color"); } 
-        set { if (material == null) SetupMaterial(); material.SetColor("_Color", value); } 
+        get { return ValidateMaterial() ? material.GetColor("_Color") : Color.black; } 
+        set { if (!ValidateMaterial()) return; material.SetColor("_Color", value); } 
     }
 }

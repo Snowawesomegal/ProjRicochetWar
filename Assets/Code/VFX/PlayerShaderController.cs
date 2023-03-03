@@ -17,10 +17,7 @@ public class PlayerShaderController : MonoBehaviour
 
     private void Awake()
     {
-        if (renderer == null)
-            renderer = GetComponent<Renderer>();
-        if (material == null)
-            material = renderer.material;
+        ValidateMaterial();
     }
 
     // Ensure that the material is present

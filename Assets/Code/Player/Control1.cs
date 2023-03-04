@@ -91,6 +91,9 @@ public class Control1 : MonoBehaviour
     public string currentAnimBool;
     string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "UpLightAttack", "UpHeavyAttack", "FAirAttack", "UpAirAttack", "DAirAttack", "BAirAttack" };
 
+    //debug
+    public bool animationDebugMessages = true;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -170,6 +173,8 @@ public class Control1 : MonoBehaviour
 
     void HitstunResponse()
     {
+        if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
+
         if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > 10)
         {
             Hit(null, false);
@@ -180,10 +185,12 @@ public class Control1 : MonoBehaviour
 
     public void DashResponse(CharacterInput input)
     {
+
         if (input.IsHeld() || input.IsPending())
         {
             if (imui.currentCharge >= dashCost)
             {
+                if (animationDebugMessages) { Debug.Log("Dash started" + "- frame: " + frame); }
                 if (currentAnimBool != null)
                 {
                     ae.StopAnimation(currentAnimBool);
@@ -207,6 +214,7 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld() || input.IsPending())
         {
+            if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
             Flip(input);
 
             ChangeAnimBool("FLightAttack", true);
@@ -215,6 +223,7 @@ public class Control1 : MonoBehaviour
 
     public void UpLightResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("UpTilt Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
             ChangeAnimBool("UpLightAttack", true);
@@ -223,6 +232,7 @@ public class Control1 : MonoBehaviour
 
     public void DownLightResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("DTilt Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
             ChangeAnimBool("DownLightAttack", true);
@@ -231,6 +241,7 @@ public class Control1 : MonoBehaviour
 
     public void UpHeavyResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("UpHeavy Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
             ChangeAnimBool("UpHeavyAttack", true);
@@ -239,6 +250,7 @@ public class Control1 : MonoBehaviour
 
     public void JumpResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("Jump Response" + "- frame: " + frame); }
         pim.CacheInput(input);
 
         if (clm.activeLockers.Contains(grounded))
@@ -253,6 +265,7 @@ public class Control1 : MonoBehaviour
 
     public void ChangeAnimBool(string boolName, bool toSet)
     {
+        if (animationDebugMessages) { Debug.Log("Changed animBool " + boolName + " to " + toSet); }
         anim.SetBool(boolName, toSet);
         if (toSet == true)
         {
@@ -288,7 +301,8 @@ public class Control1 : MonoBehaviour
         frame += 1;
         if (frame > 60) { frame = 1; }
 
-        if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this
+        if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this.
+                                                   // Sets speed to 0 every frame while wall-clinging
             // The reason this is called at all is because stopping all momentum on the frame I grab the wall sometimes just doesn't work
         {
             rb.velocity = Vector2.zero;
@@ -338,7 +352,6 @@ public class Control1 : MonoBehaviour
     {
         foreach (Collider2D i in currentOverlaps) // for all colliders the player is currently touching
         {
-            Debug.Log(i.gameObject.name);
             if (i.CompareTag("Standable")) // if one is standable
             {
                 if (!clm.activeLockers.Contains(grounded)) // if not grounded
@@ -465,7 +478,6 @@ public class Control1 : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Debug.Log("collision exit");
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             clm.RemoveLocker(wallcling);

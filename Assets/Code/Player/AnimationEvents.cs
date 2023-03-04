@@ -38,10 +38,7 @@ public class AnimationEvents : MonoBehaviour
             Debug.Log("Started animation and added inanim locker on frame " + c1.frame);
         }
 
-        if (!clm.activeLockers.Contains(c1.inAnim))
-        {
-            clm.AddLocker(c1.inAnim);
-        }
+        clm.AddLocker(c1.inAnim);
     }
 
     public void StartDash()
@@ -51,10 +48,7 @@ public class AnimationEvents : MonoBehaviour
             Debug.Log("Started dash and added Dashing locker on frame " + c1.frame);
         }
 
-        if (!clm.activeLockers.Contains(c1.dashing))
-        {
-            clm.AddLocker(c1.dashing);
-        }
+        clm.AddLocker(c1.dashing);
     }
 
     /// <summary>
@@ -64,7 +58,7 @@ public class AnimationEvents : MonoBehaviour
     {
         if (debugMessages)
         {
-            Debug.Log("stopped animation " + boolToSetFalse);
+            Debug.Log("stopped animation " + boolToSetFalse + "- frame: " + c1.frame);
         }
 
         anim.SetBool(boolToSetFalse, false);
@@ -78,7 +72,7 @@ public class AnimationEvents : MonoBehaviour
     {
         if (debugMessages)
         {
-            Debug.Log("set bool " + toSetTrue + " true.");
+            Debug.Log("set bool " + toSetTrue + " true." + "- frame: " + c1.frame);
         }
 
         c1.ChangeAnimBool(toSetTrue, true);
@@ -88,7 +82,7 @@ public class AnimationEvents : MonoBehaviour
     {
         if (debugMessages)
         {
-            Debug.Log("set bool " + toSetFalse + " false.");
+            Debug.Log("set bool " + toSetFalse + " false." + "- frame: " + c1.frame);
         }
 
         c1.ChangeAnimBool(toSetFalse, false);
@@ -105,7 +99,7 @@ public class AnimationEvents : MonoBehaviour
         {
             if (debugMessages)
             {
-                Debug.Log("set bool " + newAnimBool + " true. Via SwitchIfNotAttacking");
+                Debug.Log("set bool " + newAnimBool + " true. Via SwitchIfNotAttacking" + " true." + "- frame: " + c1.frame);
             }
 
             anim.SetBool(newAnimBool, true);

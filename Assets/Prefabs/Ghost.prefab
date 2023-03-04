@@ -606,7 +606,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 44d974d0f80d641858cb2c119de7cecc, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -664,6 +664,7 @@ MonoBehaviour:
   ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
   frame: 0
   currentAnimBool: 
+  animationDebugMessages: 1
 --- !u!114 &7259446613053437888
 MonoBehaviour:
   m_ObjectHideFlags: 0

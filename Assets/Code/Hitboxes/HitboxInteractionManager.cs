@@ -6,25 +6,22 @@ public class HitboxInteractionManager : MonoBehaviour
 {
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
     public float hitboxDamageDifferenceToWin = 10;
-    ActivateHitbox ah;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(nameof(AfterPhysicsUpdate));
-        ah = GetComponent<ActivateHitbox>();
     }
 
     void DisableConnectedHitboxes(GameObject hbi)
     {
-        if (ah.currentConnectedHitboxes.Contains(hbi))
+        if (hbi.transform.parent.GetComponent<ActivateHitbox>().currentConnectedHitboxes.Contains(hbi))
         {
-            foreach (GameObject i in ah.currentConnectedHitboxes)
+            foreach (GameObject i in hbi.transform.parent.GetComponent<ActivateHitbox>().currentConnectedHitboxes)
             {
                 i.GetComponent<HitboxInfo>().activeHitbox = false;
             }
         }
-
     }
 
     public IEnumerator AfterPhysicsUpdate() // Using WaitForFixedUpdate is the only way to run something AFTER the Collision calls
@@ -33,7 +30,6 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
 
-            foreach (Collider2D i in triggersThisFrame) { Debug.Log(i); }
             RunHitBoxManagement();
             triggersThisFrame.Clear();
         }

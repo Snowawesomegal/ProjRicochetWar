@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7259446613053437899}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7259446611072093325
 CapsuleCollider2D:
@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 1200
+  knockback: 200
   angleIndependentOfMovement: 1
-  angle: 45
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
@@ -292,7 +292,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7259446613053437899}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7259446611355422954
 CapsuleCollider2D:
@@ -361,7 +361,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7259446613053437899}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7259446611903113915
 CapsuleCollider2D:
@@ -430,7 +430,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7259446613053437899}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7259446612675128428
 CapsuleCollider2D:
@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 7259446613053437894}
   - component: {fileID: 7259446613053437895}
   - component: {fileID: 1819866637689971553}
+  - component: {fileID: 2969397049923640288}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Player
@@ -512,6 +513,7 @@ Transform:
   - {fileID: 7259446611262589474}
   - {fileID: 7259446611139407603}
   - {fileID: 7259446611103129941}
+  - {fileID: 5408500387417087804}
   - {fileID: 7259446611072093323}
   - {fileID: 7259446612675128426}
   - {fileID: 7259446611903113913}
@@ -639,6 +641,7 @@ MonoBehaviour:
   dashCost: 50
   shorthopWindow: 2
   walljumpShorthopWindow: 2
+  am: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   bufferLength: 30
@@ -648,9 +651,13 @@ MonoBehaviour:
   inAnim: {fileID: 11400000, guid: 6e871cd89094bde4a8fd0774148fe9cb, type: 2}
   wallcling: {fileID: 11400000, guid: 9de46684201334b0bb1963733b8bc2b7, type: 2}
   onlyAttack: {fileID: 11400000, guid: 468f03c3a8f114abc91524bfd93b05dc, type: 2}
+  wallTouching: {fileID: 0}
+  touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
   facingRight: 1
+  collidedWallSide: 0
+  collidedWallSlope: 0
   platformCollider: {fileID: 7259446611262589475}
   ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
   frame: 0
@@ -5678,3 +5685,84 @@ MonoBehaviour:
   ghostBars: {fileID: 7422511886786561567, guid: 64a9efc59909e48acb20c85d893905e9, type: 3}
   maxChargeDelay: 2
   chargeRecoverySpeed: 5
+--- !u!114 &2969397049923640288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7259446613053437897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d8a995e73f4443ccb42c121af883207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7818268437841943606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5408500387417087804}
+  - component: {fileID: 859923251221099715}
+  - component: {fileID: 3333052537965591636}
+  m_Layer: 0
+  m_Name: FLightAttackHit3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5408500387417087804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7818268437841943606}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7259446613053437899}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &859923251221099715
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7818268437841943606}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0000000011541417, y: 0.009681643}
+  m_Size: {x: 2.749734, y: 1.754033}
+  m_Direction: 1
+--- !u!114 &3333052537965591636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7818268437841943606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knockback: 1300
+  angleIndependentOfMovement: 1
+  angle: 45
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  activeHitbox: 1

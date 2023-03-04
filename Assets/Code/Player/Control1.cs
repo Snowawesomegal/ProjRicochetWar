@@ -9,29 +9,29 @@ using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
-    //March 1, 2023, 1:39PM
+    //March 3, 2023, 6:00PM
 
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
-    [SerializeField] float wallJumpVerticalOoOne = 0.5f;
+    public float wallJumpVerticalOoOne = 0.5f;
     public bool ignoreGravity = false;
     public bool intangible = false;
 
     //speeds
-    [SerializeField] float airSpeed = 10;
+    public float airSpeed = 10;
     [SerializeField] float airAccel = 10;
-    [SerializeField] float groundSpeed = 10;
+    public float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
-    [SerializeField] float initialJumpForce = 10;
-    [SerializeField] float dashForce = 10;
+    public float initialJumpForce = 10;
+    public float dashForce = 10;
     [SerializeField] float dashCost = 50;
 
     //windows
-    [SerializeField] float shorthopWindow = 3;
-    [SerializeField] float walljumpShorthopWindow = 3;
+    public float shorthopWindow = 3;
+    public float walljumpShorthopWindow = 3;
 
     //components
     Rigidbody2D rb;
@@ -43,7 +43,7 @@ public class Control1 : MonoBehaviour
     ActivateHitbox ah;
     HitboxInteractionManager him;
     ParticleSystem trailps;
-    AudioManager am;
+    public AudioManager am;
     GameObject sm;
     InMatchUI imui;
 
@@ -61,15 +61,15 @@ public class Control1 : MonoBehaviour
     public StandardControlLocker wallcling;
     public StandardControlLocker onlyAttack;
 
-    Collider2D wallTouching;
-    bool touchingWall = false;
+    public Collider2D wallTouching;
+    public bool touchingWall = false;
     public float minimumSpeedForHitstun = 50;
     public int framesInHitstun = 0;
     public bool facingRight = true;
 
     //Wall Collision
-    int collidedWallSide;
-    float collidedWallSlope;
+    public int collidedWallSide;
+    public float collidedWallSlope;
     [SerializeField] GameObject platformCollider;
 
     List<Collider2D> currentOverlaps = new List<Collider2D>();
@@ -182,13 +182,6 @@ public class Control1 : MonoBehaviour
         }
     }
 
-    public void Dash()
-    {
-        rb.AddForce(pim.GetCurrentDirectional().current * dashForce);
-        StartStopTrail(1);
-        clm.RemoveLocker(wallcling);
-    }
-
     public void FLightResponse(CharacterInput input)
     {
         if (input.IsHeld() || input.IsPending())
@@ -203,6 +196,7 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld() || input.IsPending())
         {
+            Debug.Log("started uptilt with input type " + input.Phase);
             anim.SetBool("UpLightAttack", true);
         }
     }
@@ -237,50 +231,6 @@ public class Control1 : MonoBehaviour
         }
     }
 
-    public void StartAnimation()
-    {
-        clm.AddLocker(inAnim);
-        Debug.Log("Started animation on frame: " + frame);
-    }
-
-    public void StopAnimation(string boolToSetFalse)
-    {
-        clm.RemoveLocker(inAnim);
-        anim.SetBool(boolToSetFalse, false);
-        anim.SetBool("ContinueAttack", false);
-        ah.currentConnectedHitboxes.Clear();
-
-        Debug.Log("Stopped animation on frame: " + frame);
-    }
-
-    public void ReduceVelocityByFactor(int factor)
-    {
-        rb.velocity /= factor;
-    }
-
-    public void SlowSpeed(float magnitude)
-    {
-        float relevantSpeed = clm.activeLockers.Contains(grounded) ? groundSpeed : airSpeed / 5;
-
-        if (Mathf.Abs(rb.velocity.x) > relevantSpeed)
-        {
-
-            rb.AddForce(new Vector2 (rb.velocity.x / -magnitude, 0));
-        }
-        if (Mathf.Abs(rb.velocity.y) > relevantSpeed)
-        {
-            rb.AddForce(new Vector2 (0, rb.velocity.y / -magnitude));
-        }
-    }
-
-    public void SwitchIfAttacking(string newAnimBool)
-    {
-        if (pim.BufferInputExists(ControlLock.Controls.ATTACK))
-        {
-            anim.SetBool(newAnimBool, true);
-        }
-    }
-
     void Flip(CharacterInput input)
     {
         if (Mathf.Round(input.Direction.current.x) > 0)
@@ -295,48 +245,6 @@ public class Control1 : MonoBehaviour
         }
 
         bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
-    }
-
-    public void ApplyWallJumpForce() // called by walljump animation
-    {
-        rb.velocity = Vector2.zero;
-
-        CharacterInput initialJumpInput = pim.GetCachedInput(ControlLock.Controls.JUMP);
-        if ((pim.GetCachedInput(ControlLock.Controls.JUMP).Duration >= walljumpShorthopWindow) && initialJumpInput.IsHeld())
-        {
-            rb.AddForce(1.8f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
-        }
-        else
-        {
-            rb.AddForce(1.4f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
-        }
-        clm.RemoveLocker(wallcling);
-        collidedWallSide = 0;
-        touchingWall = false;
-        wallTouching = null;
-
-        // it is ridiculous how many things I have to set here, something about wall mechanics should probably be reworked
-    }
-
-    public void ApplyJumpForce() // called by jump animation
-    {
-        CharacterInput initialJumpInput = pim.GetCachedInput(ControlLock.Controls.JUMP);
-
-        if ((initialJumpInput.Duration >= shorthopWindow) && initialJumpInput.IsHeld())
-        {
-            rb.AddForce(1.5f * initialJumpForce * Vector2.up);
-        }
-        else
-        {
-            rb.AddForce(initialJumpForce * Vector2.up);
-        }
-    }
-
-    public void StartStopTrail(int startstop)
-    {
-        if (startstop == 1) { trailps.Play(); }
-        else { trailps.Stop(); }
-
     }
 
     private void FixedUpdate()
@@ -387,11 +295,6 @@ public class Control1 : MonoBehaviour
             }
 
         }
-    }
-
-    public void PlaySoundFromAnimator(string name)
-    {
-        am.PlaySound(name);
     }
 
     // Updates grounded condition every frame.
@@ -447,26 +350,36 @@ public class Control1 : MonoBehaviour
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
 
-            rb.velocity = Vector2.zero;
-            imui.ChangeHealth(-hi.damage);
-            Vector2 angleOfForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * hi.angle), Mathf.Sin(Mathf.Deg2Rad * hi.angle));
-
-            if (!hi.facingRight)
+            if (hi.angle == 361)
             {
-                angleOfForce.x *= -1;
-            }
-
-            if (!hi.angleIndependentOfMovement)
-            {
-                Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
-                angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
+                Vector2 goalPosition = new Vector2(collider.transform.parent.position.x + 1, collider.transform.parent.position.y);
+                Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
+                rb.AddForce(between * hi.knockback);
             }
             else
             {
-                angleOfForce = angleOfForce.normalized;
+                rb.velocity = Vector2.zero;
+                imui.ChangeHealth(-hi.damage);
+                Vector2 angleOfForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * hi.angle), Mathf.Sin(Mathf.Deg2Rad * hi.angle));
+
+                if (!hi.facingRight)
+                {
+                    angleOfForce.x *= -1;
+                }
+
+                if (!hi.angleIndependentOfMovement)
+                {
+                    Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
+                    angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
+                }
+                else
+                {
+                    angleOfForce = angleOfForce.normalized;
+                }
+
+                rb.AddForce(angleOfForce * hi.knockback);
             }
 
-            rb.AddForce(angleOfForce * hi.knockback);
         }
         else
         {

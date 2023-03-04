@@ -13,12 +13,13 @@ public class ActivateHitbox : MonoBehaviour
     ControlLockManager clm;
 
     public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
-    public List<GameObject> currentConnectedHitboxes = new List<GameObject>();
+    public List<GameObject> currentConnectedHitboxes;
 
     private void Start()
     {
         clm = GetComponent<ControlLockManager>();
         c1 = GetComponent<Control1>();
+        currentConnectedHitboxes = new List<GameObject>() { };
     }
 
     public void ConnectHitboxes(string hitboxesSeparatedBySlashes)

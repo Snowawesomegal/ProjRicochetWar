@@ -967,6 +967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 3955727984481451, guid: 84f7c76bb39c04a6885a190278fbf7a2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79f5c736d06b05c4b982c6add25553d7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84f7c76bb39c04a6885a190278fbf7a2, type: 3}
 --- !u!1 &522320801
@@ -1355,6 +1359,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1177450269
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hurt Color Shader Mat (Instance) (Instance) (Instance) (Instance)
+  m_Shader: {fileID: -6465566751694194690, guid: 10bcce4717a42e840b05b8ba49f7ad69, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Hurt: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _SampleColor1: {r: 0.7372549, g: 0.69411767, b: 0.43529415, a: 1}
+    - _SampleColor10: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor2: {r: 0.023529414, g: 0.1254902, b: 0.21176472, a: 1}
+    - _SampleColor3: {r: 0.07058824, g: 0.20784315, b: 0.2901961, a: 0}
+    - _SampleColor4: {r: 1, g: 1, b: 1, a: 0}
+    - _SampleColor5: {r: 0.9960785, g: 0.96470594, b: 0.86666673, a: 0}
+    - _SampleColor6: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor7: {r: 0.019607844, g: 0.1254902, b: 0.20784315, a: 0}
+    - _SampleColor8: {r: 0, g: 0, b: 0, a: 0}
+    - _SampleColor9: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor1: {r: 0.34901965, g: 0.9607843, b: 0.35448313, a: 0}
+    - _TargetColor10: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor2: {r: 0.04561232, g: 0.23584908, b: 0.2206667, a: 0}
+    - _TargetColor3: {r: 0.053266283, g: 0.16607003, b: 0.1981132, a: 0}
+    - _TargetColor4: {r: 0.3490566, g: 0.20910466, b: 0.2893301, a: 0}
+    - _TargetColor5: {r: 0.77874684, g: 0.9433962, b: 0.9119221, a: 0}
+    - _TargetColor6: {r: 0.33962262, g: 0.22908507, b: 0.27569765, a: 0}
+    - _TargetColor7: {r: 0.2924528, g: 0.15864186, b: 0.15864186, a: 0}
+    - _TargetColor8: {r: 0, g: 0, b: 0, a: 0}
+    - _TargetColor9: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &1246496601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,6 +1704,7 @@ GameObject:
   - component: {fileID: 1695154413}
   - component: {fileID: 1695154415}
   - component: {fileID: 1695154414}
+  - component: {fileID: 1695154416}
   m_Layer: 0
   m_Name: TestChar1
   m_TagString: Player
@@ -1665,7 +1732,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 1177450269}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1844,8 +1911,6 @@ MonoBehaviour:
   playerController: {fileID: 1695154403}
   controlLockManager: {fileID: 1695154411}
   debugMessages: 0
-  testLock: {fileID: 0}
-  testLockDuration: 10
   inputBufferDuration: 10
   inputBufferDebugMessages: 0
   playerVerticalAttackThreshold: 70
@@ -1967,6 +2032,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e120126c-b953-4a4c-990f-a2758291ac7f
     m_ActionName: Playing/Dash[/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e3502153-134c-4efc-be88-a71187d52821
+    m_ActionName: Playing/Heavy Attack[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 359ab731-0107-4a45-8dae-b3ba007159bc
+    m_ActionName: Playing/Movement[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: DefaultControls
   m_DefaultActionMap: Playing
@@ -6777,6 +6850,25 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1695154416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695154400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6847c5d32e0f25e42bfaf9c344856424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 1695154401}
+  color_selector_dropdown: 0
+  palette_selector_dropdown: 1
+  samplePalette: {fileID: 11400000, guid: bc71ed20025472445b7647289db2963e, type: 2}
+  targetPalettes:
+  - {fileID: 11400000, guid: 650464a26db2192478b65f047769d637, type: 2}
+  - {fileID: 11400000, guid: 5fd932f6d5003114483076083466f770, type: 2}
 --- !u!114 &1877229849 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}

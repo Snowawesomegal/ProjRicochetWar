@@ -11,6 +11,8 @@ public class Control1 : MonoBehaviour
 {
     //March 3, 2023, 6:00PM
 
+    public GameObject testCircle;
+
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
     [SerializeField] float fallSpeed = 10;
@@ -27,6 +29,8 @@ public class Control1 : MonoBehaviour
     [SerializeField] float groundAccel = 10;
     public float initialJumpForce = 10;
     public float dashForce = 10;
+
+    //Costs
     [SerializeField] float dashCost = 50;
 
     //windows
@@ -46,6 +50,7 @@ public class Control1 : MonoBehaviour
     public AudioManager am;
     GameObject sm;
     InMatchUI imui;
+    AnimationEvents ae;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -60,6 +65,7 @@ public class Control1 : MonoBehaviour
     public StandardControlLocker inAnim;
     public StandardControlLocker wallcling;
     public StandardControlLocker onlyAttack;
+    public StandardControlLocker dashing;
 
     public Collider2D wallTouching;
     public bool touchingWall = false;
@@ -81,6 +87,10 @@ public class Control1 : MonoBehaviour
     public int frame = 0;
     int dropPlatformFrames = 0;
 
+    //Animator
+    public string currentAnimBool;
+    string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "UpLightAttack", "UpHeavyAttack", "FAirAttack", "UpAirAttack", "DAirAttack", "BAirAttack" };
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -94,6 +104,7 @@ public class Control1 : MonoBehaviour
         sm = GameObject.Find("SettingsManager");
         am = sm.GetComponent<AudioManager>();
         imui = GetComponent<InMatchUI>();
+        ae = GetComponent<AnimationEvents>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -169,17 +180,27 @@ public class Control1 : MonoBehaviour
 
     public void DashResponse(CharacterInput input)
     {
-        if (imui.currentCharge >= dashCost)
+        if (input.IsHeld() || input.IsPending())
         {
-            anim.SetBool("Dash", true);
+            if (imui.currentCharge >= dashCost)
+            {
+                if (currentAnimBool != null)
+                {
+                    ae.StopAnimation(currentAnimBool);
+                }
+                ChangeAnimBool("StartDash", true);
+                ChangeAnimBool("StopDash", true); //Dash ends when StopDash is false
+                clm.AddLocker(dashing);
 
-            rb.velocity = Vector2.zero;
-            imui.ChangeCharge(-dashCost);
+                rb.velocity = Vector2.zero;
+                imui.ChangeCharge(-dashCost);
+            }
+            else
+            {
+                // sound effect for no dash charge goes here
+            }
         }
-        else
-        {
-            // sound effect for no dash charge goes here
-        }
+
     }
 
     public void FLightResponse(CharacterInput input)
@@ -188,7 +209,7 @@ public class Control1 : MonoBehaviour
         {
             Flip(input);
 
-            anim.SetBool("FLightAttack", true);
+            ChangeAnimBool("FLightAttack", true);
         }
     }
 
@@ -196,8 +217,7 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld() || input.IsPending())
         {
-            Debug.Log("started uptilt with input type " + input.Phase);
-            anim.SetBool("UpLightAttack", true);
+            ChangeAnimBool("UpLightAttack", true);
         }
     }
 
@@ -205,7 +225,7 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld() || input.IsPending())
         {
-            anim.SetBool("DownLightAttack", true);
+            ChangeAnimBool("DownLightAttack", true);
         }
     }
 
@@ -213,7 +233,7 @@ public class Control1 : MonoBehaviour
     {
         if (input.IsHeld() || input.IsPending())
         {
-            anim.SetBool("UpHeavyAttack", true);
+            ChangeAnimBool("UpHeavyAttack", true);
         }
     }
 
@@ -223,11 +243,27 @@ public class Control1 : MonoBehaviour
 
         if (clm.activeLockers.Contains(grounded))
         {
-            anim.SetBool("Jumpsquat", true);
+            ChangeAnimBool("Jumpsquat", true);
         }
         else if (clm.activeLockers.Contains(wallcling))
         {
-            anim.SetBool("WallJumpSquat", true);
+            ChangeAnimBool("WallJumpSquat", true);
+        }
+    }
+
+    public void ChangeAnimBool(string boolName, bool toSet)
+    {
+        anim.SetBool(boolName, toSet);
+        if (toSet == true)
+        {
+            if (attackBools.Contains(boolName))
+            {
+                currentAnimBool = boolName;
+            }
+        }
+        else
+        {
+            currentAnimBool = null;
         }
     }
 
@@ -302,6 +338,7 @@ public class Control1 : MonoBehaviour
     {
         foreach (Collider2D i in currentOverlaps) // for all colliders the player is currently touching
         {
+            Debug.Log(i.gameObject.name);
             if (i.CompareTag("Standable")) // if one is standable
             {
                 if (!clm.activeLockers.Contains(grounded)) // if not grounded
@@ -350,11 +387,15 @@ public class Control1 : MonoBehaviour
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
 
+
             if (hi.angle == 361)
             {
-                Vector2 goalPosition = new Vector2(collider.transform.parent.position.x + 1, collider.transform.parent.position.y);
+                Vector2 hiParentVelocity = hi.transform.parent.GetComponent<Rigidbody2D>().velocity;
+                Vector3 hiParentPosition = hi.transform.parent.position;
+
+                Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight?1:-1), hiParentPosition.y);
                 Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                rb.AddForce(between * hi.knockback);
+                rb.AddForce(((between + (hiParentVelocity / 10)) * hi.knockback));
             }
             else
             {
@@ -394,7 +435,6 @@ public class Control1 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("collision enter");
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             collidedWallSide = (int)Mathf.Sign(collision.GetContact(0).point.x - transform.position.x);
@@ -405,7 +445,6 @@ public class Control1 : MonoBehaviour
         if (!currentOverlaps.Contains(collision.collider))
         {
             currentOverlaps.Add(collision.collider);
-            Debug.Log(collision.collider.name);
         }
     }
 
@@ -422,12 +461,11 @@ public class Control1 : MonoBehaviour
                 him.triggersThisFrame.Add(bc);
             }
         }
-
-        if (!currentOverlaps.Contains(collision)) { currentOverlaps.Add(collision); };
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        Debug.Log("collision exit");
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             clm.RemoveLocker(wallcling);
@@ -437,10 +475,5 @@ public class Control1 : MonoBehaviour
         }
 
         if (currentOverlaps.Contains(collision.collider)) { currentOverlaps.Remove(collision.collider); };
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (currentOverlaps.Contains(collision)) { currentOverlaps.Remove(collision); };
     }
 }

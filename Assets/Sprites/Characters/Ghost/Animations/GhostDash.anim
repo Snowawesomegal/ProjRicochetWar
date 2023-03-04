@@ -199,8 +199,15 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: StartAnimation
+    functionName: StartDash
     data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
+    functionName: SetAnimBoolFalse
+    data: StartDash
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
@@ -270,7 +277,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0.51666665
     functionName: StopAnimation
-    data: Dash
+    data: StopDash
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

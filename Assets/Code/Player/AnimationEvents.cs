@@ -15,6 +15,8 @@ public class AnimationEvents : MonoBehaviour
     PlayerInputManager pim;
     ParticleSystem trailps;
 
+    [SerializeField] bool debugMessages;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -26,22 +28,70 @@ public class AnimationEvents : MonoBehaviour
         trailps = GetComponent<ParticleSystem>();
     }
 
-    public void DebugInfo()
-    {
-
-    }
-
+    /// <summary>
+    /// Adds inAnim locker.
+    /// </summary>
     public void StartAnimation()
     {
-        clm.AddLocker(c1.inAnim);
+        if (debugMessages)
+        {
+            Debug.Log("Started animation and added inanim locker on frame " + c1.frame);
+        }
+
+        if (!clm.activeLockers.Contains(c1.inAnim))
+        {
+            clm.AddLocker(c1.inAnim);
+        }
     }
 
+    public void StartDash()
+    {
+        if (debugMessages)
+        {
+            Debug.Log("Started dash and added Dashing locker on frame " + c1.frame);
+        }
+
+        if (!clm.activeLockers.Contains(c1.dashing))
+        {
+            clm.AddLocker(c1.dashing);
+        }
+    }
+
+    /// <summary>
+    /// Sets bool to false, continueattack to false, removes inAnim locker, and clears connected hitboxes.
+    /// </summary>
     public void StopAnimation(string boolToSetFalse)
     {
+        if (debugMessages)
+        {
+            Debug.Log("stopped animation " + boolToSetFalse);
+        }
+
         anim.SetBool(boolToSetFalse, false);
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.inAnim);
+        clm.RemoveLocker(c1.dashing);
         ah.currentConnectedHitboxes.Clear();
+    }
+
+    public void SetAnimBoolTrue(string toSetTrue)
+    {
+        if (debugMessages)
+        {
+            Debug.Log("set bool " + toSetTrue + " true.");
+        }
+
+        c1.ChangeAnimBool(toSetTrue, true);
+    }
+
+    public void SetAnimBoolFalse(string toSetFalse)
+    {
+        if (debugMessages)
+        {
+            Debug.Log("set bool " + toSetFalse + " false.");
+        }
+
+        c1.ChangeAnimBool(toSetFalse, false);
     }
 
     public void StartNewAnimOfMultihit()
@@ -53,6 +103,11 @@ public class AnimationEvents : MonoBehaviour
     {
         if (pim.BufferInputExists(ControlLock.Controls.ATTACK))
         {
+            if (debugMessages)
+            {
+                Debug.Log("set bool " + newAnimBool + " true. Via SwitchIfNotAttacking");
+            }
+
             anim.SetBool(newAnimBool, true);
         }
     }
@@ -138,5 +193,4 @@ public class AnimationEvents : MonoBehaviour
     {
         c1.am.PlaySound(name);
     }
-
 }

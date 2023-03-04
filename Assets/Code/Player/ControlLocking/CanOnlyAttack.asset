@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CanOnlyAttack
   m_EditorClassIdentifier: 
   controlLock:
-    locks: 55
+    locks: 23
     priority: 0

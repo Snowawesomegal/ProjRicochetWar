@@ -91,6 +91,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.033333335
+    functionName: ApplyHoriForceInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 400
+    intParameter: 0
+    messageOptions: 0
   - time: 0.2
     functionName: EnableHitbox
     data: FLightAttackHit2

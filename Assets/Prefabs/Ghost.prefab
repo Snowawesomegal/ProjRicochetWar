@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 500
+  knockback: 600
   angleIndependentOfMovement: 1
   angle: 77
   owner: {fileID: 0}
@@ -626,19 +626,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0aa78a01e1b4196a1dbeabbb419773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testCircle: {fileID: 6899714948450397382, guid: 94c56d4ff0c7a4485a02345fc0ab1fb2, type: 3}
   fallSpeed: 20
   fallAccel: 50
-  friction: 250
+  friction: 450
   wallJumpVerticalOoOne: 0.5
   ignoreGravity: 0
   intangible: 0
   airSpeed: 40
   airAccel: 60
   groundSpeed: 30
-  groundAccel: 100
+  groundAccel: 110
   initialJumpForce: 950
   dashForce: 4000
-  dashCost: 50
+  dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2
   am: {fileID: 0}
@@ -651,6 +652,7 @@ MonoBehaviour:
   inAnim: {fileID: 11400000, guid: 6e871cd89094bde4a8fd0774148fe9cb, type: 2}
   wallcling: {fileID: 11400000, guid: 9de46684201334b0bb1963733b8bc2b7, type: 2}
   onlyAttack: {fileID: 11400000, guid: 468f03c3a8f114abc91524bfd93b05dc, type: 2}
+  dashing: {fileID: 11400000, guid: 03123bf38946f48879ee59084a60d725, type: 2}
   wallTouching: {fileID: 0}
   touchingWall: 0
   minimumSpeedForHitstun: 20
@@ -661,6 +663,7 @@ MonoBehaviour:
   platformCollider: {fileID: 7259446611262589475}
   ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
   frame: 0
+  currentAnimBool: 
 --- !u!114 &7259446613053437888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5697,6 +5700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8a995e73f4443ccb42c121af883207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMessages: 0
 --- !u!1 &7818268437841943606
 GameObject:
   m_ObjectHideFlags: 0

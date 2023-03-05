@@ -118,6 +118,8 @@ public class Control1 : MonoBehaviour
 
     public void VerticalResponse(CharacterInput input)
     {
+        anim.SetFloat("Vertical", input.Direction.current.y);
+
         if (input.Direction.current.y < -0.5)
         {
             platformCollider.SetActive(false);
@@ -134,6 +136,8 @@ public class Control1 : MonoBehaviour
 
     public void HorizontalResponse(CharacterInput input)
     {
+        anim.SetFloat("Horizontal", input.Direction.current.x);
+
         if (clm.activeLockers.Contains(wallcling))
         {
             if (Mathf.Round(input.Direction.current.x) != collidedWallSide)

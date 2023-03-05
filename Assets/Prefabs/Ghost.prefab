@@ -636,7 +636,7 @@ MonoBehaviour:
   airSpeed: 40
   airAccel: 60
   groundSpeed: 30
-  groundAccel: 110
+  groundAccel: 180
   initialJumpForce: 950
   dashForce: 4000
   dashCost: 1

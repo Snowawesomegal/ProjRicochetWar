@@ -54,14 +54,18 @@ public class AnimationEvents : MonoBehaviour
     /// <summary>
     /// Sets bool to false, continueattack to false, removes inAnim locker, and clears connected hitboxes.
     /// </summary>
-    public void StopAnimation(string boolToSetFalse)
+    public void StopAnimation(string boolToSetFalse = "Nothing")
     {
         if (debugMessages)
         {
             Debug.Log("stopped animation " + boolToSetFalse + "- frame: " + c1.frame);
         }
 
-        anim.SetBool(boolToSetFalse, false);
+        if (boolToSetFalse.ToLower() != "nothing")
+        {
+            anim.SetBool(boolToSetFalse, false);
+        }
+
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.inAnim);
         clm.RemoveLocker(c1.dashing);
@@ -186,5 +190,10 @@ public class AnimationEvents : MonoBehaviour
     public void PlaySoundFromAnimator(string name)
     {
         c1.am.PlaySound(name);
+    }
+
+    public void PlaySoundGroupFromAnimator(string name)
+    {
+        c1.am.PlaySoundGroup(name);
     }
 }

@@ -160,7 +160,6 @@ public class PlayerInputManager : MonoBehaviour
                 if (debugMessages)
                     Debug.Log("Attacking upwards");
                 playerController.UpLightResponse(input);
-                // call up attack in player controller
                 break;
             case CharacterInput.CardinalDirection.DOWN:
                 if (debugMessages)
@@ -230,7 +229,7 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.LEFT:
             case CharacterInput.CardinalDirection.RIGHT:
             case CharacterInput.CardinalDirection.NONE:
-                // call forward/side heavy in player controller
+                playerController.FHeavyResponse(input);
                 break;
             default:
                 Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());

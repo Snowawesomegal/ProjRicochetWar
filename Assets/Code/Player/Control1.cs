@@ -9,7 +9,12 @@ using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
-    //March 3, 2023, 6:00PM
+    //March 5, 2023, 12:37PM
+
+    //Todo list
+    //Change implementation of limits/reductions for vertical and horizontal speed
+    //Work out wallcling animation logic
+    //Add sounds/animations for turning around
 
     public GameObject testCircle;
 
@@ -86,6 +91,7 @@ public class Control1 : MonoBehaviour
     //frames
     public int frame = 0;
     int dropPlatformFrames = 0;
+    [SerializeField] int dropPlatformTotalFrames = 7;
 
     //Animator
     public string currentAnimBool;
@@ -118,31 +124,28 @@ public class Control1 : MonoBehaviour
 
     public void VerticalResponse(CharacterInput input)
     {
-        anim.SetFloat("Vertical", input.Direction.current.y);
-
         if (input.Direction.current.y < -0.5)
         {
             platformCollider.SetActive(false);
+            if (dropPlatformFrames == 0)
+            {
+                dropPlatformFrames = 1;
+            }
+
             if (clm.activeLockers.Contains(grounded))
             {
-                dropPlatformFrames = 0; //implement this doing something
+                dropPlatformFrames = dropPlatformTotalFrames;
             }
-        }
-        else
-        {
-            platformCollider.SetActive(true);
         }
     }
 
     public void HorizontalResponse(CharacterInput input)
     {
-        anim.SetFloat("Horizontal", input.Direction.current.x);
-
         if (clm.activeLockers.Contains(wallcling))
         {
             if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
             {
-                clm.RemoveLocker(wallcling);
+                WallClingEnterExit(false);
             }
         }
         else
@@ -161,8 +164,7 @@ public class Control1 : MonoBehaviour
                 {
                     if (collidedWallSide == pim.GetCurrentDirectional().current.x)
                     {
-                        clm.AddLocker(wallcling);
-                        rb.velocity = Vector2.zero;
+                        WallClingEnterExit(true);
                     }
                 }
 
@@ -189,7 +191,6 @@ public class Control1 : MonoBehaviour
 
     public void DashResponse(CharacterInput input)
     {
-
         if (input.IsHeld() || input.IsPending())
         {
             if (imui.currentCharge >= dashCost)
@@ -211,7 +212,6 @@ public class Control1 : MonoBehaviour
                 // sound effect for no dash charge goes here
             }
         }
-
     }
 
     public void FLightResponse(CharacterInput input)
@@ -248,7 +248,18 @@ public class Control1 : MonoBehaviour
         if (animationDebugMessages) { Debug.Log("UpHeavy Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
+            Flip(input);
+
             ChangeAnimBool("UpHeavyAttack", true);
+        }
+    }
+
+    public void FHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("FHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            ChangeAnimBool("FHeavyAttack", true);
         }
     }
 
@@ -284,10 +295,28 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    void WallClingEnterExit(bool enterexit)
+    {
+        if (enterexit)
+        {
+            clm.AddLocker(wallcling);
+            anim.SetBool("WallCling", true);
+            rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            clm.RemoveLocker(wallcling);
+            anim.SetBool("WallCling", false);
+        }
+    }
+
+    
+
     void Flip(CharacterInput input)
     {
         if (Mathf.Round(input.Direction.current.x) > 0)
         {
+
             facingRight = true;
             sr.flipX = false;
         }
@@ -302,6 +331,9 @@ public class Control1 : MonoBehaviour
 
     private void FixedUpdate()
     {
+        anim.SetFloat("Vertical", pim.GetCurrentDirectional().current.y);
+        anim.SetFloat("Horizontal", pim.GetCurrentDirectional().current.x);
+
         frame += 1;
         if (frame > 60) { frame = 1; }
 
@@ -320,6 +352,18 @@ public class Control1 : MonoBehaviour
         ManageForces();
 
         UpdateGrounded();
+
+        ManagePlatformCollider();
+    }
+
+    void ManagePlatformCollider()
+    {
+        if (dropPlatformFrames == 0)
+        {
+            platformCollider.SetActive(true);
+            return;
+        }
+        dropPlatformFrames -= 1;
     }
 
     void ManageForces()
@@ -347,7 +391,6 @@ public class Control1 : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
                 //this is a placeholder, see directional response's explanation below
             }
-
         }
     }
 
@@ -484,7 +527,7 @@ public class Control1 : MonoBehaviour
     {
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
-            clm.RemoveLocker(wallcling);
+            WallClingEnterExit(false);
             collidedWallSide = 0;
             touchingWall = false;
             wallTouching = null;

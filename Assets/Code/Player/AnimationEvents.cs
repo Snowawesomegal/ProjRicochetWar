@@ -17,6 +17,8 @@ public class AnimationEvents : MonoBehaviour
 
     [SerializeField] bool debugMessages;
 
+    [SerializeField] GameObject smokeCloud;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -130,6 +132,13 @@ public class AnimationEvents : MonoBehaviour
         rb.AddForce(pim.GetCurrentDirectional().current * c1.dashForce);
         StartStopTrail(1);
         clm.RemoveLocker(c1.wallcling);
+    }
+
+    public void SpawnSmokeCloud()
+    {
+        GameObject newCloud = Instantiate(smokeCloud, transform.position + new Vector3(-0.5f * (c1.facingRight?1:-1), 0, 0), Quaternion.identity);
+        newCloud.GetComponent<SpriteRenderer>().flipX = !c1.facingRight;
+        Destroy(newCloud, 0.3f);
     }
 
     public void StartStopTrail(int startstop)

@@ -95,7 +95,7 @@ public class Control1 : MonoBehaviour
 
     //Animator
     public string currentAnimBool;
-    string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "UpLightAttack", "UpHeavyAttack", "FAirAttack", "UpAirAttack", "DAirAttack", "BAirAttack" };
+    string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "DownHeavyAttack", "DownLightAttack", "UpLightAttack", "UpHeavyAttack"};
 
     //debug
     public bool animationDebugMessages = true;
@@ -201,7 +201,7 @@ public class Control1 : MonoBehaviour
                     ae.StopAnimation(currentAnimBool);
                 }
                 ChangeAnimBool("StartDash", true);
-                ChangeAnimBool("StopDash", true); //Dash ends when StopDash is false
+                ChangeAnimBool("StopDash", true); // not entirely sure if this line is even necessary after I added ExitTime
                 clm.AddLocker(dashing);
 
                 rb.velocity = Vector2.zero;
@@ -209,7 +209,7 @@ public class Control1 : MonoBehaviour
             }
             else
             {
-                // sound effect for no dash charge goes here
+                // sound effect for trying to dash with no charge goes here
             }
         }
     }
@@ -231,15 +231,6 @@ public class Control1 : MonoBehaviour
         if (input.IsHeld() || input.IsPending())
         {
             ChangeAnimBool("UpLightAttack", true);
-        }
-    }
-
-    public void DownLightResponse(CharacterInput input)
-    {
-        if (animationDebugMessages) { Debug.Log("DTilt Response" + "- frame: " + frame); }
-        if (input.IsHeld() || input.IsPending())
-        {
-            ChangeAnimBool("DownLightAttack", true);
         }
     }
 
@@ -310,20 +301,35 @@ public class Control1 : MonoBehaviour
         }
     }
 
-    
+    void OnDirectionChange()
+    {
+        if (clm.activeLockers.Contains(grounded))
+        {
+            ae.SpawnDirectionalSmokeCloud();
+            am.PlaySoundGroup("HeelStep");
+        }
+
+    }
 
     void Flip(CharacterInput input)
     {
         if (Mathf.Round(input.Direction.current.x) > 0)
         {
-
-            facingRight = true;
-            sr.flipX = false;
+            if (!facingRight)
+            {
+                facingRight = true;
+                sr.flipX = false;
+                OnDirectionChange();
+            }
         }
         else if (Mathf.Round(input.Direction.current.x) < 0)
         {
-            facingRight = false;
-            sr.flipX = true;
+            if (facingRight)
+            {
+                facingRight = false;
+                sr.flipX = true;
+                OnDirectionChange();
+            }
         }
 
         bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
@@ -331,8 +337,11 @@ public class Control1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        anim.SetFloat("Vertical", pim.GetCurrentDirectional().current.y);
-        anim.SetFloat("Horizontal", pim.GetCurrentDirectional().current.x);
+        anim.SetFloat("VerticalInput", pim.GetCurrentDirectional().current.y);
+        anim.SetFloat("HorizontalInput", pim.GetCurrentDirectional().current.x);
+
+        anim.SetFloat("VerticalVelocity", rb.velocity.y);
+        anim.SetFloat("HorizontalVelocity", rb.velocity.x);
 
         frame += 1;
         if (frame > 60) { frame = 1; }

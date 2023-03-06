@@ -17,7 +17,13 @@ public class AnimationEvents : MonoBehaviour
 
     [SerializeField] bool debugMessages;
 
-    [SerializeField] GameObject smokeCloud;
+    [SerializeField] GameObject dirSmokeCloud;
+    [SerializeField] GameObject landJumpSmokeCloud;
+
+    [SerializeField] string runAnimationName;
+
+    string currentAnimationName = "Idle";
+    string lastFrameAnimationName = "Idle";
 
     void Start()
     {
@@ -28,6 +34,32 @@ public class AnimationEvents : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         pim = GetComponent<PlayerInputManager>();
         trailps = GetComponent<ParticleSystem>();
+    }
+
+    private void FixedUpdate()
+    {
+        ManageCurrentAnimation();
+    }
+
+    void ManageCurrentAnimation()
+    {
+        currentAnimationName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+
+        if (currentAnimationName != lastFrameAnimationName)
+        {
+            OnAnimationChange();
+        }
+
+        lastFrameAnimationName = currentAnimationName;
+    }
+
+    void OnAnimationChange() // called on first fixedupdate after the animation node changes
+    {
+        if (currentAnimationName == runAnimationName)
+        {
+
+        }
+
     }
 
     /// <summary>
@@ -134,9 +166,17 @@ public class AnimationEvents : MonoBehaviour
         clm.RemoveLocker(c1.wallcling);
     }
 
-    public void SpawnSmokeCloud()
+    public void SpawnDirectionalSmokeCloud()
     {
-        GameObject newCloud = Instantiate(smokeCloud, transform.position + new Vector3(-0.5f * (c1.facingRight?1:-1), 0, 0), Quaternion.identity);
+        float randomDisplacement = Random.Range(-0.5f, -0.1f) * (c1.facingRight ? 1 : -1);
+        GameObject newCloud = Instantiate(dirSmokeCloud, transform.position + new Vector3(-0.5f * (c1.facingRight?1:-1) + randomDisplacement, 0, 0), Quaternion.identity);
+        newCloud.GetComponent<SpriteRenderer>().flipX = !c1.facingRight;
+        Destroy(newCloud, 0.3f);
+    }
+
+    public void SpawnLandJumpSmokeCloud()
+    {
+        GameObject newCloud = Instantiate(landJumpSmokeCloud, transform.position + new Vector3(-0.5f * (c1.facingRight ? 1 : -1), 0, 0), Quaternion.identity);
         newCloud.GetComponent<SpriteRenderer>().flipX = !c1.facingRight;
         Destroy(newCloud, 0.3f);
     }

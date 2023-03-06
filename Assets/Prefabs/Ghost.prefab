@@ -5773,7 +5773,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMessages: 0
-  smokeCloud: {fileID: 7297698191939231783, guid: 356cbeb3eb49046b290cd4788a5e2054, type: 3}
+  dirSmokeCloud: {fileID: 7297698191939231783, guid: 356cbeb3eb49046b290cd4788a5e2054, type: 3}
+  landJumpSmokeCloud: {fileID: 6894210905415877931, guid: 07c04e5ca3f61478cb3eb18e554437e7, type: 3}
+  nodeNames:
+  - Run
+  - Jumpsquat
+  - Idle
+  - LandingLag
+  - Airborne
 --- !u!1 &7818268437841943606
 GameObject:
   m_ObjectHideFlags: 0

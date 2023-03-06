@@ -45,4 +45,21 @@ public class PlayerAnimationSetManager : MonoBehaviour
             Debug.LogWarning("IndexOutOfBounds: Index to set current animation set is not within bounds.");
         }
     }
+
+    public void SetCurrentAnimationSetByName(string name)
+    {
+        if (!animationCollection)
+        {
+            Debug.LogWarning("Animation Collection is null... cannot set current animation set by name.");
+        }
+        foreach (PlayerAnimationSet animSet in animationCollection.animationSets)
+        {
+            if (animSet.setName.Equals(name))
+            {
+                SetAnimations(animSet.animationSet);
+                return;
+            }
+        }
+        Debug.LogWarning("Cannot find animation set by name: " + name);
+    }
 }

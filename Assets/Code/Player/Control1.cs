@@ -94,8 +94,8 @@ public class Control1 : MonoBehaviour
     [SerializeField] int dropPlatformTotalFrames = 7;
 
     //Animator
-    public string currentAnimBool;
-    string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "DownHeavyAttack", "DownLightAttack", "UpLightAttack", "UpHeavyAttack"};
+    public string currentAnimBool = "FHeavyAttack";
+    public string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "DownHeavyAttack", "DownLightAttack", "UpLightAttack", "UpHeavyAttack"};
 
     //debug
     public bool animationDebugMessages = true;
@@ -200,8 +200,8 @@ public class Control1 : MonoBehaviour
                 {
                     ae.StopAnimation(currentAnimBool);
                 }
-                ChangeAnimBool("StartDash", true);
-                ChangeAnimBool("StopDash", true); // not entirely sure if this line is even necessary after I added ExitTime
+                ae.ChangeAnimBool("StartDash", true);
+                ae.ChangeAnimBool("StopDash", true); // not entirely sure if this line is even necessary after I added ExitTime
                 clm.AddLocker(dashing);
 
                 rb.velocity = Vector2.zero;
@@ -221,7 +221,7 @@ public class Control1 : MonoBehaviour
             if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
             Flip(input);
 
-            ChangeAnimBool("FLightAttack", true);
+            ae.ChangeAnimBool("FLightAttack", true);
         }
     }
 
@@ -230,7 +230,7 @@ public class Control1 : MonoBehaviour
         if (animationDebugMessages) { Debug.Log("UpTilt Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            ChangeAnimBool("UpLightAttack", true);
+            ae.ChangeAnimBool("UpLightAttack", true);
         }
     }
 
@@ -241,7 +241,7 @@ public class Control1 : MonoBehaviour
         {
             Flip(input);
 
-            ChangeAnimBool("UpHeavyAttack", true);
+            ae.ChangeAnimBool("UpHeavyAttack", true);
         }
     }
 
@@ -250,7 +250,7 @@ public class Control1 : MonoBehaviour
         if (animationDebugMessages) { Debug.Log("FHeavy Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            ChangeAnimBool("FHeavyAttack", true);
+            ae.ChangeAnimBool("FHeavyAttack", true);
         }
     }
 
@@ -261,28 +261,11 @@ public class Control1 : MonoBehaviour
 
         if (clm.activeLockers.Contains(grounded))
         {
-            ChangeAnimBool("Jumpsquat", true);
+            ae.ChangeAnimBool("Jumpsquat", true);
         }
         else if (clm.activeLockers.Contains(wallcling))
         {
-            ChangeAnimBool("WallJumpSquat", true);
-        }
-    }
-
-    public void ChangeAnimBool(string boolName, bool toSet)
-    {
-        if (animationDebugMessages) { Debug.Log("Changed animBool " + boolName + " to " + toSet); }
-        anim.SetBool(boolName, toSet);
-        if (toSet == true)
-        {
-            if (attackBools.Contains(boolName))
-            {
-                currentAnimBool = boolName;
-            }
-        }
-        else
-        {
-            currentAnimBool = null;
+            ae.ChangeAnimBool("WallJumpSquat", true);
         }
     }
 

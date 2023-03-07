@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f69a2aac7c41540029c57adc38297d81
+guid: dafc2bb19cfdf454a8a54561dd29d03b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,70 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ghost AirFHeavy_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 360
-        width: 120
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 75702eb570edf4198a4d2f296135947a
-      internalID: -424659630
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ghost AirFHeavy_1
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 360
-        width: 120
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3eca21dffcb6d4e1aa2cb85130e982dd
-      internalID: 1580527257
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ghost AirFHeavy_2
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 360
-        width: 120
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bfec523a6db244cee82a03c6ab251468
-      internalID: 160636965
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ghost AirFHeavy_3
+      name: GhostAirFHeavy_0
       rect:
         serializedVersion: 2
         x: 0
@@ -182,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a3d84320341e49ba86dcaa16fc38f3a
-      internalID: 72770660
+      spriteID: cfbb8cf79edcc4ad5bef579b23f8a30c
+      internalID: 1004459254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_4
+      name: GhostAirFHeavy_1
       rect:
         serializedVersion: 2
         x: 120
@@ -203,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e60b739300d7441ed9ca7d30a7fb53a8
-      internalID: -441419555
+      spriteID: 54e798216c7ed449a904c96bf2cf1ebe
+      internalID: -554109022
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_5
+      name: GhostAirFHeavy_2
       rect:
         serializedVersion: 2
         x: 240
@@ -224,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e9bad0860e1944cbb8807a88196e38a
-      internalID: 476078863
+      spriteID: 707bb0ab3c6684370a82ba4923e2780c
+      internalID: -1346551414
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_6
+      name: GhostAirFHeavy_3
       rect:
         serializedVersion: 2
         x: 0
@@ -245,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ee4d71e3b7f2407f8515716e16665f1
-      internalID: 441277254
+      spriteID: 5780bbc41b7ea4314907abdef00e1319
+      internalID: -962571957
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_7
+      name: GhostAirFHeavy_4
       rect:
         serializedVersion: 2
         x: 120
@@ -266,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d643110ff9850438892ff5ed3276299f
-      internalID: -1014104211
+      spriteID: 6a8c0ee06908746d0ad62bd725f8ff5f
+      internalID: 152985994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_8
+      name: GhostAirFHeavy_5
       rect:
         serializedVersion: 2
         x: 240
@@ -287,14 +224,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5236649f0114745deae8858519456cca
-      internalID: -1866974874
+      spriteID: 238ce7769dcf6473a81a8e2f79ee14f6
+      internalID: 293161998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_9
+      name: GhostAirFHeavy_6
       rect:
         serializedVersion: 2
         x: 0
@@ -308,14 +245,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16c0c7560af0c44c5a70a10a5e76f34e
-      internalID: -408947399
+      spriteID: 514b324a3296246bba0cfc538768a547
+      internalID: 190608597
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ghost AirFHeavy_10
+      name: GhostAirFHeavy_7
       rect:
         serializedVersion: 2
         x: 120
@@ -329,8 +266,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6e10abd501424f2a9ee00d7cb2747a4
-      internalID: -400976881
+      spriteID: eb6e05c61cf9b49b7ac6bf88f7dc47ad
+      internalID: 1161955347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GhostAirFHeavy_8
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 338b01785fc074d4680ea80bbce1aa61
+      internalID: -500002553
       vertices: []
       indices: 
       edges: []
@@ -346,17 +304,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ghost AirFHeavy_9: -408947399
-      Ghost AirFHeavy_10: -400976881
-      Ghost AirFHeavy_1: 1580527257
-      Ghost AirFHeavy_5: 476078863
-      Ghost AirFHeavy_4: -441419555
-      Ghost AirFHeavy_2: 160636965
-      Ghost AirFHeavy_7: -1014104211
-      Ghost AirFHeavy_3: 72770660
-      Ghost AirFHeavy_6: 441277254
-      Ghost AirFHeavy_0: -424659630
-      Ghost AirFHeavy_8: -1866974874
+      GhostAirFHeavy_6: 190608597
+      GhostAirFHeavy_2: -1346551414
+      GhostAirFHeavy_3: -962571957
+      GhostAirFHeavy_5: 293161998
+      GhostAirFHeavy_1: -554109022
+      GhostAirFHeavy_4: 152985994
+      GhostAirFHeavy_8: -500002553
+      GhostAirFHeavy_0: 1004459254
+      GhostAirFHeavy_7: 1161955347
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

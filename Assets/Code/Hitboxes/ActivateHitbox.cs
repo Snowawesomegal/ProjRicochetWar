@@ -13,41 +13,46 @@ public class ActivateHitbox : MonoBehaviour
     ControlLockManager clm;
 
     public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
-    public List<GameObject> currentConnectedHitboxes;
 
     private void Start()
     {
         clm = GetComponent<ControlLockManager>();
         c1 = GetComponent<Control1>();
-        currentConnectedHitboxes = new List<GameObject>() { };
-    }
-
-    public void ConnectHitboxes(string hitboxesSeparatedBySlashes)
-    {
-        string[] boxes = hitboxesSeparatedBySlashes.Split('/');
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform currentChild = transform.GetChild(i);
-            if (Array.Exists(boxes, element => element == currentChild.name))
-            {
-                currentConnectedHitboxes.Add(currentChild.gameObject);
-                break;
-            }
-        }
     }
 
     public void EnableHitbox(string hitboxName)
     {
         GameObject hitboxObject = null;
 
-        for (int i = 0; i < transform.childCount; i++)
+        if (hitboxName.Contains('/')) // have to find a parent and then a child within the parent (input is entered as parent/child if hitbox is nested)
         {
-            Transform currentChild = transform.GetChild(i);
-            if (currentChild.name == hitboxName)
+            string[] parentAndHB = hitboxName.Split('/'); // split and add to array
+
+            foreach (Transform i in transform) // foreach child in player
             {
-                hitboxObject = currentChild.gameObject;
-                break;
+                if (i.name == parentAndHB[0]) // if that child is the parent we're looking for
+                {
+                    foreach (Transform j in i) // foreach child in that child
+                    {
+                        if (j.gameObject.name == parentAndHB[1]) // if that child is the child we're looking for
+                        {
+                            hitboxObject = j.gameObject;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else // finding non-nested child in player's transform
+        {
+            foreach (Transform i in transform)
+            {
+                if (i.name == hitboxName)
+                {
+                    hitboxObject = i.gameObject;
+                    break;
+                }
             }
         }
 
@@ -72,6 +77,47 @@ public class ActivateHitbox : MonoBehaviour
         toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
     }
 
+    public void EnableMultiHitbox(string hitboxParentName)
+    {
+        List<GameObject> hitboxesToEnable = new List<GameObject>();
+
+        foreach (Transform i in transform)
+        {
+            if (i.name == hitboxParentName)
+            {
+                foreach (Transform j in i)
+                {
+                    hitboxesToEnable.Add(j.gameObject);
+                }
+
+                break;
+            }
+        }
+
+        if (hitboxesToEnable.Count == 0)
+        {
+            Debug.Log("There is no hitbox parent with the name " + hitboxParentName + " on " + gameObject.name);
+            return;
+        }
+
+        foreach (GameObject i in hitboxesToEnable)
+        {
+            i.SetActive(true);
+
+            HitboxInfo HBInfo = i.GetComponent<HitboxInfo>();
+
+            HBInfo.owner = gameObject;
+
+            if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
+            {
+                i.transform.localPosition *= new Vector2(-1, 1);
+            }
+            HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
+
+            toBeDisabled.Add(i, HBInfo.activeFrames);
+        }
+    }
+
     private void FixedUpdate()
     {
         Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
@@ -81,7 +127,7 @@ public class ActivateHitbox : MonoBehaviour
             if (i.Value <= 0)
             {
                 i.Key.SetActive(false);
-                i.Key.GetComponent<HitboxInfo>().activeHitbox = true;
+                i.Key.GetComponent<HitboxInfo>().playersHitAlready.Clear();
                 toBeDisabled.Remove(i.Key);
             }
             else

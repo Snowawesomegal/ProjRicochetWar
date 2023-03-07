@@ -9,12 +9,11 @@ using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
-    //March 5, 2023, 12:37PM
+    //March 6, 2023, 10:47PM
 
     //Todo list
     //Change implementation of limits/reductions for vertical and horizontal speed
-    //Work out wallcling animation logic
-    //Add sounds/animations for turning around
+    //Add priority to hitboxes
 
     public GameObject testCircle;
 
@@ -23,13 +22,15 @@ public class Control1 : MonoBehaviour
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
+    [SerializeField] float airFriction = 500;
     public float wallJumpVerticalOoOne = 0.5f;
     public bool ignoreGravity = false;
     public bool intangible = false;
 
     //speeds
     public float airSpeed = 10;
-    [SerializeField] float airAccel = 10;
+    [SerializeField] float airAccel = 50;
+    [SerializeField] float airAccelDuringAerial = 40;
     public float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
     public float initialJumpForce = 10;
@@ -71,6 +72,7 @@ public class Control1 : MonoBehaviour
     public StandardControlLocker wallcling;
     public StandardControlLocker onlyAttack;
     public StandardControlLocker dashing;
+    public StandardControlLocker inAerialAnim;
 
     public Collider2D wallTouching;
     public bool touchingWall = false;
@@ -118,8 +120,6 @@ public class Control1 : MonoBehaviour
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
-
-        friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
     }
 
     public void VerticalResponse(CharacterInput input)
@@ -141,26 +141,19 @@ public class Control1 : MonoBehaviour
 
     public void HorizontalResponse(CharacterInput input)
     {
-        if (clm.activeLockers.Contains(wallcling))
+        if (clm.activeLockers.Contains(grounded)) // if grounded: move
         {
-            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
-            {
-                WallClingEnterExit(false);
-            }
+            rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel); // Ground move
         }
-        else
+        else // if in the air
         {
-            if (clm.activeLockers.Contains(grounded))
+            if (clm.activeLockers.Contains(inAerialAnim)) // if using an aerial: reduced air movement
             {
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
-                //above line caps horizontal speed at groundspeed every frame
-                //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
-                //best solution is to constantly reduce speed until speed is within desired parameters while touching ground and not in hitstun
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccelDuringAerial);
             }
-            else
+            else // if in the air but not using an aerial
             {
-                if (touchingWall)
+                if (touchingWall) // if touching wall, if holding toward wall and not using an aerial, grab wall
                 {
                     if (collidedWallSide == pim.GetCurrentDirectional().current.x)
                     {
@@ -168,11 +161,20 @@ public class Control1 : MonoBehaviour
                     }
                 }
 
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
-                //same as grounded
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel); // Air move
             }
+        }
 
+        if (clm.activeLockers.Contains(wallcling)) // if wallcling and not holding toward wall, unstick from wall
+        {
+            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
+            {
+                WallClingEnterExit(false);
+            }
+        }
+
+        if (!clm.activeLockers.Contains(inAerialAnim))
+        {
             Flip(input);
         }
     }
@@ -360,10 +362,10 @@ public class Control1 : MonoBehaviour
 
     void ManageForces()
     {
-        if (clm.activeLockers.Contains(grounded))
+        if (clm.activeLockers.Contains(grounded)) // if grounded
         {
             if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
-                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded/can't move/not holding the direction of motion;
+                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded and: can't move or not holding the direction of motion: apply friction
             {
                 if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
                 {
@@ -374,15 +376,30 @@ public class Control1 : MonoBehaviour
                     rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
                 }
             }
+
+            rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
         }
-        else
+        else // if not grounded
         {
-            if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity)
+            if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
+                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if airborne and: can't move or not holding the direction of motion: apply airFriction
             {
-                rb.AddForce(Vector2.down * fallAccel);
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
-                //this is a placeholder, see directional response's explanation below
+                if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                {
+                    rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
+                }
+                else
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                }
             }
+
+            if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
+            {
+                rb.AddForce(Vector2.down * fallAccel); // Apply gravity
+            }
+
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999)); // cap fall speed
         }
     }
 

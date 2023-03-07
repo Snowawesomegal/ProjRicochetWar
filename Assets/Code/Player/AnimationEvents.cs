@@ -130,7 +130,6 @@ public class AnimationEvents : MonoBehaviour
     public void UseCurrentAnimBoolToSetAnimBool(int truefalse) // calls anim.SetBool with c1.currentAnimBool. If false, sets currentAnimBool to null.
         // called only by LandingLag atm
     {
-        Debug.Log("at the end of landing lag, currentAnimBool is " + c1.currentAnimBool);
         if (truefalse == 0)
         {
             if (!string.IsNullOrEmpty(c1.currentAnimBool))
@@ -147,13 +146,8 @@ public class AnimationEvents : MonoBehaviour
 
             c1.currentAnimBool = null;
         }
-
     }
 
-
-    /// <summary>
-    /// Adds inAnim locker.
-    /// </summary>
     public void StartAnimation()
     {
         if (debugMessages)
@@ -161,7 +155,14 @@ public class AnimationEvents : MonoBehaviour
             Debug.Log("Started animation and added inanim locker on frame " + c1.frame);
         }
 
-        clm.AddLocker(c1.inAnim);
+        if (clm.activeLockers.Contains(c1.grounded))
+        {
+            clm.AddLocker(c1.inAnim);
+        }
+        else
+        {
+            clm.AddLocker(c1.inAerialAnim);
+        }
     }
 
     public void StartDash()
@@ -189,7 +190,7 @@ public class AnimationEvents : MonoBehaviour
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.inAnim);
         clm.RemoveLocker(c1.dashing);
-        ah.currentConnectedHitboxes.Clear();
+        clm.RemoveLocker(c1.inAerialAnim);
         StopLandingLag();
     }
     public void StopAnimationButLeaveCurrentAnimBool(string boolToSetFalse) // same as StopAnimation but does not clear the attack bool so it can be checked to apply landing lag.
@@ -205,7 +206,7 @@ public class AnimationEvents : MonoBehaviour
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.inAnim);
         clm.RemoveLocker(c1.dashing);
-        ah.currentConnectedHitboxes.Clear();
+        clm.RemoveLocker(c1.inAerialAnim);
         StopLandingLag();
     }
 

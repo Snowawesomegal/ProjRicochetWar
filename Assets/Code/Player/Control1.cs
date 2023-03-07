@@ -35,6 +35,8 @@ public class Control1 : MonoBehaviour
     [SerializeField] float groundAccel = 10;
     public float initialJumpForce = 10;
     public float dashForce = 10;
+    [SerializeField] float overMaxYSpeedAdjustment = 10;
+    [SerializeField] float overMaxXSpeedAdjustment = 10;
 
     //Costs
     [SerializeField] float dashCost = 50;
@@ -381,25 +383,37 @@ public class Control1 : MonoBehaviour
         }
         else // if not grounded
         {
-            if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
-                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if airborne and: can't move or not holding the direction of motion: apply airFriction
+            if (!clm.activeLockers.Contains(hitstun)) // if not grounded and not in hitstun
             {
-                if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0))
+                //if not in hitstun, airborne, and not holding the direction of motion: apply airFriction
                 {
-                    rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
+                    if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                    {
+                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                    }
                 }
-                else
+
+                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not in hitstun, wallclinging, or ignoreGravity
                 {
-                    rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                    rb.AddForce(Vector2.down * fallAccel); // Apply gravity
+                }
+
+                // slow down toward max speeds
+                Mathf.MoveTowards(rb.velocity.y, fallSpeed, overMaxYSpeedAdjustment);
+                Mathf.MoveTowards(rb.velocity.x, airSpeed, overMaxXSpeedAdjustment);
+            }
+            else // if not grounded but you ARE in hitstun
+            {
+                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not in hitstun, wallclinging, or ignoreGravity
+                {
+                    rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
                 }
             }
-
-            if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
-            {
-                rb.AddForce(Vector2.down * fallAccel); // Apply gravity
-            }
-
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999)); // cap fall speed
         }
     }
 

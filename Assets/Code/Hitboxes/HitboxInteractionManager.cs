@@ -165,7 +165,6 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recentlu
                 {
-                    Debug.Log(i.right.name + " was hit by " + i.left.name);
                     i.right.GetComponent<Control1>().Hit(i.left.GetComponent<Collider2D>(), true);
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
                 }

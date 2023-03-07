@@ -20,37 +20,29 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 1174053868, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.1
       value: {fileID: 563549252, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.2
+    - time: 0.1
       value: {fileID: 1248824930, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.3
-      value: {fileID: -1258573638, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.4
+    - time: 0.2
       value: {fileID: 1475273446, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.5
+    - time: 0.3
       value: {fileID: 928274792, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.6
+    - time: 0.4
       value: {fileID: 67706771, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.7
+    - time: 0.5
       value: {fileID: 607639489, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.8
+    - time: 0.6
       value: {fileID: 2097950562, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 0.9
+    - time: 0.7
       value: {fileID: 301941705, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 1
-      value: {fileID: 301941705, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 1.1
+    - time: 0.8
       value: {fileID: -333937502, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 1.2
+    - time: 0.9
       value: {fileID: 1165264947, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 1.3
+    - time: 1
       value: {fileID: 927849309, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 1.4
+    - time: 1.1
       value: {fileID: 461690179, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - time: 1.5
-      value: {fileID: -123791093, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -70,28 +62,24 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 1174053868, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 563549252, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 1248824930, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - {fileID: -1258573638, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 1475273446, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 928274792, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 67706771, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 607639489, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 2097950562, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 301941705, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - {fileID: 301941705, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: -333937502, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 1165264947, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 927849309, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
     - {fileID: 461690179, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
-    - {fileID: -123791093, guid: fe34a72abf22b42018c03d4b31ae0bec, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.5166667
+    m_StopTime: 1.2
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -125,21 +113,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.7
+  - time: 0.5
     functionName: EnableHitbox
     data: UpHeavy/UpHeavyAttackPart1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.7
+  - time: 0.5
     functionName: PlaySoundFromAnimator
     data: MassiveSwordSwing1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.8
+  - time: 0.6
     functionName: EnableHitbox
     data: UpHeavy/UpHeavyAttackPart2
     objectReferenceParameter: {fileID: 0}
@@ -147,20 +135,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.9
-    functionName: EnableHitbox
-    data: UpHeavy/UpHeavyAttackPart3
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.3
     functionName: PlaySoundFromAnimator
     data: SwordLock1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.5166667
+  - time: 1.2
     functionName: StopAnimation
     data: UpHeavyAttack
     objectReferenceParameter: {fileID: 0}

@@ -20,26 +20,22 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -56507721, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.1
       value: {fileID: -1797759626, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.2
+    - time: 0.1
       value: {fileID: 1011617425, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.3
+    - time: 0.2
       value: {fileID: -1806108318, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.4
+    - time: 0.3
       value: {fileID: 621360280, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.5
-      value: {fileID: 1337141438, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.6
+    - time: 0.4
       value: {fileID: -81230088, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.7
+    - time: 0.5
       value: {fileID: -1384017262, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.8
+    - time: 0.6
       value: {fileID: 1865419783, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 0.9
+    - time: 0.7
       value: {fileID: 1292639370, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - time: 1
+    - time: 0.8
       value: {fileID: -1458842619, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     attribute: m_Sprite
     path: 
@@ -60,12 +56,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -56507721, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: -1797759626, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: 1011617425, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: -1806108318, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: 621360280, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
-    - {fileID: 1337141438, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: -81230088, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: -1384017262, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
     - {fileID: 1865419783, guid: 96b2a4ec77cd74e119174c66dce6475a, type: 3}
@@ -76,7 +70,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.0166667
+    m_StopTime: 0.9
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -103,35 +97,35 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.3
+  - time: 0.2
     functionName: PlaySoundFromAnimator
     data: SwordUnlock1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
+  - time: 0.4
     functionName: PlaySoundFromAnimator
     data: ElectricSwordSwing1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
+  - time: 0.4
     functionName: EnableHitbox
     data: FHeavyAttack1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.8
+  - time: 0.6
     functionName: PlaySoundFromAnimator
     data: SwordLock1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0166667
+  - time: 0.9
     functionName: StopAnimation
     data: FHeavyAttack
     objectReferenceParameter: {fileID: 0}

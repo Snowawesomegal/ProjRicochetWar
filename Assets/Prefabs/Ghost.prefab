@@ -420,6 +420,8 @@ MonoBehaviour:
   groundAccel: 180
   initialJumpForce: 950
   dashForce: 4000
+  overMaxYSpeedAdjustment: 60
+  overMaxXSpeedAdjustment: 60
   dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2

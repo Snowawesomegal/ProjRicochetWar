@@ -164,7 +164,7 @@ public class PlayerInputManager : MonoBehaviour
             case CharacterInput.CardinalDirection.DOWN:
                 if (debugMessages)
                     Debug.Log("Attacking down");
-                // call down attack in player controller
+                playerController.DLightResponse(input);
                 break;
             case CharacterInput.CardinalDirection.LEFT:
                 playerController.FLightResponse(input);

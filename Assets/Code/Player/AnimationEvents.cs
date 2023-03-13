@@ -23,12 +23,14 @@ public class AnimationEvents : MonoBehaviour
     [SerializeField] GameObject landJumpSmokeCloud;
 
     [SerializeField] List<Pair<string, int>> animBoolsAndLandingLag;
+    List<string> attackBools = new List<string>();
     [SerializeField] string landingAnimationName;
     [SerializeField] string runAnimationName;
     int landingLag = 0;
 
     string currentAnimationName = "Idle";
     string lastFrameAnimationName = "Idle";
+
 
     void Start()
     {
@@ -39,6 +41,11 @@ public class AnimationEvents : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         pim = GetComponent<PlayerInputManager>();
         trailps = GetComponent<ParticleSystem>();
+
+        foreach (Pair<string, int> i in animBoolsAndLandingLag)
+        {
+            attackBools.Add(i.left);
+        }
     }
 
     private void FixedUpdate()
@@ -105,8 +112,6 @@ public class AnimationEvents : MonoBehaviour
     public void ChangeAnimBool(string boolName, bool toSet, bool changeCurrentAnimBool = true) // Sets entered animBool and updates currentAnimBool appropriately
     //Should always be used when changing animBools in order to keep currentAnimBool up to date.
     {
-        if (debugMessages) { Debug.Log("Changed animBool (and currentAnimBool)" + boolName + " to " + toSet); }
-
         if (boolName.ToLower() != "nothing")
         {
             anim.SetBool(boolName, toSet);
@@ -114,9 +119,11 @@ public class AnimationEvents : MonoBehaviour
 
         if (changeCurrentAnimBool)
         {
+            if (debugMessages) { Debug.Log("Changed animBool (and currentAnimBool) " + boolName + " to " + toSet + " -- frame " + c1.frame); }
             if (toSet == true)
             {
-                if (Array.Exists(c1.attackBools, i => i == boolName))
+                if (debugMessages) { Debug.Log(attackBools.Contains(boolName) + ", attackBools contains " + boolName); }
+                if (attackBools.Contains(boolName))
                 {
                     c1.currentAnimBool = boolName;
                 }
@@ -125,6 +132,10 @@ public class AnimationEvents : MonoBehaviour
             {
                 c1.currentAnimBool = null;
             }
+        }
+        else
+        {
+            if (debugMessages) { Debug.Log("Changed animBool, but NOT currentAnimbool to " + boolName + " to " + toSet + " -- frame " + c1.frame); }
         }
     }
     public void UseCurrentAnimBoolToSetAnimBool(int truefalse) // calls anim.SetBool with c1.currentAnimBool. If false, sets currentAnimBool to null.

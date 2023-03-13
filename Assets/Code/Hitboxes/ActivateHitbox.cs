@@ -12,7 +12,7 @@ public class ActivateHitbox : MonoBehaviour
     Control1 c1;
     ControlLockManager clm;
 
-    public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
+    public Dictionary<Pair<GameObject, Type>, int> toBeDisabled = new Dictionary<Pair<GameObject, Type>, int>();
 
     private void Start()
     {
@@ -20,13 +20,17 @@ public class ActivateHitbox : MonoBehaviour
         c1 = GetComponent<Control1>();
     }
 
-    public void EnableHitbox(string hitboxName)
+    /// <summary>
+    /// Finds by name and enables any box that is a direct child of the object this script is attached to. This function also works for pogoboxes. For any nested children, which should be the case for multipart, multihitbox, and multihit attacks, use EnableMultiHitbox. 
+    /// </summary>
+    /// <param name="hitboxName"></param>
+    public void EnableHitbox(string boxName)
     {
-        GameObject hitboxObject = null;
+        GameObject boxObject = null;
 
-        if (hitboxName.Contains('/')) // have to find a parent and then a child within the parent (input is entered as parent/child if hitbox is nested)
+        if (boxName.Contains('/')) // have to find a parent and then a child within the parent (input is entered as parent/child if hitbox is nested)
         {
-            string[] parentAndHB = hitboxName.Split('/'); // split and add to array
+            string[] parentAndHB = boxName.Split('/'); // split and add to array
 
             foreach (Transform i in transform) // foreach child in player
             {
@@ -36,7 +40,7 @@ public class ActivateHitbox : MonoBehaviour
                     {
                         if (j.gameObject.name == parentAndHB[1]) // if that child is the child we're looking for
                         {
-                            hitboxObject = j.gameObject;
+                            boxObject = j.gameObject;
                             break;
                         }
                     }
@@ -48,33 +52,23 @@ public class ActivateHitbox : MonoBehaviour
         {
             foreach (Transform i in transform)
             {
-                if (i.name == hitboxName)
+                if (i.name == boxName)
                 {
-                    hitboxObject = i.gameObject;
+                    boxObject = i.gameObject;
                     break;
                 }
             }
         }
 
-        if (hitboxObject == null)
+        if (boxObject == null)
         {
-            Debug.Log("There is no hitbox object with the name " + hitboxName + " on " + gameObject.name);
+            Debug.Log("There is no hitbox object with the name " + boxName + " on " + gameObject.name);
             return;
         }
 
-        hitboxObject.SetActive(true);
+        boxObject.SetActive(true);
 
-        HitboxInfo HBInfo = hitboxObject.GetComponent<HitboxInfo>();
-
-        HBInfo.owner = gameObject;
-
-        if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
-        {
-            hitboxObject.transform.localPosition *= new Vector2(-1, 1);
-        }
-        HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
-
-        toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
+        CalibrateBox(boxObject);
     }
 
     public void EnableMultiHitbox(string hitboxParentName)
@@ -104,30 +98,72 @@ public class ActivateHitbox : MonoBehaviour
         {
             i.SetActive(true);
 
-            HitboxInfo HBInfo = i.GetComponent<HitboxInfo>();
+            CalibrateBox(i);
+        }
+    }
 
+    void CalibrateBox(GameObject box)
+    {
+        if (box.TryGetComponent<HitboxInfo>(out HitboxInfo HBInfo))
+        {
+            CalibrateHitbox(HBInfo);
+        }
+        else if (box.TryGetComponent<Pogobox>(out Pogobox pogobox))
+        {
+            CalibratePogobox(pogobox);
+        }
+        else
+        {
+            CalibrateDefault(box);
+        }
+
+        void CalibrateHitbox(HitboxInfo HBInfo)
+        {
             HBInfo.owner = gameObject;
 
             if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
             {
-                i.transform.localPosition *= new Vector2(-1, 1);
+                HBInfo.transform.localPosition *= new Vector2(-1, 1);
             }
             HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
 
-            toBeDisabled.Add(i, HBInfo.activeFrames);
+            toBeDisabled.Add(new Pair<GameObject, Type>(HBInfo.gameObject, typeof(HitboxInfo)), HBInfo.activeFrames);
+        }
+
+        void CalibratePogobox(Pogobox pogobox)
+        {
+            if (pogobox.owner.GetComponent<Control1>().facingRight != pogobox.facingRight)
+            {
+                pogobox.transform.localPosition *= new Vector2(-1, 1);
+            }
+            pogobox.facingRight = pogobox.owner.GetComponent<Control1>().facingRight;
+
+            toBeDisabled.Add(new Pair<GameObject, Type>(pogobox.gameObject, typeof(Pogobox)), pogobox.activeFrames);
+        }
+
+        void CalibrateDefault(GameObject box)
+        {
+            toBeDisabled.Add(new Pair<GameObject, Type>(box, null), 2);
         }
     }
 
+
+
     private void FixedUpdate()
     {
-        Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
+        Dictionary<Pair<GameObject, Type>, int> copyDict = new Dictionary<Pair<GameObject, Type>, int>(toBeDisabled); // this feels like it's very cost inefficient?
 
-        foreach(KeyValuePair<GameObject, int> i in copyDict)
+        foreach(KeyValuePair<Pair<GameObject, Type>, int> i in copyDict)
         {
             if (i.Value <= 0)
             {
-                i.Key.SetActive(false);
-                i.Key.GetComponent<HitboxInfo>().playersHitAlready.Clear();
+                i.Key.left.SetActive(false);
+
+                if (i.Key.right == typeof(HitboxInfo))
+                {
+                    i.Key.left.GetComponent<HitboxInfo>().playersHitAlready.Clear();
+                }
+
                 toBeDisabled.Remove(i.Key);
             }
             else

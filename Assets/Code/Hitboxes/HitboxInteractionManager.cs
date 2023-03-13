@@ -83,7 +83,8 @@ public class HitboxInteractionManager : MonoBehaviour
 
             List<Collider2D> hitboxesCopy = new List<Collider2D>(hitboxes);
 
-            if (hitboxes.Count > 1)// more than one hitbox collided with something this frame. Dealing with collider interactions:
+            // more than one hitbox collided with something this frame. Dealing with hitbox on hitbox interactions:
+            if (hitboxes.Count > 1)
             {
                 List<List<Collider2D>> allCombinations = new List<List<Collider2D>>(); // List of all combinations of Colliders that collided this frame + are not of the same parent
                 List<Collider2D> newCollider = new List<Collider2D>();
@@ -143,7 +144,7 @@ public class HitboxInteractionManager : MonoBehaviour
                 }
             }
 
-            List<Pair<GameObject, GameObject>> hitlist = new List<Pair<GameObject, GameObject>>(); // stores all hurtbox/hitbox collisions, Hitbox is Left, Hurtbox is Right
+            List<Pair<GameObject, GameObject>> hitlist = new List<Pair<GameObject, GameObject>>(); // stores all hurtbox/hitbox collision pairs, Hitbox is Left, Hurtbox is Right
             foreach(Collider2D hurtbox in hurtboxes)
             {
                 foreach (Collider2D hitbox in hitboxes)
@@ -163,7 +164,7 @@ public class HitboxInteractionManager : MonoBehaviour
             hitlist = hitlist.OrderBy(pair => pair.left.GetComponent<HitboxInfo>().priority).ToList();
             foreach (Pair<GameObject, GameObject> i in hitlist) // hitbox left, hurtbox right
             {
-                if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recentlu
+                if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
                 {
                     i.right.GetComponent<Control1>().Hit(i.left.GetComponent<Collider2D>(), true);
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them

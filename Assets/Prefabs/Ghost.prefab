@@ -34,6 +34,73 @@ Transform:
   m_Father: {fileID: 6311728093354438148}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2435376815587201073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 798564288124584560}
+  - component: {fileID: 8314929184930192335}
+  - component: {fileID: 4113411392958667982}
+  m_Layer: 10
+  m_Name: DairLightPogobox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &798564288124584560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2435376815587201073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4975947780344413096}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &8314929184930192335
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2435376815587201073}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.97297966}
+  m_Size: {x: 2.0144176, y: 2.5600808}
+  m_Direction: 0
+--- !u!114 &4113411392958667982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2435376815587201073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23bfe6ff5654b4687b7c54ad379213e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  facingRight: 1
+  bounceForce: 1300
+  bounceAngle: 90
+  soundOnBounce: SwordSwing5
+  activeFrames: 4
 --- !u!1 &2682462411383299805
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +172,39 @@ MonoBehaviour:
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
+--- !u!1 &3487179807140661261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4975947780344413096}
+  m_Layer: 0
+  m_Name: DairLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4975947780344413096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487179807140661261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1184912076721684956}
+  - {fileID: 798564288124584560}
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3686617930835089017
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +397,7 @@ Transform:
   - {fileID: 7146791057285723836}
   - {fileID: 1124875515081784880}
   - {fileID: 4890383916044957055}
+  - {fileID: 4975947780344413096}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -449,13 +550,6 @@ MonoBehaviour:
   frame: 0
   dropPlatformTotalFrames: 7
   currentAnimBool: 
-  attackBools:
-  - FLightAttack
-  - FHeavyAttack
-  - DownHeavyAttack
-  - DownLightAttack
-  - UpLightAttack
-  - UpHeavyAttack
   animationDebugMessages: 0
 --- !u!114 &6311728093354438159
 MonoBehaviour:
@@ -5492,7 +5586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8a995e73f4443ccb42c121af883207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMessages: 0
+  debugMessages: 1
   dirSmokeCloud: {fileID: 7297698191939231783, guid: 356cbeb3eb49046b290cd4788a5e2054, type: 3}
   landJumpSmokeCloud: {fileID: 6894210905415877931, guid: 07c04e5ca3f61478cb3eb18e554437e7, type: 3}
   animBoolsAndLandingLag:
@@ -5504,9 +5598,9 @@ MonoBehaviour:
     right: 10
   - left: UpLightAttack
     right: 5
-  - left: DownHeavyAttack
+  - left: DHeavyAttack
     right: 15
-  - left: DownLightAttack
+  - left: DLightAttack
     right: 5
   landingAnimationName: GhostLandingLag
   runAnimationName: GhostRun
@@ -6071,7 +6165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4890383916044957055}
   m_Layer: 0
-  m_Name: AirFHeavy
+  m_Name: FairHeavy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6094,3 +6188,74 @@ Transform:
   m_Father: {fileID: 6311728093354438148}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7763369193071403772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1184912076721684956}
+  - component: {fileID: 8941542119798213843}
+  - component: {fileID: 2275136286165177770}
+  m_Layer: 0
+  m_Name: DairLightHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1184912076721684956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763369193071403772}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4975947780344413096}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &8941542119798213843
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763369193071403772}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.83339727}
+  m_Size: {x: 1.7865591, y: 2.794809}
+  m_Direction: 0
+--- !u!114 &2275136286165177770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763369193071403772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knockback: 1900
+  angleIndependentOfMovement: 1
+  angle: 65
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  priority: 1
+  playersHitAlready: []
+  isPartOfMultipart: 1

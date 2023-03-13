@@ -9,11 +9,11 @@ using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
-    //March 6, 2023, 10:47PM
+    //March 11, 2023, 12:53PM
 
     //Todo list
     //Change implementation of limits/reductions for vertical and horizontal speed
-    //Add priority to hitboxes
+    // add way to disable friction for dashes on the ground
 
     public GameObject testCircle;
 
@@ -99,7 +99,6 @@ public class Control1 : MonoBehaviour
 
     //Animator
     public string currentAnimBool = "FHeavyAttack";
-    public string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "DownHeavyAttack", "DownLightAttack", "UpLightAttack", "UpHeavyAttack"};
 
     //debug
     public bool animationDebugMessages = true;
@@ -235,6 +234,21 @@ public class Control1 : MonoBehaviour
         if (input.IsHeld() || input.IsPending())
         {
             ae.ChangeAnimBool("UpLightAttack", true);
+        }
+    }
+
+    public void DLightResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("DLight Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            if (clm.activeLockers.Contains(grounded))
+            {
+                rb.AddForce(120 * Vector2.up);
+            }
+
+
+            ae.ChangeAnimBool("DLightAttack", true);
         }
     }
 
@@ -407,9 +421,9 @@ public class Control1 : MonoBehaviour
                 Mathf.MoveTowards(rb.velocity.y, fallSpeed, overMaxYSpeedAdjustment);
                 Mathf.MoveTowards(rb.velocity.x, airSpeed, overMaxXSpeedAdjustment);
             }
-            else // if not grounded but you ARE in hitstun
+            else // if not grounded and you ARE in hitstun
             {
-                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not in hitstun, wallclinging, or ignoreGravity
+                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
                 {
                     rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
                 }
@@ -470,7 +484,6 @@ public class Control1 : MonoBehaviour
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
 
-
             if (hi.angle == 361)
             {
                 Vector2 hiParentVelocity = hi.transform.parent.GetComponent<Rigidbody2D>().velocity;
@@ -478,13 +491,13 @@ public class Control1 : MonoBehaviour
 
                 Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight?1:-1), hiParentPosition.y);
                 Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                rb.AddForce(((between + (hiParentVelocity / 10)) * hi.knockback));
+                rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
             }
             else
             {
                 rb.velocity = Vector2.zero;
                 imui.ChangeHealth(-hi.damage);
-                Vector2 angleOfForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * hi.angle), Mathf.Sin(Mathf.Deg2Rad * hi.angle));
+                Vector2 angleOfForce = AngleMath.Vector2FromAngle(hi.angle);
 
                 if (!hi.facingRight)
                 {

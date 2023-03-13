@@ -16,11 +16,10 @@ public class AnimationEvents : MonoBehaviour
     Rigidbody2D rb;
     PlayerInputManager pim;
     ParticleSystem trailps;
+    GameObject sm;
+    EffectManager em;
 
     [SerializeField] bool debugMessages;
-
-    [SerializeField] GameObject dirSmokeCloud;
-    [SerializeField] GameObject landJumpSmokeCloud;
 
     [SerializeField] List<Pair<string, int>> animBoolsAndLandingLag;
     List<string> attackBools = new List<string>();
@@ -41,6 +40,8 @@ public class AnimationEvents : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         pim = GetComponent<PlayerInputManager>();
         trailps = GetComponent<ParticleSystem>();
+        sm = GameObject.Find("SettingsManager");
+        em = sm.GetComponent<EffectManager>();
 
         foreach (Pair<string, int> i in animBoolsAndLandingLag)
         {
@@ -259,6 +260,18 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    public void IgnoreFrictionOnOff(int onoff)
+    {
+        if (onoff == 1)
+        {
+            c1.ignoreFriction = true;
+        }
+        else
+        {
+            c1.ignoreFriction = false;
+        }
+    }
+
     public void ApplyHoriForceInAnimation(float force)
     {
         rb.AddForce(new Vector2(force * (c1.facingRight?1:-1), 0));
@@ -283,17 +296,12 @@ public class AnimationEvents : MonoBehaviour
 
     public void SpawnDirectionalSmokeCloud()
     {
-        float randomDisplacement = UnityEngine.Random.Range(-0.5f, -0.1f) * (c1.facingRight ? 1 : -1);
-        GameObject newCloud = Instantiate(dirSmokeCloud, transform.position + new Vector3(-0.5f * (c1.facingRight?1:-1) + randomDisplacement, 0, 0), Quaternion.identity);
-        newCloud.GetComponent<SpriteRenderer>().flipX = !c1.facingRight;
-        Destroy(newCloud, 0.3f);
+        em.SpawnDirectionalEffect("RunSmokeCloud", transform.position, c1.facingRight, UnityEngine.Random.Range(-0.5f, -0.1f) * (c1.facingRight ? 1 : -1));
     }
 
-    public void SpawnLandJumpSmokeCloud()
+    public void SpawnBasicDirEffect(string name)
     {
-        GameObject newCloud = Instantiate(landJumpSmokeCloud, transform.position + new Vector3(-0.5f * (c1.facingRight ? 1 : -1), 0, 0), Quaternion.identity);
-        newCloud.GetComponent<SpriteRenderer>().flipX = !c1.facingRight;
-        Destroy(newCloud, 0.3f);
+        em.SpawnDirectionalEffect(name, transform.position, c1.facingRight);
     }
 
     public void StartStopTrail(int startstop)
@@ -302,7 +310,7 @@ public class AnimationEvents : MonoBehaviour
         else { trailps.Stop(); }
     }
 
-    public void SlowSpeed(float magnitude) // slows speed after a dash finishes. THIS DOES NOT SCALE AUTOMATICALLY; if dash intensity changes a different magnetude must be entered.
+    public void SlowSpeed(float magnitude) // slows speed after a dash finishes; called by animation event. THIS DOES NOT SCALE AUTOMATICALLY; if dash intensity changes a different magnetude must be entered.
     {
         float relevantSpeed = clm.activeLockers.Contains(c1.grounded) ? c1.groundSpeed : c1.airSpeed / 5;
 

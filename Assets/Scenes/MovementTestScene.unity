@@ -123,6 +123,44 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &88607475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1933258576658441534, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+  m_PrefabInstance: {fileID: 557021649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &88607479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88607475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5587ee8ffd84117ab58a07463c4607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+  - name: RunSmokeCloud
+    lifetime: 0.3
+    prefab: {fileID: 7297698191939231783, guid: 356cbeb3eb49046b290cd4788a5e2054, type: 3}
+    sound: 
+    rotationAdjustment: 0
+  - name: LandJumpSmokeCloud
+    lifetime: 0.3
+    prefab: {fileID: 6894210905415877931, guid: 07c04e5ca3f61478cb3eb18e554437e7, type: 3}
+    sound: 
+    rotationAdjustment: 0
+  - name: LightHitEffect
+    lifetime: 0.4
+    prefab: {fileID: 3147061465778555500, guid: 8becbf34493f046a3bf9cdb654d55537, type: 3}
+    sound: 
+    rotationAdjustment: 135
+  - name: DashEnergyEffect
+    lifetime: 0.4
+    prefab: {fileID: 8851467562859813940, guid: 018abd01c373d43dd8b490dab902086a, type: 3}
+    sound: 
+    rotationAdjustment: 0
 --- !u!1 &107629446
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,12 +6,16 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class HitboxInteractionManager : MonoBehaviour
 {
+    EffectManager em;
+
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
+
     public float hitboxDamageDifferenceToWin = 10;
 
     // Start is called before the first frame update
     void Start()
     {
+        em = GameObject.Find("SettingsManager").GetComponent<EffectManager>();
         StartCoroutine(nameof(AfterPhysicsUpdate));
     }
 
@@ -167,6 +171,7 @@ public class HitboxInteractionManager : MonoBehaviour
                 if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
                 {
                     i.right.GetComponent<Control1>().Hit(i.left.GetComponent<Collider2D>(), true);
+                    em.SpawnHitEffectOnContactPoint("LightHitEffect", i.left.GetComponent<Collider2D>(), i.right.transform.position);
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
                 }
             }

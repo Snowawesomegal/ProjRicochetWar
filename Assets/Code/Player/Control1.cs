@@ -26,6 +26,7 @@ public class Control1 : MonoBehaviour
     public float wallJumpVerticalOoOne = 0.5f;
     public bool ignoreGravity = false;
     public bool intangible = false;
+    public bool ignoreFriction = false;
 
     //speeds
     public float airSpeed = 10;
@@ -56,7 +57,7 @@ public class Control1 : MonoBehaviour
     HitboxInteractionManager him;
     ParticleSystem trailps;
     public AudioManager am;
-    GameObject sm;
+    public GameObject sm;
     InMatchUI imui;
     AnimationEvents ae;
 
@@ -383,13 +384,16 @@ public class Control1 : MonoBehaviour
             if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
                 || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded and: can't move or not holding the direction of motion: apply friction
             {
-                if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                if (!ignoreFriction)
                 {
-                    rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
-                }
-                else
-                {
-                    rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                    if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                    {
+                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                    }
                 }
             }
 
@@ -402,13 +406,16 @@ public class Control1 : MonoBehaviour
                 if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0))
                 //if not in hitstun, airborne, and not holding the direction of motion: apply airFriction
                 {
-                    if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                    if (!ignoreFriction)
                     {
-                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                        {
+                            rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        }
                     }
                 }
 

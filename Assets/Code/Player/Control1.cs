@@ -273,6 +273,15 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    public void DHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("DHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("DHeavyAttack", true);
+        }
+    }
+
     public void JumpResponse(CharacterInput input)
     {
         if (animationDebugMessages) { Debug.Log("Jump Response" + "- frame: " + frame); }

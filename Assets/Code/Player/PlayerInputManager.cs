@@ -224,7 +224,7 @@ public class PlayerInputManager : MonoBehaviour
                 playerController.UpHeavyResponse(input);
                 break;
             case CharacterInput.CardinalDirection.DOWN:
-                // call down heavy in player controller
+                playerController.DHeavyResponse(input);
                 break;
             case CharacterInput.CardinalDirection.LEFT:
             case CharacterInput.CardinalDirection.RIGHT:

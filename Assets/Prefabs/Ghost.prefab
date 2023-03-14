@@ -99,7 +99,7 @@ MonoBehaviour:
   facingRight: 1
   bounceForce: 1300
   bounceAngle: 90
-  soundOnBounce: SwordSwing5
+  soundOnBounce: 
   activeFrames: 4
 --- !u!1 &2682462411383299805
 GameObject:
@@ -169,6 +169,79 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
+  priority: 1
+  playersHitAlready: []
+  isPartOfMultipart: 0
+--- !u!1 &3433009867416186590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2435223762841617583}
+  - component: {fileID: 3417861264796566491}
+  - component: {fileID: 5749955400834724370}
+  m_Layer: 0
+  m_Name: FairLightAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2435223762841617583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433009867416186590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.35, y: 1.14, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &3417861264796566491
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433009867416186590}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.87436396}
+  m_Size: {x: 3.700844, y: 3.6488082}
+  m_Direction: 1
+--- !u!114 &5749955400834724370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433009867416186590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  knockback: 1800
+  angleIndependentOfMovement: 1
+  angle: 13
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -204,6 +277,39 @@ Transform:
   - {fileID: 798564288124584560}
   m_Father: {fileID: 6311728093354438148}
   m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3630832034770303378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6435983919889632497}
+  m_Layer: 0
+  m_Name: DairHeavy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6435983919889632497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3630832034770303378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9221109432178896743}
+  - {fileID: 2575178362352576209}
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3686617930835089017
 GameObject:
@@ -273,6 +379,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 2
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -344,7 +451,152 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
+  playersHitAlready: []
+  isPartOfMultipart: 1
+--- !u!1 &3863377767078563220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9221109432178896743}
+  - component: {fileID: 1335650314265960842}
+  - component: {fileID: 2157499711030186880}
+  m_Layer: 0
+  m_Name: DairLightAttackSour
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &9221109432178896743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3863377767078563220}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6435983919889632497}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1335650314265960842
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3863377767078563220}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -1.4842291}
+  m_Size: {x: 1.4960928, y: 4.0964727}
+  m_Direction: 0
+--- !u!114 &2157499711030186880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3863377767078563220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 4
+  knockback: 1100
+  angleIndependentOfMovement: 1
+  angle: 65
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 6
+  minimumHitstunFrames: 20
+  priority: 1
+  playersHitAlready: []
+  isPartOfMultipart: 1
+--- !u!1 &5484935819613344735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2575178362352576209}
+  - component: {fileID: 2174548166141981816}
+  - component: {fileID: 7556955064186006515}
+  m_Layer: 0
+  m_Name: DairLightAttackSweet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2575178362352576209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484935819613344735}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.03, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6435983919889632497}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2174548166141981816
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484935819613344735}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -2.3154283}
+  m_Size: {x: 0.9151592, y: 1.7284665}
+  m_Direction: 0
+--- !u!114 &7556955064186006515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484935819613344735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knockback: 3400
+  angleIndependentOfMovement: 1
+  angle: 270
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 3
+  minimumHitstunFrames: 20
+  priority: 2
   playersHitAlready: []
   isPartOfMultipart: 1
 --- !u!1 &5850729627155256250
@@ -373,7 +625,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5850729627155256250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.14, z: 0}
+  m_LocalPosition: {x: -0.3, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,7 +645,7 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.33436117, y: 0.08851187}
+  m_Offset: {x: 0, y: 0.08851187}
   m_Size: {x: 4.5324235, y: 3.3364775}
   m_Direction: 1
 --- !u!114 &8346924978110582722
@@ -415,6 +667,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -470,6 +723,8 @@ Transform:
   - {fileID: 4890383916044957055}
   - {fileID: 4975947780344413096}
   - {fileID: 6690301327492358873}
+  - {fileID: 2435223762841617583}
+  - {fileID: 6435983919889632497}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -587,7 +842,7 @@ MonoBehaviour:
   ignoreGravity: 0
   intangible: 0
   ignoreFriction: 0
-  airSpeed: 40
+  airSpeed: 35
   airAccel: 60
   airAccelDuringAerial: 45
   groundSpeed: 30
@@ -5660,7 +5915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8a995e73f4443ccb42c121af883207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMessages: 1
+  debugMessages: 0
   animBoolsAndLandingLag:
   - left: FHeavyAttack
     right: 10
@@ -5744,6 +5999,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -5815,6 +6071,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -5886,6 +6143,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -6011,6 +6269,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6082,6 +6341,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6153,6 +6413,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6224,6 +6485,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6328,6 +6590,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
+  minimumHitstunFrames: 20
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1

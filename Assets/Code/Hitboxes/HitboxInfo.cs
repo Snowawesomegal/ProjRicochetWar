@@ -11,8 +11,9 @@ public class HitboxInfo : MonoBehaviour
     public GameObject owner;
     public bool facingRight = true;
     public int activeFrames = 2;
+    public int minimumHitstunFrames = 20;
 
-    [Tooltip("Higher number priority wins; other hitboxes are disabled if two hitboxes from the same move hit a player simultaneously.")]
+    [Tooltip("Higher number priority wins; lower priority hitboxes are disabled if two hitboxes from the same move hit a player simultaneously.")]
     public int priority = 1;
 
     public List<GameObject> playersHitAlready;

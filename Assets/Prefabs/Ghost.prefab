@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 3686617930835089012}
   - component: {fileID: 3686617930835089015}
   m_Layer: 0
-  m_Name: AirFHeavyAttackSweet
+  m_Name: FairHeavyAttackSweet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 3686617931327997035}
   - component: {fileID: 3686617931327997034}
   m_Layer: 0
-  m_Name: AirFHeavyAttackSour
+  m_Name: FairHeavyAttackSour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,6 +347,77 @@ MonoBehaviour:
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
+--- !u!1 &5850729627155256250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6690301327492358873}
+  - component: {fileID: 1139993751467027589}
+  - component: {fileID: 8346924978110582722}
+  m_Layer: 0
+  m_Name: UpAirLightAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6690301327492358873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5850729627155256250}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.14, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1139993751467027589
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5850729627155256250}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.33436117, y: 0.08851187}
+  m_Size: {x: 4.5324235, y: 3.3364775}
+  m_Direction: 1
+--- !u!114 &8346924978110582722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5850729627155256250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  knockback: 2000
+  angleIndependentOfMovement: 1
+  angle: 120
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  priority: 1
+  playersHitAlready: []
+  isPartOfMultipart: 0
 --- !u!1 &6311728093354438150
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +469,7 @@ Transform:
   - {fileID: 1124875515081784880}
   - {fileID: 4890383916044957055}
   - {fileID: 4975947780344413096}
+  - {fileID: 6690301327492358873}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -514,6 +586,7 @@ MonoBehaviour:
   wallJumpVerticalOoOne: 0.5
   ignoreGravity: 0
   intangible: 0
+  ignoreFriction: 0
   airSpeed: 40
   airAccel: 60
   airAccelDuringAerial: 45
@@ -527,6 +600,7 @@ MonoBehaviour:
   shorthopWindow: 2
   walljumpShorthopWindow: 2
   am: {fileID: 0}
+  sm: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   bufferLength: 30
@@ -5587,8 +5661,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMessages: 1
-  dirSmokeCloud: {fileID: 7297698191939231783, guid: 356cbeb3eb49046b290cd4788a5e2054, type: 3}
-  landJumpSmokeCloud: {fileID: 6894210905415877931, guid: 07c04e5ca3f61478cb3eb18e554437e7, type: 3}
   animBoolsAndLandingLag:
   - left: FHeavyAttack
     right: 10

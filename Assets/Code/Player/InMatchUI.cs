@@ -29,7 +29,15 @@ public class InMatchUI : MonoBehaviour
 
         ui = FindAnyObjectByType<Canvas>();
 
+        Vector3 flip = new Vector3 (1, 1, 1);
+        if (GameObject.Find("GhostBars(Clone)") != null) // this is obviously a hack
+        {
+            flip = new Vector3(-1, 1, 1);
+        }
+
         GameObject newBars = Instantiate(ghostBars, ui.transform);
+
+        newBars.transform.localScale = flip; // this is also part of the hack
 
         healthBar = newBars.transform.GetChild(0).GetComponent<Slider>();
         chargeBar = newBars.transform.GetChild(1).GetComponent<Slider>();

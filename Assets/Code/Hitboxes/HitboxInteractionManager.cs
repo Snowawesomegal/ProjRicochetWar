@@ -1,26 +1,53 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class HitboxInteractionManager : MonoBehaviour
 {
+    EffectManager em;
+
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
+
     public float hitboxDamageDifferenceToWin = 10;
 
     // Start is called before the first frame update
     void Start()
     {
+        em = GameObject.Find("SettingsManager").GetComponent<EffectManager>();
         StartCoroutine(nameof(AfterPhysicsUpdate));
     }
 
-    void DisableConnectedHitboxes(GameObject hbi)
+    void AddPlayerToConnectedHitboxes(GameObject hb, GameObject player)
     {
-        if (hbi.transform.parent.GetComponent<ActivateHitbox>().currentConnectedHitboxes.Contains(hbi))
+        HitboxInfo hbi = hb.GetComponent<HitboxInfo>();
+        if (hbi.isPartOfMultipart)
         {
-            foreach (GameObject i in hbi.transform.parent.GetComponent<ActivateHitbox>().currentConnectedHitboxes)
+            foreach (Transform i in hb.transform.parent) // add player to all hitboxes in folder
             {
-                i.GetComponent<HitboxInfo>().activeHitbox = false;
+                i.GetComponent<HitboxInfo>().playersHitAlready.Add(player);
             }
+        }
+        else
+        {
+            hbi.playersHitAlready.Add(player);
+        }
+    }
+
+    void DisableConnectedHitboxes(GameObject hb)
+    {
+        HitboxInfo hbi = hb.GetComponent<HitboxInfo>();
+        if (hbi.isPartOfMultipart)
+        {
+            foreach (Transform i in hb.transform.parent) // disable all hitboxes in folder
+            {
+                i.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            hb.SetActive(false);
         }
     }
 
@@ -60,86 +87,94 @@ public class HitboxInteractionManager : MonoBehaviour
 
             List<Collider2D> hitboxesCopy = new List<Collider2D>(hitboxes);
 
-            // Don't open this lmao it has 50 lines of logic, removes and deactives hitboxes as necessary
-            if (hitboxes.Count == 1)
+            // more than one hitbox collided with something this frame. Dealing with hitbox on hitbox interactions:
+            if (hitboxes.Count > 1)
             {
-                if (!hitboxes[0].GetComponent<HitboxInfo>().activeHitbox)
-                {
-                    hitboxes.Clear();
-                }
-            }
-            else
-            {
+                List<List<Collider2D>> allCombinations = new List<List<Collider2D>>(); // List of all combinations of Colliders that collided this frame + are not of the same parent
+                List<Collider2D> newCollider = new List<Collider2D>();
+
                 foreach (Collider2D one in hitboxesCopy) // run through every hitbox that collided this frame
                 {
-                    foreach (Collider2D two in hitboxesCopy) // and every other hitbox that collided this frame
+                    foreach (Collider2D two in hitboxesCopy) // and other hitbox that collided this frame again
                     {
-                        if (one == two) // ignore if same hitbox
+                        if (one == two || one.gameObject == two.gameObject) // if colliders are not the same or from the same parent
                         {
                             continue;
                         }
 
-                        HitboxInfo oneHitboxInfo = one.GetComponent<HitboxInfo>();
-                        HitboxInfo twoHitboxInfo = two.GetComponent<HitboxInfo>();
-
-                        bool contBool = false;
-                        if (!oneHitboxInfo.activeHitbox) // if either is inactive already, remove from list, then skip next
+                        newCollider = new List<Collider2D>() { one, two };
+                        if (!allCombinations.Contains(newCollider)) // add them to a list if they form a unique combination
                         {
-                            hitboxes.Remove(one);
-                            contBool = true;
+                            allCombinations.Add(newCollider);
                         }
-                        if (!twoHitboxInfo.activeHitbox)
-                        {
-                            hitboxes.Remove(two);
-                            contBool = true;
-                        }
-                        if (contBool) { continue; }
+                    }
+                }
 
-                        if (one.IsTouching(two) && oneHitboxInfo.activeHitbox && twoHitboxInfo.activeHitbox) // if hitboxes are colliding + both active
+                foreach (List<Collider2D> i in allCombinations) // iterate the list of all unique collider combinations
+                {
+                    Collider2D one = i[0];
+                    Collider2D two = i[1];
+
+                    HitboxInfo oneHitboxInfo = one.GetComponent<HitboxInfo>();
+                    HitboxInfo twoHitboxInfo = two.GetComponent<HitboxInfo>();
+
+                    if (one.IsTouching(two))
+                    {
+                        if (Mathf.Abs(oneHitboxInfo.damage - twoHitboxInfo.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to beat out
                         {
-                            if (Mathf.Abs(oneHitboxInfo.damage - twoHitboxInfo.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to win
+                            if (oneHitboxInfo.damage > twoHitboxInfo.damage) // disable the weaker hitbox, because it must be much weaker
                             {
-                                if (oneHitboxInfo.damage > twoHitboxInfo.damage) // disable the weaker hitbox, because it must be much weaker
-                                {
-                                    oneHitboxInfo.activeHitbox = false;
-                                    hitboxes.Remove(one);
-                                    DisableConnectedHitboxes(one.gameObject);
-                                }
-                                else
-                                {
-                                    twoHitboxInfo.activeHitbox = false;
-                                    hitboxes.Remove(two);
-                                    DisableConnectedHitboxes(two.gameObject);
-                                }
-                            }
-                            else // hitboxes are similar damages, disable both
-                            {
+                                one.gameObject.SetActive(false);
+                                hitboxes.Remove(one);
                                 DisableConnectedHitboxes(one.gameObject);
-                                DisableConnectedHitboxes(two.gameObject);
-                                oneHitboxInfo.activeHitbox = false;
-                                twoHitboxInfo.activeHitbox = false;
-                                hitboxes.Remove(one); // remove hitboxes from list
-                                hitboxes.Remove(two);
                             }
+                            else
+                            {
+                                two.gameObject.SetActive(false);
+                                hitboxes.Remove(two);
+                                DisableConnectedHitboxes(two.gameObject);
+                            }
+                        }
+                        else // hitboxes are similar damages, disable both
+                        {
+                            DisableConnectedHitboxes(one.gameObject);
+                            DisableConnectedHitboxes(two.gameObject);
+                            one.gameObject.SetActive(false);
+                            two.gameObject.SetActive(false);
+                            hitboxes.Remove(one); // remove hitboxes from list
+                            hitboxes.Remove(two);
                         }
                     }
                 }
             }
 
-
+            List<Pair<GameObject, GameObject>> hitlist = new List<Pair<GameObject, GameObject>>(); // stores all hurtbox/hitbox collision pairs, Hitbox is Left, Hurtbox is Right
             foreach(Collider2D hurtbox in hurtboxes)
             {
                 foreach (Collider2D hitbox in hitboxes)
                 {
-                    if (hurtbox.IsTouching(hitbox) && hitbox.GetComponent<HitboxInfo>().owner != hurtbox.gameObject)
+                    HitboxInfo hbi = hitbox.GetComponent<HitboxInfo>();
+                    GameObject hurtboxGameObject = hurtbox.gameObject;
+
+                    // if player is touching hitbox, and the hitbox doesn't belong to that player, and that player hasn't already been hit by that hitbox
+                    if (hurtbox.IsTouching(hitbox) && hbi.owner != hurtboxGameObject && !hbi.playersHitAlready.Contains(hurtboxGameObject))
                     {
-                        hurtbox.GetComponent<Control1>().Hit(hitbox, true);
-                        hitbox.GetComponent<HitboxInfo>().activeHitbox = false;
+                        hitlist.Add(new Pair<GameObject, GameObject>(hitbox.gameObject, hurtbox.gameObject));
                     }
                 }
             }
 
+            // order by priority and FINALLY deal damage and knockback
+            hitlist = hitlist.OrderBy(pair => pair.left.GetComponent<HitboxInfo>().priority).ToList();
+            foreach (Pair<GameObject, GameObject> i in hitlist) // hitbox left, hurtbox right
+            {
+                if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
+                {
+                    i.right.GetComponent<Control1>().Hit(i.left.GetComponent<Collider2D>(), true);
+                    em.SpawnHitEffectOnContactPoint("LightHitEffect", i.left.GetComponent<Collider2D>(), i.right.transform.position);
+                    AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
+                }
+            }
         }
     }
-
 }

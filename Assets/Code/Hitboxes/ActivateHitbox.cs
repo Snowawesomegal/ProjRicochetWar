@@ -12,76 +12,158 @@ public class ActivateHitbox : MonoBehaviour
     Control1 c1;
     ControlLockManager clm;
 
-    public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
-    public List<GameObject> currentConnectedHitboxes;
+    public Dictionary<Pair<GameObject, Type>, int> toBeDisabled = new Dictionary<Pair<GameObject, Type>, int>();
 
     private void Start()
     {
         clm = GetComponent<ControlLockManager>();
         c1 = GetComponent<Control1>();
-        currentConnectedHitboxes = new List<GameObject>() { };
     }
 
-    public void ConnectHitboxes(string hitboxesSeparatedBySlashes)
+    /// <summary>
+    /// Finds by name and enables any box that is a direct child of the object this script is attached to. This function also works for pogoboxes. For any nested children, which should be the case for multipart, multihitbox, and multihit attacks, use EnableMultiHitbox. 
+    /// </summary>
+    /// <param name="hitboxName"></param>
+    public void EnableHitbox(string boxName)
     {
-        string[] boxes = hitboxesSeparatedBySlashes.Split('/');
+        GameObject boxObject = null;
 
-        for (int i = 0; i < transform.childCount; i++)
+        if (boxName.Contains('/')) // have to find a parent and then a child within the parent (input is entered as parent/child if hitbox is nested)
         {
-            Transform currentChild = transform.GetChild(i);
-            if (Array.Exists(boxes, element => element == currentChild.name))
+            string[] parentAndHB = boxName.Split('/'); // split and add to array
+
+            foreach (Transform i in transform) // foreach child in player
             {
-                currentConnectedHitboxes.Add(currentChild.gameObject);
-                break;
+                if (i.name == parentAndHB[0]) // if that child is the parent we're looking for
+                {
+                    foreach (Transform j in i) // foreach child in that child
+                    {
+                        if (j.gameObject.name == parentAndHB[1]) // if that child is the child we're looking for
+                        {
+                            boxObject = j.gameObject;
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
         }
-    }
-
-    public void EnableHitbox(string hitboxName)
-    {
-        GameObject hitboxObject = null;
-
-        for (int i = 0; i < transform.childCount; i++)
+        else // finding non-nested child in player's transform
         {
-            Transform currentChild = transform.GetChild(i);
-            if (currentChild.name == hitboxName)
+            foreach (Transform i in transform)
             {
-                hitboxObject = currentChild.gameObject;
-                break;
+                if (i.name == boxName)
+                {
+                    boxObject = i.gameObject;
+                    break;
+                }
             }
         }
 
-        if (hitboxObject == null)
+        if (boxObject == null)
         {
-            Debug.Log("There is no hitbox object with the name " + hitboxName + " on " + gameObject.name);
+            Debug.Log("There is no hitbox object with the name " + boxName + " on " + gameObject.name);
             return;
         }
 
-        hitboxObject.SetActive(true);
+        boxObject.SetActive(true);
 
-        HitboxInfo HBInfo = hitboxObject.GetComponent<HitboxInfo>();
-
-        HBInfo.owner = gameObject;
-
-        if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
-        {
-            hitboxObject.transform.localPosition *= new Vector2(-1, 1);
-        }
-        HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
-
-        toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
+        CalibrateBox(boxObject);
     }
+
+    public void EnableMultiHitbox(string hitboxParentName)
+    {
+        List<GameObject> hitboxesToEnable = new List<GameObject>();
+
+        foreach (Transform i in transform)
+        {
+            if (i.name == hitboxParentName)
+            {
+                foreach (Transform j in i)
+                {
+                    hitboxesToEnable.Add(j.gameObject);
+                }
+
+                break;
+            }
+        }
+
+        if (hitboxesToEnable.Count == 0)
+        {
+            Debug.Log("There is no hitbox parent with the name " + hitboxParentName + " on " + gameObject.name);
+            return;
+        }
+
+        foreach (GameObject i in hitboxesToEnable)
+        {
+            i.SetActive(true);
+
+            CalibrateBox(i);
+        }
+    }
+
+    void CalibrateBox(GameObject box)
+    {
+        if (box.TryGetComponent<HitboxInfo>(out HitboxInfo HBInfo))
+        {
+            CalibrateHitbox(HBInfo);
+        }
+        else if (box.TryGetComponent<Pogobox>(out Pogobox pogobox))
+        {
+            CalibratePogobox(pogobox);
+        }
+        else
+        {
+            CalibrateDefault(box);
+        }
+
+        void CalibrateHitbox(HitboxInfo HBInfo)
+        {
+            HBInfo.owner = gameObject;
+
+            if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
+            {
+                HBInfo.transform.localPosition *= new Vector2(-1, 1);
+            }
+            HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
+
+            toBeDisabled.Add(new Pair<GameObject, Type>(HBInfo.gameObject, typeof(HitboxInfo)), HBInfo.activeFrames);
+        }
+
+        void CalibratePogobox(Pogobox pogobox)
+        {
+            if (pogobox.owner.GetComponent<Control1>().facingRight != pogobox.facingRight)
+            {
+                pogobox.transform.localPosition *= new Vector2(-1, 1);
+            }
+            pogobox.facingRight = pogobox.owner.GetComponent<Control1>().facingRight;
+
+            toBeDisabled.Add(new Pair<GameObject, Type>(pogobox.gameObject, typeof(Pogobox)), pogobox.activeFrames);
+        }
+
+        void CalibrateDefault(GameObject box)
+        {
+            toBeDisabled.Add(new Pair<GameObject, Type>(box, null), 2);
+        }
+    }
+
+
 
     private void FixedUpdate()
     {
-        Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
+        Dictionary<Pair<GameObject, Type>, int> copyDict = new Dictionary<Pair<GameObject, Type>, int>(toBeDisabled); // this feels like it's very cost inefficient?
 
-        foreach(KeyValuePair<GameObject, int> i in copyDict)
+        foreach(KeyValuePair<Pair<GameObject, Type>, int> i in copyDict)
         {
             if (i.Value <= 0)
             {
-                i.Key.SetActive(false);
-                i.Key.GetComponent<HitboxInfo>().activeHitbox = true;
+                i.Key.left.SetActive(false);
+
+                if (i.Key.right == typeof(HitboxInfo))
+                {
+                    i.Key.left.GetComponent<HitboxInfo>().playersHitAlready.Clear();
+                }
+
                 toBeDisabled.Remove(i.Key);
             }
             else

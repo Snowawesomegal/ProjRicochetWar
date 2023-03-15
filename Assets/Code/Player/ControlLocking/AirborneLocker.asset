@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AirborneLocker
   m_EditorClassIdentifier: 
   controlLock:
-    locks: 0
+    locks: 4
     priority: 0

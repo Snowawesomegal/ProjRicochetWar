@@ -30,6 +30,7 @@ public class InMatchUI : MonoBehaviour
         ui = FindAnyObjectByType<Canvas>();
 
         GameObject newBars = Instantiate(ghostBars, ui.transform);
+
         healthBar = newBars.transform.GetChild(0).GetComponent<Slider>();
         chargeBar = newBars.transform.GetChild(1).GetComponent<Slider>();
 

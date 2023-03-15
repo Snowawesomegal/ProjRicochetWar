@@ -9,7 +9,11 @@ using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
-    //March 3, 2023, 6:00PM
+    //March 11, 2023, 12:53PM
+
+    //Todo list
+    //Change implementation of limits/reductions for vertical and horizontal speed
+    // add way to disable friction for dashes on the ground
 
     public GameObject testCircle;
 
@@ -18,17 +22,22 @@ public class Control1 : MonoBehaviour
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
+    [SerializeField] float airFriction = 500;
     public float wallJumpVerticalOoOne = 0.5f;
     public bool ignoreGravity = false;
     public bool intangible = false;
+    public bool ignoreFriction = false;
 
     //speeds
     public float airSpeed = 10;
-    [SerializeField] float airAccel = 10;
+    [SerializeField] float airAccel = 50;
+    [SerializeField] float airAccelDuringAerial = 40;
     public float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
     public float initialJumpForce = 10;
     public float dashForce = 10;
+    [SerializeField] float overMaxYSpeedAdjustment = 10;
+    [SerializeField] float overMaxXSpeedAdjustment = 10;
 
     //Costs
     [SerializeField] float dashCost = 50;
@@ -48,7 +57,7 @@ public class Control1 : MonoBehaviour
     HitboxInteractionManager him;
     ParticleSystem trailps;
     public AudioManager am;
-    GameObject sm;
+    public GameObject sm;
     InMatchUI imui;
     AnimationEvents ae;
 
@@ -66,6 +75,7 @@ public class Control1 : MonoBehaviour
     public StandardControlLocker wallcling;
     public StandardControlLocker onlyAttack;
     public StandardControlLocker dashing;
+    public StandardControlLocker inAerialAnim;
 
     public Collider2D wallTouching;
     public bool touchingWall = false;
@@ -86,10 +96,10 @@ public class Control1 : MonoBehaviour
     //frames
     public int frame = 0;
     int dropPlatformFrames = 0;
+    [SerializeField] int dropPlatformTotalFrames = 7;
 
     //Animator
-    public string currentAnimBool;
-    string[] attackBools = new string[] { "FLightAttack", "FHeavyAttack", "UpLightAttack", "UpHeavyAttack", "FAirAttack", "UpAirAttack", "DAirAttack", "BAirAttack" };
+    public string currentAnimBool = "FHeavyAttack";
 
     //debug
     public bool animationDebugMessages = true;
@@ -112,8 +122,6 @@ public class Control1 : MonoBehaviour
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
-
-        friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
     }
 
     public void VerticalResponse(CharacterInput input)
@@ -121,52 +129,54 @@ public class Control1 : MonoBehaviour
         if (input.Direction.current.y < -0.5)
         {
             platformCollider.SetActive(false);
+            if (dropPlatformFrames == 0)
+            {
+                dropPlatformFrames = 1;
+            }
+
             if (clm.activeLockers.Contains(grounded))
             {
-                dropPlatformFrames = 0; //implement this doing something
+                dropPlatformFrames = dropPlatformTotalFrames;
             }
-        }
-        else
-        {
-            platformCollider.SetActive(true);
         }
     }
 
     public void HorizontalResponse(CharacterInput input)
     {
-        if (clm.activeLockers.Contains(wallcling))
+        if (clm.activeLockers.Contains(grounded)) // if grounded: move
         {
-            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
-            {
-                clm.RemoveLocker(wallcling);
-            }
+            rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel); // Ground move
         }
-        else
+        else // if in the air
         {
-            if (clm.activeLockers.Contains(grounded))
+            if (clm.activeLockers.Contains(inAerialAnim)) // if using an aerial: reduced air movement
             {
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
-                //above line caps horizontal speed at groundspeed every frame
-                //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
-                //best solution is to constantly reduce speed until speed is within desired parameters while touching ground and not in hitstun
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccelDuringAerial);
             }
-            else
+            else // if in the air but not using an aerial
             {
-                if (touchingWall)
+                if (touchingWall) // if touching wall, if holding toward wall and not using an aerial, grab wall
                 {
                     if (collidedWallSide == pim.GetCurrentDirectional().current.x)
                     {
-                        clm.AddLocker(wallcling);
-                        rb.velocity = Vector2.zero;
+                        WallClingEnterExit(true);
                     }
                 }
 
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
-                //same as grounded
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel); // Air move
             }
+        }
 
+        if (clm.activeLockers.Contains(wallcling)) // if wallcling and not holding toward wall, unstick from wall
+        {
+            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
+            {
+                WallClingEnterExit(false);
+            }
+        }
+
+        if (!clm.activeLockers.Contains(inAerialAnim))
+        {
             Flip(input);
         }
     }
@@ -185,7 +195,6 @@ public class Control1 : MonoBehaviour
 
     public void DashResponse(CharacterInput input)
     {
-
         if (input.IsHeld() || input.IsPending())
         {
             if (imui.currentCharge >= dashCost)
@@ -195,8 +204,8 @@ public class Control1 : MonoBehaviour
                 {
                     ae.StopAnimation(currentAnimBool);
                 }
-                ChangeAnimBool("StartDash", true);
-                ChangeAnimBool("StopDash", true); //Dash ends when StopDash is false
+                ae.ChangeAnimBool("StartDash", true);
+                ae.ChangeAnimBool("StopDash", true); // not entirely sure if this line is even necessary after I added ExitTime
                 clm.AddLocker(dashing);
 
                 rb.velocity = Vector2.zero;
@@ -204,10 +213,9 @@ public class Control1 : MonoBehaviour
             }
             else
             {
-                // sound effect for no dash charge goes here
+                // sound effect for trying to dash with no charge goes here
             }
         }
-
     }
 
     public void FLightResponse(CharacterInput input)
@@ -217,7 +225,7 @@ public class Control1 : MonoBehaviour
             if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
             Flip(input);
 
-            ChangeAnimBool("FLightAttack", true);
+            ae.ChangeAnimBool("FLightAttack", true);
         }
     }
 
@@ -226,16 +234,22 @@ public class Control1 : MonoBehaviour
         if (animationDebugMessages) { Debug.Log("UpTilt Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            ChangeAnimBool("UpLightAttack", true);
+            ae.ChangeAnimBool("UpLightAttack", true);
         }
     }
 
-    public void DownLightResponse(CharacterInput input)
+    public void DLightResponse(CharacterInput input)
     {
-        if (animationDebugMessages) { Debug.Log("DTilt Response" + "- frame: " + frame); }
+        if (animationDebugMessages) { Debug.Log("DLight Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            ChangeAnimBool("DownLightAttack", true);
+            if (clm.activeLockers.Contains(grounded))
+            {
+                rb.AddForce(120 * Vector2.up);
+            }
+
+
+            ae.ChangeAnimBool("DLightAttack", true);
         }
     }
 
@@ -244,7 +258,27 @@ public class Control1 : MonoBehaviour
         if (animationDebugMessages) { Debug.Log("UpHeavy Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            ChangeAnimBool("UpHeavyAttack", true);
+            Flip(input);
+
+            ae.ChangeAnimBool("UpHeavyAttack", true);
+        }
+    }
+
+    public void FHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("FHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("FHeavyAttack", true);
+        }
+    }
+
+    public void DHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("DHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("DHeavyAttack", true);
         }
     }
 
@@ -255,42 +289,58 @@ public class Control1 : MonoBehaviour
 
         if (clm.activeLockers.Contains(grounded))
         {
-            ChangeAnimBool("Jumpsquat", true);
+            ae.ChangeAnimBool("Jumpsquat", true);
         }
         else if (clm.activeLockers.Contains(wallcling))
         {
-            ChangeAnimBool("WallJumpSquat", true);
+            ae.ChangeAnimBool("WallJumpSquat", true);
         }
     }
 
-    public void ChangeAnimBool(string boolName, bool toSet)
+    void WallClingEnterExit(bool enterexit)
     {
-        if (animationDebugMessages) { Debug.Log("Changed animBool " + boolName + " to " + toSet); }
-        anim.SetBool(boolName, toSet);
-        if (toSet == true)
+        if (enterexit)
         {
-            if (attackBools.Contains(boolName))
-            {
-                currentAnimBool = boolName;
-            }
+            clm.AddLocker(wallcling);
+            anim.SetBool("WallCling", true);
+            rb.velocity = Vector2.zero;
         }
         else
         {
-            currentAnimBool = null;
+            clm.RemoveLocker(wallcling);
+            anim.SetBool("WallCling", false);
         }
+    }
+
+    void OnDirectionChange()
+    {
+        if (clm.activeLockers.Contains(grounded))
+        {
+            ae.SpawnDirectionalSmokeCloud();
+            am.PlaySoundGroup("HeelStep");
+        }
+
     }
 
     void Flip(CharacterInput input)
     {
         if (Mathf.Round(input.Direction.current.x) > 0)
         {
-            facingRight = true;
-            sr.flipX = false;
+            if (!facingRight)
+            {
+                facingRight = true;
+                sr.flipX = false;
+                OnDirectionChange();
+            }
         }
         else if (Mathf.Round(input.Direction.current.x) < 0)
         {
-            facingRight = false;
-            sr.flipX = true;
+            if (facingRight)
+            {
+                facingRight = false;
+                sr.flipX = true;
+                OnDirectionChange();
+            }
         }
 
         bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
@@ -298,6 +348,12 @@ public class Control1 : MonoBehaviour
 
     private void FixedUpdate()
     {
+        anim.SetFloat("VerticalInput", pim.GetCurrentDirectional().current.y);
+        anim.SetFloat("HorizontalInput", pim.GetCurrentDirectional().current.x);
+
+        anim.SetFloat("VerticalVelocity", rb.velocity.y);
+        anim.SetFloat("HorizontalVelocity", rb.velocity.x);
+
         frame += 1;
         if (frame > 60) { frame = 1; }
 
@@ -316,34 +372,78 @@ public class Control1 : MonoBehaviour
         ManageForces();
 
         UpdateGrounded();
+
+        ManagePlatformCollider();
+    }
+
+    void ManagePlatformCollider()
+    {
+        if (dropPlatformFrames == 0)
+        {
+            platformCollider.SetActive(true);
+            return;
+        }
+        dropPlatformFrames -= 1;
     }
 
     void ManageForces()
     {
-        if (clm.activeLockers.Contains(grounded))
+        if (clm.activeLockers.Contains(grounded)) // if grounded
         {
             if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
-                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded/can't move/not holding the direction of motion;
+                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded and: can't move or not holding the direction of motion: apply friction
             {
-                if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                if (!ignoreFriction)
                 {
-                    rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
+                    if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                    {
+                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                    }
                 }
-                else
-                {
-                    rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
-                }
-            }
-        }
-        else
-        {
-            if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity)
-            {
-                rb.AddForce(Vector2.down * fallAccel);
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
-                //this is a placeholder, see directional response's explanation below
             }
 
+            rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
+        }
+        else // if not grounded
+        {
+            if (!clm.activeLockers.Contains(hitstun)) // if not grounded and not in hitstun
+            {
+                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0))
+                //if not in hitstun, airborne, and not holding the direction of motion: apply airFriction
+                {
+                    if (!ignoreFriction)
+                    {
+                        if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                        {
+                            rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        }
+                    }
+                }
+
+                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not in hitstun, wallclinging, or ignoreGravity
+                {
+                    rb.AddForce(Vector2.down * fallAccel); // Apply gravity
+                }
+
+                // slow down toward max speeds
+                Mathf.MoveTowards(rb.velocity.y, fallSpeed, overMaxYSpeedAdjustment);
+                Mathf.MoveTowards(rb.velocity.x, airSpeed, overMaxXSpeedAdjustment);
+            }
+            else // if not grounded and you ARE in hitstun
+            {
+                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
+                {
+                    rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
+                }
+            }
         }
     }
 
@@ -400,7 +500,6 @@ public class Control1 : MonoBehaviour
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
 
-
             if (hi.angle == 361)
             {
                 Vector2 hiParentVelocity = hi.transform.parent.GetComponent<Rigidbody2D>().velocity;
@@ -408,13 +507,13 @@ public class Control1 : MonoBehaviour
 
                 Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight?1:-1), hiParentPosition.y);
                 Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                rb.AddForce(((between + (hiParentVelocity / 10)) * hi.knockback));
+                rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
             }
             else
             {
                 rb.velocity = Vector2.zero;
                 imui.ChangeHealth(-hi.damage);
-                Vector2 angleOfForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * hi.angle), Mathf.Sin(Mathf.Deg2Rad * hi.angle));
+                Vector2 angleOfForce = AngleMath.Vector2FromAngle(hi.angle);
 
                 if (!hi.facingRight)
                 {
@@ -480,7 +579,7 @@ public class Control1 : MonoBehaviour
     {
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
-            clm.RemoveLocker(wallcling);
+            WallClingEnterExit(false);
             collidedWallSide = 0;
             touchingWall = false;
             wallTouching = null;

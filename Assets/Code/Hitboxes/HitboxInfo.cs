@@ -11,8 +11,15 @@ public class HitboxInfo : MonoBehaviour
     public GameObject owner;
     public bool facingRight = true;
     public int activeFrames = 2;
+    public int minimumHitstunFrames = 20;
 
-    public bool activeHitbox = true;
+    [Tooltip("Higher number priority wins; lower priority hitboxes are disabled if two hitboxes from the same move hit a player simultaneously.")]
+    public int priority = 1;
+
+    public List<GameObject> playersHitAlready;
+
+    [Tooltip("Set this to true if the hitbox has multiple hitboxes that are part of the same move as it, and are disabled if it connects. In this case, this object should also be parented to a another gameobject. See Ghost UpHeavy. This is checked by HitboxInteractionManager.")]
+    public bool isPartOfMultipart = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

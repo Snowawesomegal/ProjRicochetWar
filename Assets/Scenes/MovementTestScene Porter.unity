@@ -703,9 +703,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
+  m_MaxPlayerCount: 8
   m_AllowJoining: 1
-  m_JoinBehavior: 0
+  m_JoinBehavior: 1
   m_PlayerJoinedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -715,16 +715,32 @@ MonoBehaviour:
   m_JoinAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 11a75187-14d0-4d73-89b8-d5d649554aaa
       m_Processors: 
       m_Interactions: 
-      m_SingletonActionBindings: []
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: ce1256a9-5b16-4995-9b61-3a97cee5be0f
+        m_Path: <Gamepad>/start
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 8cd0b529-be14-4e0d-8f56-437b4ec9b17a
+        m_Path: <Keyboard>/enter
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 7259446613053437897, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
+  m_PlayerPrefab: {fileID: 6311728093354438150, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -908,71 +924,6 @@ MonoBehaviour:
   maxCameraSize: 10
   zoomSpaceScale: 0.5
   Ghost: {fileID: 7259446613053437897, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
---- !u!1001 &1474584375
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2969397049923640288, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: debugMessages
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437897, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_Name
-      value: Ghost
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.61
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437899, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259446613053437902, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: efe1c317424cc804385dcccf8a1c9fac, type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
 --- !u!1 &1507579591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,28 +1024,3 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &2080181758 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7259446613053437897, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-  m_PrefabInstance: {fileID: 1474584375}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2080181759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080181758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04f1c1efa37e65545be394a83487031f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2080181771}
-  blankCollection: {fileID: 11400000, guid: 99f22017249b76848b0b2016a4031bbf, type: 2}
-  animationCollection: {fileID: 11400000, guid: 2cbabf7d26ca4d64ba9932f87d31e068, type: 2}
---- !u!95 &2080181771 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7259446613053437902, guid: 5681ef2b7cbc047c6801b15f8dcd4026, type: 3}
-  m_PrefabInstance: {fileID: 1474584375}
-  m_PrefabAsset: {fileID: 0}

@@ -61,6 +61,7 @@ public class Control1 : MonoBehaviour
     EffectManager em;
     InMatchUI imui;
     AnimationEvents ae;
+    TrailRenderer tr;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -120,6 +121,7 @@ public class Control1 : MonoBehaviour
         imui = GetComponent<InMatchUI>();
         ae = GetComponent<AnimationEvents>();
         em = sm.GetComponent<EffectManager>();
+        tr = GetComponent<TrailRenderer>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -514,6 +516,8 @@ public class Control1 : MonoBehaviour
 
             em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
+            tr.emitting = true;
+
             if (hi.angle == 361)
             {
                 Vector2 hiParentVelocity = hi.transform.parent.GetComponent<Rigidbody2D>().velocity;
@@ -556,6 +560,7 @@ public class Control1 : MonoBehaviour
                 gameObject.layer = 9;
             }
             rb.sharedMaterial = notBouncy;
+            tr.emitting = false;
         }
     }
 

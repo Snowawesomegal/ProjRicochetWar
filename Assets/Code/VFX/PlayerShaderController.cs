@@ -75,7 +75,7 @@ public class PlayerShaderController : MonoBehaviour
         for (int i = 0; i < NUMBER_COLORS; i++)
         {
             int currentName = i + 1;
-            string sampleName = "_ColorSample" + currentName;
+            string sampleName = "_SampleColor" + currentName;
             if (i < samplePalette.colors.Count)
             {
                 material.SetColor(sampleName, samplePalette.colors[i]);

@@ -694,6 +694,7 @@ GameObject:
   - component: {fileID: 6311728093354438152}
   - component: {fileID: 3055701596010756782}
   - component: {fileID: 1881402502247760431}
+  - component: {fileID: 5095880387278515821}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Player
@@ -748,7 +749,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 79f5c736d06b05c4b982c6add25553d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1075,7 +1076,7 @@ MonoBehaviour:
     m_ActionId: 359ab731-0107-4a45-8dae-b3ba007159bc
     m_ActionName: Playing/Movement[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: DefaultControls
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Playing
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -5931,6 +5932,25 @@ MonoBehaviour:
     right: 5
   landingAnimationName: GhostLandingLag
   runAnimationName: GhostRun
+--- !u!114 &5095880387278515821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311728093354438150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6847c5d32e0f25e42bfaf9c344856424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 6311728093354438151}
+  color_selector_dropdown: 0
+  palette_selector_dropdown: 1
+  samplePalette: {fileID: 11400000, guid: bc71ed20025472445b7647289db2963e, type: 2}
+  targetPalettes:
+  - {fileID: 11400000, guid: 650464a26db2192478b65f047769d637, type: 2}
+  - {fileID: 11400000, guid: 5fd932f6d5003114483076083466f770, type: 2}
 --- !u!1 &6311728093461558692
 GameObject:
   m_ObjectHideFlags: 0

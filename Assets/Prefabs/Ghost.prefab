@@ -1093,15 +1093,15 @@ MonoBehaviour:
   ignoreGravity: 0
   intangible: 0
   ignoreFriction: 0
-  airSpeed: 16
+  airSpeed: 20
   airAccel: 90
   airAccelDuringAerial: 80
-  groundSpeed: 30
+  groundSpeed: 25
   groundAccel: 200
   initialJumpForce: 950
   dashForce: 4000
-  overMaxYSpeedAdjustment: 120
-  overMaxXSpeedAdjustment: 120
+  overMaxYSpeedAdjustment: 400
+  overMaxXSpeedAdjustment: 400
   dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2

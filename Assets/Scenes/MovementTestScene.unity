@@ -222,6 +222,11 @@ MonoBehaviour:
     prefab: {fileID: 8851467562859813940, guid: 018abd01c373d43dd8b490dab902086a, type: 3}
     sound: 
     rotationAdjustment: 0
+  - name: HitExplosion1
+    lifetime: 0.2
+    prefab: {fileID: 5303907904916548384, guid: 09e74660236aa4b1dbafc0d3e23b7eb4, type: 3}
+    sound: 
+    rotationAdjustment: 45
 --- !u!1 &107629446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,7 +1429,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1440,7 +1445,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3955727984481444, guid: 84f7c76bb39c04a6885a190278fbf7a2, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3955727984481444, guid: 84f7c76bb39c04a6885a190278fbf7a2, type: 3}
       propertyPath: m_LocalScale.x

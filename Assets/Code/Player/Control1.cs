@@ -58,6 +58,7 @@ public class Control1 : MonoBehaviour
     ParticleSystem trailps;
     public AudioManager am;
     public GameObject sm;
+    EffectManager em;
     InMatchUI imui;
     AnimationEvents ae;
 
@@ -118,6 +119,7 @@ public class Control1 : MonoBehaviour
         am = sm.GetComponent<AudioManager>();
         imui = GetComponent<InMatchUI>();
         ae = GetComponent<AnimationEvents>();
+        em = sm.GetComponent<EffectManager>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -433,9 +435,19 @@ public class Control1 : MonoBehaviour
                     rb.AddForce(Vector2.down * fallAccel); // Apply gravity
                 }
 
+                float newXSpeed = rb.velocity.x;
+                float newYSpeed = rb.velocity.y;
                 // slow down toward max speeds
-                Mathf.MoveTowards(rb.velocity.y, fallSpeed, overMaxYSpeedAdjustment);
-                Mathf.MoveTowards(rb.velocity.x, airSpeed, overMaxXSpeedAdjustment);
+                if (Mathf.Abs(rb.velocity.x) > airSpeed)
+                {
+                    newXSpeed = Mathf.MoveTowards(rb.velocity.x, airSpeed * Mathf.Sign(rb.velocity.x), overMaxXSpeedAdjustment);
+                }
+                if (rb.velocity.y < -fallSpeed)
+                {
+                    newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
+                }
+
+                rb.velocity = new Vector2(newXSpeed, newYSpeed);
             }
             else // if not grounded and you ARE in hitstun
             {
@@ -499,6 +511,8 @@ public class Control1 : MonoBehaviour
             rb.sharedMaterial = bouncy;
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+
+            em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
             if (hi.angle == 361)
             {

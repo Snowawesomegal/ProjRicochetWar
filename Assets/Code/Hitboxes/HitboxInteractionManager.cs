@@ -26,7 +26,11 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             foreach (Transform i in hb.transform.parent) // add player to all hitboxes in folder
             {
-                i.GetComponent<HitboxInfo>().playersHitAlready.Add(player);
+                if (i.TryGetComponent(out HitboxInfo ihbi))
+                {
+                    ihbi.playersHitAlready.Add(player);
+                }
+
             }
         }
         else

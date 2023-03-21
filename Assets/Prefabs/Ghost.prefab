@@ -1087,21 +1087,21 @@ MonoBehaviour:
   testCircle: {fileID: 6899714948450397382, guid: 94c56d4ff0c7a4485a02345fc0ab1fb2, type: 3}
   fallSpeed: 20
   fallAccel: 50
-  friction: 4.5
-  airFriction: 0.4
+  friction: 5
+  airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
   ignoreGravity: 0
   intangible: 0
   ignoreFriction: 0
-  airSpeed: 35
-  airAccel: 60
-  airAccelDuringAerial: 45
+  airSpeed: 16
+  airAccel: 90
+  airAccelDuringAerial: 80
   groundSpeed: 30
-  groundAccel: 180
+  groundAccel: 200
   initialJumpForce: 950
   dashForce: 4000
-  overMaxYSpeedAdjustment: 60
-  overMaxXSpeedAdjustment: 60
+  overMaxYSpeedAdjustment: 120
+  overMaxXSpeedAdjustment: 120
   dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2

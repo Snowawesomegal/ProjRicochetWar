@@ -173,6 +173,7 @@ public class PlayerInputManager : MonoBehaviour
                 playerController.FLightResponse(input);
                 break;
             case CharacterInput.CardinalDirection.NONE:
+                playerController.NeutralAttackResponse(input);
                 if (debugMessages)
                     Debug.Log("Attacking sideways " + input.Phase);
                 break;

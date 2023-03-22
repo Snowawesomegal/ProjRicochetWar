@@ -141,6 +141,7 @@ public class HitboxInteractionManager : MonoBehaviour
                         }
                         else // hitboxes are similar damages, disable both
                         {
+                            em.SpawnHitEffectOnContactPoint("ClankEffect1", one, two.bounds.center);
                             DisableConnectedHitboxes(one.gameObject);
                             DisableConnectedHitboxes(two.gameObject);
                             one.gameObject.SetActive(false);

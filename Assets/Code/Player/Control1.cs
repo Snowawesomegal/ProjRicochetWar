@@ -233,6 +233,17 @@ public class Control1 : MonoBehaviour
         }
     }
 
+    public void NeutralAttackResponse(CharacterInput input)
+    {
+        if (input.IsHeld() || input.IsPending())
+        {
+            if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
+            Flip(input);
+
+            ae.ChangeAnimBool("FLightAttack", true);
+        }
+    }
+
     public void UpLightResponse(CharacterInput input)
     {
         if (animationDebugMessages) { Debug.Log("UpTilt Response" + "- frame: " + frame); }
@@ -513,6 +524,7 @@ public class Control1 : MonoBehaviour
             rb.sharedMaterial = bouncy;
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+            anim.SetBool("Hitstun", true);
 
             em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
@@ -561,6 +573,7 @@ public class Control1 : MonoBehaviour
             }
             rb.sharedMaterial = notBouncy;
             tr.emitting = false;
+            anim.SetBool("Hitstun", false);
         }
     }
 

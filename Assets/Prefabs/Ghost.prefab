@@ -114,8 +114,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.97297966}
-  m_Size: {x: 2.0144176, y: 2.5600808}
+  m_Offset: {x: 0, y: -0.8333973}
+  m_Size: {x: 1.786559, y: 2.794809}
   m_Direction: 0
 --- !u!114 &4113411392958667982
 MonoBehaviour:
@@ -6358,7 +6358,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.318182
+        value: 0.36165428
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -6370,9 +6370,9 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.427451, g: 0.9843138, b: 0.9843138, a: 1}
-      key1: {r: 0.427451, g: 0.9843138, b: 0.9843138, a: 0}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.427451, g: 0.9843138, b: 0.9843138, a: 0.58431375}
+      key1: {r: 0.427451, g: 0.9843138, b: 0.9843138, a: 0.5176471}
+      key2: {r: 0, g: 0, b: 0, a: 0.39607844}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -6386,17 +6386,17 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 34310
-      atime1: 65535
-      atime2: 0
-      atime3: 0
+      atime0: 386
+      atime1: 15998
+      atime2: 32768
+      atime3: 65535
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
+      m_NumAlphaKeys: 4
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0

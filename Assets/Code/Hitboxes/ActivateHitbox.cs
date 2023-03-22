@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using System;
+using System.Xml.Linq;
 
 public class ActivateHitbox : MonoBehaviour
 {
@@ -66,9 +67,19 @@ public class ActivateHitbox : MonoBehaviour
             return;
         }
 
-        boxObject.SetActive(true);
-
-        CalibrateBox(boxObject);
+        if (boxObject.TryGetComponent(out HitboxInfo hbi))
+        {
+            if (!hbi.doNotEnable)
+            {
+                boxObject.SetActive(true);
+                CalibrateBox(boxObject);
+            }
+        }
+        else
+        {
+            boxObject.SetActive(true);
+            CalibrateBox(boxObject);
+        }
     }
 
     public void EnableMultiHitbox(string hitboxParentName)
@@ -96,9 +107,18 @@ public class ActivateHitbox : MonoBehaviour
 
         foreach (GameObject i in hitboxesToEnable)
         {
-            i.SetActive(true);
-
-            CalibrateBox(i);
+            if (i.TryGetComponent(out HitboxInfo hbi))
+            {
+                if (!hbi.doNotEnable)
+                {
+                    i.SetActive(true);
+                    CalibrateBox(i);
+                }
+            }
+            else
+            {
+                i.SetActive(true);
+            }
         }
     }
 

@@ -335,6 +335,330 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""OwenControls"",
+            ""id"": ""b8a64e02-f236-407b-bdc7-f8a39e35a97d"",
+            ""actions"": [
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f0af3d6-3d2d-46db-a726-e5406501a8b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""6bd6d8ac-249b-4603-b9ed-6df79870076d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Special"",
+                    ""type"": ""Button"",
+                    ""id"": ""6992e97d-a755-454e-8492-011ce23a63ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Directional"",
+                    ""type"": ""Value"",
+                    ""id"": ""f061c71f-773f-4716-bb2d-8c8b65e32565"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ca80299-ce6d-46cc-af75-8eeb3d6277e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heavy Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3bdffba-3e1c-4547-8a4c-a166b883dc92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Button"",
+                    ""id"": ""462e5cf3-ba14-47da-8f47-3004df081109"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c2de2b98-ba47-4a9e-8242-1ca0f809bac5"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0bca029-3046-4342-8ab5-9f140c2c143f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91b99987-89db-47d2-ae21-2f37c1e5e723"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b899845-a304-4189-899c-4b75267e4ecd"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""632aa141-19f6-48ce-8d86-e1eed950f3db"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c8084a8-54de-4050-9b63-59ef47413655"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb4dbc31-5fe3-4ef1-9302-702b248676a3"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""a54a4649-b395-4c3f-bb42-cd050ced4ace"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Directional"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""f4ad2b7c-f4bb-4dbb-a395-69d482dad27f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""791ba1d4-4c11-4497-907e-68d8e89bc71f"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""66b75d8f-8ba7-4ab6-82be-dded17727bd8"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""eac439cf-94e2-47c1-8e1b-68f96372f55a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""163b6a8a-0916-44b5-9b40-a5933f29bbea"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Directional"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b697b2c9-da48-4e10-a578-3b84ab085906"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6a87e524-ca9e-4c38-a584-97ccc5d76ab4"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ac6b71a4-2b6c-4f76-b6d1-e329245c7d82"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""91dec547-acad-4e6c-bae8-0a88129b92b0"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Directional"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6230dbb-bd51-47a5-be90-0362c32a9ed6"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2038011e-7be4-4f94-9eed-aabfe2ad4966"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9cf5663-c180-4619-840a-c59d9d6751ea"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e51d7849-3f2e-4044-bdfe-7ff6670a4bcb"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f9f4965-ad4f-42b3-8824-e57af61e8d0c"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e497886c-cc7d-4e03-8a60-fe87085346d7"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -371,6 +695,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Playing_Dash = m_Playing.FindAction("Dash", throwIfNotFound: true);
         m_Playing_HeavyAttack = m_Playing.FindAction("Heavy Attack", throwIfNotFound: true);
         m_Playing_Movement = m_Playing.FindAction("Movement", throwIfNotFound: true);
+        // OwenControls
+        m_OwenControls = asset.FindActionMap("OwenControls", throwIfNotFound: true);
+        m_OwenControls_Jump = m_OwenControls.FindAction("Jump", throwIfNotFound: true);
+        m_OwenControls_Attack = m_OwenControls.FindAction("Attack", throwIfNotFound: true);
+        m_OwenControls_Special = m_OwenControls.FindAction("Special", throwIfNotFound: true);
+        m_OwenControls_Directional = m_OwenControls.FindAction("Directional", throwIfNotFound: true);
+        m_OwenControls_Dash = m_OwenControls.FindAction("Dash", throwIfNotFound: true);
+        m_OwenControls_HeavyAttack = m_OwenControls.FindAction("Heavy Attack", throwIfNotFound: true);
+        m_OwenControls_Movement = m_OwenControls.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -507,6 +840,87 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public PlayingActions @Playing => new PlayingActions(this);
+
+    // OwenControls
+    private readonly InputActionMap m_OwenControls;
+    private IOwenControlsActions m_OwenControlsActionsCallbackInterface;
+    private readonly InputAction m_OwenControls_Jump;
+    private readonly InputAction m_OwenControls_Attack;
+    private readonly InputAction m_OwenControls_Special;
+    private readonly InputAction m_OwenControls_Directional;
+    private readonly InputAction m_OwenControls_Dash;
+    private readonly InputAction m_OwenControls_HeavyAttack;
+    private readonly InputAction m_OwenControls_Movement;
+    public struct OwenControlsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public OwenControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Jump => m_Wrapper.m_OwenControls_Jump;
+        public InputAction @Attack => m_Wrapper.m_OwenControls_Attack;
+        public InputAction @Special => m_Wrapper.m_OwenControls_Special;
+        public InputAction @Directional => m_Wrapper.m_OwenControls_Directional;
+        public InputAction @Dash => m_Wrapper.m_OwenControls_Dash;
+        public InputAction @HeavyAttack => m_Wrapper.m_OwenControls_HeavyAttack;
+        public InputAction @Movement => m_Wrapper.m_OwenControls_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_OwenControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OwenControlsActions set) { return set.Get(); }
+        public void SetCallbacks(IOwenControlsActions instance)
+        {
+            if (m_Wrapper.m_OwenControlsActionsCallbackInterface != null)
+            {
+                @Jump.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnJump;
+                @Attack.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnAttack;
+                @Special.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnSpecial;
+                @Special.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnSpecial;
+                @Special.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnSpecial;
+                @Directional.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnDirectional;
+                @Directional.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnDirectional;
+                @Directional.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnDirectional;
+                @Dash.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnDash;
+                @HeavyAttack.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnHeavyAttack;
+                @HeavyAttack.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnHeavyAttack;
+                @HeavyAttack.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnHeavyAttack;
+                @Movement.started -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_OwenControlsActionsCallbackInterface.OnMovement;
+            }
+            m_Wrapper.m_OwenControlsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Special.started += instance.OnSpecial;
+                @Special.performed += instance.OnSpecial;
+                @Special.canceled += instance.OnSpecial;
+                @Directional.started += instance.OnDirectional;
+                @Directional.performed += instance.OnDirectional;
+                @Directional.canceled += instance.OnDirectional;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+                @HeavyAttack.started += instance.OnHeavyAttack;
+                @HeavyAttack.performed += instance.OnHeavyAttack;
+                @HeavyAttack.canceled += instance.OnHeavyAttack;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+            }
+        }
+    }
+    public OwenControlsActions @OwenControls => new OwenControlsActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -526,6 +940,16 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public interface IPlayingActions
+    {
+        void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
+        void OnDirectional(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
+    }
+    public interface IOwenControlsActions
     {
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);

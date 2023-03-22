@@ -9,6 +9,7 @@ public class HitboxInteractionManager : MonoBehaviour
     EffectManager em;
 
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
+    public List<GameObject> doNotEnableHitboxes = new List<GameObject>();
 
     public float hitboxDamageDifferenceToWin = 10;
 
@@ -26,7 +27,11 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             foreach (Transform i in hb.transform.parent) // add player to all hitboxes in folder
             {
-                i.GetComponent<HitboxInfo>().playersHitAlready.Add(player);
+                if (i.TryGetComponent(out HitboxInfo ihbi))
+                {
+                    Debug.Log("added player to " + ihbi + " as part of a multihitbox");
+                    ihbi.playersHitAlready.Add(player);
+                }
             }
         }
         else
@@ -35,20 +40,30 @@ public class HitboxInteractionManager : MonoBehaviour
         }
     }
 
-    void DisableConnectedHitboxes(GameObject hb)
+    List<Transform> GetConnectedHitboxes(GameObject hb)
     {
-        HitboxInfo hbi = hb.GetComponent<HitboxInfo>();
-        if (hbi.isPartOfMultipart)
+        List<Transform> hitboxesToRemove = new List<Transform>();
+
+        if (hb.TryGetComponent(out HitboxInfo hbi))
         {
-            foreach (Transform i in hb.transform.parent) // disable all hitboxes in folder
+            if (hbi.isPartOfMultipart)
             {
-                i.gameObject.SetActive(false);
+                foreach (Transform i in hb.transform.parent) // disable all hitboxes in folder
+                {
+                    hitboxesToRemove.Add(i);
+                }
+            }
+            else
+            {
+                hitboxesToRemove.Add(hb.transform);
             }
         }
         else
         {
-            hb.SetActive(false);
+            Debug.Log("You just tried to involve a pogobox with a collision or something, code is very broken");
         }
+
+        return hitboxesToRemove;
     }
 
     public IEnumerator AfterPhysicsUpdate() // Using WaitForFixedUpdate is the only way to run something AFTER the Collision calls
@@ -68,10 +83,25 @@ public class HitboxInteractionManager : MonoBehaviour
 
         void RunHitBoxManagement()
         {
+
             if (triggersThisFrame.Count == 0) { return; }
 
             List<Collider2D> hitboxes = new List<Collider2D>();
             List<Collider2D> hurtboxes = new List<Collider2D>();
+
+            void DisableAndRemoveHitboxes(GameObject baseBox)
+            {
+                foreach (Transform hitbox in GetConnectedHitboxes(baseBox))
+                {
+                    hitbox.gameObject.SetActive(false);
+                    hitboxes.Remove(hitbox.GetComponent<Collider2D>());
+                    if (hitbox.TryGetComponent(out HitboxInfo hbi2))
+                    {
+                        hbi2.doNotEnable = true;
+                        doNotEnableHitboxes.Add(hitbox.gameObject);
+                    }
+                }
+            }
 
             foreach(Collider2D i in triggersThisFrame) // Get separate lists of hitboxes and hurtboxes, exclude walls
             {
@@ -124,25 +154,19 @@ public class HitboxInteractionManager : MonoBehaviour
                         {
                             if (oneHitboxInfo.damage > twoHitboxInfo.damage) // disable the weaker hitbox, because it must be much weaker
                             {
-                                one.gameObject.SetActive(false);
-                                hitboxes.Remove(one);
-                                DisableConnectedHitboxes(one.gameObject);
+                                DisableAndRemoveHitboxes(one.gameObject);
                             }
                             else
                             {
-                                two.gameObject.SetActive(false);
-                                hitboxes.Remove(two);
-                                DisableConnectedHitboxes(two.gameObject);
+                                DisableAndRemoveHitboxes(two.gameObject);
                             }
                         }
                         else // hitboxes are similar damages, disable both
                         {
-                            DisableConnectedHitboxes(one.gameObject);
-                            DisableConnectedHitboxes(two.gameObject);
-                            one.gameObject.SetActive(false);
-                            two.gameObject.SetActive(false);
-                            hitboxes.Remove(one); // remove hitboxes from list
-                            hitboxes.Remove(two);
+                            em.SpawnHitEffectOnContactPoint("ClankEffect1", one, two.bounds.center);
+
+                            DisableAndRemoveHitboxes(one.gameObject);
+                            DisableAndRemoveHitboxes(two.gameObject);
                         }
                     }
                 }

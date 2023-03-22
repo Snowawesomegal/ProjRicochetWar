@@ -58,8 +58,11 @@ public class Control1 : MonoBehaviour
     ParticleSystem trailps;
     public AudioManager am;
     public GameObject sm;
+    EffectManager em;
     InMatchUI imui;
     AnimationEvents ae;
+    TrailRenderer tr;
+    PlayerShaderController psc;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -118,6 +121,9 @@ public class Control1 : MonoBehaviour
         am = sm.GetComponent<AudioManager>();
         imui = GetComponent<InMatchUI>();
         ae = GetComponent<AnimationEvents>();
+        em = sm.GetComponent<EffectManager>();
+        tr = GetComponent<TrailRenderer>();
+        psc = GetComponent<PlayerShaderController>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -219,6 +225,17 @@ public class Control1 : MonoBehaviour
     }
 
     public void FLightResponse(CharacterInput input)
+    {
+        if (input.IsHeld() || input.IsPending())
+        {
+            if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
+            Flip(input);
+
+            ae.ChangeAnimBool("FLightAttack", true);
+        }
+    }
+
+    public void NeutralAttackResponse(CharacterInput input)
     {
         if (input.IsHeld() || input.IsPending())
         {
@@ -374,6 +391,11 @@ public class Control1 : MonoBehaviour
         UpdateGrounded();
 
         ManagePlatformCollider();
+
+        if (psc.ShaderStrength > 0)
+        {
+            psc.ShaderStrength -= 0.1f;
+        }
     }
 
     void ManagePlatformCollider()
@@ -433,9 +455,19 @@ public class Control1 : MonoBehaviour
                     rb.AddForce(Vector2.down * fallAccel); // Apply gravity
                 }
 
+                float newXSpeed = rb.velocity.x;
+                float newYSpeed = rb.velocity.y;
                 // slow down toward max speeds
-                Mathf.MoveTowards(rb.velocity.y, fallSpeed, overMaxYSpeedAdjustment);
-                Mathf.MoveTowards(rb.velocity.x, airSpeed, overMaxXSpeedAdjustment);
+                if (Mathf.Abs(rb.velocity.x) > airSpeed)
+                {
+                    newXSpeed = Mathf.MoveTowards(rb.velocity.x, airSpeed * Mathf.Sign(rb.velocity.x), overMaxXSpeedAdjustment);
+                }
+                if (rb.velocity.y < -fallSpeed)
+                {
+                    newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
+                }
+
+                rb.velocity = new Vector2(newXSpeed, newYSpeed);
             }
             else // if not grounded and you ARE in hitstun
             {
@@ -499,6 +531,13 @@ public class Control1 : MonoBehaviour
             rb.sharedMaterial = bouncy;
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+            anim.SetBool("Hitstun", true);
+
+            em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
+
+            tr.emitting = true;
+
+            psc.ShaderStrength = 1;
 
             if (hi.angle == 361)
             {
@@ -542,6 +581,8 @@ public class Control1 : MonoBehaviour
                 gameObject.layer = 9;
             }
             rb.sharedMaterial = notBouncy;
+            tr.emitting = false;
+            anim.SetBool("Hitstun", false);
         }
     }
 

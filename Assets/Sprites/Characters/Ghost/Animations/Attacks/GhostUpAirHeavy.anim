@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GhostUpAirLight
+  m_Name: GhostUpAirHeavy
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,15 +20,19 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1156741208, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
+      value: {fileID: 1474115503, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
     - time: 0.1
-      value: {fileID: 1540482081, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
+      value: {fileID: 1672678073, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
     - time: 0.2
-      value: {fileID: -1953937412, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
+      value: {fileID: 909710154, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
     - time: 0.3
-      value: {fileID: 505940514, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
+      value: {fileID: 1028191341, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
     - time: 0.4
-      value: {fileID: -381251078, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
+      value: {fileID: -1366616392, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - time: 0.5
+      value: {fileID: 1204828051, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - time: 0.6
+      value: {fileID: 1600591329, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,17 +52,19 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1156741208, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
-    - {fileID: 1540482081, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
-    - {fileID: -1953937412, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
-    - {fileID: 505940514, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
-    - {fileID: -381251078, guid: 19de9009c06ba4afd8f4490f75d16762, type: 3}
+    - {fileID: 1474115503, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - {fileID: 1672678073, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - {fileID: 909710154, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - {fileID: 1028191341, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - {fileID: -1366616392, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - {fileID: 1204828051, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
+    - {fileID: 1600591329, guid: 4ff7f06f8529245b4a0ace1c98f23949, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.7
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -85,23 +91,16 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.1
-    functionName: EnableHitbox
-    data: UpAirLightAttack
+  - time: 0.3
+    functionName: EnableMultiHitbox
+    data: UpAirHeavy
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.1
-    functionName: PlaySoundFromAnimator
-    data: SwordSwing1
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
+  - time: 0.7
     functionName: StopAnimation
-    data: UpLightAttack
+    data: UpHeavyAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

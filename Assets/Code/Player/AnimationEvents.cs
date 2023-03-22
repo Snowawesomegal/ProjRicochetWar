@@ -18,6 +18,7 @@ public class AnimationEvents : MonoBehaviour
     ParticleSystem trailps;
     GameObject sm;
     EffectManager em;
+    HitboxInteractionManager him;
 
     [SerializeField] bool debugMessages;
 
@@ -26,10 +27,6 @@ public class AnimationEvents : MonoBehaviour
     [SerializeField] string landingAnimationName;
     [SerializeField] string runAnimationName;
     int landingLag = 0;
-
-    string currentAnimationName = "Idle";
-    string lastFrameAnimationName = "Idle";
-
 
     void Start()
     {
@@ -42,6 +39,7 @@ public class AnimationEvents : MonoBehaviour
         trailps = GetComponent<ParticleSystem>();
         sm = GameObject.Find("SettingsManager");
         em = sm.GetComponent<EffectManager>();
+        him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         foreach (Pair<string, int> i in animBoolsAndLandingLag)
         {
@@ -51,8 +49,6 @@ public class AnimationEvents : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //ManageCurrentAnimation();
-
         if (landingLag > 0) // increment landing lag
         {
             landingLag -= 1;
@@ -61,23 +57,6 @@ public class AnimationEvents : MonoBehaviour
                 StopLandingLag();
             }
         }
-    }
-
-    void ManageCurrentAnimation() //keeps track of the current animation and animation changes, slightly costly so disabled unless necessary; ran in FixedUpdate()
-    {
-        currentAnimationName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-
-        if (currentAnimationName != lastFrameAnimationName)
-        {
-            OnAnimationChange();
-        }
-
-        lastFrameAnimationName = currentAnimationName;
-    }
-
-    void OnAnimationChange() // called on first fixedupdate after the animation node changes; disabled if ManageCurrentAnimation is disabled
-    {
-
     }
 
     public void CalculateLandingLag() // called by landing animation; see explanations below
@@ -175,6 +154,12 @@ public class AnimationEvents : MonoBehaviour
         {
             clm.AddLocker(c1.inAerialAnim);
         }
+
+        foreach (GameObject i in him.doNotEnableHitboxes)
+        {
+            i.GetComponent<HitboxInfo>().doNotEnable = false;
+        }
+        him.doNotEnableHitboxes.Clear();
     }
 
     public void StartDash()

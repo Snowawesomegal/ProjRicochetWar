@@ -197,13 +197,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 4000
+  knockback: 2970
   angleIndependentOfMovement: 1
   angle: 12
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -276,6 +277,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -414,7 +416,8 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  priority: 2
+  doNotEnable: 0
+  priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
 --- !u!1 &3686617931327997036
@@ -486,7 +489,8 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  priority: 1
+  doNotEnable: 0
+  priority: 2
   playersHitAlready: []
   isPartOfMultipart: 1
 --- !u!1 &3863377767078563220
@@ -535,8 +539,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.4842291}
-  m_Size: {x: 1.4960928, y: 4.0964727}
+  m_Offset: {x: -0.013696194, y: -1.2102957}
+  m_Size: {x: 1.7974215, y: 4.6443396}
   m_Direction: 0
 --- !u!114 &2157499711030186880
 MonoBehaviour:
@@ -558,7 +562,8 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
-  priority: 1
+  doNotEnable: 0
+  priority: 2
   playersHitAlready: []
   isPartOfMultipart: 1
 --- !u!1 &4393596211020838063
@@ -630,7 +635,8 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  priority: 1
+  doNotEnable: 0
+  priority: 2
   playersHitAlready: []
   isPartOfMultipart: 0
 --- !u!1 &4662223803153955432
@@ -702,6 +708,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 3
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -774,7 +781,8 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
-  priority: 2
+  doNotEnable: 0
+  priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
 --- !u!1 &5850729627155256250
@@ -846,6 +854,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -918,7 +927,8 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  priority: 2
+  doNotEnable: 0
+  priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
 --- !u!1 &6311728093354438150
@@ -945,7 +955,7 @@ GameObject:
   - component: {fileID: 3055701596010756782}
   - component: {fileID: 1881402502247760431}
   - component: {fileID: -6832151150410818669}
-  - component: {fileID: -6821819325987962088}
+  - component: {fileID: -6679137475492885588}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Player
@@ -1001,7 +1011,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 79f5c736d06b05c4b982c6add25553d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1087,7 +1097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testCircle: {fileID: 6899714948450397382, guid: 94c56d4ff0c7a4485a02345fc0ab1fb2, type: 3}
-  fallSpeed: 30
+  fallSpeed: 20
   fallAccel: 50
   friction: 5
   airFriction: 0.6
@@ -1328,120 +1338,36 @@ MonoBehaviour:
     m_ActionId: 359ab731-0107-4a45-8dae-b3ba007159bc
     m_ActionName: Playing/Movement[/Keyboard/o]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 7f0af3d6-3d2d-46db-a726-e5406501a8b3
-    m_ActionName: OwenControls/Jump[/DualShock4GamepadHID/buttonEast,/Keyboard/space,/DualShock4GamepadHID/buttonSouth]
+    m_ActionName: OwenControls/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6bd6d8ac-249b-4603-b9ed-6df79870076d
-    m_ActionName: OwenControls/Attack[/Keyboard/j,/DualShock4GamepadHID/buttonNorth]
+    m_ActionName: OwenControls/Attack[/Keyboard/j]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnSpecial
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6992e97d-a755-454e-8492-011ce23a63ce
-    m_ActionName: OwenControls/Special[/Keyboard/k,/DualShock4GamepadHID/buttonWest]
+    m_ActionName: OwenControls/Special[/Keyboard/k]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnDirectional
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: f061c71f-773f-4716-bb2d-8c8b65e32565
-    m_ActionName: OwenControls/Directional[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/down,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
+    m_ActionName: OwenControls/Directional[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnDash
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 9ca80299-ce6d-46cc-af75-8eeb3d6277e0
-    m_ActionName: OwenControls/Dash[/Keyboard/l,/DualShock4GamepadHID/rightTrigger]
+    m_ActionName: OwenControls/Dash[/Keyboard/l]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnHeavy
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: f3bdffba-3e1c-4547-8a4c-a166b883dc92
-    m_ActionName: OwenControls/Heavy Attack[/Keyboard/u,/DualShock4GamepadHID/leftTrigger]
+    m_ActionName: OwenControls/Heavy Attack[/Keyboard/u]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6311728093354438156}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
-        m_MethodName: OnMovement
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 462e5cf3-ba14-47da-8f47-3004df081109
-    m_ActionName: OwenControls/Movement[/Keyboard/o,/DualShock4GamepadHID/leftShoulder]
+    m_ActionName: OwenControls/Movement[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: OwenControls
+  m_DefaultActionMap: Playing
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!61 &6311728093354438155
@@ -6395,7 +6321,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 0
---- !u!114 &-6821819325987962088
+--- !u!114 &-6679137475492885588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6483,6 +6409,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -6555,6 +6482,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -6627,6 +6555,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
@@ -6753,6 +6682,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6825,6 +6755,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6897,6 +6828,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -6969,6 +6901,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 0
@@ -7074,6 +7007,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  doNotEnable: 0
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1

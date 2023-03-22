@@ -62,6 +62,7 @@ public class Control1 : MonoBehaviour
     InMatchUI imui;
     AnimationEvents ae;
     TrailRenderer tr;
+    PlayerShaderController psc;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
@@ -122,6 +123,7 @@ public class Control1 : MonoBehaviour
         ae = GetComponent<AnimationEvents>();
         em = sm.GetComponent<EffectManager>();
         tr = GetComponent<TrailRenderer>();
+        psc = GetComponent<PlayerShaderController>();
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -389,6 +391,11 @@ public class Control1 : MonoBehaviour
         UpdateGrounded();
 
         ManagePlatformCollider();
+
+        if (psc.ShaderStrength > 0)
+        {
+            psc.ShaderStrength -= 0.1f;
+        }
     }
 
     void ManagePlatformCollider()
@@ -529,6 +536,8 @@ public class Control1 : MonoBehaviour
             em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
             tr.emitting = true;
+
+            psc.ShaderStrength = 1;
 
             if (hi.angle == 361)
             {

@@ -26,7 +26,6 @@ public class AnimationEvents : MonoBehaviour
     List<string> attackBools = new List<string>();
     [SerializeField] string landingAnimationName;
     [SerializeField] string runAnimationName;
-    int landingLag = 0;
 
     void Start()
     {
@@ -47,46 +46,26 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (landingLag > 0) // increment landing lag
-        {
-            landingLag -= 1;
-            if (landingLag == 0)
-            {
-                StopLandingLag();
-            }
-        }
-    }
-
     public void CalculateLandingLag() // called by landing animation; see explanations below
     {
         if (!string.IsNullOrEmpty(c1.currentAnimBool)) // if currentAnimBool is not empty, player must have attacked while landing.
         {
-            if (debugMessages)
-            {
-                Debug.Log("Landing lag called StopAnimation; landed while using " + c1.currentAnimBool);
-            }
-
             foreach (Pair<string, int> i in animBoolsAndLandingLag) // Gets landing lag from list of aerials and landing lags
             {
                 if (i.left == c1.currentAnimBool)
                 {
-                    landingLag = i.right; // sets landing lag
-                    StartLandingLag(); // freezes animator
-                    Debug.Log("LandingLag is now " + landingLag + " frame " + c1.frame);
+                    StartLandingLag(i.right); // freezes animator using the listed number of frames
                 }
             }
         }
     }
-    void StopLandingLag() // restarts animator and sets landinglag to 0 in case it isn't somehow
+    void StartLandingLag(int frameLength) // freezes animator
     {
-        anim.speed = 1;
-        landingLag = 0;
+        c1.FreezeFrames(0, frameLength, c1);
     }
-    void StartLandingLag() // freezes animator
+    void StopLandingLag()
     {
-        anim.speed = 0;
+        // THIS NEEDS TO HAVE SOMETHING IN IT OR THIS ISN'T GONNA WORK LOL
     }
 
     public void ChangeAnimBool(string boolName, bool toSet, bool changeCurrentAnimBool = true) // Sets entered animBool and updates currentAnimBool appropriately

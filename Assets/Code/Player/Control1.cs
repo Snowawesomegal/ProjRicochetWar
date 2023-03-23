@@ -6,13 +6,17 @@ using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using System.Drawing;
 using System.Linq;
+using UnityEngine.TextCore.Text;
 
-public class Control1 : MonoBehaviour
+public class Control1 : MonoBehaviour, IIdentifiable
 {
     // Todo list
     // Fix dashes, which were completely broken by friction changes
 
-
+    private uint id;
+    private bool initializedID;
+    bool IIdentifiable.InitializedID { get { return initializedID; } set { initializedID = value; } }
+    uint IIdentifiable.ID { get { return id; } set { id = value; } }
 
     public GameObject testCircle;
 
@@ -128,6 +132,16 @@ public class Control1 : MonoBehaviour
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
+    }
+
+    private void Awake()
+    {
+        ((IIdentifiable)this).InitializeID();
+    }
+
+    public void FreezeFrames(int framesPerTick, int duration, IIdentifiable identifiable)
+    {
+        GameManager.Instance.TimeController.Slow(0, 5, this);
     }
 
     public void VerticalResponse(CharacterInput input)

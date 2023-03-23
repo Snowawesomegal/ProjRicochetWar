@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        TimeController.Tick();
+    }
+
     /// <summary>
     /// Pause the game.
     /// </summary>

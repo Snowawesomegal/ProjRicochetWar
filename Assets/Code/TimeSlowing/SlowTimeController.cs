@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace TimeSlowing
 {
-    public class TargetedSlowTime <T> : MonoBehaviour where T : SlowTime<T>
+    public class TargetedSlowTime <T> where T : SlowTime<T>
     {
         public T slowTime;
         public List<string> targets;
 
         public TargetedSlowTime(T slowTime, params IIdentifiable[] targets)
         {
+            this.targets = new List<string>();
             this.slowTime = slowTime;
             AddTargets(targets);
         }
@@ -161,12 +162,10 @@ namespace TimeSlowing
             if (targetedSlowTimes.Count == 0 || targetedSlowTimes[targetedSlowTimes.Count - 1].CompareTo(tst) <= 0)
             {
                 targetedSlowTimes.Add(tst);
-                return;
             }
             else if (targetedSlowTimes[0].CompareTo(tst) >= 0)
             {
                 targetedSlowTimes.Insert(0, tst);
-                return;
             }
             else
             {

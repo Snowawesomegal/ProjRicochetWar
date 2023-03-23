@@ -123,6 +123,14 @@ namespace TimeSlowing
             return targetedSlowSubscribers.Remove(identifiable.Identifier);
         }
 
+        public void RemoveSlows(IIdentifiable identifiable)
+        {
+            foreach (TargetedSlowTime<T> tst in targetedSlowTimes)
+            {
+                tst.RemoveTargets(identifiable);
+            }
+        }
+
         public void Slow(T st)
         {
             slowed = true;

@@ -137,6 +137,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
     private void Awake()
     {
         ((IIdentifiable)this).InitializeID();
+        GameManager.Instance.TimeController.SubscribeTargetedSlow(this, OnSlow);
+    }
+
+    public void OnSlow(float speed)
+    {
+        anim.speed = speed;
+        rb.simulated = speed != 0;
+        rb.gravityScale = speed;
     }
 
     public void FreezeFrames(int framesPerTick, int duration, IIdentifiable identifiable)

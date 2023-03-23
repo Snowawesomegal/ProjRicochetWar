@@ -368,7 +368,6 @@ public class Control1 : MonoBehaviour
         if (clm.activeLockers.Contains(grounded))
         {
             ae.SpawnDirectionalSmokeCloud();
-            am.PlaySoundGroup("HeelStep");
         }
 
     }
@@ -426,10 +425,14 @@ public class Control1 : MonoBehaviour
 
         ManagePlatformCollider();
 
-        if (psc.ShaderStrength > 0)
+        if (psc != null)
         {
-            psc.ShaderStrength -= 0.1f;
+            if (psc.ShaderStrength > 0)
+            {
+                psc.ShaderStrength -= 0.1f;
+            }
         }
+
     }
 
     void ManagePlatformCollider()

@@ -9,11 +9,10 @@ using System.Linq;
 
 public class Control1 : MonoBehaviour
 {
-    //March 11, 2023, 12:53PM
+    // Todo list
+    // Fix dashes, which were completely broken by friction changes
 
-    //Todo list
-    //Change implementation of limits/reductions for vertical and horizontal speed
-    // add way to disable friction for dashes on the ground
+
 
     public GameObject testCircle;
 

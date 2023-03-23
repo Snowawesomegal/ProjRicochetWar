@@ -5,25 +5,55 @@ namespace TimeScaling
 {
     public struct SlowTime
     {
+        public int framesPerTick;
+        public int remainingFrames;
+        private int currentFrame;
         public float speed;
-        public float endTime;
+        // TODO: create a tick-based and a time-based version of slow time
+        public bool Frozen { get { return framesPerTick == 0; } }
+        public bool Done { get { return currentFrame <= 0; } }
+
+        public SlowTime(int framesPerTick, int remainingFrames)
+        {
+            if (framesPerTick < 0)
+                framesPerTick = 0;
+
+            this.framesPerTick = framesPerTick;
+            this.remainingFrames = remainingFrames;
+            this.speed = 1 / framesPerTick;
+            this.currentFrame = 0;
+        }
+
         public SlowTime(float speed, float duration)
         {
-            if (speed < ScaledTime.MIN_TIME_SCALE)
-                speed = ScaledTime.MIN_TIME_SCALE;
+            if (speed <= 0)
+                speed = 0;
+
+            this.framesPerTick = speed != 0 ? (int)Mathf.Ceil(1 / speed) : 0;
+            this.remainingFrames = (int)Mathf.Ceil(duration / Application.targetFrameRate);
             this.speed = speed;
-            this.endTime = Time.time + duration * speed;
+            this.currentFrame = 0;
         }
-        public void ExtendDuration()
+
+        public bool Tick()
         {
-            this.endTime += Time.deltaTime;
+            remainingFrames--;
+
+            if (framesPerTick == 0)
+                return remainingFrames <= 0;
+
+            currentFrame++;
+            if (currentFrame >= framesPerTick)
+            {
+                currentFrame = 0;
+                return true;
+            }
+            return false;
         }
     }
 
     public class ScaledTime
     {
-        [SerializeField] public const float MIN_TIME_SCALE = 0;
-
         [SerializeField] private List<SlowTime> slowTimes = new List<SlowTime>();
         [SerializeField] private bool slowed;
         [SerializeField] private float speed;

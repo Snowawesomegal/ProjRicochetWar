@@ -10,7 +10,7 @@ namespace TimeSlowing
         FRAME
     }
 
-    public class FloatingSlowTime : SlowTime
+    public class FloatingSlowTime : SlowTime<FloatingSlowTime>
     {
         private SlowUpdateType updateType;
         private float speed;
@@ -42,6 +42,17 @@ namespace TimeSlowing
 
             float currentTime = updateType switch { SlowUpdateType.FIXED => Time.fixedTime, _ => Time.time };
             return currentTime >= endTime;
+        }
+
+        public override int Compare(FloatingSlowTime st1, FloatingSlowTime st2)
+        {
+            int comparedSpeeds = st1.speed.CompareTo(st2.speed);
+            return comparedSpeeds != 0 ? comparedSpeeds : st1.endTime.CompareTo(st2.endTime);
+        }
+
+        public override int CompareTo(FloatingSlowTime st)
+        {
+            return Compare(this, st);
         }
     }
 }

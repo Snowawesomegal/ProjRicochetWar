@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TimeSlowing
 {
-    public abstract class SlowTime
+    public abstract class SlowTime <T> : IComparer<T> where T : SlowTime<T>
     {
         public abstract float Speed { get; }
         public abstract bool Frozen { get; }
@@ -17,6 +17,7 @@ namespace TimeSlowing
         /// true, it delays the time this SlowTime is done. </param>
         /// <returns> True if this SlowTime is finished slowing and should be removed. </returns>
         public abstract bool Tick(bool frozen);
-        // public abstract int  Comparator<T>(T st1, T st2) where T : SlowTime;
+        public abstract int Compare(T st1, T st2);
+        public abstract int CompareTo(T st);
     }
 }

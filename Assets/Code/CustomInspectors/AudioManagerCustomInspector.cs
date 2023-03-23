@@ -36,7 +36,7 @@ public class AudioManagerCustomInspector : Editor
                     EditorGUILayout.Space(10);
                     if (GUILayout.Button("Play Sound from Group: " + group.groupName))
                     {
-                        group.PlaySound();
+                        group.PlaySound(myTarget);
                     }
                 }
             }

@@ -9,6 +9,7 @@ public class MusicSound : AbstractSound
     [HideInInspector] public bool looped = false;
     [SerializeField] public float loopStart = 0f;
     [SerializeField] public float loopEnd = 0f;
+    private bool stopped = false;
 
     public override void OnEstablishSource()
     {
@@ -39,6 +40,13 @@ public class MusicSound : AbstractSound
                 PlayInterval(loopStart, loopEnd);
             }
         }
+        stopped = false;
+    }
+
+    public override void Stop()
+    {
+        base.Stop();
+        stopped = true;
     }
 
     public void PlayInterval(float from, float to)
@@ -61,7 +69,7 @@ public class MusicSound : AbstractSound
 
     public override void UpdateLoop()
     {
-        if (!loop || !Application.isFocused)
+        if (stopped || !loop || !Application.isFocused)
             return;
 
         if (!source.isPlaying)

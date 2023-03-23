@@ -12,6 +12,7 @@ public abstract class AbstractSound
 
     [SerializeField] public AudioClip clip;
 
+    [SerializeField] [Range(0, 1)] public float presetVolume = 1f;
     [SerializeField] [Range(0, 1)] public float volume = 1f;
     [SerializeField] [Range(0.1f, 3)] public float pitch = 1f;
 
@@ -44,6 +45,11 @@ public abstract class AbstractSound
     public virtual void Play()
     {
         source.Play();
+    }
+
+    public virtual void Stop()
+    {
+        source.Stop();
     }
 
     public virtual void UpdateLoop()

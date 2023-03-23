@@ -465,11 +465,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: music.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: sounds.Array.size
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: music.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0a40c2d5f6a9c3243ac0a3f9e541b10b, type: 3}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: music.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: music.Array.data[0].name
+      value: Pirate Theme
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: music.Array.data[0].pitch
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: sounds.Array.data[0].clip
@@ -510,6 +526,18 @@ PrefabInstance:
     - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: sounds.Array.data[4].name
       value: SwordSwing5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: music.Array.data[0].volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: music.Array.data[0].presetVolume
+      value: 0.676
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
+      propertyPath: sounds.Array.data[0].presetVolume
+      value: 0.386
       objectReference: {fileID: 0}
     - target: {fileID: 1933258576658441534, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: m_Name
@@ -898,6 +926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggersThisFrame: []
+  doNotEnableHitboxes: []
   hitboxDamageDifferenceToWin: 10
 --- !u!114 &1246496609
 MonoBehaviour:

@@ -6,6 +6,9 @@ namespace TimeSlowing
 {
     public class FloatingTimeController : SlowTimeController<FloatingSlowTime>
     {
+        public FloatingTimeController() : base() { }
+        public FloatingTimeController(SlowUpdateType updateType) : base(updateType) { }
+
         public void Slow(float speed, float duration)
         {
             FloatingSlowTime st = new FloatingSlowTime(speed, duration, updateType);

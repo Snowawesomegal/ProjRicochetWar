@@ -6,6 +6,9 @@ namespace TimeSlowing
 {
     public class TickingTimeController : SlowTimeController<TickingSlowTime>
     {
+        public TickingTimeController() : base() { }
+        public TickingTimeController(SlowUpdateType updateType) : base(updateType) { }
+
         public void Slow(int framesPerTick, int duration)
         {
             TickingSlowTime st = new TickingSlowTime(framesPerTick, duration);

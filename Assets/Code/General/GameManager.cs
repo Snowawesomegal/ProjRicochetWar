@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TimeSlowing;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,33 +13,10 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { if (instance == null) instance = FindObjectOfType<GameManager>(); return instance; } }
 
-    // instance variable and property of paused
-    private bool paused = false;
-    public bool Paused
-    {
-        get { return paused; }
-        set
-        {
-            // when paused is changed to another value
-            if (value != paused)
-            {
-                paused = value; // update the value
-                OnPause?.Invoke(this, paused); // invoke all OnPause events
-            }
-        }
-    }
+    public TickingTimeController timeController;
+    public TickingTimeController TimeController { get { if (timeController == null) timeController = new TickingTimeController(SlowUpdateType.FIXED); return timeController; } }
 
-    // This is a delegate used to create the OnPause event. In order to subscribe to the OnPause event,
-    // the method being subscribed must follow this signature (a.k.a. return void and receive a GameManager and bool as params)
-    // The GameManager passed in will be the singleton instance of the GameManager. The boolean being passed in will be
-    // the current value of paused.
-    public delegate void BoolGameManagerEvent(GameManager sender, bool b);
-    // This is the event property. To subscribe a method to this event, use this command:
-    // GameManager.Instance.OnPause += MyMethod; // note that MyMethod is a BoolGameManagerEvent delegate
-    // To unsubscribe to this event, use this command:
-    // GameManager.Instance.OnPause -= MyMethod;
-    // Subscribing to this event allows objects to trigger a function whenever the game is paused or unpaused.
-    public event BoolGameManagerEvent OnPause;
+    public static TickingTimeController InstanceTimeController { get { return Instance.TimeController; } }
 
     private void Awake()
     {
@@ -61,8 +39,8 @@ public class GameManager : MonoBehaviour
     /// <returns> the current value of paused after pausing </returns>
     public bool PauseGame()
     {
-        Paused = true;
-        return Paused;
+        timeController.Frozen = true;
+        return true;
     }
 
     /// <summary>
@@ -71,18 +49,7 @@ public class GameManager : MonoBehaviour
     /// <returns> the current value of paused after unpausing </returns>
     public bool UnpauseGame()
     {
-        Paused = false;
-        return Paused;
-    }
-
-    /// <summary>
-    /// Toggle the pause value of the game. If the game is paused, it will unpause.
-    /// If the game is unpaused, it will pause.
-    /// </summary>
-    /// <returns> the current value of paused after toggling </returns>
-    public bool TogglePause()
-    {
-        Paused = !Paused;
-        return Paused;
+        timeController.Frozen = false;
+        return false;
     }
 }

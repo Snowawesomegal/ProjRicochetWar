@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TimeSlowing
 {
-    public class TargetedSlowTime <T> where T : SlowTime<T>
+    public class TargetedSlowTime <T> : MonoBehaviour where T : SlowTime<T>
     {
         public T slowTime;
         public List<string> targets;
@@ -72,19 +72,19 @@ namespace TimeSlowing
 
     public class SlowTimeController <T> where T : SlowTime<T>
     {
-        private List<T> slowTimes;
-        private List<TargetedSlowTime<T>> targetedSlowTimes;
-        private Dictionary<string, TargetedSlowInfo<T>> targetedSlowSubscribers;
+        protected List<T> slowTimes;
+        protected List<TargetedSlowTime<T>> targetedSlowTimes;
+        protected Dictionary<string, TargetedSlowInfo<T>> targetedSlowSubscribers;
 
-        private SlowUpdateType updateType;
+        protected SlowUpdateType updateType;
         public SlowUpdateType UpdateType { get { return updateType; } }
 
-        private bool frozen;
+        protected bool frozen;
         public bool Frozen { get { return frozen || (slowed && timeScale == 0); } set { if (value != frozen) { frozen = value; OnFreeze?.Invoke(frozen); } } }
         public event System.Action<bool> OnFreeze;
 
-        private float timeScale = 1f;
-        private bool slowed = false;
+        protected float timeScale = 1f;
+        protected bool slowed = false;
         public float TimeScale { get { return frozen ? 0 : slowed ? timeScale : 1f; } }
         public bool Slowed { get { return slowed; } }
 
@@ -170,7 +170,7 @@ namespace TimeSlowing
             UpdateTargetedSlowTimes(tst.targets);
         }
 
-        private void UpdateTargetedSlowTimes(List<string> targets)
+        protected void UpdateTargetedSlowTimes(List<string> targets)
         {
             foreach (string target in targets)
             {
@@ -193,14 +193,14 @@ namespace TimeSlowing
             }
         }
 
-        public float TargetedTimeScale(IIdentifiable identifiable)
+        public float GetTimeScale(IIdentifiable identifiable)
         {
             if (targetedSlowSubscribers.TryGetValue(identifiable.Identifier, out TargetedSlowInfo<T> tsi))
                 return tsi.TimeScale * TimeScale;
             return TimeScale;
         }
 
-        public void Tick()
+        public virtual void Tick()
         {
             for (int i = 0; i < slowTimes.Count; i++)
             {
@@ -231,6 +231,18 @@ namespace TimeSlowing
                 }
             }
             UpdateTargetedSlowTimes(updateTargets);
+        }
+
+        protected virtual void Update()
+        {
+            if (updateType == SlowUpdateType.FRAME)
+                Tick();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            if (updateType == SlowUpdateType.FIXED)
+                Tick();
         }
     }
 }

@@ -6,14 +6,17 @@ using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using System.Drawing;
 using System.Linq;
+using UnityEngine.TextCore.Text;
 
-public class Control1 : MonoBehaviour
+public class Control1 : MonoBehaviour, IIdentifiable
 {
-    //March 11, 2023, 12:53PM
+    // Todo list
+    // Fix dashes, which were completely broken by friction changes
 
-    //Todo list
-    //Change implementation of limits/reductions for vertical and horizontal speed
-    // add way to disable friction for dashes on the ground
+    private uint id;
+    private bool initializedID;
+    bool IIdentifiable.InitializedID { get { return initializedID; } set { initializedID = value; } }
+    uint IIdentifiable.ID { get { return id; } set { id = value; } }
 
     public GameObject testCircle;
 
@@ -27,6 +30,7 @@ public class Control1 : MonoBehaviour
     public bool ignoreGravity = false;
     public bool intangible = false;
     public bool ignoreFriction = false;
+    [SerializeField] float DIStrength = 5;
 
     //speeds
     public float airSpeed = 10;
@@ -130,6 +134,16 @@ public class Control1 : MonoBehaviour
         rb.sharedMaterial = notBouncy;
     }
 
+    private void Awake()
+    {
+        ((IIdentifiable)this).InitializeID();
+    }
+
+    public void FreezeFrames(int framesPerTick, int duration, IIdentifiable identifiable)
+    {
+        GameManager.Instance.TimeController.Slow(0, 5, this);
+    }
+
     public void VerticalResponse(CharacterInput input)
     {
         if (input.Direction.current.y < -0.5)
@@ -149,42 +163,75 @@ public class Control1 : MonoBehaviour
 
     public void HorizontalResponse(CharacterInput input)
     {
-        if (clm.activeLockers.Contains(grounded)) // if grounded: move
+        if (!clm.activeLockers.Contains(hitstun))
         {
-            rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel); // Ground move
-        }
-        else // if in the air
-        {
-            if (clm.activeLockers.Contains(inAerialAnim)) // if using an aerial: reduced air movement
+            if (clm.activeLockers.Contains(grounded)) // if grounded: move
             {
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccelDuringAerial);
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel); // Ground move
             }
-            else // if in the air but not using an aerial
+            else // if in the air
             {
-                if (touchingWall) // if touching wall, if holding toward wall and not using an aerial, grab wall
+                if (clm.activeLockers.Contains(inAerialAnim)) // if using an aerial: reduced air movement
                 {
-                    if (collidedWallSide == pim.GetCurrentDirectional().current.x)
-                    {
-                        WallClingEnterExit(true);
-                    }
+                    rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccelDuringAerial);
                 }
+                else // if in the air but not using an aerial
+                {
+                    if (touchingWall) // if touching wall, if holding toward wall and not using an aerial, grab wall
+                    {
+                        if (collidedWallSide == pim.GetCurrentDirectional().current.x)
+                        {
+                            WallClingEnterExit(true);
+                        }
+                    }
 
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel); // Air move
+                    rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel); // Air move
+                }
             }
-        }
 
-        if (clm.activeLockers.Contains(wallcling)) // if wallcling and not holding toward wall, unstick from wall
-        {
-            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
+            if (clm.activeLockers.Contains(wallcling)) // if wallcling and not holding toward wall, unstick from wall
             {
-                WallClingEnterExit(false);
+                if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
+                {
+                    WallClingEnterExit(false);
+                }
+            }
+
+            if (!clm.activeLockers.Contains(inAerialAnim))
+            {
+                Flip(input);
+            }
+        }
+        else // DI Implementation
+        {
+            float angleOfMotion = Vector2.Angle(Vector2.right, new Vector2(Mathf.Abs(rb.velocity.x), rb.velocity.y)); // angle difference from 0 or 180; angle of 200 returns 20
+            if (angleOfMotion >= 45)
+            {
+                if (rb.velocity.y > 0)
+                {
+                    rb.AddForce(new Vector2(input.Direction.current.x * DIStrength, -input.Direction.current.x * (DIStrength/5)));
+                }
+                else
+                {
+                    rb.AddForce(new Vector2(input.Direction.current.x * DIStrength, input.Direction.current.x * (DIStrength/5)));
+                }
+            }
+            else
+            {
+                if (rb.velocity.x > 0)
+                {
+                    rb.AddForce(new Vector2(input.Direction.current.x * (DIStrength/5), -input.Direction.current.x * DIStrength));
+                    rb.AddForce(new Vector2(-input.Direction.current.y * (DIStrength / 5), input.Direction.current.y * DIStrength));
+                }
+                else
+                {
+                    rb.AddForce(new Vector2(input.Direction.current.x * (DIStrength/5), input.Direction.current.x * DIStrength));
+                    rb.AddForce(new Vector2(input.Direction.current.y * (DIStrength / 5), input.Direction.current.y * DIStrength));
+                }
             }
         }
 
-        if (!clm.activeLockers.Contains(inAerialAnim))
-        {
-            Flip(input);
-        }
+
     }
 
     void HitstunResponse()
@@ -334,7 +381,6 @@ public class Control1 : MonoBehaviour
         if (clm.activeLockers.Contains(grounded))
         {
             ae.SpawnDirectionalSmokeCloud();
-            am.PlaySoundGroup("HeelStep");
         }
 
     }
@@ -392,10 +438,14 @@ public class Control1 : MonoBehaviour
 
         ManagePlatformCollider();
 
-        if (psc.ShaderStrength > 0)
+        if (psc != null)
         {
-            psc.ShaderStrength -= 0.1f;
+            if (psc.ShaderStrength > 0)
+            {
+                psc.ShaderStrength -= 0.1f;
+            }
         }
+
     }
 
     void ManagePlatformCollider()

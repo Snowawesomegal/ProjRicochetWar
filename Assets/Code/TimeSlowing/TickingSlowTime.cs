@@ -26,7 +26,7 @@ namespace TimeSlowing
             this.framesPerTick = framesPerTick;
             this.framesRemaining = frames;
             this.currentFrame = 0;
-            this.speed = 1 / framesPerTick;
+            this.speed = framesPerTick == 0 ? 0 : 1 / framesPerTick;
         }
         public TickingSlowTime(int framesPerTick, int frames, System.Action OnTick) : this(framesPerTick, frames)
         {

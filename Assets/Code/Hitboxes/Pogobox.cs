@@ -27,7 +27,7 @@ public class Pogobox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Standable"))
+        if (collision.CompareTag("Standable") || collision.CompareTag("Player"))
         {
             playerrb.velocity = new Vector2(playerrb.velocity.x, 0);
             playerrb.AddForce(AngleMath.Vector2FromAngle(bounceAngle).normalized * bounceForce);

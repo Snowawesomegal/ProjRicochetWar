@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 80186462d2b494f3d8ace97ec0a3f846
+guid: 75246048cc8ea413db172864e7c64cd9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DeathFLightHit3_0
+      name: DeathFLightHit3V4_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 010796f45e6d04be0bac8fae4bb06932
-      internalID: 1675278777
+      spriteID: cabd8ae4a142744ddbc03caae2dd1d27
+      internalID: -1678350311
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit3_1
+      name: DeathFLightHit3V4_1
       rect:
         serializedVersion: 2
         x: 120
@@ -140,14 +140,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21ccb66264b0f42be9d97551aa9aba3a
-      internalID: -763450864
+      spriteID: a17c10dd8a1ac46b19d0fbf001f5cda3
+      internalID: -1562724009
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit3_2
+      name: DeathFLightHit3V4_2
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 240
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abda1ea717c33416586ebaf05f7fb152
+      internalID: 95272015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathFLightHit3V4_3
       rect:
         serializedVersion: 2
         x: 0
@@ -161,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 241ef3b29966c499a8f00b7395b79cd1
-      internalID: -2134309680
+      spriteID: 425b3eb3e853241eab2084070ca225ec
+      internalID: 725018312
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit3_3
+      name: DeathFLightHit3V4_4
       rect:
         serializedVersion: 2
         x: 120
@@ -182,14 +203,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b11ddfc5979e34aac98567df5becee57
-      internalID: -82817537
+      spriteID: df1b62521da9a497a86dccfafe650cae
+      internalID: 1510832149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit3_4
+      name: DeathFLightHit3V4_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 120
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a36ff9b1f8a1e4e5fb9d30c8051a0f50
+      internalID: -1166191490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathFLightHit3V4_6
       rect:
         serializedVersion: 2
         x: 0
@@ -203,8 +245,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a6a40c80690c44ef83bc781f9863dae
-      internalID: -1147548293
+      spriteID: 98b1c63b02bf94babba48c6891ddd00a
+      internalID: -834941829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathFLightHit3V4_7
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3a9357d26b546219ef3c707f603fe2
+      internalID: 1533415467
       vertices: []
       indices: 
       edges: []
@@ -220,11 +283,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DeathFLightHit3_3: -82817537
-      DeathFLightHit3_2: -2134309680
-      DeathFLightHit3_4: -1147548293
-      DeathFLightHit3_1: -763450864
-      DeathFLightHit3_0: 1675278777
+      DeathFLightHit3V4_4: 1510832149
+      DeathFLightHit3V4_6: -834941829
+      DeathFLightHit3V4_1: -1562724009
+      DeathFLightHit3V4_3: 725018312
+      DeathFLightHit3V4_0: -1678350311
+      DeathFLightHit3V4_5: -1166191490
+      DeathFLightHit3V4_2: 95272015
+      DeathFLightHit3V4_7: 1533415467
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

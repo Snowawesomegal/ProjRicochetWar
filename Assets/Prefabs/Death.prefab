@@ -32,7 +32,7 @@ Transform:
   - {fileID: 5324972259403682343}
   - {fileID: 5324972259917817974}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &976418747818727208
 GameObject:
@@ -66,7 +66,7 @@ Transform:
   - {fileID: 4902785983727423730}
   - {fileID: 8167890758308044157}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2488495210437006846
 GameObject:
@@ -245,7 +245,7 @@ Transform:
   - {fileID: 7027356358378458678}
   - {fileID: 4453222615765600128}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3267544278575473981
 GameObject:
@@ -424,7 +424,7 @@ Transform:
   - {fileID: 1008944911504695437}
   - {fileID: 1541577636693107489}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3590874157232770959
 GameObject:
@@ -457,7 +457,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &3539679749456110218
 CapsuleCollider2D:
@@ -5342,7 +5342,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7179901049484416775
 CapsuleCollider2D:
@@ -5497,8 +5497,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000000011541417, y: 0.009681643}
-  m_Size: {x: 2.749734, y: 1.754033}
+  m_Offset: {x: 0.61970085, y: 0.07164972}
+  m_Size: {x: 3.457978, y: 2.550812}
   m_Direction: 1
 --- !u!114 &223429190023775434
 MonoBehaviour:
@@ -5609,7 +5609,7 @@ GameObject:
   - component: {fileID: 5324972259631739923}
   - component: {fileID: 5324972259631739924}
   m_Layer: 0
-  m_Name: UpLightAttack1
+  m_Name: UpLightAttackLaunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5622,8 +5622,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5324972259631739926}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.14, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5643,8 +5643,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21857095}
-  m_Size: {x: 4.034669, y: 2.9053376}
+  m_Offset: {x: -0.00000001839797, y: -0.15433337}
+  m_Size: {x: 4.03467, y: 3.212449}
   m_Direction: 1
 --- !u!114 &5324972259631739924
 MonoBehaviour:
@@ -5716,8 +5716,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000000047058393, y: 0.039475445}
-  m_Size: {x: 2.749733, y: 2.478954}
+  m_Offset: {x: -0.000000020989077, y: -0.17606916}
+  m_Size: {x: 3.390943, y: 3.1706192}
   m_Direction: 1
 --- !u!114 &5324972259666958793
 MonoBehaviour:
@@ -5769,7 +5769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5324972259697596014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5789,9 +5789,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.19465256}
-  m_Size: {x: 1.7882371, y: 2.7893095}
-  m_Direction: 0
+  m_Offset: {x: -0.029247971, y: 0.2649215}
+  m_Size: {x: 2.7308178, y: 2.50089}
+  m_Direction: 1
 --- !u!114 &5324972259697596012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6065,6 +6065,7 @@ Transform:
   - {fileID: 5324972259666958795}
   - {fileID: 7374218087597074338}
   - {fileID: 5324972259631739925}
+  - {fileID: 2908757286451228426}
   - {fileID: 9034038152016812013}
   - {fileID: 1291835033694642017}
   - {fileID: 6750890407021335598}
@@ -6194,8 +6195,8 @@ MonoBehaviour:
   airSpeed: 20
   airAccel: 90
   airAccelDuringAerial: 80
-  groundSpeed: 25
-  groundAccel: 200
+  groundSpeed: 20
+  groundAccel: 180
   initialJumpForce: 810
   dashForce: 4000
   overMaxYSpeedAdjustment: 400
@@ -11491,6 +11492,79 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 0
+--- !u!1 &5366513683229172554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5432122400862040217}
+  - component: {fileID: 8706125585753689332}
+  - component: {fileID: 126689517544172008}
+  m_Layer: 0
+  m_Name: UpLightAttackScoop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5432122400862040217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5366513683229172554}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2908757286451228426}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &8706125585753689332
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5366513683229172554}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00000015411999, y: -1.2928523}
+  m_Size: {x: 4.0346704, y: 0.9354178}
+  m_Direction: 1
+--- !u!114 &126689517544172008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5366513683229172554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 6
+  knockback: 2000
+  angleIndependentOfMovement: 1
+  angle: 366
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  minimumHitstunFrames: 20
+  doNotEnable: 0
+  priority: 1
+  playersHitAlready: []
+  isPartOfMultipart: 0
 --- !u!1 &5710615818665767659
 GameObject:
   m_ObjectHideFlags: 0
@@ -11522,7 +11596,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1271082766836338132
 CapsuleCollider2D:
@@ -11710,6 +11784,38 @@ MonoBehaviour:
   priority: 1
   playersHitAlready: []
   isPartOfMultipart: 1
+--- !u!1 &6681182329834456621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2908757286451228426}
+  m_Layer: 0
+  m_Name: UpLight (In progress, nonfunctional)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2908757286451228426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681182329834456621}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5432122400862040217}
+  m_Father: {fileID: 5324972260535258965}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6828110783430351673
 GameObject:
   m_ObjectHideFlags: 0
@@ -11887,5 +11993,5 @@ Transform:
   - {fileID: 3267544278575473980}
   - {fileID: 3267544280134006567}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

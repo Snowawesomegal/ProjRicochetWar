@@ -20,15 +20,17 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 349759745, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
+      value: {fileID: 1544584150, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
     - time: 0.1
-      value: {fileID: 1333847580, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
+      value: {fileID: 1228726329, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
     - time: 0.2
-      value: {fileID: -114660352, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
+      value: {fileID: -81339307, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
     - time: 0.3
-      value: {fileID: -227572412, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
+      value: {fileID: 538560031, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
     - time: 0.4
-      value: {fileID: -1209250295, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
+      value: {fileID: -37947095, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
+    - time: 0.5
+      value: {fileID: -843469929, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,17 +50,18 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 349759745, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
-    - {fileID: 1333847580, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
-    - {fileID: -114660352, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
-    - {fileID: -227572412, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
-    - {fileID: -1209250295, guid: c5cd2c64656eb4e59a6653a3db9a43e4, type: 3}
+    - {fileID: 1544584150, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
+    - {fileID: 1228726329, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
+    - {fileID: -81339307, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
+    - {fileID: 538560031, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
+    - {fileID: -37947095, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
+    - {fileID: -843469929, guid: 1a4426faccf7a4213993bd6f3295fb92, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.6
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -85,98 +88,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
+  - time: 0.1
+    functionName: ApplyHoriForceInAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 500
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.2
+    functionName: EnableHitbox
+    data: FLightAttackHit2
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.26666668
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.28333333
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.3
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.31666666
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.35
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.36666667
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.38333333
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.4
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.41666666
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.43333334
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.45
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.46666667
+  - time: 0.48333332
     functionName: SwitchIfAttacking
     data: ContinueAttack
     objectReferenceParameter: {fileID: 0}
@@ -184,6 +110,41 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.5
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.51666665
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.53333336
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.55
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.56666666
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6
     functionName: StopAnimation
     data: FLightAttack
     objectReferenceParameter: {fileID: 0}

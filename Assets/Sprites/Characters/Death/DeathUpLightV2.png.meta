@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c5cd2c64656eb4e59a6653a3db9a43e4
+guid: 3ef0c45e40c1740e18bcc21267c84492
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DeathFLightHit2_0
+      name: DeathUpLightV2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bae86a39c93d04cafb48f12c906ac80d
-      internalID: 349759745
+      spriteID: d4ad73492e6e94476a34c552ecd72b7f
+      internalID: -1058449061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit2_1
+      name: DeathUpLightV2_1
       rect:
         serializedVersion: 2
         x: 120
@@ -140,14 +140,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: badde797be8dc4a538b78e6579c8ab66
-      internalID: 1333847580
+      spriteID: 1cc9525cf95634557975c2f7e69df59f
+      internalID: 1234833399
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit2_2
+      name: DeathUpLightV2_2
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 240
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ca4610ed0f3d4936b55e4aafbb84fd6
+      internalID: -659755593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathUpLightV2_3
       rect:
         serializedVersion: 2
         x: 0
@@ -161,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ad2b26af561b4967baf9132476d9fac
-      internalID: -114660352
+      spriteID: 64f5aeccb2f45460596ade4829899b37
+      internalID: 176468086
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit2_3
+      name: DeathUpLightV2_4
       rect:
         serializedVersion: 2
         x: 120
@@ -182,14 +203,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 043585fc27c064620bf99a826b8392f7
-      internalID: -227572412
+      spriteID: a83c618126aa94fccb91660c722c2aa6
+      internalID: 1622883979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeathFLightHit2_4
+      name: DeathUpLightV2_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 120
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d484f62931b54b3e867827019ecf306
+      internalID: 611915214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathUpLightV2_6
       rect:
         serializedVersion: 2
         x: 0
@@ -203,8 +245,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 767c6ed68e2a348c38a1eee1da44344b
-      internalID: -1209250295
+      spriteID: f0a677df730444a2f8aacd4d7848ae95
+      internalID: -781046936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathUpLightV2_7
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abe18473ce4d348a68ef73c2af69f415
+      internalID: -1641020038
       vertices: []
       indices: 
       edges: []
@@ -220,11 +283,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DeathFLightHit2_2: -114660352
-      DeathFLightHit2_4: -1209250295
-      DeathFLightHit2_0: 349759745
-      DeathFLightHit2_3: -227572412
-      DeathFLightHit2_1: 1333847580
+      DeathUpLightV2_5: 611915214
+      DeathUpLightV2_2: -659755593
+      DeathUpLightV2_4: 1622883979
+      DeathUpLightV2_7: -1641020038
+      DeathUpLightV2_0: -1058449061
+      DeathUpLightV2_6: -781046936
+      DeathUpLightV2_3: 176468086
+      DeathUpLightV2_1: 1234833399
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
             effectVolume = value;
             foreach (AbstractSound s in sounds)
             {
-                s.volume = effectVolume;
+                s.volume = effectVolume * s.presetVolume;
                 s.RefreshSourceSettings();
             }
         }
@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
             musicVolume = value;
             foreach (AbstractSound s in music)
             {
-                s.volume = musicVolume;
+                s.volume = musicVolume * s.presetVolume;
                 s.RefreshSourceSettings();
             }
         }
@@ -47,6 +47,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public GameObject soundSourceTarget;
     [HideInInspector] public AudioSource musicSource;
     [HideInInspector] public MusicSound currentMusic;
+
+    public event System.Action OnUpdateMusic;
 
     private void Awake()
     {
@@ -118,10 +120,36 @@ public class AudioManager : MonoBehaviour
     {
         if (soundMap.TryGetValue(name, out EffectSound sound))
         {
-            sound.source.Play();
+            sound.Play(this);
             return true;
         }
         Debug.LogWarning("Attempted to play Sound by name: " + name + ". Sound not found in AudioManager.");
+        return false;
+    }
+
+    public bool AddRepeats(string name, int repeats)
+    {
+        if (soundMap.TryGetValue(name, out EffectSound sound))
+        {
+            sound.loopsLeft += repeats;
+            if (!sound.source.isPlaying)
+            {
+                sound.Play(this);
+            }
+            return true;
+        }
+        Debug.LogWarning("Attempted to add repeats to Sound by name: " + name + ". Sound not found in AudioManager.");
+        return false;
+    }
+
+    public bool StopSound(string name)
+    {
+        if (soundMap.TryGetValue(name, out EffectSound sound))
+        {
+            sound.Stop();
+            return true;
+        }
+        Debug.LogWarning("Attempted to stop Sound by name: " + name + ". Sound not found in AudioManager.");
         return false;
     }
 
@@ -129,7 +157,7 @@ public class AudioManager : MonoBehaviour
     {
         if (soundGroupMap.TryGetValue(groupName, out SoundEffectGroup group))
         {
-            group.PlaySound();
+            group.PlaySound(this);
             return true;
         }
         Debug.LogWarning("Attempted to play Sound Group by name: " + name + ". Sound Group not found in AudioManager.");
@@ -148,8 +176,16 @@ public class AudioManager : MonoBehaviour
         return false;
     }
 
+    public bool StopMusic()
+    {
+        currentMusic?.source.Stop();
+        currentMusic = null;
+        return true;
+    }
+
     private void FixedUpdate()
     {
         currentMusic?.UpdateLoop();
+        OnUpdateMusic?.Invoke();
     }
 }

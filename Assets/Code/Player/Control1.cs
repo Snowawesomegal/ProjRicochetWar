@@ -12,6 +12,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 {
     // Todo list
     // Fix dashes, which were completely broken by friction changes
+    // Implement something in StopLandingLag to actually stop the freeze, right now it does nothing
 
     private uint id;
     private bool initializedID;
@@ -19,6 +20,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     uint IIdentifiable.ID { get { return id; } set { id = value; } }
 
     public GameObject testCircle;
+    public Vector3 feetOffset;
+    float minimumHitstunFrames = 0;
 
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
@@ -90,6 +93,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public int framesInHitstun = 0;
     public bool facingRight = true;
 
+    [SerializeField] bool spawnSmokeOnDirectionChange;
+
     //Wall Collision
     public int collidedWallSide;
     public float collidedWallSlope;
@@ -149,7 +154,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void FreezeFrames(int framesPerTick, int duration, IIdentifiable identifiable)
     {
-        GameManager.Instance.TimeController.Slow(0, 5, this);
+        GameManager.Instance.TimeController.Slow(framesPerTick, duration, identifiable);
     }
 
     public void VerticalResponse(CharacterInput input)
@@ -250,6 +255,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             Hit(null, false);
             framesInHitstun = 0;
+            minimumHitstunFrames = 0;
         }
         framesInHitstun += 1;
     }
@@ -386,11 +392,13 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     void OnDirectionChange()
     {
-        if (clm.activeLockers.Contains(grounded))
+        if (spawnSmokeOnDirectionChange)
         {
-            ae.SpawnDirectionalSmokeCloud();
+            if (clm.activeLockers.Contains(grounded))
+            {
+                ae.SpawnDirectionalSmokeCloud();
+            }
         }
-
     }
 
     void Flip(CharacterInput input)
@@ -593,16 +601,31 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
             em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
+            minimumHitstunFrames = hi.minimumHitstunFrames;
+
             tr.emitting = true;
 
-            psc.ShaderStrength = 1;
+            if (psc != null)
+            {
+                psc.ShaderStrength = 1;
+            }
+
 
             if (hi.angle == 361)
             {
-                Vector2 hiParentVelocity = hi.transform.parent.GetComponent<Rigidbody2D>().velocity;
-                Vector3 hiParentPosition = hi.transform.parent.position;
+                Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
+                Vector3 hiParentPosition = hi.transform.root.position;
 
                 Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight?1:-1), hiParentPosition.y);
+                Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
+                rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
+            }
+            else if (hi.angle == 362)
+            {
+                Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
+                Vector3 hiParentPosition = hi.transform.root.position;
+
+                Vector2 goalPosition = new Vector2(hiParentPosition.x, hiParentPosition.y + 2f);
                 Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
                 rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
             }

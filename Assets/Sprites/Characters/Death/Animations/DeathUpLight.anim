@@ -96,7 +96,14 @@ AnimationClip:
     messageOptions: 0
   - time: 0.2
     functionName: EnableHitbox
-    data: UpLightAttackLaunch
+    data: UpLight/UpLightAttackScoop
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.3
+    functionName: EnableHitbox
+    data: UpLight/UpLightAttackLaunch
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

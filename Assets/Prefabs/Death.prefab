@@ -32,7 +32,7 @@ Transform:
   - {fileID: 5324972259403682343}
   - {fileID: 5324972259917817974}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &976418747818727208
 GameObject:
@@ -66,7 +66,7 @@ Transform:
   - {fileID: 4902785983727423730}
   - {fileID: 8167890758308044157}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2488495210437006846
 GameObject:
@@ -245,7 +245,7 @@ Transform:
   - {fileID: 7027356358378458678}
   - {fileID: 4453222615765600128}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3267544278575473981
 GameObject:
@@ -424,7 +424,7 @@ Transform:
   - {fileID: 1008944911504695437}
   - {fileID: 1541577636693107489}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3590874157232770959
 GameObject:
@@ -457,7 +457,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &3539679749456110218
 CapsuleCollider2D:
@@ -5342,7 +5342,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7179901049484416775
 CapsuleCollider2D:
@@ -5627,8 +5627,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 5
+  m_Father: {fileID: 2908757286451228426}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &5324972259631739923
 CapsuleCollider2D:
@@ -5661,7 +5661,7 @@ MonoBehaviour:
   damage: 6
   knockback: 2000
   angleIndependentOfMovement: 1
-  angle: 110
+  angle: 80
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
@@ -5864,8 +5864,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.8, y: -1.2}
-  - {x: 0.8, y: -1.2}
+  - {x: -0.8, y: -1.4}
+  - {x: 0.8, y: -1.4}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -6064,7 +6064,6 @@ Transform:
   - {fileID: 5324972259697596013}
   - {fileID: 5324972259666958795}
   - {fileID: 7374218087597074338}
-  - {fileID: 5324972259631739925}
   - {fileID: 2908757286451228426}
   - {fileID: 9034038152016812013}
   - {fileID: 1291835033694642017}
@@ -6183,6 +6182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testCircle: {fileID: 6899714948450397382, guid: 94c56d4ff0c7a4485a02345fc0ab1fb2, type: 3}
+  feetOffset: {x: 0.5, y: -0.4, z: 0}
   fallSpeed: 20
   fallAccel: 40
   friction: 5
@@ -6222,6 +6222,7 @@ MonoBehaviour:
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
   facingRight: 1
+  spawnSmokeOnDirectionChange: 0
   collidedWallSide: 0
   collidedWallSlope: 0
   platformCollider: {fileID: 5324972259843863229}
@@ -6554,7 +6555,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2540575, y: -0.04913211}
+  m_Offset: {x: 0, y: -0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -6565,7 +6566,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3219714, y: 2.3017359}
+  m_Size: {x: 1.2, y: 2.6}
   m_EdgeRadius: 0
 --- !u!198 &5324972260535258968
 ParticleSystem:
@@ -11554,12 +11555,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  knockback: 2000
+  knockback: 700
   angleIndependentOfMovement: 1
-  angle: 366
+  angle: 362
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
+  activeFrames: 5
   minimumHitstunFrames: 20
   doNotEnable: 0
   priority: 1
@@ -11596,7 +11597,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1271082766836338132
 CapsuleCollider2D:
@@ -11794,7 +11795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2908757286451228426}
   m_Layer: 0
-  m_Name: UpLight (In progress, nonfunctional)
+  m_Name: UpLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11813,8 +11814,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5432122400862040217}
+  - {fileID: 5324972259631739925}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6828110783430351673
 GameObject:
@@ -11993,5 +11995,5 @@ Transform:
   - {fileID: 3267544278575473980}
   - {fileID: 3267544280134006567}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

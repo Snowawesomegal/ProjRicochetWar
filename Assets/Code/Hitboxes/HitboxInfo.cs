@@ -7,6 +7,8 @@ public class HitboxInfo : MonoBehaviour
     public float damage = 10;
     public float knockback = 100;
     public bool angleIndependentOfMovement = true;
+
+    [Tooltip("361 moves opponent to right in front of player, 362 moves opponent toward right above player")]
     public float angle = 45;
     public GameObject owner;
     public bool facingRight = true;

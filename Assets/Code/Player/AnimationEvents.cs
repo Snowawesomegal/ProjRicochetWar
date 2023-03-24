@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEngine.ParticleSystem;
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 
 public class AnimationEvents : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class AnimationEvents : MonoBehaviour
     }
     void StopLandingLag()
     {
-        // THIS NEEDS TO HAVE SOMETHING IN IT OR THIS ISN'T GONNA WORK LOL
+        GameManager.Instance.TimeController.RemoveSlows(c1);
     }
 
     public void ChangeAnimBool(string boolName, bool toSet, bool changeCurrentAnimBool = true) // Sets entered animBool and updates currentAnimBool appropriately
@@ -266,6 +267,11 @@ public class AnimationEvents : MonoBehaviour
     public void SpawnBasicDirEffect(string name)
     {
         em.SpawnDirectionalEffect(name, transform.position, c1.facingRight);
+    }
+
+    public void SpawnEffectAtFeet(string name)
+    {
+        em.SpawnDirectionalEffect(name, transform.position + new Vector3 (c1.feetOffset.x * (c1.facingRight ? 1 : -1), c1.feetOffset.y, 0), c1.facingRight);
     }
 
     public void StartStopTrail(int startstop)

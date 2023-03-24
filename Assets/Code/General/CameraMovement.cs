@@ -43,51 +43,66 @@ public class CameraMovement : MonoBehaviour
 
     void LateUpdate()
     {
-
-        Vector2 centerpoint = GetCenter();
-        float farthestDistance = GetFarthestDistance();
-
-        Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
-
-        float distance = Vector2.Distance(centerpoint, position2D);
-        float scale = distance / reduceMoveSpeedScaling; // what percent of toScaleBy is distance? Multiply speed by that
-
-        Vector2 movement = Vector2.MoveTowards(transform.position, centerpoint, Time.deltaTime * scale * baseCameraSpeed);
-        transform.position = new Vector3(Mathf.Clamp(movement.x, lowestX, highestX), Mathf.Clamp(movement.y, lowestY, highestY), -10);
-
-        float zScale = farthestDistance / reduceZoomSpeedScaling;
-        cam.orthographicSize = Mathf.MoveTowards(
-            cam.orthographicSize, Mathf.Clamp(farthestDistance * zoomSpaceScale, minCameraSize, maxCameraSize), Time.deltaTime * baseZoomSpeed * zScale);
-
-
-        Vector2 GetCenter()
+        if (toFollow.Count == 1)
         {
-            Vector2 average = Vector2.zero;
-            foreach(GameObject i in toFollow)
-            {
-                average += new Vector2(i.transform.position.x, i.transform.position.y);
-            }
-            average /= toFollow.Count;
+            Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
 
-            return average;
+            float distance = Vector2.Distance(toFollow[0].transform.position, position2D);
+            float scale = distance / reduceMoveSpeedScaling; // what percent of toScaleBy is distance? Multiply speed by that
+
+            Vector2 movement = Vector2.MoveTowards(transform.position, toFollow[0].transform.position, Time.deltaTime * scale * baseCameraSpeed);
+            transform.position = new Vector3(Mathf.Clamp(movement.x, lowestX, highestX), Mathf.Clamp(movement.y, lowestY, highestY), -10);
+
+            cam.orthographicSize = (minCameraSize + maxCameraSize) / 2;
+
         }
-
-        float GetFarthestDistance()
+        if (toFollow.Count >= 2)
         {
-            float farthest = 1;
-            foreach(GameObject i in toFollow)
+            Vector2 centerpoint = GetCenter();
+            float farthestDistance = GetFarthestDistance();
+
+            Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
+
+            float distance = Vector2.Distance(centerpoint, position2D);
+            float scale = distance / reduceMoveSpeedScaling; // what percent of toScaleBy is distance? Multiply speed by that
+
+            Vector2 movement = Vector2.MoveTowards(transform.position, centerpoint, Time.deltaTime * scale * baseCameraSpeed);
+            transform.position = new Vector3(Mathf.Clamp(movement.x, lowestX, highestX), Mathf.Clamp(movement.y, lowestY, highestY), -10);
+
+            float zScale = farthestDistance / reduceZoomSpeedScaling;
+            cam.orthographicSize = Mathf.MoveTowards(
+                cam.orthographicSize, Mathf.Clamp(farthestDistance * zoomSpaceScale, minCameraSize, maxCameraSize), Time.deltaTime * baseZoomSpeed * zScale);
+
+
+            Vector2 GetCenter()
             {
-                foreach(GameObject j in toFollow)
+                Vector2 average = Vector2.zero;
+                foreach (GameObject i in toFollow)
                 {
-                    float current = Vector2.Distance(i.transform.position, j.transform.position);
-                    if (Mathf.Abs(current) > farthest)
+                    average += new Vector2(i.transform.position.x, i.transform.position.y);
+                }
+                average /= toFollow.Count;
+
+                return average;
+            }
+
+            float GetFarthestDistance()
+            {
+                float farthest = 1;
+                foreach (GameObject i in toFollow)
+                {
+                    foreach (GameObject j in toFollow)
                     {
-                        farthest = Mathf.Abs(current);
+                        float current = Vector2.Distance(i.transform.position, j.transform.position);
+                        if (Mathf.Abs(current) > farthest)
+                        {
+                            farthest = Mathf.Abs(current);
+                        }
                     }
                 }
-            }
-            return farthest;
+                return farthest;
 
+            }
         }
     }
 }

@@ -102,6 +102,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.2
+    functionName: PlaySoundFromAnimator
+    data: ScytheSliceLong1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.48333332
     functionName: SwitchIfAttacking
     data: ContinueAttack

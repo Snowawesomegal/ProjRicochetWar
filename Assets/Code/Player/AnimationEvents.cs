@@ -7,6 +7,7 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEngine.ParticleSystem;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
+using System.Xml.Linq;
 
 public class AnimationEvents : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class AnimationEvents : MonoBehaviour
     List<string> attackBools = new List<string>();
     [SerializeField] string landingAnimationName;
     [SerializeField] string runAnimationName;
+
+    [SerializeField] List<ObjectToInstantiate> projectiles;
 
     void Start()
     {
@@ -294,6 +297,19 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    public void InstantiateObjectFromAnimation(string name)
+    {
+        foreach (ObjectToInstantiate i in projectiles)
+        {
+            if (i.name == name)
+            {
+                Destroy(Instantiate(i.prefab, transform.position + new Vector3 (i.offset.x * (c1.facingRight ? 1 : -1), i.offset.y, 0), Quaternion.Euler(AngleMath.Vector2FromAngle(i.angle))), i.lifetime * 0.01666666666f);
+                return;
+            }
+        }
+        Debug.LogWarning("Tried to spawn " + name + " but " + gameObject.name + " does not have an object with that name in its projectile list.");
+    }
+
     public void ApplyWallJumpForce() // called by walljump animation
     {
         rb.velocity = Vector2.zero;
@@ -337,5 +353,15 @@ public class AnimationEvents : MonoBehaviour
     public void PlaySoundGroupFromAnimator(string name)
     {
         c1.am.PlaySoundGroup(name);
+    }
+
+    [Serializable]
+    public class ObjectToInstantiate
+    {
+        public GameObject prefab;
+        public string name;
+        public float angle;
+        public Vector2 offset;
+        public int lifetime;
     }
 }

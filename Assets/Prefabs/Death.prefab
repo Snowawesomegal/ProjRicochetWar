@@ -11394,6 +11394,12 @@ MonoBehaviour:
     right: 5
   landingAnimationName: GhostLandingLag
   runAnimationName: GhostRun
+  projectiles:
+  - prefab: {fileID: 1495149470519623135, guid: 48dd7122d45924632a0dbaf009cad0f0, type: 3}
+    name: DeathClaw
+    angle: 0
+    offset: {x: 1.5, y: -1}
+    lifetime: 72
 --- !u!96 &4566240962166225602
 TrailRenderer:
   serializedVersion: 2

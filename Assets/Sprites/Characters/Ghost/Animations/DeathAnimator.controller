@@ -689,7 +689,8 @@ AnimatorState:
   - {fileID: -1731286338431764189}
   - {fileID: 8392190577627185598}
   - {fileID: 2748467121792138727}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 3952694428888990101}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1090,7 +1091,7 @@ AnimatorStateMachine:
     m_Position: {x: 40, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3425097250859693080}
-    m_Position: {x: 670, y: 120, z: 0}
+    m_Position: {x: 670, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5168738302809704591}
     m_Position: {x: 670, y: -10, z: 0}
@@ -1480,6 +1481,19 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3952694428888990101
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1057f21141c4ba6b4f95aaa3d29785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: DeathWalk
 --- !u!1102 &4529252969297093365
 AnimatorState:
   serializedVersion: 6
@@ -1822,7 +1836,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e51c7028f0fd24401bd2920cff169afa, type: 2}
+  m_Motion: {fileID: 7400000, guid: 494240f303116496e80f223e4ad9f7b4, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

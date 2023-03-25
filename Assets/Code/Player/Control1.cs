@@ -86,6 +86,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public StandardControlLocker onlyAttack;
     public StandardControlLocker dashing;
     public StandardControlLocker inAerialAnim;
+    public StandardControlLocker inGrab;
 
     public Collider2D wallTouching;
     public bool touchingWall = false;
@@ -610,49 +611,55 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 psc.ShaderStrength = 1;
             }
 
-
-            if (hi.angle == 361)
+            if (!clm.activeLockers.Contains(inGrab))
             {
-                Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
-                Vector3 hiParentPosition = hi.transform.root.position;
-
-                Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight?1:-1), hiParentPosition.y);
-                Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
+                ApplyKnockback();
             }
-            else if (hi.angle == 362)
-            {
-                Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
-                Vector3 hiParentPosition = hi.transform.root.position;
 
-                Vector2 goalPosition = new Vector2(hiParentPosition.x, hiParentPosition.y + 2f);
-                Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
-            }
-            else
+            void ApplyKnockback()
             {
-                rb.velocity = Vector2.zero;
-                imui.ChangeHealth(-hi.damage);
-                Vector2 angleOfForce = AngleMath.Vector2FromAngle(hi.angle);
-
-                if (!hi.facingRight)
+                if (hi.angle == 361)
                 {
-                    angleOfForce.x *= -1;
+                    Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
+                    Vector3 hiParentPosition = hi.transform.root.position;
+
+                    Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight ? 1 : -1), hiParentPosition.y);
+                    Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
+                    rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
                 }
-
-                if (!hi.angleIndependentOfMovement)
+                else if (hi.angle == 362)
                 {
-                    Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
-                    angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
+                    Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
+                    Vector3 hiParentPosition = hi.transform.root.position;
+
+                    Vector2 goalPosition = new Vector2(hiParentPosition.x, hiParentPosition.y + 2f);
+                    Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
+                    rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
                 }
                 else
                 {
-                    angleOfForce = angleOfForce.normalized;
+                    rb.velocity = Vector2.zero;
+                    imui.ChangeHealth(-hi.damage);
+                    Vector2 angleOfForce = AngleMath.Vector2FromAngle(hi.angle);
+
+                    if (!hi.facingRight)
+                    {
+                        angleOfForce.x *= -1;
+                    }
+
+                    if (!hi.angleIndependentOfMovement)
+                    {
+                        Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
+                        angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
+                    }
+                    else
+                    {
+                        angleOfForce = angleOfForce.normalized;
+                    }
+
+                    rb.AddForce(angleOfForce * hi.knockback);
                 }
-
-                rb.AddForce(angleOfForce * hi.knockback);
             }
-
         }
         else
         {
@@ -665,6 +672,21 @@ public class Control1 : MonoBehaviour, IIdentifiable
             tr.emitting = false;
             anim.SetBool("Hitstun", false);
         }
+    }
+
+    public void Grabbed(bool enterExitGrab = true)
+    {
+        if (enterExitGrab)
+        {
+            clm.AddLocker(inGrab);
+            anim.SetBool("Hitstun", true);
+        }
+        else
+        {
+            clm.RemoveLocker(inGrab);
+            anim.SetBool("Hitstun", false);
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -684,15 +706,25 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out HitboxInfo _))
+        if (collision.TryGetComponent(out HitboxInfo hbi))
         {
-            if (!him.triggersThisFrame.Contains(collision))
+            if (hbi.isGrab)
             {
-                him.triggersThisFrame.Add(collision);
+                if (!him.grabboxesAndPlayersThisFrame.Contains(new Pair<Collider2D, Collider2D>(collision, bc)))
+                {
+                    him.grabboxesAndPlayersThisFrame.Add(new Pair<Collider2D, Collider2D>(collision, bc));
+                }
             }
-            if (!him.triggersThisFrame.Contains(bc))
+            else
             {
-                him.triggersThisFrame.Add(bc);
+                if (!him.triggersThisFrame.Contains(collision))
+                {
+                    him.triggersThisFrame.Add(collision);
+                }
+                if (!him.triggersThisFrame.Contains(bc))
+                {
+                    him.triggersThisFrame.Add(bc);
+                }
             }
         }
     }

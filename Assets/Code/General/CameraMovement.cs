@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public List<GameObject> toFollow = new List<GameObject>();
+    List<GameObject> toFollow = new List<GameObject>();
 
     [SerializeField] float highestX = 666;
     [SerializeField] float lowestX = -666;
@@ -25,17 +25,15 @@ public class CameraMovement : MonoBehaviour
 
     private Camera cam;
 
-    public GameObject Ghost;
-
     void Start()
     {
-        //Debug.Log("Camera has spawned the players.");
-        //toFollow.Add(Instantiate(Ghost));
-        //toFollow.Add(Instantiate(Ghost));
 
-        if (toFollow.Count < 1)
+        foreach (GameObject i in GameObject.FindGameObjectsWithTag("Player"))
         {
-            Debug.Log("no objects have been added to the camera.");
+            if (!toFollow.Contains(i))
+            {
+                toFollow.Add(i);
+            }
         }
 
         cam = GetComponent<Camera>();

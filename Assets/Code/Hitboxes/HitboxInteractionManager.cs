@@ -9,6 +9,8 @@ public class HitboxInteractionManager : MonoBehaviour
     EffectManager em;
 
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
+    public List<Pair<Collider2D, Collider2D>> grabboxesAndPlayersThisFrame = new List<Pair<Collider2D, Collider2D>>(); // not yet functional
+
     public List<GameObject> doNotEnableHitboxes = new List<GameObject>();
 
     public float hitboxDamageDifferenceToWin = 10;
@@ -73,6 +75,7 @@ public class HitboxInteractionManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
 
             RunHitBoxManagement();
+            RunGrabManagement();
             triggersThisFrame.Clear();
         }
 
@@ -83,7 +86,6 @@ public class HitboxInteractionManager : MonoBehaviour
 
         void RunHitBoxManagement()
         {
-
             if (triggersThisFrame.Count == 0) { return; }
 
             List<Collider2D> hitboxes = new List<Collider2D>();
@@ -199,6 +201,19 @@ public class HitboxInteractionManager : MonoBehaviour
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
                 }
             }
+        }
+
+        void RunGrabManagement()
+        {
+            foreach (Pair<Collider2D, Collider2D> i in grabboxesAndPlayersThisFrame) // left grab hitbox, right player hitbox
+            {
+                i.right.transform.root.GetComponent<Control1>().Grabbed();
+                DeathHeavyClawControl dhcc = i.left.transform.root.GetComponent<DeathHeavyClawControl>();
+                dhcc.grabbedPlayer = i.right.gameObject;
+                dhcc.grabbedPlayerRB = i.right.GetComponent<Rigidbody2D>();
+                dhcc.grabbedPlayerRB.velocity = Vector2.zero;
+            }
+            grabboxesAndPlayersThisFrame.Clear();
         }
     }
 }

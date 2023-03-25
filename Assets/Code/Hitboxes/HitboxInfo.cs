@@ -15,6 +15,8 @@ public class HitboxInfo : MonoBehaviour
     public int activeFrames = 2;
     public int minimumHitstunFrames = 20;
 
+    public bool isGrab = false;
+
     [Tooltip("Set true in all connected hitboxes when a hitbox clanks so that the rest of the hitboxes activated afterward in the same move are not activated.")]
     public bool doNotEnable = false;
 

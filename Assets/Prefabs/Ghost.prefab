@@ -204,6 +204,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -277,6 +278,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -416,6 +418,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -489,6 +492,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 2
   playersHitAlready: []
@@ -562,6 +566,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 2
   playersHitAlready: []
@@ -635,6 +640,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 2
   playersHitAlready: []
@@ -708,6 +714,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 3
   playersHitAlready: []
@@ -781,6 +788,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -854,6 +862,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -927,6 +936,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -1097,6 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testCircle: {fileID: 6899714948450397382, guid: 94c56d4ff0c7a4485a02345fc0ab1fb2, type: 3}
+  feetOffset: {x: 0, y: 0, z: 0}
   fallSpeed: 20
   fallAccel: 50
   friction: 5
@@ -1131,11 +1142,13 @@ MonoBehaviour:
   onlyAttack: {fileID: 11400000, guid: 468f03c3a8f114abc91524bfd93b05dc, type: 2}
   dashing: {fileID: 11400000, guid: 03123bf38946f48879ee59084a60d725, type: 2}
   inAerialAnim: {fileID: 11400000, guid: 14134491038084bb980f48708f2f734a, type: 2}
+  inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
   wallTouching: {fileID: 0}
   touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
   facingRight: 1
+  spawnSmokeOnDirectionChange: 0
   collidedWallSide: 0
   collidedWallSlope: 0
   platformCollider: {fileID: 6311728094876046316}
@@ -6307,6 +6320,7 @@ MonoBehaviour:
     right: 5
   landingAnimationName: GhostLandingLag
   runAnimationName: GhostRun
+  projectiles: []
 --- !u!96 &-6832151150410818669
 TrailRenderer:
   serializedVersion: 2
@@ -6494,6 +6508,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -6567,6 +6582,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -6640,6 +6656,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -6767,6 +6784,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -6840,6 +6858,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -6913,6 +6932,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -6986,6 +7006,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
@@ -7092,6 +7113,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []

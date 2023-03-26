@@ -193,12 +193,26 @@ public class HitboxInteractionManager : MonoBehaviour
             hitlist = hitlist.OrderBy(pair => pair.left.GetComponent<HitboxInfo>().priority).ToList();
             foreach (Pair<GameObject, GameObject> i in hitlist) // hitbox left, hurtbox right
             {
-                if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
+                HitboxInfo hbi = i.left.GetComponent<HitboxInfo>();
+                if (!hbi.playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
                     Control1 hitboxC1 = i.left.transform.root.GetComponent<Control1>();
-                    hurtboxC1.FreezeFrames(0, i.left.GetComponent<HitboxInfo>().hitstopFrames, hurtboxC1);
-                    hitboxC1.FreezeFrames(0, i.left.GetComponent<HitboxInfo>().hitstopFrames, hitboxC1);
+                    hurtboxC1.FreezeFrames(0, hbi.hitstopFrames, hurtboxC1);
+                    hitboxC1.FreezeFrames(0, hbi.hitstopFrames, hitboxC1);
+
+                    if (!string.IsNullOrEmpty(hbi.hitsound))
+                    {
+                        if (hbi.soundGroupInsteadOfSound)
+                        {
+                            hurtboxC1.am.PlaySoundGroup(hbi.hitsound);
+                        }
+                        else
+                        {
+                            hurtboxC1.am.PlaySound(hbi.hitsound);
+                        }
+
+                    }
 
                     hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true);
                     

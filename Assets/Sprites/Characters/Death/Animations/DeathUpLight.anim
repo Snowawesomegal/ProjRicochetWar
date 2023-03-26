@@ -94,16 +94,30 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.2
+  - time: 0.083333336
+    functionName: PlaySoundFromAnimator
+    data: PortalOpen1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.1
     functionName: EnableHitbox
     data: UpLight/UpLightAttackScoop
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.3
+  - time: 0.2
     functionName: EnableHitbox
     data: UpLight/UpLightAttackLaunch
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
+    functionName: PlaySoundFromAnimator
+    data: ChainRetract1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

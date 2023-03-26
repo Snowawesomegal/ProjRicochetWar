@@ -8,6 +8,9 @@ public class HitboxInfo : MonoBehaviour
     public float kbSpeedMultiplier = 1;
     public float kbDistance = 8;
 
+    public string hitsound = null;
+    public bool soundGroupInsteadOfSound = false;
+
     [Tooltip("361 moves opponent to right in front of player, 362 moves opponent toward right above player")]
     public float angle = 45;
     public GameObject owner;

@@ -199,6 +199,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 12
   owner: {fileID: 0}
   facingRight: 1
@@ -274,6 +276,8 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 13
   owner: {fileID: 0}
   facingRight: 1
@@ -415,6 +419,8 @@ MonoBehaviour:
   damage: 12
   kbSpeedMultiplier: 1
   kbDistance: 12
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 20
   owner: {fileID: 0}
   facingRight: 1
@@ -490,6 +496,8 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 6
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 40
   owner: {fileID: 0}
   facingRight: 1
@@ -565,6 +573,8 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 4
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 65
   owner: {fileID: 0}
   facingRight: 1
@@ -640,6 +650,8 @@ MonoBehaviour:
   damage: 8
   kbSpeedMultiplier: 1
   kbDistance: 3
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 160
   owner: {fileID: 0}
   facingRight: 1
@@ -715,6 +727,8 @@ MonoBehaviour:
   damage: 8
   kbSpeedMultiplier: 1
   kbDistance: 3
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 90
   owner: {fileID: 0}
   facingRight: 1
@@ -790,6 +804,8 @@ MonoBehaviour:
   damage: 12
   kbSpeedMultiplier: 1
   kbDistance: 6
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 270
   owner: {fileID: 0}
   facingRight: 1
@@ -865,6 +881,8 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 120
   owner: {fileID: 0}
   facingRight: 1
@@ -940,6 +958,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 4
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 120
   owner: {fileID: 0}
   facingRight: 1
@@ -6513,6 +6533,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 10
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 115
   owner: {fileID: 0}
   facingRight: 1
@@ -6588,6 +6610,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 12
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 140
   owner: {fileID: 0}
   facingRight: 1
@@ -6663,6 +6687,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 9
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 160
   owner: {fileID: 0}
   facingRight: 1
@@ -6792,6 +6818,8 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: WeaponHit
+  soundGroupInsteadOfSound: 1
   angle: 110
   owner: {fileID: 0}
   facingRight: 1
@@ -6867,6 +6895,8 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.01
   kbDistance: 0.2
+  hitsound: WeaponHit
+  soundGroupInsteadOfSound: 1
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
@@ -6942,6 +6972,8 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.01
   kbDistance: 0.2
+  hitsound: WeaponHit
+  soundGroupInsteadOfSound: 1
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
@@ -7017,6 +7049,8 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: WeaponHit
+  soundGroupInsteadOfSound: 1
   angle: 45
   owner: {fileID: 0}
   facingRight: 1
@@ -7125,6 +7159,8 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 65
   owner: {fileID: 0}
   facingRight: 1

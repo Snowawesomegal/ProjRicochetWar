@@ -5,8 +5,8 @@ using UnityEngine;
 public class HitboxInfo : MonoBehaviour
 {
     public float damage = 10;
-    public float knockback = 100;
-    public bool angleIndependentOfMovement = true;
+    public float kbSpeedMultiplier = 1;
+    public float kbDistance = 8;
 
     [Tooltip("361 moves opponent to right in front of player, 362 moves opponent toward right above player")]
     public float angle = 45;
@@ -14,6 +14,8 @@ public class HitboxInfo : MonoBehaviour
     public bool facingRight = true;
     public int activeFrames = 2;
     public int minimumHitstunFrames = 20;
+
+    public int hitstopFrames = 10;
 
     public bool isGrab = false;
 

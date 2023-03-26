@@ -7,6 +7,8 @@ using UnityEngine.Windows;
 using System.Drawing;
 using System.Linq;
 using UnityEngine.TextCore.Text;
+using System.Runtime;
+using Unity.VisualScripting;
 
 public class Control1 : MonoBehaviour, IIdentifiable
 {
@@ -34,6 +36,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public bool intangible = false;
     public bool ignoreFriction = false;
     [SerializeField] float DIStrength = 5;
+    int knockbackTime = 0;
+    Vector2 initialLaunchVelocity;
+    List<Pair<HitboxInfo, Vector2>> queuedKnockback = new List<Pair<HitboxInfo, Vector2>>();
 
     //speeds
     public float airSpeed = 10;
@@ -216,49 +221,41 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 Flip(input);
             }
         }
-        else // DI Implementation
+        else // DI Implementation goes here:
         {
-            float angleOfMotion = Vector2.Angle(Vector2.right, new Vector2(Mathf.Abs(rb.velocity.x), rb.velocity.y)); // angle difference from 0 or 180; angle of 200 returns 20
-            if (angleOfMotion >= 45)
-            {
-                if (rb.velocity.y > 0)
-                {
-                    rb.AddForce(new Vector2(input.Direction.current.x * DIStrength, -input.Direction.current.x * (DIStrength/5)));
-                }
-                else
-                {
-                    rb.AddForce(new Vector2(input.Direction.current.x * DIStrength, input.Direction.current.x * (DIStrength/5)));
-                }
-            }
-            else
-            {
-                if (rb.velocity.x > 0)
-                {
-                    rb.AddForce(new Vector2(input.Direction.current.x * (DIStrength/5), -input.Direction.current.x * DIStrength));
-                    rb.AddForce(new Vector2(-input.Direction.current.y * (DIStrength / 5), input.Direction.current.y * DIStrength));
-                }
-                else
-                {
-                    rb.AddForce(new Vector2(input.Direction.current.x * (DIStrength/5), input.Direction.current.x * DIStrength));
-                    rb.AddForce(new Vector2(input.Direction.current.y * (DIStrength / 5), input.Direction.current.y * DIStrength));
-                }
-            }
+
         }
-
-
     }
 
     void HitstunResponse()
     {
         if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
 
-        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > 10)
+        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0)
         {
             Hit(null, false);
             framesInHitstun = 0;
             minimumHitstunFrames = 0;
         }
         framesInHitstun += 1;
+
+        if (knockbackTime <= 0)
+        {
+            rb.velocity = Vector2.MoveTowards(rb.velocity, Vector2.zero, initialLaunchVelocity.magnitude / ((0 - knockbackTime * 5) + 10));
+            knockbackTime -= 1;
+        }
+        else
+        {
+            knockbackTime -= 1;
+        }
+    }
+
+    void StartKnockback(float knockbackDistance, float knockbackSpeed, Vector2 angle)
+    {
+        knockbackTime = Mathf.RoundToInt(knockbackDistance / knockbackSpeed);
+
+        initialLaunchVelocity = knockbackSpeed * angle * 100;
+        rb.velocity = initialLaunchVelocity;
     }
 
     public void DashResponse(CharacterInput input)
@@ -455,6 +452,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
         ManagePlatformCollider();
 
+        ManageQueuedKnockback();
+
         if (psc != null)
         {
             if (psc.ShaderStrength > 0)
@@ -477,29 +476,29 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     void ManageForces()
     {
-        if (clm.activeLockers.Contains(grounded)) // if grounded
+        if (!clm.activeLockers.Contains(hitstun))
         {
-            if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
-                || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded and: can't move or not holding the direction of motion: apply friction
+            if (clm.activeLockers.Contains(grounded)) // if grounded + not in hitstun
             {
-                if (!ignoreFriction)
+                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
+                    || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded and: can't move or not holding the direction of motion: apply friction
                 {
-                    if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                    if (!ignoreFriction)
                     {
-                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                        {
+                            rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        }
                     }
                 }
-            }
 
-            rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
-        }
-        else // if not grounded
-        {
-            if (!clm.activeLockers.Contains(hitstun)) // if not grounded and not in hitstun
+                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
+            }
+            else // if not grounded + not in hitstun
             {
                 if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0))
                 //if not in hitstun, airborne, and not holding the direction of motion: apply airFriction
@@ -536,12 +535,26 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
                 rb.velocity = new Vector2(newXSpeed, newYSpeed);
             }
-            else // if not grounded and you ARE in hitstun
+        }
+        else // if in hitstun
+        {
+            if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
             {
-                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
-                {
-                    rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
-                }
+                // rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
+            }
+        }
+    }
+
+    // 
+    void ManageQueuedKnockback()
+    {
+        if (queuedKnockback.Count != 0)
+        {
+            if (GameManager.Instance.TimeController.GetTimeScale(this) == 1)
+            {
+                queuedKnockback = queuedKnockback.OrderBy(pair => -pair.left.damage).ToList();
+                StartKnockback(queuedKnockback[0].left.kbDistance, queuedKnockback[0].left.kbSpeedMultiplier, queuedKnockback[0].right);
+                queuedKnockback.Clear();
             }
         }
     }
@@ -620,21 +633,21 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 if (hi.angle == 361)
                 {
-                    Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
                     Vector3 hiParentPosition = hi.transform.root.position;
 
                     Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight ? 1 : -1), hiParentPosition.y);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                    rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
+
+                    queuedKnockback.Add(new Pair<HitboxInfo, Vector2>(hi, between));
                 }
                 else if (hi.angle == 362)
                 {
-                    Vector2 hiParentVelocity = hi.transform.root.GetComponent<Rigidbody2D>().velocity;
                     Vector3 hiParentPosition = hi.transform.root.position;
 
                     Vector2 goalPosition = new Vector2(hiParentPosition.x, hiParentPosition.y + 2f);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-                    rb.AddForce(((between + (hiParentVelocity / 9)) * hi.knockback));
+
+                    queuedKnockback.Add(new Pair<HitboxInfo, Vector2>(hi, between));
                 }
                 else
                 {
@@ -647,17 +660,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
                         angleOfForce.x *= -1;
                     }
 
-                    if (!hi.angleIndependentOfMovement)
-                    {
-                        Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
-                        angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
-                    }
-                    else
-                    {
-                        angleOfForce = angleOfForce.normalized;
-                    }
+                    angleOfForce = angleOfForce.normalized;
 
-                    rb.AddForce(angleOfForce * hi.knockback);
+                    queuedKnockback.Add(new Pair<HitboxInfo, Vector2>(hi, angleOfForce));
                 }
             }
         }

@@ -31,7 +31,6 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 if (i.TryGetComponent(out HitboxInfo ihbi))
                 {
-                    Debug.Log("added player to " + ihbi + " as part of a multihitbox");
                     ihbi.playersHitAlready.Add(player);
                 }
             }
@@ -196,7 +195,13 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
                 {
-                    i.right.GetComponent<Control1>().Hit(i.left.GetComponent<Collider2D>(), true);
+                    Control1 hurtboxC1 = i.right.GetComponent<Control1>();
+                    Control1 hitboxC1 = i.left.transform.root.GetComponent<Control1>();
+                    hurtboxC1.FreezeFrames(0, i.left.GetComponent<HitboxInfo>().hitstopFrames, hurtboxC1);
+                    hitboxC1.FreezeFrames(0, i.left.GetComponent<HitboxInfo>().hitstopFrames, hitboxC1);
+
+                    hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true);
+                    
                     em.SpawnHitEffectOnContactPoint("LightHitEffect", i.left.GetComponent<Collider2D>(), i.right.transform.position);
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
                 }

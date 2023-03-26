@@ -197,13 +197,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 2970
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 2
   angle: 12
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -271,13 +272,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  knockback: 1800
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 2
   angle: 13
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -411,13 +413,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 12
-  knockback: 3140
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 12
   angle: 20
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -485,13 +488,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
-  knockback: 2400
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 6
   angle: 40
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -559,13 +563,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  knockback: 1100
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 4
   angle: 65
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -633,13 +638,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
-  knockback: 3500
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 3
   angle: 160
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -707,13 +713,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
-  knockback: 3450
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 3
   angle: 90
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 3
@@ -781,13 +788,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 12
-  knockback: 3400
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 6
   angle: 270
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -855,13 +863,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  knockback: 2000
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 2
   angle: 120
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -929,13 +938,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 3600
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 4
   angle: 120
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -1067,7 +1077,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: b2f55495ccaa04b34adbb489a628535f, type: 2}
   m_Interpolate: 1
@@ -6501,13 +6511,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 3500
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 10
   angle: 115
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6575,13 +6586,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 3200
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 12
   angle: 140
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6649,13 +6661,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockback: 3000
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 9
   angle: 160
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6777,13 +6790,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  knockback: 2000
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 2
   angle: 110
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6851,13 +6865,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  knockback: 600
-  angleIndependentOfMovement: 1
-  angle: 77
+  kbSpeedMultiplier: 0.01
+  kbDistance: 0.2
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6925,13 +6940,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  knockback: 200
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 0.01
+  kbDistance: 0.2
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6999,13 +7015,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
-  knockback: 2400
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 2
   angle: 45
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -7106,13 +7123,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
-  knockback: 1900
-  angleIndependentOfMovement: 1
+  kbSpeedMultiplier: 1
+  kbDistance: 2
   angle: 65
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1

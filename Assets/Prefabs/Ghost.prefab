@@ -6901,7 +6901,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 30
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
@@ -6978,7 +6978,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 42
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0

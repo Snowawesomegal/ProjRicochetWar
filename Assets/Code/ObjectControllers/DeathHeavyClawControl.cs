@@ -8,6 +8,7 @@ public class DeathHeavyClawControl : MonoBehaviour
     HitboxInteractionManager him;
     CapsuleCollider2D cc;
     GameObject hitboxObject;
+    AudioManager am;
 
     public GameObject owner = null;
 
@@ -21,10 +22,13 @@ public class DeathHeavyClawControl : MonoBehaviour
 
     public int framesActive = 0;
 
+
+
     private void Awake()
     {
         hitboxObject = transform.GetChild(1).gameObject;
         cc = hitboxObject.GetComponent<CapsuleCollider2D>();
+        am = GameObject.Find("SettingsManager").GetComponent<AudioManager>();
 
         if (GetComponent<SpriteRenderer>().flipX)
         {
@@ -74,6 +78,11 @@ public class DeathHeavyClawControl : MonoBehaviour
 
         Destroy(gameObject);
         owner.GetComponent<DeathAnimationEvents>().upwardHeavyClawExists = false;
+    }
+
+    public void PlaySoundFromAnimator(string name)
+    {
+        am.PlaySound(name);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) // if player touching grab hitbox is not owner, grab player.

@@ -109,6 +109,20 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.35
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.36666667
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.38333333
     functionName: SwitchIfAttacking
     data: ContinueAttack
@@ -159,20 +173,6 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.5
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.51666665
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5333333
     functionName: SwitchIfAttacking
     data: ContinueAttack
     objectReferenceParameter: {fileID: 0}

@@ -1265,7 +1265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: sounds.Array.data[26].presetVolume
-      value: 0.717
+      value: 0.874
       objectReference: {fileID: 0}
     - target: {fileID: 1933258576658441530, guid: e3d1bd91573471d41b00658a052674a4, type: 3}
       propertyPath: sounds.Array.data[27].presetVolume
@@ -1827,7 +1827,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246496601}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ad814b95af094ab89ffac32aa376fd8, type: 3}
   m_Name: 
@@ -1835,12 +1835,12 @@ MonoBehaviour:
   highestX: 8
   lowestX: -8
   highestY: 3
-  lowestY: -3
+  lowestY: -3.5
   baseCameraSpeed: 8
   reduceMoveSpeedScaling: 3
   baseZoomSpeed: 2
   reduceZoomSpeedScaling: 8
-  minCameraSize: 7
+  minCameraSize: 5
   maxCameraSize: 10
   zoomSpaceScale: 0.5
 --- !u!1 &1507579591

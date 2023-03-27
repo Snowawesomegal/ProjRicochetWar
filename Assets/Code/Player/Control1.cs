@@ -685,6 +685,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             clm.AddLocker(inGrab);
             anim.SetBool("Hitstun", true);
+            anim.SetBool(currentAnimBool, false);
+            clm.RemoveLocker(inAnim);
         }
         else
         {

@@ -132,11 +132,13 @@ MonoBehaviour:
   damage: 8
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 160
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 35
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
@@ -207,12 +209,14 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 65
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -315,6 +319,8 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 40
   owner: {fileID: 0}
   facingRight: 1
@@ -390,11 +396,13 @@ MonoBehaviour:
   damage: 12
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 20
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 35
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
@@ -498,12 +506,14 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 13
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5385,6 +5395,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 12
   owner: {fileID: 0}
   facingRight: 1
@@ -5527,12 +5539,14 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 45
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 40
-  hitstopFrames: 10
+  minimumHitstunFrames: 35
+  hitstopFrames: 7
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5602,12 +5616,14 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 140
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 12
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5677,12 +5693,14 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 8
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 80
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
-  hitstopFrames: 10
+  minimumHitstunFrames: 50
+  hitstopFrames: 7
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5752,12 +5770,14 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.01
   kbDistance: 0.15
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 80
-  hitstopFrames: 10
+  minimumHitstunFrames: 70
+  hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5827,12 +5847,14 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.01
   kbDistance: 0.15
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 40
-  hitstopFrames: 10
+  minimumHitstunFrames: 35
+  hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5956,12 +5978,14 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 160
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 1
-  minimumHitstunFrames: 20
-  hitstopFrames: 10
+  minimumHitstunFrames: 35
+  hitstopFrames: 11
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6031,6 +6055,8 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 115
   owner: {fileID: 0}
   facingRight: 1
@@ -11605,12 +11631,14 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 0.1
   kbDistance: 0.5
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 362
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 5
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -11680,12 +11708,14 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 120
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -11755,11 +11785,13 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 120
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 35
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
@@ -11830,12 +11862,14 @@ MonoBehaviour:
   damage: 12
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 270
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 13
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -11938,6 +11972,8 @@ MonoBehaviour:
   damage: 8
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 90
   owner: {fileID: 0}
   facingRight: 1
@@ -12013,12 +12049,14 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
+  hitsound: 
+  soundGroupInsteadOfSound: 0
   angle: 65
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
-  hitstopFrames: 10
+  hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1

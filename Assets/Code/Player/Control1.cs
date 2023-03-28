@@ -38,7 +38,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float DIStrength = 5;
     int knockbackTime = 0;
     Vector2 initialLaunchVelocity;
-    List<Pair<HitboxInfo, Vector2>> queuedKnockback = new List<Pair<HitboxInfo, Vector2>>();
+    Pair<HitboxInfo, Vector2> queuedKnockback;
 
     //speeds
     public float airSpeed = 10;
@@ -231,7 +231,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
 
-        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0)
+        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) == 1) // if slow enough and in hitstun for longer than minHitstunFrames and knockback time is over and not in hitstop: stop hitstun
         {
             Hit(null, false);
             framesInHitstun = 0;
@@ -256,6 +256,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
         initialLaunchVelocity = knockbackSpeed * angle * 100;
         rb.velocity = initialLaunchVelocity;
+        
     }
 
     public void DashResponse(CharacterInput input)
@@ -466,11 +467,19 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     void ManagePlatformCollider()
     {
-        if (dropPlatformFrames == 0)
+        if (clm.activeLockers.Contains(hitstun))
         {
-            platformCollider.SetActive(true);
-            return;
+            platformCollider.SetActive(false);
         }
+        else
+        {
+            if (dropPlatformFrames <= 0)
+            {
+                platformCollider.SetActive(true);
+                return;
+            }
+        }
+
         dropPlatformFrames -= 1;
     }
 
@@ -545,16 +554,15 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
-    // 
     void ManageQueuedKnockback()
     {
-        if (queuedKnockback.Count != 0)
+        if (queuedKnockback != null)
         {
             if (GameManager.Instance.TimeController.GetTimeScale(this) == 1)
             {
-                queuedKnockback = queuedKnockback.OrderBy(pair => -pair.left.damage).ToList();
-                StartKnockback(queuedKnockback[0].left.kbDistance, queuedKnockback[0].left.kbSpeedMultiplier, queuedKnockback[0].right);
-                queuedKnockback.Clear();
+                StartKnockback(queuedKnockback.left.kbDistance, queuedKnockback.left.kbSpeedMultiplier, queuedKnockback.right);
+                queuedKnockback = null;
+                Debug.Log("knockback applied on frame: " + frame);
             }
         }
     }
@@ -606,12 +614,22 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (enterOrExitHitstun)
         {
+            Debug.Log("start hitstun on frame: " + frame + ", hit by move " + collider.gameObject.name);
+
             clm.AddLocker(hitstun);
             gameObject.layer = 8;
             rb.sharedMaterial = bouncy;
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
             anim.SetBool("Hitstun", true);
+
+            if (!string.IsNullOrEmpty(currentAnimBool))
+            {
+                anim.SetBool(currentAnimBool, false);
+                currentAnimBool = null;
+            }
+
+            framesInHitstun = 0;
 
             em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
@@ -627,6 +645,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             if (!clm.activeLockers.Contains(inGrab))
             {
                 ApplyKnockback();
+                Debug.Log("hit on frame: " + frame + " with " + hi.hitstopFrames + " of hitstop");
             }
 
             void ApplyKnockback()
@@ -638,7 +657,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight ? 1 : -1), hiParentPosition.y);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
 
-                    queuedKnockback.Add(new Pair<HitboxInfo, Vector2>(hi, between));
+                    queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
                 }
                 else if (hi.angle == 362)
                 {
@@ -647,7 +666,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     Vector2 goalPosition = new Vector2(hiParentPosition.x, hiParentPosition.y + 2f);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
 
-                    queuedKnockback.Add(new Pair<HitboxInfo, Vector2>(hi, between));
+                    queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
                 }
                 else
                 {
@@ -662,7 +681,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
                     angleOfForce = angleOfForce.normalized;
 
-                    queuedKnockback.Add(new Pair<HitboxInfo, Vector2>(hi, angleOfForce));
+                    queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, angleOfForce);
                 }
             }
         }
@@ -676,6 +695,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
             rb.sharedMaterial = notBouncy;
             tr.emitting = false;
             anim.SetBool("Hitstun", false);
+
+            Debug.Log("STOPPED hitstun on frame: " + frame);
         }
     }
 
@@ -685,7 +706,13 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             clm.AddLocker(inGrab);
             anim.SetBool("Hitstun", true);
-            anim.SetBool(currentAnimBool, false);
+
+            if (!string.IsNullOrEmpty(currentAnimBool))
+            {
+                anim.SetBool(currentAnimBool, false);
+                currentAnimBool = null;
+            }
+
             clm.RemoveLocker(inAnim);
         }
         else

@@ -276,7 +276,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 13
   owner: {fileID: 0}
@@ -496,7 +496,7 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 6
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 40
   owner: {fileID: 0}
@@ -573,7 +573,7 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 4
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 65
   owner: {fileID: 0}
@@ -881,7 +881,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 120
   owner: {fileID: 0}
@@ -6816,10 +6816,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: WeaponHit
-  soundGroupInsteadOfSound: 1
+  kbSpeedMultiplier: 0.8
+  kbDistance: 0.2
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
   angle: 110
   owner: {fileID: 0}
   facingRight: 1
@@ -6895,8 +6895,8 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.01
   kbDistance: 0.2
-  hitsound: WeaponHit
-  soundGroupInsteadOfSound: 1
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
@@ -6972,8 +6972,8 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.01
   kbDistance: 0.2
-  hitsound: WeaponHit
-  soundGroupInsteadOfSound: 1
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
@@ -7049,9 +7049,9 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
-  hitsound: WeaponHit
-  soundGroupInsteadOfSound: 1
-  angle: 45
+  hitsound: 
+  soundGroupInsteadOfSound: 0
+  angle: 60
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
@@ -7159,7 +7159,7 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 2
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 65
   owner: {fileID: 0}

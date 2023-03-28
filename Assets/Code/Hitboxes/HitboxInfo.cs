@@ -18,6 +18,9 @@ public class HitboxInfo : MonoBehaviour
     public int activeFrames = 2;
     public int minimumHitstunFrames = 20;
 
+    [Tooltip("Set this to true if the hitbox has multiple hitboxes that are part of the same move as it, and are disabled if it connects. In this case, this object should also be parented to a another gameobject. See Ghost UpHeavy. This is checked by HitboxInteractionManager.")]
+    public bool isPartOfMultipart = false;
+
     public int hitstopFrames = 10;
 
     public bool isGrab = false;
@@ -29,9 +32,6 @@ public class HitboxInfo : MonoBehaviour
     public int priority = 1;
 
     public List<GameObject> playersHitAlready;
-
-    [Tooltip("Set this to true if the hitbox has multiple hitboxes that are part of the same move as it, and are disabled if it connects. In this case, this object should also be parented to a another gameobject. See Ghost UpHeavy. This is checked by HitboxInteractionManager.")]
-    public bool isPartOfMultipart = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

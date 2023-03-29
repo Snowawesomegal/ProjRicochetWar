@@ -75,9 +75,12 @@ public class AnimationEvents : MonoBehaviour
     public void ChangeAnimBool(string boolName, bool toSet, bool changeCurrentAnimBool = true) // Sets entered animBool and updates currentAnimBool appropriately
     //Should always be used when changing animBools in order to keep currentAnimBool up to date.
     {
-        if (boolName.ToLower() != "nothing")
+        if (!string.IsNullOrEmpty(boolName))
         {
-            anim.SetBool(boolName, toSet);
+            if (boolName.ToLower() != "nothing")
+            {
+                anim.SetBool(boolName, toSet);
+            }
         }
 
         if (changeCurrentAnimBool)
@@ -168,8 +171,10 @@ public class AnimationEvents : MonoBehaviour
         ChangeAnimBool(boolToSetFalse, false, true);
 
         anim.SetBool("ContinueAttack", false);
+        clm.RemoveLocker(c1.hitstun);
         clm.RemoveLocker(c1.inAnim);
         clm.RemoveLocker(c1.dashing);
+        clm.RemoveLocker(c1.inGrab);
         clm.RemoveLocker(c1.inAerialAnim);
         StopLandingLag();
     }
@@ -303,7 +308,16 @@ public class AnimationEvents : MonoBehaviour
         {
             if (i.name == name)
             {
-                Destroy(Instantiate(i.prefab, transform.position + new Vector3 (i.offset.x * (c1.facingRight ? 1 : -1), i.offset.y, 0), Quaternion.Euler(AngleMath.Vector2FromAngle(i.angle))), i.lifetime * 0.01666666666f);
+                GameObject newProj = Instantiate(i.prefab, transform.position + new Vector3(i.offset.x * (c1.facingRight ? 1 : -1), i.offset.y, 0),
+                    Quaternion.Euler(new Vector3(0, 0, i.angle * (c1.facingRight ? 1 : -1))));
+                Destroy(newProj, i.lifetime * 0.01666666666f);
+
+                Debug.Log(newProj.TryGetComponent(out SimpleAnimationEvents _));
+                if (newProj.TryGetComponent(out SimpleAnimationEvents sae))
+                {
+                    sae.owner = gameObject;
+                }
+
                 return;
             }
         }

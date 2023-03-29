@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DeathFairLight
+  m_Name: DeathDairLight
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,17 +20,17 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1529832792, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - time: 0.15
-      value: {fileID: -105577158, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - time: 0.18333334
-      value: {fileID: -698146805, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - time: 0.21666667
-      value: {fileID: 547972000, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - time: 0.31666666
-      value: {fileID: 18566035, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - time: 0.41666666
-      value: {fileID: -1029733010, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
+      value: {fileID: -1998166002, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - time: 0.1
+      value: {fileID: -449904994, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - time: 0.2
+      value: {fileID: 1809561444, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - time: 0.3
+      value: {fileID: 403867714, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - time: 0.4
+      value: {fileID: -1239610817, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - time: 0.5
+      value: {fileID: -364659059, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,18 +50,18 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1529832792, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - {fileID: -105577158, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - {fileID: -698146805, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - {fileID: 547972000, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - {fileID: 18566035, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
-    - {fileID: -1029733010, guid: 03ce74109f70c4eff826665e0b62fe9e, type: 3}
+    - {fileID: -1998166002, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - {fileID: -449904994, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - {fileID: 1809561444, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - {fileID: 403867714, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - {fileID: -1239610817, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
+    - {fileID: -364659059, guid: fe22702e7106e4c42ae35e404499740d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0.6
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -88,37 +88,30 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.15
-    functionName: EnableHitbox
-    data: FairLight/Bottom
+  - time: 0.1
+    functionName: InstantiateObjectFromAnimation
+    data: DeathChainDownRight
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.15
-    functionName: PlaySoundFromAnimator
-    data: ScytheSliceLong1
+    functionName: InstantiateObjectFromAnimation
+    data: DeathChainDownCenter
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.18333334
-    functionName: EnableHitbox
-    data: FairLight/Middle
+  - time: 0.2
+    functionName: InstantiateObjectFromAnimation
+    data: DeathChainDownLeft
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.21666667
-    functionName: EnableHitbox
-    data: FairLight/Top
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.51666665
+  - time: 0.6
     functionName: StopAnimation
-    data: FLightAttack
+    data: DLightAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

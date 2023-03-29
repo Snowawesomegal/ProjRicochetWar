@@ -175,12 +175,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &1783476594694308123
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,12 +252,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 30
+  isPartOfMultipart: 0
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &1789466778852168342
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,12 +329,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  isPartOfMultipart: 0
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &1873353377180505974
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,12 +406,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  isPartOfMultipart: 0
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &2488495210437006846
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,12 +483,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  isPartOfMultipart: 0
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 2
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &3165081455376329925
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,12 +560,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 2
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &3175766936586442947
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,12 +670,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &3267544278575473981
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,12 +747,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 2
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &3267544280134006568
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,12 +824,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  isPartOfMultipart: 1
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &3320607318868306268
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,12 +934,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &3896457870097304381
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,12 +5823,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 0
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &4593085596669440352
 GameObject:
   m_ObjectHideFlags: 0
@@ -5967,12 +5967,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 60
+  isPartOfMultipart: 0
   hitstopFrames: 7
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5324972259403682360
 GameObject:
   m_ObjectHideFlags: 0
@@ -6044,12 +6044,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 12
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &5324972259631739926
 GameObject:
   m_ObjectHideFlags: 0
@@ -6121,12 +6121,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 50
+  isPartOfMultipart: 0
   hitstopFrames: 7
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5324972259666958796
 GameObject:
   m_ObjectHideFlags: 0
@@ -6197,13 +6197,13 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 70
+  minimumHitstunFrames: 40
+  isPartOfMultipart: 0
   hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5324972259697596014
 GameObject:
   m_ObjectHideFlags: 0
@@ -6275,12 +6275,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  isPartOfMultipart: 0
   hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5324972259843863229
 GameObject:
   m_ObjectHideFlags: 0
@@ -6406,12 +6406,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 35
+  isPartOfMultipart: 1
   hitstopFrames: 11
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &5324972260176221429
 GameObject:
   m_ObjectHideFlags: 0
@@ -6483,12 +6483,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &5324972260535258967
 GameObject:
   m_ObjectHideFlags: 0
@@ -6675,6 +6675,7 @@ MonoBehaviour:
   dashForce: 4000
   overMaxYSpeedAdjustment: 400
   overMaxXSpeedAdjustment: 400
+  fastFallMultiplier: 2
   dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2
@@ -6682,7 +6683,7 @@ MonoBehaviour:
   sm: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
-  bufferLength: 30
+  bufferLength: 10
   grounded: {fileID: 11400000, guid: 748e80c1e61624f2d9238535930e41fc, type: 2}
   airborne: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
   hitstun: {fileID: 11400000, guid: 2836bc8b5de41ef418c0cb92db0922e5, type: 2}
@@ -11875,6 +11876,21 @@ MonoBehaviour:
     angle: 0
     offset: {x: 1.5, y: -1}
     lifetime: 72
+  - prefab: {fileID: 2223829415317500003, guid: d41326c6b37f049e298094cfdf90eedf, type: 3}
+    name: DeathChainDownLeft
+    angle: 160
+    offset: {x: -0.75, y: -2.35}
+    lifetime: 50
+  - prefab: {fileID: 2223829415317500003, guid: d41326c6b37f049e298094cfdf90eedf, type: 3}
+    name: DeathChainDownCenter
+    angle: 180
+    offset: {x: 0, y: -2.4}
+    lifetime: 50
+  - prefab: {fileID: 2223829415317500003, guid: d41326c6b37f049e298094cfdf90eedf, type: 3}
+    name: DeathChainDownRight
+    angle: 200
+    offset: {x: 0.75, y: -2.35}
+    lifetime: 50
 --- !u!96 &4566240962166225602
 TrailRenderer:
   serializedVersion: 2
@@ -12059,12 +12075,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 5
   minimumHitstunFrames: 20
+  isPartOfMultipart: 0
   hitstopFrames: 5
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5516840152391052791
 GameObject:
   m_ObjectHideFlags: 0
@@ -12136,12 +12152,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  isPartOfMultipart: 0
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5710615818665767659
 GameObject:
   m_ObjectHideFlags: 0
@@ -12213,12 +12229,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  isPartOfMultipart: 0
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5760643476447703195
 GameObject:
   m_ObjectHideFlags: 0
@@ -12290,12 +12306,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  isPartOfMultipart: 0
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &5940161446798389902
 GameObject:
   m_ObjectHideFlags: 0
@@ -12367,12 +12383,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 13
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &6681182329834456621
 GameObject:
   m_ObjectHideFlags: 0
@@ -12477,12 +12493,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 0
   hitstopFrames: 10
   isGrab: 0
   doNotEnable: 0
   priority: 3
   playersHitAlready: []
-  isPartOfMultipart: 0
 --- !u!1 &8488403946447471533
 GameObject:
   m_ObjectHideFlags: 0
@@ -12554,12 +12570,12 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  isPartOfMultipart: 1
   hitstopFrames: 6
   isGrab: 0
   doNotEnable: 0
   priority: 1
   playersHitAlready: []
-  isPartOfMultipart: 1
 --- !u!1 &8562780229411627200
 GameObject:
   m_ObjectHideFlags: 0

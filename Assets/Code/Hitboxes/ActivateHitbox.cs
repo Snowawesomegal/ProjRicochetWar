@@ -139,13 +139,24 @@ public class ActivateHitbox : MonoBehaviour
 
         void CalibrateHitbox(HitboxInfo HBInfo)
         {
-            HBInfo.owner = gameObject;
-
-            if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
+            if (HBInfo.owner == null)
             {
-                HBInfo.transform.localPosition *= new Vector2(-1, 1);
+                HBInfo.owner = gameObject;
             }
-            HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
+
+            if (HBInfo.owner.TryGetComponent(out Control1 c2))
+            {
+                if (c2.facingRight != HBInfo.facingRight)
+                {
+                    HBInfo.transform.localPosition *= new Vector2(-1, 1);
+                }
+
+                HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
+            }
+            else
+            {
+                Debug.LogError("Hitbox was activated, but its owner was " + HBInfo.owner + " which does not contain a Control1.");
+            }
 
             toBeDisabled.Add(new Pair<GameObject, Type>(HBInfo.gameObject, typeof(HitboxInfo)), HBInfo.activeFrames);
         }
@@ -166,8 +177,6 @@ public class ActivateHitbox : MonoBehaviour
             toBeDisabled.Add(new Pair<GameObject, Type>(box, null), 2);
         }
     }
-
-
 
     private void FixedUpdate()
     {

@@ -197,9 +197,13 @@ public class HitboxInteractionManager : MonoBehaviour
                 if (!hbi.playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
-                    Control1 hitboxC1 = i.left.transform.root.GetComponent<Control1>();
+                    Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
                     hurtboxC1.FreezeFrames(0, hbi.hitstopFrames, hurtboxC1);
-                    hitboxC1.FreezeFrames(0, hbi.hitstopFrames, hitboxC1);
+                    if (!hbi.isProjectile) // is not projectile; freeze player
+                    {
+                        hitboxC1.FreezeFrames(0, hbi.hitstopFrames, hitboxC1);
+                    }
+
 
                     if (!string.IsNullOrEmpty(hbi.hitsound))
                     {

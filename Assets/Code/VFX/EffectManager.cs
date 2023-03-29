@@ -46,7 +46,7 @@ public class EffectManager : MonoBehaviour
 
         GameObject newEffect = Instantiate(effect.prefab, position + new Vector3(xdisplacement, ydisplacement, 0), rotation);
 
-        newEffect.GetComponent<SpriteRenderer>().flipY = hitbox.transform.root.GetComponent<Control1>().facingRight;
+        newEffect.GetComponent<SpriteRenderer>().flipY = hitbox.GetComponent<HitboxInfo>().owner.GetComponent<Control1>().facingRight;
 
         Destroy(newEffect, effect.lifetime);
     }

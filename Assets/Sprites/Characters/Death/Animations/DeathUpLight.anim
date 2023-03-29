@@ -23,17 +23,17 @@ AnimationClip:
       value: {fileID: -1058449061, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
     - time: 0.1
       value: {fileID: 1234833399, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
-    - time: 0.2
+    - time: 0.16666667
       value: {fileID: -659755593, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
-    - time: 0.3
+    - time: 0.2
       value: {fileID: 176468086, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
-    - time: 0.4
+    - time: 0.31666666
       value: {fileID: 1622883979, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
-    - time: 0.5
+    - time: 0.43333334
       value: {fileID: 611915214, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
-    - time: 0.6
+    - time: 0.53333336
       value: {fileID: -781046936, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
-    - time: 0.6666667
+    - time: 0.6333333
       value: {fileID: -1641020038, guid: 3ef0c45e40c1740e18bcc21267c84492, type: 3}
     attribute: m_Sprite
     path: 

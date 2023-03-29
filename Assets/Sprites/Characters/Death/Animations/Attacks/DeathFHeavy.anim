@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GhostDairLight
+  m_Name: DeathFHeavy
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,15 +20,15 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -42064454, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - time: 0.083333336
-      value: {fileID: 839424891, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - time: 0.18333334
-      value: {fileID: 73031655, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - time: 0.28333333
-      value: {fileID: 621605495, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - time: 0.38333333
-      value: {fileID: 1587826404, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
+      value: {fileID: 1873064114, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - time: 0.4
+      value: {fileID: -1854691851, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - time: 0.5
+      value: {fileID: -2023674471, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - time: 0.6666667
+      value: {fileID: -1132859930, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - time: 0.76666665
+      value: {fileID: -931049261, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,17 +48,17 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -42064454, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - {fileID: 839424891, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - {fileID: 73031655, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - {fileID: 621605495, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
-    - {fileID: 1587826404, guid: f8ca17b61f4ef4caaab03989336c0bff, type: 3}
+    - {fileID: 1873064114, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - {fileID: -1854691851, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - {fileID: -2023674471, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - {fileID: -1132859930, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
+    - {fileID: -931049261, guid: 4cf68d2e7e60b4e3b952e88a5fcfa290, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.46666667
+    m_StopTime: 0.8333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -85,23 +85,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.083333336
-    functionName: PlaySoundFromAnimator
-    data: SwordSwing2
+  - time: 0.05
+    functionName: SpawnHorizontalHeavyClaw
+    data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.083333336
-    functionName: EnableMultiHitbox
-    data: DairLight
+  - time: 0.4
+    functionName: EnableHitbox
+    data: FHeavyAttack1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.46666667
+  - time: 0.8333333
     functionName: StopAnimation
-    data: DLightAttack
+    data: FHeavyAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

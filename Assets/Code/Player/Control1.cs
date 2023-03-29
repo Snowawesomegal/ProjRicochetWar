@@ -39,6 +39,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     int knockbackTime = 0;
     Vector2 initialLaunchVelocity;
     Pair<HitboxInfo, Vector2> queuedKnockback;
+    GameObject runeActive;
 
     //speeds
     public float airSpeed = 10;
@@ -51,8 +52,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float overMaxYSpeedAdjustment = 10;
     [SerializeField] float overMaxXSpeedAdjustment = 10;
     [SerializeField] float fastFallMultiplier = 1.5f;
-    bool applyFFMultiplier = false;
-    int delayFF = 0;
+    public bool applyFFMultiplier = false;
+    public int delayFF = 0;
 
     //Costs
     [SerializeField] float dashCost = 50;
@@ -115,6 +116,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     //objects
     public GameObject ball;
+    public GameObject rune;
 
     //frames
     public int frame = 0;
@@ -321,6 +323,19 @@ public class Control1 : MonoBehaviour, IIdentifiable
         
     }
 
+    public void UseRune()
+    {
+        if (runeActive == null)
+        {
+            runeActive = Instantiate(rune, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            transform.position = runeActive.transform.position;
+            Destroy(runeActive);
+        }
+    }
+
     public void DashResponse(CharacterInput input)
     {
         if (input.IsHeld() || input.IsPending())
@@ -384,6 +399,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             if (clm.activeLockers.Contains(grounded))
             {
+                delayFF = 10;
                 rb.AddForce(120 * Vector2.up);
             }
 
@@ -433,6 +449,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
         else if (clm.activeLockers.Contains(wallcling))
         {
             ae.ChangeAnimBool("WallJumpSquat", true);
+        }
+    }
+
+    public void MovementResponse(CharacterInput input)
+    {
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("Movement", true);
         }
     }
 
@@ -663,6 +687,13 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 applyFFMultiplier = false;
                 fastFallBuffer = 0;
                 currentGroundTag = groundTag;
+
+                if (anim.GetBool("Movement"))
+                {
+                    clm.RemoveLocker(inAerialAnim);
+                    clm.AddLocker(inAnim);
+                }
+
                 if (!clm.activeLockers.Contains(hitstun))
                 {
                     gameObject.layer = 9;
@@ -684,15 +715,20 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             Debug.Log("start hitstun on frame: " + frame + ", hit by move " + collider.gameObject.name);
 
-            ae.StopAnimation(currentAnimBool);
-            currentAnimBool = null;
+            clm.RemoveLocker(inAnim);
+            clm.RemoveLocker(inAerialAnim);
+            if (!clm.activeLockers.Contains(inGrab))
+            {
+                clm.AddLocker(hitstun);
+                anim.SetBool(currentAnimBool, false);
+                currentAnimBool = null;
+                anim.SetBool("Hitstun", true);
+            }
 
-            clm.AddLocker(hitstun);
             gameObject.layer = 8;
             rb.sharedMaterial = bouncy;
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
-            anim.SetBool("Hitstun", true);
 
             framesInHitstun = 0;
 
@@ -779,8 +815,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
         else // exit grab
         {
-            ae.StopAnimation(currentAnimBool);
-            anim.SetBool("Hitstun", false);
+            Hit(null, false);
         }
     }
 

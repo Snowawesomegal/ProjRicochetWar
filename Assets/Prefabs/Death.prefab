@@ -177,6 +177,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -254,6 +255,7 @@ MonoBehaviour:
   minimumHitstunFrames: 30
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -331,6 +333,7 @@ MonoBehaviour:
   minimumHitstunFrames: 30
   isPartOfMultipart: 0
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -408,6 +411,7 @@ MonoBehaviour:
   minimumHitstunFrames: 30
   isPartOfMultipart: 0
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -485,6 +489,7 @@ MonoBehaviour:
   minimumHitstunFrames: 35
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -562,6 +567,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 5
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -672,6 +678,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -749,6 +756,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 2
@@ -826,6 +834,7 @@ MonoBehaviour:
   minimumHitstunFrames: 35
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -936,6 +945,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5778,7 +5788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4272750656507035532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0.75, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5798,9 +5808,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.007162623}
-  m_Size: {x: 5.91797, y: 1.4903181}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0.2457354}
+  m_Size: {x: 1.6712866, y: 1.9847269}
+  m_Direction: 0
 --- !u!114 &2336627124889584080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5813,18 +5823,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
+  damage: 4
+  kbSpeedMultiplier: 0.1
+  kbDistance: 0.7
   hitsound: 
   soundGroupInsteadOfSound: 0
-  angle: 12
+  angle: 45
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -5969,6 +5980,7 @@ MonoBehaviour:
   minimumHitstunFrames: 60
   isPartOfMultipart: 0
   hitstopFrames: 7
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6046,6 +6058,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 12
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6123,6 +6136,7 @@ MonoBehaviour:
   minimumHitstunFrames: 50
   isPartOfMultipart: 0
   hitstopFrames: 7
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6200,6 +6214,7 @@ MonoBehaviour:
   minimumHitstunFrames: 40
   isPartOfMultipart: 0
   hitstopFrames: 5
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6277,6 +6292,7 @@ MonoBehaviour:
   minimumHitstunFrames: 35
   isPartOfMultipart: 0
   hitstopFrames: 5
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6408,6 +6424,7 @@ MonoBehaviour:
   minimumHitstunFrames: 35
   isPartOfMultipart: 1
   hitstopFrames: 11
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6485,6 +6502,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -6676,6 +6694,8 @@ MonoBehaviour:
   overMaxYSpeedAdjustment: 400
   overMaxXSpeedAdjustment: 400
   fastFallMultiplier: 2
+  applyFFMultiplier: 0
+  delayFF: 0
   dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2
@@ -6703,6 +6723,7 @@ MonoBehaviour:
   collidedWallSlope: 0
   platformCollider: {fileID: 5324972259843863229}
   ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
+  rune: {fileID: 0}
   frame: 0
   dropPlatformTotalFrames: 7
   currentAnimBool: 
@@ -11891,6 +11912,11 @@ MonoBehaviour:
     angle: 200
     offset: {x: 0.75, y: -2.35}
     lifetime: 50
+  - prefab: {fileID: 1495149470519623135, guid: 48dd7122d45924632a0dbaf009cad0f0, type: 3}
+    name: DeathClawRight
+    angle: 90
+    offset: {x: 0, y: -0.5}
+    lifetime: 72
 --- !u!96 &4566240962166225602
 TrailRenderer:
   serializedVersion: 2
@@ -12004,6 +12030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heavyClaw: {fileID: 1495149470519623135, guid: 48dd7122d45924632a0dbaf009cad0f0, type: 3}
   upwardHeavyClawExists: 0
+  horizontalHeavyClawExists: 0
 --- !u!1 &5366513683229172554
 GameObject:
   m_ObjectHideFlags: 0
@@ -12077,6 +12104,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 5
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -12154,6 +12182,7 @@ MonoBehaviour:
   minimumHitstunFrames: 30
   isPartOfMultipart: 0
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -12231,6 +12260,7 @@ MonoBehaviour:
   minimumHitstunFrames: 30
   isPartOfMultipart: 0
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -12308,6 +12338,7 @@ MonoBehaviour:
   minimumHitstunFrames: 35
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -12385,6 +12416,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 13
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1
@@ -12495,6 +12527,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 3
@@ -12572,6 +12605,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 6
+  isProjectile: 0
   isGrab: 0
   doNotEnable: 0
   priority: 1

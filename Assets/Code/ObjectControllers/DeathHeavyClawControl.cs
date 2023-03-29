@@ -9,8 +9,14 @@ public class DeathHeavyClawControl : MonoBehaviour
     CapsuleCollider2D cc;
     GameObject hitboxObject;
     AudioManager am;
+    SpriteRenderer sr;
+    Control1 c1;
 
     public GameObject owner = null;
+
+    public bool horizontal = false;
+
+    bool facingRight = true;
 
     public GameObject grabbedPlayer = null;
     public Rigidbody2D grabbedPlayerRB = null;
@@ -22,22 +28,26 @@ public class DeathHeavyClawControl : MonoBehaviour
 
     public int framesActive = 0;
 
-
-
-    private void Awake()
+    private void Start()
     {
         hitboxObject = transform.GetChild(1).gameObject;
         cc = hitboxObject.GetComponent<CapsuleCollider2D>();
         am = GameObject.Find("SettingsManager").GetComponent<AudioManager>();
+        sr = GetComponent<SpriteRenderer>();
+        c1 = owner.GetComponent<Control1>();
 
         if (GetComponent<SpriteRenderer>().flipX)
         {
             cc.transform.localPosition = new Vector3 (cc.transform.localPosition.x * -1, cc.transform.localPosition.y, 0);
         }
 
+        facingRight = c1.facingRight;
+
         grabPosition = transform.GetChild(0);
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
+
+        Flip();
     }
 
     private void FixedUpdate()
@@ -77,12 +87,36 @@ public class DeathHeavyClawControl : MonoBehaviour
         }
 
         Destroy(gameObject);
-        owner.GetComponent<DeathAnimationEvents>().upwardHeavyClawExists = false;
+
+        if (!horizontal)
+        {
+            owner.GetComponent<DeathAnimationEvents>().upwardHeavyClawExists = false;
+        }
+        else
+        {
+            owner.GetComponent<DeathAnimationEvents>().horizontalHeavyClawExists = false;
+        }
+
     }
 
     public void PlaySoundFromAnimator(string name)
     {
         am.PlaySound(name);
+    }
+
+    void Flip()
+    {
+        if (c1.facingRight != facingRight)
+        {
+            foreach(Pair<int, Vector2> i in frameAndGrabPosition)
+            {
+                i.right = new Vector2(i.right.x * -1, i.right.y);
+            }
+            hitboxObject.transform.position = new Vector3(hitboxObject.transform.position.x * -1, hitboxObject.transform.position.y, 0);
+        }
+
+
+        facingRight = c1.facingRight;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) // if player touching grab hitbox is not owner, grab player.

@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   facingRight: 1
-  bounceForce: 1300
+  bounceForce: 1400
   bounceAngle: 90
   soundOnBounce: 
   activeFrames: 2
@@ -208,10 +208,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3433009867416186590
 GameObject:
@@ -286,10 +287,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3487179807140661261
 GameObject:
@@ -430,10 +432,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3686617931327997036
 GameObject:
@@ -508,10 +511,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 2
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3863377767078563220
 GameObject:
@@ -586,10 +590,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 2
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &4393596211020838063
 GameObject:
@@ -664,10 +669,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 2
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &4662223803153955432
 GameObject:
@@ -742,10 +748,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 3
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &5484935819613344735
 GameObject:
@@ -820,10 +827,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 25
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &5850729627155256250
 GameObject:
@@ -898,10 +906,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &5872751037901427146
 GameObject:
@@ -976,10 +985,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6311728093354438150
 GameObject:
@@ -1153,10 +1163,11 @@ MonoBehaviour:
   friction: 5
   airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
-  ignoreGravity: 0
+  affectedByGravity: 1
   intangible: 0
   ignoreFriction: 0
   DIStrength: 10
+  DLightBounce: 1
   airSpeed: 20
   airAccel: 90
   airAccelDuringAerial: 80
@@ -1172,11 +1183,13 @@ MonoBehaviour:
   dashCost: 1
   shorthopWindow: 2
   walljumpShorthopWindow: 2
+  clm: {fileID: 0}
+  pim: {fileID: 0}
   am: {fileID: 0}
   sm: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
-  bufferLength: 10
+  FFbufferLength: 20
   grounded: {fileID: 11400000, guid: 748e80c1e61624f2d9238535930e41fc, type: 2}
   airborne: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
   hitstun: {fileID: 11400000, guid: 2836bc8b5de41ef418c0cb92db0922e5, type: 2}
@@ -1197,6 +1210,7 @@ MonoBehaviour:
   platformCollider: {fileID: 6311728094876046316}
   ball: {fileID: 4884946861483399507, guid: e5d27e67f0e664b46b49865cef84bfd1, type: 3}
   rune: {fileID: 273070670396802673, guid: a880326a22c60479ab530ef37c6abeb3, type: 3}
+  counterShield: {fileID: 3665710821956638940, guid: de38e03764740495eb86b63196cf3137, type: 3}
   frame: 0
   dropPlatformTotalFrames: 7
   currentAnimBool: 
@@ -1255,7 +1269,7 @@ MonoBehaviour:
   playerController: {fileID: 6311728093354438149}
   controlLockManager: {fileID: 6311728093354438157}
   debugMessages: 0
-  inputBufferDuration: 10
+  inputBufferDuration: 20
   inputBufferDebugMessages: 0
   playerVerticalAttackThreshold: 70
 --- !u!114 &6311728093354438154
@@ -6556,10 +6570,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6311728094502531945
 GameObject:
@@ -6634,10 +6649,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6311728094776920358
 GameObject:
@@ -6712,10 +6728,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6311728094876046316
 GameObject:
@@ -6844,10 +6861,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6311728095265584959
 GameObject:
@@ -6922,10 +6940,11 @@ MonoBehaviour:
   minimumHitstunFrames: 30
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6311728095304874141
 GameObject:
@@ -7000,10 +7019,11 @@ MonoBehaviour:
   minimumHitstunFrames: 10
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &6893162481284236793
 GameObject:
@@ -7078,10 +7098,11 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 0
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &7573752285776330696
 GameObject:
@@ -7189,8 +7210,9 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   isPartOfMultipart: 1
   hitstopFrames: 10
+  isCounter: 0
   isProjectile: 0
   isGrab: 0
-  doNotEnable: 0
   priority: 1
+  doNotEnable: 0
   playersHitAlready: []

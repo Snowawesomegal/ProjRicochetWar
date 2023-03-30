@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HitstunLocker
   m_EditorClassIdentifier: 
   controlLock:
-    locks: 28
+    locks: 220
     priority: 0

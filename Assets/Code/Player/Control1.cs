@@ -32,7 +32,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float friction = 10;
     [SerializeField] float airFriction = 500;
     public float wallJumpVerticalOoOne = 0.5f;
-    public bool ignoreGravity = false;
+    public bool affectedByGravity = true;
     public bool intangible = false;
     public bool ignoreFriction = false;
     [SerializeField] float DIStrength = 5;
@@ -40,6 +40,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     Vector2 initialLaunchVelocity;
     Pair<HitboxInfo, Vector2> queuedKnockback;
     GameObject runeActive;
+    [SerializeField] bool DLightBounce = true;
 
     //speeds
     public float airSpeed = 10;
@@ -67,8 +68,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     Collider2D bc;
     Animator anim;
     SpriteRenderer sr;
-    ControlLockManager clm;
-    PlayerInputManager pim;
+    public ControlLockManager clm;
+    public PlayerInputManager pim;
     ActivateHitbox ah;
     HitboxInteractionManager him;
     ParticleSystem trailps;
@@ -84,7 +85,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public PhysicsMaterial2D notBouncy;
 
     //buffer
-    public int bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
+    public int FFbufferLength = 10; //how long in seconds an input that is not currently valid will wait to be valid
     int fastFallBuffer = 0;
 
     //Control Lockers
@@ -117,6 +118,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     //objects
     public GameObject ball;
     public GameObject rune;
+    public GameObject counterShield;
 
     //frames
     public int frame = 0;
@@ -150,6 +152,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
+
+        Physics2D.gravity = Vector2.zero;
     }
 
     private void Awake()
@@ -178,7 +182,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
         else
         {
-            fastFallBuffer = bufferLength;
+            fastFallBuffer = FFbufferLength;
         }
     }
 
@@ -186,6 +190,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (startstop)
         {
+            if (applyFFMultiplier == false)
+            {
+                em.SpawnDirectionalEffect("Sparkle1", new Vector3(transform.position.x + (facingRight ? 1f : -1f), transform.position.y - 1.2f, 0), facingRight);
+            }
             applyFFMultiplier = true;
             fastFallBuffer = 0;
 
@@ -397,12 +405,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (animationDebugMessages) { Debug.Log("DLight Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            if (clm.activeLockers.Contains(grounded))
+            if (DLightBounce)
             {
-                delayFF = 10;
-                rb.AddForce(120 * Vector2.up);
+                if (clm.activeLockers.Contains(grounded))
+                {
+                    delayFF = 10;
+                    rb.AddForce(150 * Vector2.up);
+                }
             }
-
 
             ae.ChangeAnimBool("DLightAttack", true);
         }
@@ -457,6 +467,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (input.IsHeld() || input.IsPending())
         {
             ae.ChangeAnimBool("Movement", true);
+        }
+    }
+
+    public void SpecialResponse(CharacterInput input)
+    {
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("Special", true);
         }
     }
 
@@ -551,6 +569,13 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
         }
 
+        if (!affectedByGravity && !clm.activeLockers.Contains(dashing))
+        {
+            if (rb.velocity.y < 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
+        }
     }
 
     void ManagePlatformCollider()
@@ -613,7 +638,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     }
                 }
 
-                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not in hitstun, wallclinging, or ignoreGravity
+                if (!clm.activeLockers.Contains(wallcling) && affectedByGravity) // if not in hitstun, wallclinging, or ignoreGravity
                 {
                     rb.AddForce(Vector2.down * fallAccel * (applyFFMultiplier ? fastFallMultiplier : 1)); // Apply gravity
                 }
@@ -635,7 +660,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
         else // if in hitstun
         {
-            if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity) // if not wallclinging or ignoreGravity
+            if (!clm.activeLockers.Contains(wallcling) && affectedByGravity) // if not wallclinging or ignoreGravity
             {
                 rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
             }

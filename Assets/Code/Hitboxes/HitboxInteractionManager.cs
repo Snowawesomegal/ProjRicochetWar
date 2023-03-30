@@ -9,7 +9,7 @@ public class HitboxInteractionManager : MonoBehaviour
     EffectManager em;
 
     public List<Collider2D> triggersThisFrame = new List<Collider2D>();
-    public List<Pair<Collider2D, Collider2D>> grabboxesAndPlayersThisFrame = new List<Pair<Collider2D, Collider2D>>(); // not yet functional
+    public List<Pair<Collider2D, Collider2D>> grabboxesAndPlayersThisFrame = new List<Pair<Collider2D, Collider2D>>();
 
     public List<GameObject> doNotEnableHitboxes = new List<GameObject>();
 
@@ -78,7 +78,6 @@ public class HitboxInteractionManager : MonoBehaviour
             triggersThisFrame.Clear();
         }
 
-
         // Runs through every collider that has collided this frame, and adds them to either hitboxes or hurtboxes
         // Removes inactive hitboxes and deactives touching hitboxes.
         // Finally checks if hurtboxes are touching hitboxes
@@ -88,7 +87,28 @@ public class HitboxInteractionManager : MonoBehaviour
             if (triggersThisFrame.Count == 0) { return; }
 
             List<Collider2D> hitboxes = new List<Collider2D>();
-            List<Collider2D> hurtboxes = new List<Collider2D>();
+            List<Collider2D> playerHurtboxes = new List<Collider2D>();
+            List<Collider2D> counterBoxes = new List<Collider2D>();
+
+            foreach(Collider2D i in triggersThisFrame) // Get separate lists of hitboxes and hurtboxes, exclude walls
+            {
+                if (i.TryGetComponent(out HitboxInfo hbi))
+                {
+                    if (hbi.isCounter)
+                    {
+                        counterBoxes.Add(i);
+                    }
+                    else
+                    {
+                        hitboxes.Add(i);
+                    }
+
+                }
+                else if (i.TryGetComponent(out Control1 c1)) // THIS WILL BREAK IF WE USE A DIFFERENT SCRIPT FOR CONTROL (or Hit()) //TODO
+                {
+                    playerHurtboxes.Add(i);
+                }
+            }
 
             void DisableAndRemoveHitboxes(GameObject baseBox)
             {
@@ -101,18 +121,6 @@ public class HitboxInteractionManager : MonoBehaviour
                         hbi2.doNotEnable = true;
                         doNotEnableHitboxes.Add(hitbox.gameObject);
                     }
-                }
-            }
-
-            foreach(Collider2D i in triggersThisFrame) // Get separate lists of hitboxes and hurtboxes, exclude walls
-            {
-                if (i.TryGetComponent(out HitboxInfo hbi))
-                {
-                    hitboxes.Add(i);
-                }
-                else if (i.TryGetComponent(out Control1 c1)) // THIS WILL BREAK IF WE USE A DIFFERENT SCRIPT FOR CONTROL (or Hit()) //TODO
-                {
-                    hurtboxes.Add(i);
                 }
             }
 
@@ -173,8 +181,28 @@ public class HitboxInteractionManager : MonoBehaviour
                 }
             }
 
+            if (counterBoxes.Count > 0) // registering counter hits before the hitboxes are registered hitting anything
+            {
+                foreach (Collider2D counter in counterBoxes)
+                {
+                    List<Collider2D> hitboxesCopy2 = new List<Collider2D>(hitboxes);
+                    foreach (Collider2D hitbox in hitboxesCopy2)
+                    {
+                        HitboxInfo hbi = hitbox.GetComponent<HitboxInfo>();
+                        GameObject counterOwner = counter.GetComponent<HitboxInfo>().owner;
+
+                        // if player is touching hitbox, and the hitbox doesn't belong to that player, and that player hasn't already been hit by that hitbox
+                        if (counter.IsTouching(hitbox) && hbi.owner != counterOwner && !counter.GetComponent<HitboxInfo>().playersHitAlready.Contains(hbi.owner))
+                        {
+                            hitboxes.Remove(hitbox);
+                            hbi.owner.GetComponent<Control1>().Hit(counter);
+                        }
+                    }
+                }
+            }
+
             List<Pair<GameObject, GameObject>> hitlist = new List<Pair<GameObject, GameObject>>(); // stores all hurtbox/hitbox collision pairs, Hitbox is Left, Hurtbox is Right
-            foreach(Collider2D hurtbox in hurtboxes)
+            foreach(Collider2D hurtbox in playerHurtboxes)
             {
                 foreach (Collider2D hitbox in hitboxes)
                 {

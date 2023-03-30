@@ -63,10 +63,12 @@ public class AnimationEvents : MonoBehaviour
             }
         }
     }
+
     void StartLandingLag(int frameLength) // freezes animator
     {
         c1.FreezeFrames(0, frameLength, c1);
     }
+
     void StopLandingLag()
     {
         GameManager.Instance.TimeController.RemoveSlows(c1);
@@ -104,6 +106,7 @@ public class AnimationEvents : MonoBehaviour
             if (debugMessages) { Debug.Log("Changed animBool, but NOT currentAnimbool to " + boolName + " to " + toSet + " -- frame " + c1.frame); }
         }
     }
+
     public void UseCurrentAnimBoolToSetAnimBool(int truefalse) // calls anim.SetBool with c1.currentAnimBool. If false, sets currentAnimBool to null.
         // called only by LandingLag atm
     {
@@ -148,6 +151,22 @@ public class AnimationEvents : MonoBehaviour
         him.doNotEnableHitboxes.Clear();
     }
 
+    public void StartSpecial()
+    {
+        if (debugMessages)
+        {
+            Debug.Log("Started special and added inanim locker on frame " + c1.frame);
+        }
+
+        clm.AddLocker(c1.inAnim);
+
+        foreach (GameObject i in him.doNotEnableHitboxes)
+        {
+            i.GetComponent<HitboxInfo>().doNotEnable = false;
+        }
+        him.doNotEnableHitboxes.Clear();
+    }
+
     public void StartDash()
     {
         if (debugMessages)
@@ -156,6 +175,9 @@ public class AnimationEvents : MonoBehaviour
         }
 
         clm.AddLocker(c1.dashing);
+        c1.affectedByGravity = false;
+        c1.intangible = true;
+        c1.ignoreFriction = true;
     }
 
     /// <summary>
@@ -169,13 +191,16 @@ public class AnimationEvents : MonoBehaviour
         }
 
         ChangeAnimBool(boolToSetFalse, false, true);
-
+        c1.affectedByGravity = true;
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.hitstun);
         clm.RemoveLocker(c1.inAnim);
         clm.RemoveLocker(c1.dashing);
         clm.RemoveLocker(c1.inGrab);
         clm.RemoveLocker(c1.inAerialAnim);
+        c1.affectedByGravity = true;
+        c1.intangible = false;
+        c1.ignoreFriction = false;
         StopLandingLag();
     }
     public void StopAnimationButLeaveCurrentAnimBool(string boolToSetFalse) // same as StopAnimation but does not clear the attack bool so it can be checked to apply landing lag.
@@ -187,11 +212,14 @@ public class AnimationEvents : MonoBehaviour
         }
 
         anim.SetBool(boolToSetFalse, false);
-
+        c1.affectedByGravity = true;
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.inAnim);
         clm.RemoveLocker(c1.dashing);
         clm.RemoveLocker(c1.inAerialAnim);
+        c1.affectedByGravity = true;
+        c1.intangible = false;
+        c1.ignoreFriction = false;
         StopLandingLag();
     }
 
@@ -265,6 +293,39 @@ public class AnimationEvents : MonoBehaviour
         rb.AddForce(pim.GetCurrentDirectional().current * c1.dashForce);
         StartStopTrail(1);
         clm.RemoveLocker(c1.wallcling);
+    }
+
+    public void SpawnGhostCounterShield()
+    {
+        c1.affectedByGravity = false;
+        c1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        Vector2 currentDir = c1.pim.GetCurrentDirectional().current;
+        float rotationz;
+        if (currentDir != new Vector2(0, 0))
+        {
+            rotationz = Vector2.Angle(new Vector2(1, 0), c1.pim.GetCurrentDirectional().current);
+            if (c1.pim.GetCurrentDirectional().current.y < 0)
+            {
+                rotationz *= -1;
+            }
+        }
+        else
+        {
+            rotationz = c1.facingRight ? 0 : -180;
+        }
+        Vector2 offset = Vector2.zero;
+        if (currentDir == Vector2.zero)
+        {
+            offset.x = c1.facingRight ? 1 : -1;
+        }
+        else
+        {
+            offset = currentDir;
+        }
+
+        Instantiate(c1.counterShield, transform.position + (Vector3) offset, Quaternion.Euler(0, 0, rotationz)).GetComponent<SimpleAnimationEvents>().owner = gameObject;
+
     }
 
     public void SpawnDirectionalSmokeCloud()

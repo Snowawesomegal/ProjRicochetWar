@@ -161,7 +161,7 @@ public class HitboxInteractionManager : MonoBehaviour
                     HitboxInfo oneHitboxInfo = one.GetComponent<HitboxInfo>();
                     HitboxInfo twoHitboxInfo = two.GetComponent<HitboxInfo>();
 
-                    if (one.IsTouching(two))
+                    if (one.IsTouching(two) && oneHitboxInfo.owner != twoHitboxInfo.owner)
                     {
                         if (Mathf.Abs(oneHitboxInfo.damage - twoHitboxInfo.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to beat out
                         {
@@ -233,7 +233,7 @@ public class HitboxInteractionManager : MonoBehaviour
                     Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
                     Debug.Log("freezeframes on player: " + hurtboxC1.gameObject.name);
                     hurtboxC1.FreezeFrames(0, hbi.hitstopFrames);
-                    if (!hbi.isProjectile) // is not projectile; freeze player
+                    if (!hbi.isProjectile) // is not projectile; freeze attacking player too
                     {
                         Debug.Log("here");
                         hitboxC1.FreezeFrames(0, hbi.hitstopFrames);
@@ -256,6 +256,11 @@ public class HitboxInteractionManager : MonoBehaviour
                     
                     em.SpawnHitEffectOnContactPoint("LightHitEffect", i.left.GetComponent<Collider2D>(), i.right.transform.position);
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
+
+                    if (hbi.transform.root.TryGetComponent(out EyeControl eyeControl)) // this is a really stupid way to handle this one case, I should probably fix this
+                    {
+                        eyeControl.SelfDestruct();
+                    }
                 }
             }
         }

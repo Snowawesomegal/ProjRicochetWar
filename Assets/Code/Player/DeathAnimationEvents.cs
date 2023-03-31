@@ -57,12 +57,4 @@ public class DeathAnimationEvents : MonoBehaviour
             anim.SetBool("ContinueAttack", true);
         }
     }
-
-    public void CheckIfHoriDown()
-    {
-        if (c1.pim.GetCachedInput(ControlLock.Controls.HORIZONTAL).ProcessingStage == CharacterInput.InputProcessStage.PENDING)
-        {
-            Debug.Log("hori down");
-        }
-    }
 }

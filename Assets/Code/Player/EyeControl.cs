@@ -7,10 +7,11 @@ public class EyeControl : MonoBehaviour
 {
     List<GameObject> players;
     GameObject currentTarget;
-    GameObject target;
     Control1 targetControl1;
     int chooseTargetCountdown = 60;
     int currentTargetIndex = 0;
+    bool targetChosen = false;
+
     public GameObject reticlePrefab;
     GameObject reticle;
     public GameObject owner;
@@ -21,25 +22,28 @@ public class EyeControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
+        transform.GetChild(0).GetComponent<HitboxInfo>().owner = owner;
         players = GameObject.FindGameObjectsWithTag("Player").ToList();
         players.Remove(owner);
 
-        if (players.Count == 1)
+        if (players.Count == 1) // theres only one player, so skip all the targeting, select our player and set up
         {
-            chooseTargetCountdown = 0;
-            target = currentTarget;
-            reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
+            chooseTargetCountdown = -1;
+            currentTarget = players[0];
+            targetControl1 = currentTarget.GetComponent<Control1>();
+            targetChosen = true;
         }
         else if (players.Count > 1)
         {
             currentTarget = GetClosest(players);
-            reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
         }
+        reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
     }
 
     private void FixedUpdate()
     {
-        if (chooseTargetCountdown > 0)
+        if (chooseTargetCountdown > 0) // if countdown is not over, update ordered player list
         {
             players.OrderBy(player => player.transform.position.x); // order players left to right, so you can move the reticle horizontally easily
 
@@ -52,15 +56,20 @@ public class EyeControl : MonoBehaviour
                 currentTarget = GetClosest(players); // if there is no target (because they died etc) snap to nearest player
             }
 
-            MoveReticle(); // move reticle to target position
+            // move reticle to target position
 
             chooseTargetCountdown -= 1;
         }
         else if (chooseTargetCountdown == 0) // countdown is over; set target
         {
-            target = currentTarget;
+            targetChosen = true;
+            targetControl1 = currentTarget.GetComponent<Control1>();
             chooseTargetCountdown -= 1;
-            Destroy(reticle);
+        }
+
+        if (reticle != null)
+        {
+            MoveReticle();
         }
 
         if (open)
@@ -71,7 +80,21 @@ public class EyeControl : MonoBehaviour
             }
             else
             {
-                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 0.1f);
+                transform.position = Vector2.MoveTowards(transform.position, currentTarget.transform.position, 0.1f);
+                Vector2 between = currentTarget.transform.position - transform.position;
+                anim.SetFloat("XDif", between.x);
+                anim.SetFloat("YDif", between.y);
+            }
+        }
+        else
+        {
+            if (targetChosen)
+            {
+                if (targetControl1.clm.activeLockers.Contains(targetControl1.hitstun))
+                {
+                    Debug.Log("Target hit");
+                    OpenEye();
+                }
             }
         }
     }
@@ -96,10 +119,9 @@ public class EyeControl : MonoBehaviour
         {
             reticle.transform.position = currentTarget.transform.position;
         }
-
     }
 
-    void ChangeCurrentTarget(bool rightleft) // to be called by player. somehow, idk
+    public void ChangeCurrentTarget(bool rightleft) // to be called by player. somehow, idk
     {
         if (chooseTargetCountdown > 0)
         {
@@ -124,5 +146,16 @@ public class EyeControl : MonoBehaviour
         openCountdown = 60;
         open = true;
         anim.SetBool("Open", true);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        SelfDestruct();
+    }
+
+    public void SelfDestruct()
+    {
+        Destroy(reticle);
+        Destroy(gameObject);
     }
 }

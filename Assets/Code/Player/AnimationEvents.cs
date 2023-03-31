@@ -66,7 +66,7 @@ public class AnimationEvents : MonoBehaviour
 
     void StartLandingLag(int frameLength) // freezes animator
     {
-        c1.FreezeFrames(0, frameLength, c1);
+        c1.FreezeFrames(0, frameLength);
     }
 
     void StopLandingLag()
@@ -190,7 +190,11 @@ public class AnimationEvents : MonoBehaviour
             Debug.Log("stopped animation " + boolToSetFalse + "- frame: " + c1.frame);
         }
 
-        ChangeAnimBool(boolToSetFalse, false, true);
+        if (!string.IsNullOrEmpty(boolToSetFalse))
+        {
+            ChangeAnimBool(boolToSetFalse, false, true);
+        }
+
         c1.affectedByGravity = true;
         anim.SetBool("ContinueAttack", false);
         clm.RemoveLocker(c1.hitstun);
@@ -290,7 +294,16 @@ public class AnimationEvents : MonoBehaviour
 
     public void Dash()
     {
-        rb.AddForce(pim.GetCurrentDirectional().current * c1.dashForce);
+        Vector2 currentDir = pim.GetCurrentDirectional().current;
+        if (currentDir != Vector2.zero)
+        {
+            rb.AddForce(currentDir * c1.dashForce);
+        }
+        else
+        {
+            rb.AddForce(new Vector2(1 * (c1.facingRight ? 1 : -1), 0) * c1.dashForce);
+        }
+
         StartStopTrail(1);
         clm.RemoveLocker(c1.wallcling);
     }

@@ -35,6 +35,8 @@ public class DeathHeavyClawControl : MonoBehaviour
         am = GameObject.Find("SettingsManager").GetComponent<AudioManager>();
         sr = GetComponent<SpriteRenderer>();
         c1 = owner.GetComponent<Control1>();
+        hitboxObject.GetComponent<HitboxInfo>().owner = owner;
+
 
         if (GetComponent<SpriteRenderer>().flipX)
         {
@@ -83,7 +85,7 @@ public class DeathHeavyClawControl : MonoBehaviour
     {
         if (grabbedPlayer != null)
         {
-            grabbedPlayer.GetComponent<Control1>().Grabbed(false);
+            grabbedPlayer.GetComponent<Control1>().ExitGrab();
         }
 
         Destroy(gameObject);

@@ -98,6 +98,10 @@ public class HitboxInteractionManager : MonoBehaviour
                     {
                         counterBoxes.Add(i);
                     }
+                    else if (hbi.isGrab)
+                    {
+                        // nothing
+                    }
                     else
                     {
                         hitboxes.Add(i);
@@ -185,6 +189,7 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 foreach (Collider2D counter in counterBoxes)
                 {
+                    Debug.Log("a counterbox was active");
                     List<Collider2D> hitboxesCopy2 = new List<Collider2D>(hitboxes);
                     foreach (Collider2D hitbox in hitboxesCopy2)
                     {
@@ -226,12 +231,13 @@ public class HitboxInteractionManager : MonoBehaviour
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
                     Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
-                    hurtboxC1.FreezeFrames(0, hbi.hitstopFrames, hurtboxC1);
+                    Debug.Log("freezeframes on player: " + hurtboxC1.gameObject.name);
+                    hurtboxC1.FreezeFrames(0, hbi.hitstopFrames);
                     if (!hbi.isProjectile) // is not projectile; freeze player
                     {
-                        hitboxC1.FreezeFrames(0, hbi.hitstopFrames, hitboxC1);
+                        Debug.Log("here");
+                        hitboxC1.FreezeFrames(0, hbi.hitstopFrames);
                     }
-
 
                     if (!string.IsNullOrEmpty(hbi.hitsound))
                     {
@@ -258,11 +264,14 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             foreach (Pair<Collider2D, Collider2D> i in grabboxesAndPlayersThisFrame) // left grab hitbox, right player hitbox
             {
-                i.right.transform.root.GetComponent<Control1>().Grabbed();
-                DeathHeavyClawControl dhcc = i.left.transform.root.GetComponent<DeathHeavyClawControl>();
-                dhcc.grabbedPlayer = i.right.gameObject;
-                dhcc.grabbedPlayerRB = i.right.GetComponent<Rigidbody2D>();
-                dhcc.grabbedPlayerRB.velocity = Vector2.zero;
+                if (i.left.GetComponent<HitboxInfo>().owner != i.right.gameObject)
+                {
+                    i.right.transform.root.GetComponent<Control1>().Grabbed(i.left);
+                    DeathHeavyClawControl dhcc = i.left.transform.root.GetComponent<DeathHeavyClawControl>();
+                    dhcc.grabbedPlayer = i.right.gameObject;
+                    dhcc.grabbedPlayerRB = i.right.GetComponent<Rigidbody2D>();
+                    dhcc.grabbedPlayerRB.velocity = Vector2.zero;
+                }
             }
             grabboxesAndPlayersThisFrame.Clear();
         }

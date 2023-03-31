@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static AnimationEvents;
 
 public class DeathAnimationEvents : MonoBehaviour
 {
     public GameObject heavyClaw;
+    Animator anim;
     Control1 c1;
     public bool upwardHeavyClawExists = false;
     public bool horizontalHeavyClawExists = false;
-
+    [SerializeField] GameObject largeEyePrefab;
+    [SerializeField] GameObject smallEyePrefab;
 
     private void Start()
     {
         c1 = GetComponent<Control1>();
+        anim = GetComponent<Animator>();
     }
 
     public void SpawnHeavyClaw()
@@ -37,6 +41,28 @@ public class DeathAnimationEvents : MonoBehaviour
             newHeavyClaw.GetComponent<DeathHeavyClawControl>().horizontal = true;
             horizontalHeavyClawExists = true;
 
+        }
+    }
+
+    public void SpawnLargeEye()
+    {
+        GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position, Quaternion.identity);
+        newLargeEye.GetComponent<EyeControl>().owner = gameObject;
+    }
+
+    public void IfSpecialHeldContinue()
+    {
+        if (c1.pim.BufferInputExists(ControlLock.Controls.SPECIAL))
+        {
+            anim.SetBool("ContinueAttack", true);
+        }
+    }
+
+    public void CheckIfHoriDown()
+    {
+        if (c1.pim.GetCachedInput(ControlLock.Controls.HORIZONTAL).ProcessingStage == CharacterInput.InputProcessStage.PENDING)
+        {
+            Debug.Log("hori down");
         }
     }
 }

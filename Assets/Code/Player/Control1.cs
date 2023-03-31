@@ -169,9 +169,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
         rb.gravityScale = speed;
     }
 
-    public void FreezeFrames(int framesPerTick, int duration, IIdentifiable identifiable)
+    public void FreezeFrames(int framesPerTick, int duration)
     {
-        GameManager.Instance.TimeController.Slow(framesPerTick, duration, identifiable);
+        GameManager.Instance.TimeController.Slow(framesPerTick, duration, this);
     }
 
     void TryBufferFastFall()
@@ -293,16 +293,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 Flip(input);
             }
         }
-        else // DI Implementation goes here:
-        {
-
-        }
     }
 
     void HitstunResponse()
     {
         if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
-
         if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) == 1) // if slow enough and in hitstun for longer than minHitstunFrames and knockback time is over and not in hitstop: stop hitstun
         {
             Hit(null, false);
@@ -319,6 +314,28 @@ public class Control1 : MonoBehaviour, IIdentifiable
         else
         {
             knockbackTime -= 1;
+        }
+
+        // DI IMPLEMENTATION:
+        if (pim.GetCurrentDirectional().current != Vector2.zero)
+        {
+            float inputAngle = Vector2.Angle(Vector2.right, pim.GetCurrentDirectional().current); // angle of input (0 right, -90 bottom, 90 top)
+
+            if (pim.GetCurrentDirectional().current.y < 0)
+            {
+                inputAngle *= -1;
+            }
+
+            float currentMomentumAngle = Vector2.Angle(Vector2.right, rb.velocity);
+
+            if (rb.velocity.y < 0)
+            {
+                currentMomentumAngle *= -1;
+            }
+
+            currentMomentumAngle = Mathf.MoveTowardsAngle(currentMomentumAngle, inputAngle, DIStrength);
+
+            rb.velocity = AngleMath.Vector2FromAngle(currentMomentumAngle) * rb.velocity.magnitude;
         }
     }
 
@@ -618,7 +635,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     }
                 }
 
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
+                if (!clm.activeLockers.Contains(dashing))
+                {
+                    rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
+                }
             }
             else // if not grounded + not in hitstun
             {
@@ -643,19 +663,23 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     rb.AddForce(Vector2.down * fallAccel * (applyFFMultiplier ? fastFallMultiplier : 1)); // Apply gravity
                 }
 
-                float newXSpeed = rb.velocity.x;
-                float newYSpeed = rb.velocity.y;
-                // slow down toward max speeds
-                if (Mathf.Abs(rb.velocity.x) > airSpeed)
+                if (!ignoreFriction)
                 {
-                    newXSpeed = Mathf.MoveTowards(rb.velocity.x, airSpeed * Mathf.Sign(rb.velocity.x), overMaxXSpeedAdjustment);
-                }
-                if (rb.velocity.y < -fallSpeed)
-                {
-                    newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
+                    float newXSpeed = rb.velocity.x;
+                    float newYSpeed = rb.velocity.y;
+                    // slow down toward max speeds
+                    if (Mathf.Abs(rb.velocity.x) > airSpeed)
+                    {
+                        newXSpeed = Mathf.MoveTowards(rb.velocity.x, airSpeed * Mathf.Sign(rb.velocity.x), overMaxXSpeedAdjustment);
+                    }
+                    if (rb.velocity.y < -fallSpeed)
+                    {
+                        newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
+                    }
+
+                    rb.velocity = new Vector2(newXSpeed, newYSpeed);
                 }
 
-                rb.velocity = new Vector2(newXSpeed, newYSpeed);
             }
         }
         else // if in hitstun
@@ -738,16 +762,26 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (enterOrExitHitstun) // Deal with being hit:
         {
-            Debug.Log("start hitstun on frame: " + frame + ", hit by move " + collider.gameObject.name);
-
             clm.RemoveLocker(inAnim);
             clm.RemoveLocker(inAerialAnim);
             if (!clm.activeLockers.Contains(inGrab))
             {
                 clm.AddLocker(hitstun);
-                anim.SetBool(currentAnimBool, false);
-                currentAnimBool = null;
                 anim.SetBool("Hitstun", true);
+
+                if (!string.IsNullOrEmpty(currentAnimBool))
+                {
+                    ae.ChangeAnimBool(currentAnimBool, false, true);
+                }
+
+                affectedByGravity = true;
+                anim.SetBool("ContinueAttack", false);
+                clm.RemoveLocker(inAnim);
+                clm.RemoveLocker(dashing);
+                clm.RemoveLocker(inAerialAnim);
+                affectedByGravity = true;
+                intangible = false;
+                ignoreFriction = false;
             }
 
             gameObject.layer = 8;
@@ -774,6 +808,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 Debug.Log("hit on frame: " + frame + " with " + hi.hitstopFrames + " of hitstop");
             }
 
+            imui.ChangeHealth(-hi.damage);
             void ApplyKnockback()
             {
                 if (hi.angle == 361)
@@ -797,7 +832,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 else
                 {
                     rb.velocity = Vector2.zero;
-                    imui.ChangeHealth(-hi.damage);
                     Vector2 angleOfForce = AngleMath.Vector2FromAngle(hi.angle);
 
                     if (!hi.facingRight)
@@ -810,38 +844,37 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, angleOfForce);
                 }
             }
+
         }
         else // Stop hitstun:
         {
             ae.StopAnimation(currentAnimBool);
-            currentAnimBool = null;
 
             if (clm.activeLockers.Contains(grounded))
             {
                 gameObject.layer = 9;
             }
-            rb.sharedMaterial = notBouncy;
-            tr.emitting = false;
-            anim.SetBool("Hitstun", false);
 
-            Debug.Log("STOPPED hitstun on frame: " + frame);
+            rb.sharedMaterial = notBouncy;
+
+            tr.emitting = false;
+
+            anim.SetBool("Hitstun", false);
         }
     }
 
-    public void Grabbed(bool enterExitGrab = true)
+    public void Grabbed(Collider2D collider)
     {
-        if (enterExitGrab)
-        {
-            ae.StopAnimation(currentAnimBool);
-            currentAnimBool = null;
+        imui.ChangeHealth(-collider.GetComponent<HitboxInfo>().damage);
+        ae.StopAnimation(currentAnimBool);
 
-            clm.AddLocker(inGrab);
-            anim.SetBool("Hitstun", true);
-        }
-        else // exit grab
-        {
-            Hit(null, false);
-        }
+        clm.AddLocker(inGrab);
+        anim.SetBool("Hitstun", true);
+    }
+
+    public void ExitGrab()
+    {
+        Hit(null, false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

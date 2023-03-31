@@ -166,6 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3451660310418945453}
   - component: {fileID: 5029944620236504117}
+  - component: {fileID: 7762763779303119199}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -204,6 +205,36 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 3.341027}
   m_Size: {x: 5.6298084, y: 3.8211174}
   m_Direction: 1
+--- !u!114 &7762763779303119199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3073611199108729101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 8
+  kbSpeedMultiplier: 666
+  kbDistance: 666
+  hitsound: 
+  soundGroupInsteadOfSound: 0
+  angle: 666
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  minimumHitstunFrames: 666
+  isPartOfMultipart: 0
+  hitstopFrames: 10
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 1
+  priority: 1
+  doNotEnable: 0
+  playersHitAlready: []
 --- !u!1 &5480937345896250214
 GameObject:
   m_ObjectHideFlags: 0

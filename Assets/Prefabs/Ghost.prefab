@@ -1166,7 +1166,7 @@ MonoBehaviour:
   affectedByGravity: 1
   intangible: 0
   ignoreFriction: 0
-  DIStrength: 10
+  DIStrength: 1
   DLightBounce: 1
   airSpeed: 20
   airAccel: 90
@@ -1177,7 +1177,7 @@ MonoBehaviour:
   dashForce: 4000
   overMaxYSpeedAdjustment: 400
   overMaxXSpeedAdjustment: 400
-  fastFallMultiplier: 2
+  fastFallMultiplier: 2.5
   applyFFMultiplier: 0
   delayFF: 0
   dashCost: 1

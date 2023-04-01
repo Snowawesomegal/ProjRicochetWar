@@ -189,7 +189,6 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 foreach (Collider2D counter in counterBoxes)
                 {
-                    Debug.Log("a counterbox was active");
                     List<Collider2D> hitboxesCopy2 = new List<Collider2D>(hitboxes);
                     foreach (Collider2D hitbox in hitboxesCopy2)
                     {

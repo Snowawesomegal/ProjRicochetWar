@@ -912,8 +912,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (collision.TryGetComponent(out HitboxInfo hbi))
         {
-            Debug.Log("collision");
-
             if (hbi.isGrab)
             {
                 if (!him.grabboxesAndPlayersThisFrame.Contains(new Pair<Collider2D, Collider2D>(collision, bc)))

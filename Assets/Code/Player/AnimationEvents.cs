@@ -66,7 +66,6 @@ public class AnimationEvents : MonoBehaviour
 
     void StartLandingLag(int frameLength) // freezes animator
     {
-        Debug.Log("started landing lag");
         c1.FreezeFrames(0, frameLength);
     }
 

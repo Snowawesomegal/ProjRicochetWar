@@ -216,7 +216,7 @@ MonoBehaviour:
     prefab: {fileID: 6894210905415877931, guid: 07c04e5ca3f61478cb3eb18e554437e7, type: 3}
     sound: 
     rotationAdjustment: 0
-  - name: LightHitEffect
+  - name: MinorHitEffect
     lifetime: 0.4
     prefab: {fileID: 3147061465778555500, guid: 8becbf34493f046a3bf9cdb654d55537, type: 3}
     sound: 
@@ -239,6 +239,16 @@ MonoBehaviour:
   - name: Sparkle1
     lifetime: 0.2
     prefab: {fileID: 8482050640802095764, guid: e6bf9d9bd15014efe88744eea515e598, type: 3}
+    sound: 
+    rotationAdjustment: 0
+  - name: MajorHitEffect1
+    lifetime: 0.5
+    prefab: {fileID: 8611514783532772551, guid: cee445b5b61eb495eae5a243d567c8c5, type: 3}
+    sound: 
+    rotationAdjustment: 0
+  - name: MediumHitEffect1
+    lifetime: 0.5
+    prefab: {fileID: 6557183952061765409, guid: f205139fbc87d4e1893dfb24c9a294eb, type: 3}
     sound: 
     rotationAdjustment: 0
 --- !u!1 &107629446

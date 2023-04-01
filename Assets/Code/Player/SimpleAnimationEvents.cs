@@ -16,7 +16,6 @@ public class SimpleAnimationEvents : MonoBehaviour
         {
             if (i.TryGetComponent(out HitboxInfo hbi))
             {
-                Debug.Log("set hbi owner to owner (" + owner + ").");
                 hbi.owner = owner;
             }
         }

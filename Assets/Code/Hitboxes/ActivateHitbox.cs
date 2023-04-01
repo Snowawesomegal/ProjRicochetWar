@@ -118,17 +118,18 @@ public class ActivateHitbox : MonoBehaviour
             else
             {
                 i.SetActive(true);
+                CalibrateBox(i);
             }
         }
     }
 
     void CalibrateBox(GameObject box)
     {
-        if (box.TryGetComponent<HitboxInfo>(out HitboxInfo HBInfo))
+        if (box.TryGetComponent(out HitboxInfo HBInfo))
         {
             CalibrateHitbox(HBInfo);
         }
-        else if (box.TryGetComponent<Pogobox>(out Pogobox pogobox))
+        else if (box.TryGetComponent(out Pogobox pogobox))
         {
             CalibratePogobox(pogobox);
         }

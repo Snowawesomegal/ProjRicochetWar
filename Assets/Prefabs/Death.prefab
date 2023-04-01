@@ -12053,8 +12053,8 @@ MonoBehaviour:
   heavyClaw: {fileID: 1495149470519623135, guid: 48dd7122d45924632a0dbaf009cad0f0, type: 3}
   upwardHeavyClawExists: 0
   horizontalHeavyClawExists: 0
+  massiveEyePrefab: {fileID: 6149822287970504118, guid: e253d151ee9314d69a68db4f7906c7c4, type: 3}
   largeEyePrefab: {fileID: 8180998669354741200, guid: fc140138cf26541729ebed027fda920d, type: 3}
-  smallEyePrefab: {fileID: 0}
 --- !u!1 &5366513683229172554
 GameObject:
   m_ObjectHideFlags: 0

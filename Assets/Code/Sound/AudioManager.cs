@@ -107,7 +107,6 @@ public class AudioManager : MonoBehaviour
                     effectGroup.sounds.Add(s);
                 } else
                 {
-                    Debug.Log("Making new sound effect group: " + groupName);
                     SoundEffectGroup newEffectGroup = new SoundEffectGroup(groupName);
                     newEffectGroup.sounds.Add(s);
                     soundGroupMap.Add(groupName, newEffectGroup);

@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5324972260535258964, guid: fb581ae3f309e47e1993b35838854463, type: 3}
+      propertyPath: animationDebugMessages
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5324972260535258965, guid: fb581ae3f309e47e1993b35838854463, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -178,6 +182,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Death
       objectReference: {fileID: 0}
+    - target: {fileID: 7395734871897021557, guid: fb581ae3f309e47e1993b35838854463, type: 3}
+      propertyPath: massiveEyePrefab
+      value: 
+      objectReference: {fileID: 6149822287970504118, guid: e253d151ee9314d69a68db4f7906c7c4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb581ae3f309e47e1993b35838854463, type: 3}
 --- !u!1 &88607475 stripped
@@ -1884,12 +1892,12 @@ MonoBehaviour:
   highestX: 8
   lowestX: -8
   highestY: 3
-  lowestY: -3.5
+  lowestY: -3.7
   baseCameraSpeed: 8
   reduceMoveSpeedScaling: 3
-  baseZoomSpeed: 2
+  baseZoomSpeed: 3
   reduceZoomSpeedScaling: 8
-  minCameraSize: 5
+  minCameraSize: 4
   maxCameraSize: 10
   zoomSpaceScale: 0.5
 --- !u!1001 &1409660347

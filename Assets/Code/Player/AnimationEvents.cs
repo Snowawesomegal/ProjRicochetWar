@@ -66,12 +66,16 @@ public class AnimationEvents : MonoBehaviour
 
     void StartLandingLag(int frameLength) // freezes animator
     {
+        Debug.Log("started landing lag");
         c1.FreezeFrames(0, frameLength);
     }
 
     void StopLandingLag()
     {
-        GameManager.Instance.TimeController.RemoveSlows(c1);
+        if (GameManager.Instance.TimeController.GetTimeScale(c1) != 1)
+        {
+            GameManager.Instance.TimeController.RemoveSlows(c1);
+        }
     }
 
     public void ChangeAnimBool(string boolName, bool toSet, bool changeCurrentAnimBool = true) // Sets entered animBool and updates currentAnimBool appropriately
@@ -386,7 +390,6 @@ public class AnimationEvents : MonoBehaviour
                     Quaternion.Euler(new Vector3(0, 0, i.angle * (c1.facingRight ? 1 : -1))));
                 Destroy(newProj, i.lifetime * 0.01666666666f);
 
-                Debug.Log(newProj.TryGetComponent(out SimpleAnimationEvents _));
                 if (newProj.TryGetComponent(out SimpleAnimationEvents sae))
                 {
                     sae.owner = gameObject;

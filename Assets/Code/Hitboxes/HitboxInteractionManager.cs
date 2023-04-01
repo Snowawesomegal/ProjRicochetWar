@@ -185,6 +185,11 @@ public class HitboxInteractionManager : MonoBehaviour
                 }
             }
 
+            foreach(Collider2D i in hitboxes)
+            {
+                Debug.Log(i.name);
+            }
+
             if (counterBoxes.Count > 0) // registering counter hits before the hitboxes are registered hitting anything
             {
                 foreach (Collider2D counter in counterBoxes)
@@ -231,11 +236,9 @@ public class HitboxInteractionManager : MonoBehaviour
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
                     Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
-                    Debug.Log("freezeframes on player: " + hurtboxC1.gameObject.name);
                     hurtboxC1.FreezeFrames(0, hbi.hitstopFrames);
                     if (!hbi.isProjectile) // is not projectile; freeze attacking player too
                     {
-                        Debug.Log("here");
                         hitboxC1.FreezeFrames(0, hbi.hitstopFrames);
                     }
 

@@ -11,8 +11,8 @@ public class DeathAnimationEvents : MonoBehaviour
     Control1 c1;
     public bool upwardHeavyClawExists = false;
     public bool horizontalHeavyClawExists = false;
+    [SerializeField] GameObject massiveEyePrefab;
     [SerializeField] GameObject largeEyePrefab;
-    [SerializeField] GameObject smallEyePrefab;
 
     private void Start()
     {
@@ -48,6 +48,12 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position, Quaternion.identity);
         newLargeEye.GetComponent<EyeControl>().owner = gameObject;
+    }
+
+    public void SpawnMassiveEye()
+    {
+        GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position, Quaternion.identity);
+        newMassiveEye.GetComponent<EyeControl>().owner = gameObject;
     }
 
     public void IfSpecialHeldContinue()

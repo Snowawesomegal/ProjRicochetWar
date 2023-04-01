@@ -55,6 +55,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float fastFallMultiplier = 1.5f;
     public bool applyFFMultiplier = false;
     public int delayFF = 0;
+    Vector2 beforeFreezeSpeed = Vector2.zero;
 
     //Costs
     [SerializeField] float dashCost = 50;
@@ -149,6 +150,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
         tr = GetComponent<TrailRenderer>();
         psc = GetComponent<PlayerShaderController>();
 
+        
+
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
@@ -165,12 +168,28 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public void OnSlow(float speed)
     {
         anim.speed = speed;
-        rb.simulated = speed != 0;
-        rb.gravityScale = speed;
+
+        if (speed == 0)
+        {
+            beforeFreezeSpeed = rb.velocity;
+            Debug.Log("STORED velocity " + beforeFreezeSpeed + " on frame " + frame);
+
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.isKinematic = true;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.isKinematic = false;
+
+            rb.velocity = beforeFreezeSpeed;
+            Debug.Log("SET velocity " + beforeFreezeSpeed + " to stored velocity on frame " + frame);
+        }
     }
 
     public void FreezeFrames(int framesPerTick, int duration)
     {
+        Debug.Log("freezeframes called");
         GameManager.Instance.TimeController.Slow(framesPerTick, duration, this);
     }
 
@@ -699,7 +718,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 StartKnockback(queuedKnockback.left.kbDistance, queuedKnockback.left.kbSpeedMultiplier, queuedKnockback.right);
                 queuedKnockback = null;
-                Debug.Log("knockback applied on frame: " + frame);
             }
         }
     }
@@ -713,13 +731,13 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 if (!clm.activeLockers.Contains(grounded)) // if not grounded
                 {
-                    if (rb.velocity.y <= 0) // if moving downward, just be grounded no matter what
+                    if (rb.velocity.y <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) != 0) // if moving downward (and not frozen), become grounded
                     {
                         BecomeGrounded(i.tag);
                     }
                     else if (i.gameObject.layer != 6) // physics layer 6 is platforms. This WILL break if anyone rearranges the layers
                     {
-                        BecomeGrounded(i.tag); // if moving upward, but collision is not a platform, become grounded anyway, because some weird shit happened
+                        BecomeGrounded(i.tag); // if moving upward, but collision is not a platform, become grounded anyway. This breaks if we have standable walls
                     }
                 }
                 return;
@@ -732,6 +750,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             if (enterexit)
             {
                 clm.AddLocker(grounded);
+                clm.RemoveLocker(airborne);
                 anim.SetBool("Grounded", true);
                 applyFFMultiplier = false;
                 fastFallBuffer = 0;
@@ -751,6 +770,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             else
             {
                 clm.RemoveLocker(grounded);
+                clm.AddLocker(airborne);
                 currentGroundTag = null;
                 anim.SetBool("Grounded", false);
                 gameObject.layer = 8;
@@ -805,7 +825,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
             if (!clm.activeLockers.Contains(inGrab))
             {
                 ApplyKnockback();
-                Debug.Log("hit on frame: " + frame + " with " + hi.hitstopFrames + " of hitstop");
             }
 
             imui.ChangeHealth(-hi.damage);
@@ -896,6 +915,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (collision.TryGetComponent(out HitboxInfo hbi))
         {
+            Debug.Log("collision");
+
             if (hbi.isGrab)
             {
                 if (!him.grabboxesAndPlayersThisFrame.Contains(new Pair<Collider2D, Collider2D>(collision, bc)))

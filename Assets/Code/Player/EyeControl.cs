@@ -81,7 +81,7 @@ public class EyeControl : MonoBehaviour
             else
             {
                 transform.position = Vector2.MoveTowards(transform.position, currentTarget.transform.position, 0.1f);
-                Vector2 between = currentTarget.transform.position - transform.position;
+                Vector2 between = (currentTarget.transform.position - transform.position).normalized;
                 anim.SetFloat("XDif", between.x);
                 anim.SetFloat("YDif", between.y);
             }
@@ -92,7 +92,6 @@ public class EyeControl : MonoBehaviour
             {
                 if (targetControl1.clm.activeLockers.Contains(targetControl1.hitstun))
                 {
-                    Debug.Log("Target hit");
                     OpenEye();
                 }
             }

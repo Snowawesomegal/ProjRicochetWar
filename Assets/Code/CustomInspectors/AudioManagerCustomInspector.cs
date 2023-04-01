@@ -51,7 +51,6 @@ public class AudioManagerCustomInspector : Editor
                 EditorGUILayout.Space(10);
                 if (GUILayout.Button("Play Sound: " + s.name))
                 {
-                    Debug.Log("play sound");
                     s.source.Play();
                 }
             }

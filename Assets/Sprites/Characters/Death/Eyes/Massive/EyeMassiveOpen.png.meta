@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 335f46acb73404da0a74816a8e205331
+guid: afee0be0e67e045f9b92a7e7aa32f5ab
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EyeSmallLook_0
+      name: EyeMassiveOpen_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 940fcca28d1bf4e57a71d0d1054e3dc2
-      internalID: -762467578
+      spriteID: 5a149944950d84b1198502650109f998
+      internalID: 1452065957
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeSmallLook_1
+      name: EyeMassiveOpen_1
       rect:
         serializedVersion: 2
         x: 32
@@ -140,35 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61a8635506fda45ee96fe69f9dab4b5a
-      internalID: -117350847
+      spriteID: 6c4bf61233af84379aa1096e8390b81d
+      internalID: 511142472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeSmallLook_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d0d3eb3772c944fafb79a3d255caff53
-      internalID: 1374937760
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EyeSmallLook_3
+      name: EyeMassiveOpen_2
       rect:
         serializedVersion: 2
         x: 0
@@ -182,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a49ec5e55bc84c808ca6d41b125807c
-      internalID: -1747362525
+      spriteID: 348b4857fdb5c4d4caf2bacf3749e56f
+      internalID: -1926127465
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeSmallLook_4
+      name: EyeMassiveOpen_3
       rect:
         serializedVersion: 2
         x: 32
@@ -203,35 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a85b4f2958f424132bbb0d25015f4382
-      internalID: 351811141
+      spriteID: 7db98f1b05d6e4b878e2378c413b7432
+      internalID: -1933181556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeSmallLook_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f621cd09b3af54102af9d6a09d4dee24
-      internalID: 1570029579
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EyeSmallLook_6
+      name: EyeMassiveOpen_4
       rect:
         serializedVersion: 2
         x: 0
@@ -245,29 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74add696077fc4d8b9d1f52caebdba9c
-      internalID: -563173618
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EyeSmallLook_7
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91d71afd88fe74dd6b7f403301d39b42
-      internalID: 806188227
+      spriteID: 2ef0f75e792c04f568b852602b2d3727
+      internalID: -496098575
       vertices: []
       indices: 
       edges: []
@@ -283,14 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EyeSmallLook_5: 1570029579
-      EyeSmallLook_1: -117350847
-      EyeSmallLook_3: -1747362525
-      EyeSmallLook_4: 351811141
-      EyeSmallLook_2: 1374937760
-      EyeSmallLook_7: 806188227
-      EyeSmallLook_0: -762467578
-      EyeSmallLook_6: -563173618
+      EyeMassiveOpen_1: 511142472
+      EyeMassiveOpen_4: -496098575
+      EyeMassiveOpen_0: 1452065957
+      EyeMassiveOpen_2: -1926127465
+      EyeMassiveOpen_3: -1933181556
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

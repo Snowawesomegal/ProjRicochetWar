@@ -64,14 +64,15 @@ public class EffectManager : MonoBehaviour
         Debug.Log("There is no visual effect named " + name + " in EffectManager's inspector.");
         return null;
     }
-}
 
-[System.Serializable]
-public class VisualEffect
-{
-    public string name;
-    public float lifetime;
-    public GameObject prefab;
-    public string sound;
-    public float rotationAdjustment;
+    [System.Serializable]
+    public class VisualEffect
+    {
+        public string name;
+        public float lifetime;
+        public GameObject prefab;
+        public string sound;
+        public float rotationAdjustment;
+    }
+
 }

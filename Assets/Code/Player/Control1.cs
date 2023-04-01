@@ -172,7 +172,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (speed == 0)
         {
             beforeFreezeSpeed = rb.velocity;
-            Debug.Log("STORED velocity " + beforeFreezeSpeed + " on frame " + frame);
 
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             rb.isKinematic = true;
@@ -183,13 +182,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
             rb.isKinematic = false;
 
             rb.velocity = beforeFreezeSpeed;
-            Debug.Log("SET velocity " + beforeFreezeSpeed + " to stored velocity on frame " + frame);
         }
     }
 
     public void FreezeFrames(int framesPerTick, int duration)
     {
-        Debug.Log("freezeframes called");
         GameManager.Instance.TimeController.Slow(framesPerTick, duration, this);
     }
 

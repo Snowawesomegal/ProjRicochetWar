@@ -185,11 +185,6 @@ public class HitboxInteractionManager : MonoBehaviour
                 }
             }
 
-            foreach(Collider2D i in hitboxes)
-            {
-                Debug.Log(i.name);
-            }
-
             if (counterBoxes.Count > 0) // registering counter hits before the hitboxes are registered hitting anything
             {
                 foreach (Collider2D counter in counterBoxes)
@@ -201,11 +196,11 @@ public class HitboxInteractionManager : MonoBehaviour
                         HitboxInfo hbi = hitbox.GetComponent<HitboxInfo>();
                         GameObject counterOwner = counter.GetComponent<HitboxInfo>().owner;
 
-                        // if player is touching hitbox, and the hitbox doesn't belong to that player, and that player hasn't already been hit by that hitbox
+                        // if counter is touching hitbox, and the hitbox doesn't belong to the same player as the counter, and that player hasn't already been hit by the counter
                         if (counter.IsTouching(hitbox) && hbi.owner != counterOwner && !counter.GetComponent<HitboxInfo>().playersHitAlready.Contains(hbi.owner))
                         {
-                            hitboxes.Remove(hitbox);
-                            hbi.owner.GetComponent<Control1>().Hit(counter);
+                            DisableAndRemoveHitboxes(hitbox.gameObject);
+                            hbi.owner.GetComponent<Control1>().Hit(counter); // this means counters always hit the player, even with projectiles
                         }
                     }
                 }
@@ -232,17 +227,17 @@ public class HitboxInteractionManager : MonoBehaviour
             foreach (Pair<GameObject, GameObject> i in hitlist) // hitbox left, hurtbox right
             {
                 HitboxInfo hbi = i.left.GetComponent<HitboxInfo>();
-                if (!hbi.playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
+                if (!hbi.playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added during the move already
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
                     Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
-                    hurtboxC1.FreezeFrames(0, hbi.hitstopFrames);
-                    if (!hbi.isProjectile) // is not projectile; freeze attacking player too
+                    hurtboxC1.FreezeFrames(0, hbi.hitstopFrames); // apply hitstop defending player
+                    if (!hbi.isProjectile) // is not projectile; apply hitstop attacking player too; if projectile the attacking player is not frozen
                     {
                         hitboxC1.FreezeFrames(0, hbi.hitstopFrames);
                     }
 
-                    if (!string.IsNullOrEmpty(hbi.hitsound))
+                    if (!string.IsNullOrEmpty(hbi.hitsound)) // play hit sound
                     {
                         if (hbi.soundGroupInsteadOfSound)
                         {
@@ -252,12 +247,11 @@ public class HitboxInteractionManager : MonoBehaviour
                         {
                             hurtboxC1.am.PlaySound(hbi.hitsound);
                         }
-
                     }
 
-                    hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true);
-                    
-                    em.SpawnHitEffectOnContactPoint("LightHitEffect", i.left.GetComponent<Collider2D>(), i.right.transform.position);
+                    hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true); // apply knockback to defending player
+
+                    em.SpawnHitEffectOnContactPoint(GetApproriateEffect(hbi.damage), i.left.GetComponent<Collider2D>(), i.right.transform.position);
                     AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
 
                     if (hbi.transform.root.TryGetComponent(out EyeControl eyeControl)) // this is a really stupid way to handle this one case, I should probably fix this
@@ -279,9 +273,31 @@ public class HitboxInteractionManager : MonoBehaviour
                     dhcc.grabbedPlayer = i.right.gameObject;
                     dhcc.grabbedPlayerRB = i.right.GetComponent<Rigidbody2D>();
                     dhcc.grabbedPlayerRB.velocity = Vector2.zero;
+
+                    em.SpawnHitEffectOnContactPoint(GetApproriateEffect(i.left.GetComponent<HitboxInfo>().damage), i.left.GetComponent<Collider2D>(), i.right.transform.position);
                 }
             }
             grabboxesAndPlayersThisFrame.Clear();
+        }
+    }
+
+    public string GetApproriateEffect(float damage)
+    {
+        if (damage < 5)
+        {
+            return "MinorHitEffect";
+        }
+        else if (damage >= 5 && damage < 10)
+        {
+            return "MediumHitEffect1";
+        }
+        else if (damage >= 10)
+        {
+            return "MajorHitEffect1";
+        }
+        else
+        {
+            return "MediumHitEffect1";
         }
     }
 }

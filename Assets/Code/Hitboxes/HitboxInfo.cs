@@ -29,6 +29,11 @@ public class HitboxInfo : MonoBehaviour
 
     public bool isGrab = false;
 
+    public float DiMultiplier = 1;
+
+    [Tooltip("Only used if angle is 361; where relative to attacker should the hitbox aim to move the hit player?")]
+    public Vector2 knockbackGoalPos;
+
     [Tooltip("LOWER number priority wins; lower priority hitboxes are disabled if two hitboxes from the same move hit a player simultaneously.")]
     public int priority = 1;
 

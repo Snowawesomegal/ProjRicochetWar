@@ -48,6 +48,7 @@ public class DeathHeavyClawControl : MonoBehaviour
         grabPosition = transform.GetChild(0);
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
+        Camera.main.GetComponent<CameraMovement>().toFollow.Add(gameObject);
 
         Flip();
     }
@@ -87,6 +88,8 @@ public class DeathHeavyClawControl : MonoBehaviour
         {
             grabbedPlayer.GetComponent<Control1>().ExitGrab();
         }
+
+        Camera.main.GetComponent<CameraMovement>().toFollow.Remove(gameObject);
 
         Destroy(gameObject);
 

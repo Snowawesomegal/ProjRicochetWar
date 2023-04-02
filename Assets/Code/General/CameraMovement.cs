@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    List<GameObject> toFollow = new List<GameObject>();
+    public List<GameObject> toFollow = new List<GameObject>();
 
     [SerializeField] float highestX = 666;
     [SerializeField] float lowestX = -666;

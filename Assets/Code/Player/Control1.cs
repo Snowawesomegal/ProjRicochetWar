@@ -13,8 +13,7 @@ using Unity.VisualScripting;
 public class Control1 : MonoBehaviour, IIdentifiable
 {
     // Todo list
-    // Fix dashes, which were completely broken by friction changes
-    // Fix DairLight, which was somewhat broken by fastfall changes
+    // add Death's heavy aerials
 
     private uint id;
     private bool initializedID;
@@ -56,6 +55,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public bool applyFFMultiplier = false;
     public int delayFF = 0;
     Vector2 beforeFreezeSpeed = Vector2.zero;
+    float moveDiMultiplier = 1;
 
     //Costs
     [SerializeField] float dashCost = 50;
@@ -73,7 +73,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public PlayerInputManager pim;
     ActivateHitbox ah;
     HitboxInteractionManager him;
-    ParticleSystem trailps;
+    public ParticleSystem dashps;
+    public ParticleSystem permaTrailps;
     public AudioManager am;
     public GameObject sm;
     EffectManager em;
@@ -141,7 +142,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         pim = GetComponent<PlayerInputManager>();
         clm = GetComponent<ControlLockManager>();
         ah = GetComponent<ActivateHitbox>();
-        trailps = GetComponent<ParticleSystem>();
         sm = GameObject.Find("SettingsManager");
         am = sm.GetComponent<AudioManager>();
         imui = GetComponent<InMatchUI>();
@@ -149,8 +149,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         em = sm.GetComponent<EffectManager>();
         tr = GetComponent<TrailRenderer>();
         psc = GetComponent<PlayerShaderController>();
-
-        
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
@@ -349,7 +347,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 currentMomentumAngle *= -1;
             }
 
-            currentMomentumAngle = Mathf.MoveTowardsAngle(currentMomentumAngle, inputAngle, DIStrength);
+            currentMomentumAngle = Mathf.MoveTowardsAngle(currentMomentumAngle, inputAngle, DIStrength * moveDiMultiplier);
 
             rb.velocity = AngleMath.Vector2FromAngle(currentMomentumAngle) * rb.velocity.magnitude;
         }
@@ -796,7 +794,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 clm.RemoveLocker(inAnim);
                 clm.RemoveLocker(dashing);
                 clm.RemoveLocker(inAerialAnim);
-                affectedByGravity = true;
                 intangible = false;
                 ignoreFriction = false;
             }
@@ -805,6 +802,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             rb.sharedMaterial = bouncy;
 
             HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+            moveDiMultiplier = hi.DiMultiplier;
 
             framesInHitstun = 0;
 
@@ -829,18 +827,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 if (hi.angle == 361)
                 {
+                    int facingRightInt = facingRight ? 1 : -1;
+
                     Vector3 hiParentPosition = hi.transform.root.position;
 
-                    Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.facingRight ? 1 : -1), hiParentPosition.y);
-                    Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-
-                    queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
-                }
-                else if (hi.angle == 362)
-                {
-                    Vector3 hiParentPosition = hi.transform.root.position;
-
-                    Vector2 goalPosition = new Vector2(hiParentPosition.x, hiParentPosition.y + 2f);
+                    Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.knockbackGoalPos.x * facingRightInt), hiParentPosition.y + hi.knockbackGoalPos.y);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
 
                     queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
@@ -870,6 +861,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 gameObject.layer = 9;
             }
+
+            moveDiMultiplier = 1;
 
             rb.sharedMaterial = notBouncy;
 

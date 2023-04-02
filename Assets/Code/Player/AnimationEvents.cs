@@ -17,7 +17,6 @@ public class AnimationEvents : MonoBehaviour
     Control1 c1;
     Rigidbody2D rb;
     PlayerInputManager pim;
-    ParticleSystem trailps;
     GameObject sm;
     EffectManager em;
     HitboxInteractionManager him;
@@ -39,7 +38,6 @@ public class AnimationEvents : MonoBehaviour
         c1 = GetComponent<Control1>();
         rb = GetComponent<Rigidbody2D>();
         pim = GetComponent<PlayerInputManager>();
-        trailps = GetComponent<ParticleSystem>();
         sm = GameObject.Find("SettingsManager");
         em = sm.GetComponent<EffectManager>();
         him = Camera.main.GetComponent<HitboxInteractionManager>();
@@ -361,8 +359,17 @@ public class AnimationEvents : MonoBehaviour
 
     public void StartStopTrail(int startstop)
     {
-        if (startstop == 1) { trailps.Play(); }
-        else { trailps.Stop(); }
+        if (c1.dashps != null)
+        {
+            if (startstop == 1)
+            {
+                c1.dashps.Play();
+            }
+            else
+            {
+                c1.dashps.Stop();
+            }
+        }
     }
 
     public void SlowSpeed(float magnitude) // slows speed after a dash finishes; called by animation event. THIS DOES NOT SCALE AUTOMATICALLY; if dash intensity changes a different magnetude must be entered.

@@ -13,6 +13,7 @@ public class DeathAnimationEvents : MonoBehaviour
     public bool horizontalHeavyClawExists = false;
     [SerializeField] GameObject massiveEyePrefab;
     [SerializeField] GameObject largeEyePrefab;
+    [SerializeField] GameObject grabbyClaw;
 
     private void Start()
     {
@@ -29,6 +30,13 @@ public class DeathAnimationEvents : MonoBehaviour
             newHeavyClaw.GetComponent<DeathHeavyClawControl>().owner = gameObject;
             upwardHeavyClawExists = true;
         }
+    }
+
+    public void SpawnGrabbyClaw()
+    {
+        GameObject newGrabbyClaw = Instantiate(grabbyClaw, transform.position + new Vector3(0, 1.5f, 0),
+            Quaternion.Euler(0f, 0f + (c1.facingRight ? 180 : 0), 0f));
+        newGrabbyClaw.GetComponent<DeathHeavyClawControl>().owner = gameObject;
     }
 
     public void SpawnHorizontalHeavyClaw()

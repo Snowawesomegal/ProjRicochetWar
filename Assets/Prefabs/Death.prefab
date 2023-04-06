@@ -141,11 +141,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -222,11 +225,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 30
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -303,11 +309,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -384,11 +393,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -456,8 +468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  kbSpeedMultiplier: 0.05
-  kbDistance: 0.5
+  kbSpeedMultiplier: 0.1
+  kbDistance: 0.9
   hitsound: 
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -465,11 +477,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 0
   knockbackGoalPos: {x: 0, y: 3}
   priority: 1
@@ -546,11 +561,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 5
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 2
@@ -660,11 +678,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -741,11 +762,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 2
@@ -822,11 +846,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -936,11 +963,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1017,11 +1047,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1165,11 +1198,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 60
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 7
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1246,11 +1282,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 12
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1327,11 +1366,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 50
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 7
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1399,8 +1441,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  kbSpeedMultiplier: 0.01
-  kbDistance: 0.15
+  kbSpeedMultiplier: 0.005
+  kbDistance: 0.01
   hitsound: 
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -1408,13 +1450,16 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 40
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 5
   isCounter: 0
   isProjectile: 0
   isGrab: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 0
+  knockbackGoalPos: {x: 2, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -1480,8 +1525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  kbSpeedMultiplier: 0.01
-  kbDistance: 0.15
+  kbSpeedMultiplier: 0.005
+  kbDistance: 0.01
   hitsound: 
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -1489,13 +1534,16 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 35
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 5
   isCounter: 0
   isProjectile: 0
   isGrab: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 0
+  knockbackGoalPos: {x: 2, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -1624,11 +1672,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 35
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 11
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1705,11 +1756,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 1
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -1883,7 +1937,7 @@ MonoBehaviour:
   testCircle: {fileID: 6899714948450397382, guid: 94c56d4ff0c7a4485a02345fc0ab1fb2, type: 3}
   feetOffset: {x: 0.5, y: -0.4, z: 0}
   fallSpeed: 20
-  fallAccel: 40
+  fallAccel: 45
   friction: 5
   airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
@@ -1892,6 +1946,7 @@ MonoBehaviour:
   ignoreFriction: 0
   DIStrength: 1
   DLightBounce: 0
+  firstFrameOfHitstun: 0
   airSpeed: 20
   airAccel: 90
   airAccelDuringAerial: 80
@@ -1925,7 +1980,6 @@ MonoBehaviour:
   dashing: {fileID: 11400000, guid: 03123bf38946f48879ee59084a60d725, type: 2}
   inAerialAnim: {fileID: 11400000, guid: 14134491038084bb980f48708f2f734a, type: 2}
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
-  wallTouching: {fileID: 0}
   touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
@@ -2393,7 +2447,7 @@ TrailRenderer:
   m_SortingLayerID: 1751215343
   m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Time: 2.5
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2465,9 +2519,11 @@ MonoBehaviour:
   heavyClaw: {fileID: 1495149470519623135, guid: 48dd7122d45924632a0dbaf009cad0f0, type: 3}
   upwardHeavyClawExists: 0
   horizontalHeavyClawExists: 0
+  grabbyClawExists: 0
   massiveEyePrefab: {fileID: 6149822287970504118, guid: e253d151ee9314d69a68db4f7906c7c4, type: 3}
   largeEyePrefab: {fileID: 8180998669354741200, guid: fc140138cf26541729ebed027fda920d, type: 3}
   grabbyClaw: {fileID: 4359128928174131814, guid: 330ae44cac58740799679feb46d37707, type: 3}
+  eyeExists: 0
 --- !u!1 &5366513683229172554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,11 +2595,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 5
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 5
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 2}
   priority: 1
@@ -2620,11 +2679,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -2701,11 +2763,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 4
   minimumHitstunFrames: 30
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -2782,11 +2847,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 13
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1
@@ -3182,7 +3250,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.2
+      scalar: 3.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7708,11 +7776,14 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 6
   isCounter: 0
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1

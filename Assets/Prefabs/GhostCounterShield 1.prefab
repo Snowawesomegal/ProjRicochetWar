@@ -71,11 +71,16 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 25
   minimumHitstunFrames: 20
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 20
   isCounter: 1
   isProjectile: 0
   isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -92,6 +97,7 @@ GameObject:
   - component: {fileID: 3665710821956638913}
   - component: {fileID: 3665710821956638942}
   - component: {fileID: 8213615872157118724}
+  - component: {fileID: 3136851367203988909}
   m_Layer: 0
   m_Name: GhostCounterShield 1
   m_TagString: Untagged
@@ -214,3 +220,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   hitboxPrefab: {fileID: 0}
+--- !u!50 &3136851367203988909
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665710821956638940}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

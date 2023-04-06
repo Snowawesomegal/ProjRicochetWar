@@ -11,9 +11,11 @@ public class DeathAnimationEvents : MonoBehaviour
     Control1 c1;
     public bool upwardHeavyClawExists = false;
     public bool horizontalHeavyClawExists = false;
+    public bool grabbyClawExists = false;
     [SerializeField] GameObject massiveEyePrefab;
     [SerializeField] GameObject largeEyePrefab;
     [SerializeField] GameObject grabbyClaw;
+    public bool eyeExists = false;
 
     private void Start()
     {
@@ -34,9 +36,13 @@ public class DeathAnimationEvents : MonoBehaviour
 
     public void SpawnGrabbyClaw()
     {
-        GameObject newGrabbyClaw = Instantiate(grabbyClaw, transform.position + new Vector3(0, 1.5f, 0),
-            Quaternion.Euler(0f, 0f + (c1.facingRight ? 180 : 0), 0f));
-        newGrabbyClaw.GetComponent<DeathHeavyClawControl>().owner = gameObject;
+        if (!grabbyClawExists)
+        {
+            GameObject newGrabbyClaw = Instantiate(grabbyClaw, transform.position + new Vector3(0, 1.5f, 0),
+                Quaternion.Euler(0f, 0f + (c1.facingRight ? 180 : 0), 0f));
+            newGrabbyClaw.GetComponent<DeathHeavyClawControl>().owner = gameObject;
+            newGrabbyClaw.GetComponent<DeathHeavyClawControl>().grabbyClaw = true;
+        }
     }
 
     public void SpawnHorizontalHeavyClaw()
@@ -54,14 +60,23 @@ public class DeathAnimationEvents : MonoBehaviour
 
     public void SpawnLargeEye()
     {
-        GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position, Quaternion.identity);
-        newLargeEye.GetComponent<EyeControl>().owner = gameObject;
+        if (!eyeExists)
+        {
+            GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position, Quaternion.identity);
+            newLargeEye.GetComponent<EyeControl>().owner = gameObject;
+            eyeExists = true;
+        }
+
     }
 
     public void SpawnMassiveEye()
     {
-        GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position, Quaternion.identity);
-        newMassiveEye.GetComponent<EyeControl>().owner = gameObject;
+        if (!eyeExists)
+        {
+            GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position, Quaternion.identity);
+            newMassiveEye.GetComponent<EyeControl>().owner = gameObject;
+            eyeExists = true;
+        }
     }
 
     public void IfSpecialHeldContinue()

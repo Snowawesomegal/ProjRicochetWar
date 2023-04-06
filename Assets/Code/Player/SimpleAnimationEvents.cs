@@ -34,5 +34,10 @@ public class SimpleAnimationEvents : MonoBehaviour
     public void SelfDestruct()
     {
         Destroy(gameObject);
+
+        if (Camera.main.GetComponent<HitboxInteractionManager>().doNotEnableHitboxes.Contains(gameObject))
+        {
+            Camera.main.GetComponent<HitboxInteractionManager>().doNotEnableHitboxes.Remove(gameObject);
+        }
     }
 }

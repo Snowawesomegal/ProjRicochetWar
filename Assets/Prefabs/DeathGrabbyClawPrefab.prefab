@@ -71,11 +71,16 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 5
   minimumHitstunFrames: 10
+  cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
   isGrab: 1
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -92,6 +97,7 @@ GameObject:
   - component: {fileID: 95718077859621427}
   - component: {fileID: 4161054569026177184}
   - component: {fileID: 3581628624488657016}
+  - component: {fileID: 2422041545509176436}
   m_Layer: 0
   m_Name: DeathGrabbyClawPrefab
   m_TagString: Untagged
@@ -202,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   horizontal: 0
+  grabbyClaw: 0
   grabbedPlayer: {fileID: 0}
   grabbedPlayerRB: {fileID: 0}
   frameAndGrabPosition:
@@ -228,6 +235,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   hitboxPrefab: {fileID: 0}
+--- !u!50 &2422041545509176436
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359128928174131814}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7449048716350390571
 GameObject:
   m_ObjectHideFlags: 0

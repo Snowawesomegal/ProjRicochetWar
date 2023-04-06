@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b198f65309b6240c0ac97df2b8ce1e99
+guid: 7dbe2f22cbabc454482d2184f7b3c816
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EyeLargeOpen (1)_0
+      name: DeathHitstun_0
       rect:
         serializedVersion: 2
         x: 0
         y: 64
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 161e152738d8b4373a676ac827ac5afd
-      internalID: -1733460029
+      spriteID: e8157d0437dec465d97bbabe6ce6cfa7
+      internalID: -143784150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeLargeOpen (1)_1
+      name: DeathHitstun_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 64
         y: 64
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,62 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15ea211917b8a47539a30a1987c56036
-      internalID: -716987557
+      spriteID: c55b6937221644166b35dcbfcfdbe74c
+      internalID: -55296388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeLargeOpen (1)_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 80fc8629e5e2045169a914833b109d31
-      internalID: -370896453
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EyeLargeOpen (1)_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69e4c35e5aecf4d949753d833b9c3585
-      internalID: -1275432484
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EyeLargeOpen (1)_4
+      name: DeathHitstun_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d948c71c2c524eb1aca8ab4d70c53c5
-      internalID: 1895001874
+      spriteID: d1bd132589bd64155aea04bf0e4a0b83
+      internalID: 275970760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeLargeOpen (1)_5
+      name: DeathHitstun_3
       rect:
         serializedVersion: 2
-        x: 32
+        x: 64
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,8 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b796225a964fe4ceaa0e016470de2b3d
-      internalID: 2021625059
+      spriteID: 1276176f5633545299a6248e20b4cf7c
+      internalID: 961605375
       vertices: []
       indices: 
       edges: []
@@ -241,12 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EyeLargeOpen (1)_4: 1895001874
-      EyeLargeOpen (1)_3: -1275432484
-      EyeLargeOpen (1)_0: -1733460029
-      EyeLargeOpen (1)_2: -370896453
-      EyeLargeOpen (1)_1: -716987557
-      EyeLargeOpen (1)_5: 2021625059
+      DeathHitstun_0: -143784150
+      DeathHitstun_1: -55296388
+      DeathHitstun_2: 275970760
+      DeathHitstun_3: 961605375
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

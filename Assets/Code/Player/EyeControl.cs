@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class EyeControl : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class EyeControl : MonoBehaviour
     int chooseTargetCountdown = 60;
     int currentTargetIndex = 0;
     bool targetChosen = false;
+    GameObject hitbox;
+
+    public GameObject destroyedPS;
+
+    int framesLifetime = 360;
+    int framesActive = 0;
 
     public GameObject reticlePrefab;
     GameObject reticle;
@@ -18,10 +25,12 @@ public class EyeControl : MonoBehaviour
     Animator anim;
     int openCountdown = 60;
     bool open = false;
+    HitboxInteractionManager him;
 
     // Start is called before the first frame update
     void Start()
     {
+        him = Camera.main.GetComponent<HitboxInteractionManager>();
         anim = GetComponent<Animator>();
         transform.GetChild(0).GetComponent<HitboxInfo>().owner = owner;
         players = GameObject.FindGameObjectsWithTag("Player").ToList();
@@ -39,6 +48,9 @@ public class EyeControl : MonoBehaviour
             currentTarget = GetClosest(players);
         }
         reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
+
+        him.SelfDestructObject += gameObj => SelfDestruct(gameObj);
+        hitbox = transform.GetChild(0).gameObject;
     }
 
     private void FixedUpdate()
@@ -63,7 +75,10 @@ public class EyeControl : MonoBehaviour
         else if (chooseTargetCountdown == 0) // countdown is over; set target
         {
             targetChosen = true;
-            targetControl1 = currentTarget.GetComponent<Control1>();
+            if (targetControl1 != null)
+            {
+                targetControl1 = currentTarget.GetComponent<Control1>();
+            }
             chooseTargetCountdown -= 1;
         }
 
@@ -84,13 +99,19 @@ public class EyeControl : MonoBehaviour
                 Vector2 between = (currentTarget.transform.position - transform.position).normalized;
                 anim.SetFloat("XDif", between.x);
                 anim.SetFloat("YDif", between.y);
+
+                framesActive += 1;
+                if (framesActive >= framesLifetime)
+                {
+                    SelfDestruct(hitbox);
+                }
             }
         }
         else
         {
             if (targetChosen)
             {
-                if (targetControl1.clm.activeLockers.Contains(targetControl1.hitstun))
+                if (targetControl1.firstFrameOfHitstun)
                 {
                     OpenEye();
                 }
@@ -142,19 +163,21 @@ public class EyeControl : MonoBehaviour
 
     public void OpenEye()
     {
+        Debug.Log("open");
         openCountdown = 60;
         open = true;
         anim.SetBool("Open", true);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    public void SelfDestruct(GameObject whatObjectIsDestroyed)
     {
-        SelfDestruct();
-    }
-
-    public void SelfDestruct()
-    {
-        Destroy(reticle);
-        Destroy(gameObject);
+        if (whatObjectIsDestroyed == hitbox)
+        {
+            Destroy(Instantiate(destroyedPS, transform.position, Quaternion.identity), 3);
+            Destroy(reticle);
+            Destroy(gameObject);
+            him.SelfDestructObject -= SelfDestruct;
+            owner.GetComponent<DeathAnimationEvents>().eyeExists = false;
+        }
     }
 }

@@ -40,6 +40,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     Pair<HitboxInfo, Vector2> queuedKnockback;
     GameObject runeActive;
     [SerializeField] bool DLightBounce = true;
+    public bool firstFrameOfHitstun = false;
 
     //speeds
     public float airSpeed = 10;
@@ -101,7 +102,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public StandardControlLocker inAerialAnim;
     public StandardControlLocker inGrab;
 
-    public Collider2D wallTouching;
     public bool touchingWall = false;
     public float minimumSpeedForHitstun = 50;
     public int framesInHitstun = 0;
@@ -155,6 +155,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         rb.sharedMaterial = notBouncy;
 
         Physics2D.gravity = Vector2.zero;
+
     }
 
     private void Awake()
@@ -282,10 +283,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 }
                 else // if in the air but not using an aerial
                 {
-                    if (touchingWall) // if touching wall, if holding toward wall and not using an aerial, grab wall
+                    if (touchingWall && !clm.activeLockers.Contains(wallcling)) // if touching wall, if holding toward wall and not using an aerial or already wallcling, grab wall
                     {
                         if (collidedWallSide == pim.GetCurrentDirectional().current.x)
                         {
+                            Debug.Log("called wallcling enter via not having grounded locker, and holding toward wall.");
                             WallClingEnterExit(true);
                         }
                     }
@@ -298,6 +300,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
                 {
+                    Debug.Log("called wallcling EXIT via having wallcling locker, touching wall, and holding away.");
                     WallClingEnterExit(false);
                 }
             }
@@ -319,6 +322,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
             minimumHitstunFrames = 0;
         }
         framesInHitstun += 1;
+        if (framesInHitstun == 2)
+        {
+            firstFrameOfHitstun = false;
+        }
 
         if (knockbackTime <= 0)
         {
@@ -379,15 +386,15 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (input.IsHeld() || input.IsPending())
         {
+            Debug.Log("recognized dash input: " + gameObject.name);
+
             if (imui.currentCharge >= dashCost)
             {
                 if (animationDebugMessages) { Debug.Log("Dash started" + "- frame: " + frame); }
-                if (currentAnimBool != null)
-                {
-                    ae.StopAnimation(currentAnimBool);
-                }
+                ae.StopAnimation(currentAnimBool);
                 ae.ChangeAnimBool("StartDash", true);
-                ae.ChangeAnimBool("StopDash", true); // not entirely sure if this line is even necessary after I added ExitTime
+                Hit(null, false);
+                queuedKnockback = null;
                 clm.AddLocker(dashing);
 
                 rb.velocity = Vector2.zero;
@@ -509,17 +516,21 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
-    void WallClingEnterExit(bool enterexit)
+    public void WallClingEnterExit(bool enterexit)
     {
         if (enterexit)
         {
             clm.AddLocker(wallcling);
             anim.SetBool("WallCling", true);
+            Debug.Log("REMOVE airborne locker via enter wallcling");
+            clm.RemoveLocker(airborne);
             rb.velocity = Vector2.zero;
         }
         else
         {
             clm.RemoveLocker(wallcling);
+            Debug.Log("addlocker airborne via EXIT wallcling");
+            clm.AddLocker(airborne);
             anim.SetBool("WallCling", false);
         }
     }
@@ -557,6 +568,19 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
 
         bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
+    }
+
+    public void ChangeIntangible(bool enterexit)
+    {
+        if (enterexit)
+        {
+            Debug.Log("intangible");
+            intangible = true;
+        }
+        else
+        {
+            intangible = false;
+        }
     }
 
     private void FixedUpdate()
@@ -738,7 +762,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 return;
             }
         }
-        BecomeGrounded(null, false); // it would've returned if any current collisions ground/platform so must not be on the ground
+        if (clm.activeLockers.Contains(grounded))
+        {
+            BecomeGrounded(null, false); // it would've returned if any current collisions ground/platform so must not be on the ground
+        }
 
         void BecomeGrounded(string groundTag, bool enterexit = true)
         {
@@ -794,7 +821,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 clm.RemoveLocker(inAnim);
                 clm.RemoveLocker(dashing);
                 clm.RemoveLocker(inAerialAnim);
-                intangible = false;
+                anim.SetBool("Special", false);
+                ChangeIntangible(false);
                 ignoreFriction = false;
             }
 
@@ -805,6 +833,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             moveDiMultiplier = hi.DiMultiplier;
 
             framesInHitstun = 0;
+            firstFrameOfHitstun = true;
 
             em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
 
@@ -892,7 +921,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             collidedWallSide = (int)Mathf.Sign(collision.GetContact(0).point.x - transform.position.x);
             touchingWall = true;
-            wallTouching = collision.collider;
         }
 
         if (!currentOverlaps.Contains(collision.collider))
@@ -901,39 +929,12 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out HitboxInfo hbi))
-        {
-            if (hbi.isGrab)
-            {
-                if (!him.grabboxesAndPlayersThisFrame.Contains(new Pair<Collider2D, Collider2D>(collision, bc)))
-                {
-                    him.grabboxesAndPlayersThisFrame.Add(new Pair<Collider2D, Collider2D>(collision, bc));
-                }
-            }
-            else
-            {
-                if (!him.triggersThisFrame.Contains(collision))
-                {
-                    him.triggersThisFrame.Add(collision);
-                }
-                if (!him.triggersThisFrame.Contains(bc))
-                {
-                    him.triggersThisFrame.Add(bc);
-                }
-            }
-        }
-    }
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
-            WallClingEnterExit(false);
             collidedWallSide = 0;
             touchingWall = false;
-            wallTouching = null;
         }
 
         if (currentOverlaps.Contains(collision.collider)) { currentOverlaps.Remove(collision.collider); };

@@ -145,9 +145,18 @@ public class AnimationEvents : MonoBehaviour
             clm.AddLocker(c1.inAerialAnim);
         }
 
-        foreach (GameObject i in him.doNotEnableHitboxes)
+        ResetDoNotEnable();
+    }
+
+    void ResetDoNotEnable()
+    {
+        List<GameObject> dneCopy = new List<GameObject>(him.doNotEnableHitboxes);
+        foreach (GameObject i in dneCopy)
         {
-            i.GetComponent<HitboxInfo>().doNotEnable = false;
+            if (i != null)
+            {
+                i.GetComponent<HitboxInfo>().doNotEnable = false;
+            }
         }
         him.doNotEnableHitboxes.Clear();
     }
@@ -177,7 +186,7 @@ public class AnimationEvents : MonoBehaviour
 
         clm.AddLocker(c1.dashing);
         c1.affectedByGravity = false;
-        c1.intangible = true;
+        c1.ChangeIntangible(true);
         c1.ignoreFriction = true;
     }
 
@@ -204,9 +213,11 @@ public class AnimationEvents : MonoBehaviour
         clm.RemoveLocker(c1.inGrab);
         clm.RemoveLocker(c1.inAerialAnim);
         c1.affectedByGravity = true;
-        c1.intangible = false;
+        c1.ChangeIntangible(false);
         c1.ignoreFriction = false;
         StopLandingLag();
+
+        ResetDoNotEnable();
     }
     public void StopAnimationButLeaveCurrentAnimBool(string boolToSetFalse) // same as StopAnimation but does not clear the attack bool so it can be checked to apply landing lag.
         // called only by the start of landing lag atm
@@ -223,7 +234,7 @@ public class AnimationEvents : MonoBehaviour
         clm.RemoveLocker(c1.dashing);
         clm.RemoveLocker(c1.inAerialAnim);
         c1.affectedByGravity = true;
-        c1.intangible = false;
+        c1.ChangeIntangible(false);
         c1.ignoreFriction = false;
         StopLandingLag();
     }
@@ -295,6 +306,8 @@ public class AnimationEvents : MonoBehaviour
 
     public void Dash()
     {
+        Debug.Log("dash force: " + gameObject.name);
+
         Vector2 currentDir = pim.GetCurrentDirectional().current;
         if (currentDir != Vector2.zero)
         {
@@ -420,12 +433,7 @@ public class AnimationEvents : MonoBehaviour
         {
             rb.AddForce(1.4f * c1.initialJumpForce * new Vector2(-0.75f * c1.collidedWallSide, c1.wallJumpVerticalOoOne));
         }
-        clm.RemoveLocker(c1.wallcling);
-        c1.collidedWallSide = 0;
-        c1.touchingWall = false;
-        c1.wallTouching = null;
-
-        // it is ridiculous how many things I have to set here, something about wall mechanics should probably be reworked
+        c1.WallClingEnterExit(false);
     }
 
     public void ApplyJumpForce() // called by jump animation

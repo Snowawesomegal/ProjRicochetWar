@@ -1,6 +1,8 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 
 public class HitboxInfo : MonoBehaviour
 {
@@ -17,6 +19,10 @@ public class HitboxInfo : MonoBehaviour
     public bool facingRight = true;
     public int activeFrames = 2;
     public int minimumHitstunFrames = 20;
+    public bool cannotClank = false;
+
+
+
 
     [Tooltip("Set this to true if the hitbox has multiple hitboxes that are part of the same move as it, and are disabled if it connects. In this case, this object should also be parented to a another gameobject. See Ghost UpHeavy. This is checked by HitboxInteractionManager.")]
     public bool isPartOfMultipart = false;
@@ -28,6 +34,11 @@ public class HitboxInfo : MonoBehaviour
     public bool isProjectile = false;
 
     public bool isGrab = false;
+
+    public bool isDestroyable = false;
+
+    [Tooltip("If isDestroyable is true, when colliding with a hitbox, reduce health by hitbox damage, and self destruct if health < 0.")]
+    public float objectHealth = 0;
 
     public float DiMultiplier = 1;
 
@@ -42,23 +53,84 @@ public class HitboxInfo : MonoBehaviour
 
     public List<GameObject> playersHitAlready;
 
+
+    Collider2D hbc;
+    HitboxInteractionManager him;
+    private void Awake()
+    {
+        hbc = GetComponent<Collider2D>();
+        if (transform.root.GetComponent<Rigidbody2D>() == null)
+        {
+            Debug.LogError("Hitbox " + gameObject.name + " on object " + transform.root.name + " has a HitboxInfo script but root has no rigidbody2D! Collisions will be ignored!");
+        }
+        him = Camera.main.GetComponent<HitboxInteractionManager>();
+    }
+
+    public static bool ComparePair(Pair<Collider2D, Collider2D> one, Pair<Collider2D, Collider2D> two)
+    {
+        if ((one.left == two.left && one.right == two.right) || (one.left == two.right && one.right == two.left))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool ContainsPair(Pair<Collider2D, Collider2D> pair, List<Pair<Collider2D, Collider2D>> list)
+    {
+        foreach (Pair<Collider2D, Collider2D> i in list)
+        {
+            if (ComparePair(pair, i))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out HitboxInfo _) || collision.TryGetComponent(out Control1 _))
-        {
-            HitboxInteractionManager him = Camera.main.GetComponent<HitboxInteractionManager>();
-            Collider2D cd = GetComponent<Collider2D>();
+        Pair<Collider2D, Collider2D> toSend = new Pair<Collider2D, Collider2D>(hbc, collision);
 
-            if (!him.triggersThisFrame.Contains(collision))
+        if (collision.TryGetComponent(out HitboxInfo hbi)) // if collided with hitbox
+        {
+            if (hbi.owner != owner)
             {
-                him.triggersThisFrame.Add(collision);
+                if (hbi.isCounter) // is normal hitbox that hit a counter
+                {
+                    if (!ContainsPair(toSend, him.hitboxCounterCol))
+                    {
+                        him.hitboxCounterCol.Add(toSend);
+                    }
+                }
+                else // is normal hitbox that hit another hitbox
+                {
+                    if (!ContainsPair(toSend, him.hitboxHitboxCol))
+                    {
+                        him.hitboxHitboxCol.Add(toSend);
+                    }
+                }
             }
-            if (!him.triggersThisFrame.Contains(collision))
+        }
+
+        if (collision.TryGetComponent(out Control1 _)) // collided with player
+        {
+            if (owner != collision.gameObject)
             {
-                him.triggersThisFrame.Add(cd);
+                if (isGrab) // is grab that hit player
+                {
+                    if (!ContainsPair(toSend, him.grabPlayerCol))
+                    {
+                        him.grabPlayerCol.Add(toSend);
+                    }
+                }
+                else if (!isCounter)// is normal hitbox that hit player
+                {
+                    if (!ContainsPair(toSend, him.hitboxPlayerCol))
+                    {
+                        him.hitboxPlayerCol.Add(toSend);
+                    }
+                }
             }
         }
     }
-
-
 }

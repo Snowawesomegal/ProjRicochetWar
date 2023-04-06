@@ -15,6 +15,7 @@ public class DeathHeavyClawControl : MonoBehaviour
     public GameObject owner = null;
 
     public bool horizontal = false;
+    public bool grabbyClaw = false;
 
     bool facingRight = true;
 
@@ -99,9 +100,20 @@ public class DeathHeavyClawControl : MonoBehaviour
         }
         else
         {
-            owner.GetComponent<DeathAnimationEvents>().horizontalHeavyClawExists = false;
+            if (grabbyClaw)
+            {
+                owner.GetComponent<DeathAnimationEvents>().grabbyClawExists = false;
+            }
+            else
+            {
+                owner.GetComponent<DeathAnimationEvents>().horizontalHeavyClawExists = false;
+            }
         }
 
+        if (Camera.main.GetComponent<HitboxInteractionManager>().doNotEnableHitboxes.Contains(gameObject))
+        {
+            Camera.main.GetComponent<HitboxInteractionManager>().doNotEnableHitboxes.Remove(gameObject);
+        }
     }
 
     public void PlaySoundFromAnimator(string name)
@@ -122,19 +134,5 @@ public class DeathHeavyClawControl : MonoBehaviour
 
 
         facingRight = c1.facingRight;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) // if player touching grab hitbox is not owner, grab player.
-    {
-        if (collision.gameObject != owner)
-        {
-            if (collision.TryGetComponent(out Control1 c1))
-            {
-                if (!him.grabboxesAndPlayersThisFrame.Contains(new Pair<Collider2D, Collider2D>(cc, collision)))
-                {
-                    him.grabboxesAndPlayersThisFrame.Add(new Pair<Collider2D, Collider2D>(cc, collision));
-                }
-            }
-        }
     }
 }

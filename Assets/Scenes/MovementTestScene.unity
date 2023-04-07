@@ -1666,67 +1666,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1025100690
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.61
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438148, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438150, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_Name
-      value: Ghost
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311728093354438151, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2006209000}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1c1cd7f01d6a54289a5aba69a210e998, type: 3}
 --- !u!1 &1097837619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,9 +2090,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5324972260535258964, guid: fb581ae3f309e47e1993b35838854463, type: 3}
+      propertyPath: UNIQUEinMovementAir
+      value: 
+      objectReference: {fileID: 11400000, guid: ad6accefa2cc548d9a75f37bdadb14f1, type: 2}
+    - target: {fileID: 5324972260535258964, guid: fb581ae3f309e47e1993b35838854463, type: 3}
+      propertyPath: UNIQUEinMovementGround
+      value: 
+      objectReference: {fileID: 11400000, guid: e9ed95adf42a24dcebc9690072fc52da, type: 2}
     - target: {fileID: 5324972260535258965, guid: fb581ae3f309e47e1993b35838854463, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5324972260535258965, guid: fb581ae3f309e47e1993b35838854463, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2312,68 +2259,6 @@ Transform:
   m_Father: {fileID: 687472960}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -179.508}
---- !u!21 &2006209000
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hurt Color Shader Mat (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 10bcce4717a42e840b05b8ba49f7ad69, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _Hurt: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
-    - _SampleColor1: {r: 0.7372549, g: 0.69411767, b: 0.43529415, a: 0}
-    - _SampleColor10: {r: 0, g: 0, b: 0, a: 1}
-    - _SampleColor2: {r: 0.023529414, g: 0.1254902, b: 0.21176472, a: 0}
-    - _SampleColor3: {r: 0.07058824, g: 0.20784315, b: 0.2901961, a: 0}
-    - _SampleColor4: {r: 1, g: 1, b: 1, a: 0}
-    - _SampleColor5: {r: 0.9960785, g: 0.96470594, b: 0.86666673, a: 0}
-    - _SampleColor6: {r: 0, g: 0, b: 0, a: 0}
-    - _SampleColor7: {r: 0.019607844, g: 0.1254902, b: 0.20784315, a: 0}
-    - _SampleColor8: {r: 0, g: 0, b: 0, a: 1}
-    - _SampleColor9: {r: 0, g: 0, b: 0, a: 1}
-    - _TargetColor1: {r: 0.7372549, g: 0.69411767, b: 0.43529415, a: 0}
-    - _TargetColor10: {r: 0, g: 0, b: 0, a: 1}
-    - _TargetColor2: {r: 0.023529414, g: 0.1254902, b: 0.21176472, a: 0}
-    - _TargetColor3: {r: 0.07058824, g: 0.20784315, b: 0.2901961, a: 0}
-    - _TargetColor4: {r: 1, g: 1, b: 1, a: 0}
-    - _TargetColor5: {r: 0.9960785, g: 0.96470594, b: 0.86666673, a: 0}
-    - _TargetColor6: {r: 0, g: 0, b: 0, a: 0}
-    - _TargetColor7: {r: 0.019607844, g: 0.1254902, b: 0.20784315, a: 0}
-    - _TargetColor8: {r: 0, g: 0, b: 0, a: 1}
-    - _TargetColor9: {r: 0, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1001 &2134042934
 PrefabInstance:
   m_ObjectHideFlags: 0

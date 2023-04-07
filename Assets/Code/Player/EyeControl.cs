@@ -11,7 +11,6 @@ public class EyeControl : MonoBehaviour
     Control1 targetControl1;
     int chooseTargetCountdown = 60;
     int currentTargetIndex = 0;
-    bool targetChosen = false;
     GameObject hitbox;
 
     public GameObject destroyedPS;
@@ -41,13 +40,17 @@ public class EyeControl : MonoBehaviour
             chooseTargetCountdown = -1;
             currentTarget = players[0];
             targetControl1 = currentTarget.GetComponent<Control1>();
-            targetChosen = true;
         }
         else if (players.Count > 1)
         {
             currentTarget = GetClosest(players);
         }
-        reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
+
+        if (currentTarget != null)
+        {
+            reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
+        }
+
 
         him.SelfDestructObject += gameObj => SelfDestruct(gameObj);
         hitbox = transform.GetChild(0).gameObject;
@@ -74,7 +77,6 @@ public class EyeControl : MonoBehaviour
         }
         else if (chooseTargetCountdown == 0) // countdown is over; set target
         {
-            targetChosen = true;
             if (targetControl1 != null)
             {
                 targetControl1 = currentTarget.GetComponent<Control1>();
@@ -109,7 +111,7 @@ public class EyeControl : MonoBehaviour
         }
         else
         {
-            if (targetChosen)
+            if (targetControl1 != null)
             {
                 if (targetControl1.firstFrameOfHitstun)
                 {

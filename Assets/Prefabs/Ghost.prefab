@@ -6061,6 +6061,7 @@ MonoBehaviour:
   ignoreFriction: 0
   DIStrength: 1
   DLightBounce: 1
+  firstFrameOfHitstun: 0
   airSpeed: 20
   airAccel: 75
   airAccelDuringAerial: 80
@@ -6094,6 +6095,9 @@ MonoBehaviour:
   dashing: {fileID: 11400000, guid: 03123bf38946f48879ee59084a60d725, type: 2}
   inAerialAnim: {fileID: 11400000, guid: 14134491038084bb980f48708f2f734a, type: 2}
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
+  UNIQUEinMovementAir: {fileID: 11400000, guid: 636518d449bb5428cb4202c04d05d357, type: 2}
+  UNIQUEinMovementGround: {fileID: 11400000, guid: cbc671def756d454f85b961185b43341, type: 2}
+  allLockers: []
   touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0

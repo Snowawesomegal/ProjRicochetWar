@@ -185,6 +185,11 @@ public class HitboxInteractionManager : MonoBehaviour
                 if (!hbi.playersHitAlready.Contains(i.right.gameObject) && i.left.enabled) // check if the hitbox has had the player added during the move already
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
+                    if (hurtboxC1.intangible)
+                    {
+                        continue;
+                    }
+
                     Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
                     hurtboxC1.FreezeFrames(0, hbi.hitstopFrames); // apply hitstop defending player
                     if (!hbi.isProjectile) // is not projectile; apply hitstop attacking player too; if projectile the attacking player is not frozen

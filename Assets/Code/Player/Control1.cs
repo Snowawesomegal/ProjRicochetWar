@@ -41,6 +41,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     GameObject runeActive;
     [SerializeField] bool DLightBounce = true;
     public bool firstFrameOfHitstun = false;
+    public bool canFastFall = true;
 
     //speeds
     public float airSpeed = 10;
@@ -91,6 +92,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public int FFbufferLength = 10; //how long in seconds an input that is not currently valid will wait to be valid
     int fastFallBuffer = 0;
 
+
     //Control Lockers
     public StandardControlLocker grounded;
     public StandardControlLocker airborne;
@@ -101,6 +103,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public StandardControlLocker dashing;
     public StandardControlLocker inAerialAnim;
     public StandardControlLocker inGrab;
+    public StandardControlLocker UNIQUEinMovementAir;
+    public StandardControlLocker UNIQUEinMovementGround;
+    public StandardControlLocker[] allLockers;
 
     public bool touchingWall = false;
     public float minimumSpeedForHitstun = 50;
@@ -150,6 +155,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
         tr = GetComponent<TrailRenderer>();
         psc = GetComponent<PlayerShaderController>();
 
+        allLockers = new StandardControlLocker[]
+        { grounded, airborne, hitstun, inAnim, inAerialAnim, wallcling, onlyAttack, dashing, inGrab, UNIQUEinMovementAir, UNIQUEinMovementGround};
+
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
@@ -191,7 +199,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     void TryBufferFastFall()
     {
-        if (rb.velocity.y <= 0)
+        if (rb.velocity.y <= 0 && canFastFall)
         {
             StartStopFastFall(true);
         }
@@ -225,7 +233,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     void ManageFastFall()
     {
-        if (fastFallBuffer > 0)
+        if (fastFallBuffer > 0 && canFastFall)
         {
             fastFallBuffer -= 1;
             if (rb.velocity.y <= 0)
@@ -269,7 +277,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void HorizontalResponse(CharacterInput input)
     {
-        if (!clm.activeLockers.Contains(hitstun))
+        if (!clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
         {
             if (clm.activeLockers.Contains(grounded)) // if grounded: move
             {
@@ -502,6 +510,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void MovementResponse(CharacterInput input)
     {
+        pim.CacheInput(input);
+
         if (input.IsHeld() || input.IsPending())
         {
             ae.ChangeAnimBool("Movement", true);
@@ -624,8 +634,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
         }
 
-        if (!affectedByGravity && !clm.activeLockers.Contains(dashing))
+        if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
         {
+            Debug.Log("not affected by gravity, not in Movement, and moving downward, so stopped vertical speed: frame " + frame);
             if (rb.velocity.y < 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -715,6 +726,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                         newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
                     }
 
+                    Debug.Log(rb.velocity + " changed to " + new Vector2(newXSpeed, newYSpeed) + " by friction.");
                     rb.velocity = new Vector2(newXSpeed, newYSpeed);
                 }
 
@@ -779,6 +791,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 currentGroundTag = groundTag;
 
                 if (anim.GetBool("Movement"))
+                {
+                    clm.RemoveLocker(UNIQUEinMovementAir);
+                    clm.AddLocker(UNIQUEinMovementGround);
+                }
+                else if (anim.GetBool("Special"))
                 {
                     clm.RemoveLocker(inAerialAnim);
                     clm.AddLocker(inAnim);

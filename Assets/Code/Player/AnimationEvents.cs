@@ -205,38 +205,25 @@ public class AnimationEvents : MonoBehaviour
             ChangeAnimBool(boolToSetFalse, false, true);
         }
 
+        StopEverything();
+    }
+
+    public void StopEverything() // Clears everything and stops all animations. If called solo, does not clear the attack bool so it can be checked to apply landing lag.
+    {
         c1.affectedByGravity = true;
         anim.SetBool("ContinueAttack", false);
-        clm.RemoveLocker(c1.hitstun);
-        clm.RemoveLocker(c1.inAnim);
-        clm.RemoveLocker(c1.dashing);
-        clm.RemoveLocker(c1.inGrab);
-        clm.RemoveLocker(c1.inAerialAnim);
+        anim.SetBool("Movement", false);
+        anim.SetBool("Special", false);
+        anim.SetBool("Jumpsquat", false);
+        clmEx.RemoveAllLockersExcept(clm, c1.allLockers, new StandardControlLocker[] { c1.grounded, c1.airborne });
         c1.affectedByGravity = true;
         c1.ChangeIntangible(false);
         c1.ignoreFriction = false;
         StopLandingLag();
+        c1.permaTrailps.Play();
+        c1.canFastFall = true;
 
         ResetDoNotEnable();
-    }
-    public void StopAnimationButLeaveCurrentAnimBool(string boolToSetFalse) // same as StopAnimation but does not clear the attack bool so it can be checked to apply landing lag.
-        // called only by the start of landing lag atm
-    {
-        if (debugMessages)
-        {
-            Debug.Log("stopped animation " + boolToSetFalse + "- frame: " + c1.frame);
-        }
-
-        anim.SetBool(boolToSetFalse, false);
-        c1.affectedByGravity = true;
-        anim.SetBool("ContinueAttack", false);
-        clm.RemoveLocker(c1.inAnim);
-        clm.RemoveLocker(c1.dashing);
-        clm.RemoveLocker(c1.inAerialAnim);
-        c1.affectedByGravity = true;
-        c1.ChangeIntangible(false);
-        c1.ignoreFriction = false;
-        StopLandingLag();
     }
 
     public void SetAnimBoolTrue(string toSetTrue) // Sets a single animation bool true from the animator, and updates currentAnimBool if it is an attack.

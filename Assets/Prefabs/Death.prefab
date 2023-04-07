@@ -1947,6 +1947,7 @@ MonoBehaviour:
   DIStrength: 1
   DLightBounce: 0
   firstFrameOfHitstun: 0
+  canFastFall: 1
   airSpeed: 20
   airAccel: 90
   airAccelDuringAerial: 80
@@ -1980,6 +1981,9 @@ MonoBehaviour:
   dashing: {fileID: 11400000, guid: 03123bf38946f48879ee59084a60d725, type: 2}
   inAerialAnim: {fileID: 11400000, guid: 14134491038084bb980f48708f2f734a, type: 2}
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
+  UNIQUEinMovementAir: {fileID: 11400000, guid: ad6accefa2cc548d9a75f37bdadb14f1, type: 2}
+  UNIQUEinMovementGround: {fileID: 11400000, guid: e9ed95adf42a24dcebc9690072fc52da, type: 2}
+  allLockers: []
   touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
@@ -2524,6 +2528,10 @@ MonoBehaviour:
   largeEyePrefab: {fileID: 8180998669354741200, guid: fc140138cf26541729ebed027fda920d, type: 3}
   grabbyClaw: {fileID: 4359128928174131814, guid: 330ae44cac58740799679feb46d37707, type: 3}
   eyeExists: 0
+  movementAbilityAccel: 150
+  movementAbilityMinFrames: 20
+  movementAbilityCurrentFrames: 0
+  movementAbilityMaxFrames: 120
 --- !u!1 &5366513683229172554
 GameObject:
   m_ObjectHideFlags: 0

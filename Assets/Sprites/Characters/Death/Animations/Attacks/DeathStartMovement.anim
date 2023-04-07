@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DeathJumpsquat
+  m_Name: DeathStartMovement
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,11 +20,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1219724230, guid: a30ac47181198475fb536a00993c7748, type: 3}
-    - time: 0.033333335
-      value: {fileID: -26252970, guid: a30ac47181198475fb536a00993c7748, type: 3}
+      value: {fileID: 122804780, guid: 52d92cf2edda04bf288a7dbd851bee35, type: 3}
     - time: 0.05
-      value: {fileID: 2116287619, guid: a30ac47181198475fb536a00993c7748, type: 3}
+      value: {fileID: -2105397886, guid: 52d92cf2edda04bf288a7dbd851bee35, type: 3}
+    - time: 0.1
+      value: {fileID: 1433871542, guid: 52d92cf2edda04bf288a7dbd851bee35, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,15 +44,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1219724230, guid: a30ac47181198475fb536a00993c7748, type: 3}
-    - {fileID: -26252970, guid: a30ac47181198475fb536a00993c7748, type: 3}
-    - {fileID: 2116287619, guid: a30ac47181198475fb536a00993c7748, type: 3}
+    - {fileID: 122804780, guid: 52d92cf2edda04bf288a7dbd851bee35, type: 3}
+    - {fileID: -2105397886, guid: 52d92cf2edda04bf288a7dbd851bee35, type: 3}
+    - {fileID: 1433871542, guid: 52d92cf2edda04bf288a7dbd851bee35, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.06666667
+    m_StopTime: 0.15
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -73,35 +73,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: StartAnimation
+    functionName: OnSpecialStartup
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.033333335
-    functionName: PlaySoundFromAnimator
-    data: DeathJump
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.033333335
-    functionName: ApplyJumpForce
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.033333335
-    functionName: SpawnEffectAtFeet
-    data: LandJumpSmokeCloud
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.05
-    functionName: StopEverything
+  - time: 0.15
+    functionName: OnEnterSpecial
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

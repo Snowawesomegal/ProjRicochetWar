@@ -43,8 +43,8 @@ public class PlayerShaderController : MonoBehaviour
     {
         // Reset the material being used
         bool removeTossedMaterial = (material != null);
-        Debug.Log("Please ignore the error about leaking materials into the scene. This behavior is understood and taken care of.");
         material = renderer.material;
+        Debug.Log("Please ignore the error about leaking materials into the scene. This behavior is understood and taken care of.");
         // This is called in order to clean up random materials that generated and lost their last reference.
         // Without this, we get a material leak in the editor: https://answers.unity.com/questions/283271/material-leak-in-editor.html
         if (removeTossedMaterial)

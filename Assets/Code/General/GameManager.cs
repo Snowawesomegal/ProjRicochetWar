@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public TickingTimeController timeController;
     public TickingTimeController TimeController { get { if (timeController == null) timeController = new TickingTimeController(SlowUpdateType.FIXED); return timeController; } }
 
+    public SessionSettings session;
+    public SessionSettings Session { get { if (session == null) session = new SessionSettings(); return session; } }
+
     public static TickingTimeController InstanceTimeController { get { return Instance.TimeController; } }
 
     private void Awake()
@@ -31,6 +34,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void FixedUpdate()
@@ -56,5 +61,10 @@ public class GameManager : MonoBehaviour
     {
         timeController.Frozen = false;
         return false;
+    }
+
+    public void ResetGame()
+    {
+        timeController = new TickingTimeController(SlowUpdateType.FIXED);
     }
 }

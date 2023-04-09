@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(AudioManager))]
 public class AudioManagerCustomInspector : Editor
@@ -12,8 +13,35 @@ public class AudioManagerCustomInspector : Editor
 
         AudioManager myTarget = (AudioManager)target;
 
+        if (EditorSceneManager.IsPreviewScene(myTarget.gameObject.scene))
+        {
+            EditorGUILayout.HelpBox("Unable to \"Prepare Audio Sources\" because you are in preview mode.", MessageType.Info);
+            return;
+        }
+
+        if (EditorUtility.IsPersistent(myTarget.gameObject))
+        {
+            EditorGUILayout.HelpBox("Unable to view object further because it is not persistent (instantiated) yet.", MessageType.Info);
+        }
+
+        if (myTarget.musicMap == null || myTarget.soundMap == null || myTarget.soundGroupMap == null)
+            myTarget.Prepared = false;
+
+        bool prepared = myTarget.Prepared;
+        if (!prepared)
+        {
+            EditorGUILayout.HelpBox("AudioManager is not prepared. Likely missing a audio target reference object.", MessageType.Error);
+            return;
+        }
+        GameSettings.Instance.VerifyInitialization();
+        GameSettings.Instance.SettingsUpdate();
+
         EditorGUILayout.Space(10);
 
+        if (GUILayout.Button("Stop Music."))
+        {
+            myTarget.StopMusic();
+        }
         foreach (MusicSound s in myTarget.music)
         {
             if (s != null)
@@ -21,7 +49,8 @@ public class AudioManagerCustomInspector : Editor
                 EditorGUILayout.Space(10);
                 if (GUILayout.Button("Play Music: " + s.name))
                 {
-                    s.EstablishSource(myTarget.musicSource, true);
+                    myTarget.SetMusic(s.name);
+                    // s.EstablishSource(myTarget.musicSource, true);
                 }
             }
         }
@@ -36,7 +65,8 @@ public class AudioManagerCustomInspector : Editor
                     EditorGUILayout.Space(10);
                     if (GUILayout.Button("Play Sound from Group: " + group.groupName))
                     {
-                        group.PlaySound(myTarget);
+                        myTarget.PlaySoundGroup(group.groupName);
+                        // group.PlaySound(myTarget);
                     }
                 }
             }
@@ -51,9 +81,22 @@ public class AudioManagerCustomInspector : Editor
                 EditorGUILayout.Space(10);
                 if (GUILayout.Button("Play Sound: " + s.name))
                 {
-                    s.source.Play();
+                    myTarget.PlaySound(s.name);
+                    // s.source.Play();
+                }
+                if (GUILayout.Button("Stop Sound: " + s.name))
+                {
+                    myTarget.StopSound(s.name);
                 }
             }
         }
+
+        EditorGUILayout.Space(20);
+        if (GUILayout.Button("Reprepare Sound Sources"))
+        {
+            myTarget.Prepared = false;
+        }
+
+        myTarget.UpdateSounds();
     }
 }

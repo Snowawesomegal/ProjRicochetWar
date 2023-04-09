@@ -23,8 +23,20 @@ public class GameSettings : MonoBehaviour
     [SerializeField] public AudioManager audioManager;
     #endregion
 
+    private bool initialized = false;
+
     private void Awake()
     {
+        VerifyInitialization();
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void VerifyInitialization()
+    {
+        if (initialized)
+            return;
+
         if (instance == null)
         {
             instance = this;
@@ -39,15 +51,18 @@ public class GameSettings : MonoBehaviour
         {
             audioManager = GetComponent<AudioManager>();
         }
-
-        DontDestroyOnLoad(gameObject);
+        initialized = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        SettingsUpdate();
+    }
+
+    public void SettingsUpdate()
+    {
         UpdateAudioManager();
-        //Debug.Log("Sound is played: " + audioManager.musicSource.isPlaying);
     }
 
     private void UpdateAudioManager()

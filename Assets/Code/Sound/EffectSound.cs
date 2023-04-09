@@ -39,7 +39,13 @@ public class EffectSound : AbstractSound
 
     public override void Stop()
     {
-        base.Stop();
+        loopsLeft = 0;
+        stopping = true;
+    }
+
+    public override void FinishStop()
+    {
+        base.FinishStop();
         loopsLeft = 0;
         stopped = true;
         if (subscriber)
@@ -56,13 +62,20 @@ public class EffectSound : AbstractSound
         {
             am.OnUpdateMusic += UpdateLoop;
             subscriber = am;
+        } else
+        {
+            subscriber.OnUpdateMusic -= UpdateLoop;
+            am.OnUpdateMusic += UpdateLoop;
+            subscriber = am;
         }
     }
 
     public override void UpdateLoop()
     {
-        if (stopped || (!loop && loopsLeft <= 0) || !Application.isFocused)
+        if ((!Application.isFocused && Application.isPlaying) || stopped)
             return;
+        
+        Stopping(); // run if the sound is being stopped
 
         if (!source.isPlaying)
         {

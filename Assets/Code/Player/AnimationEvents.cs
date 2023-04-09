@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEngine.ParticleSystem;
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
+using System.Xml.Linq;
 
 public class AnimationEvents : MonoBehaviour
 {
@@ -15,7 +17,6 @@ public class AnimationEvents : MonoBehaviour
     Control1 c1;
     Rigidbody2D rb;
     PlayerInputManager pim;
-    ParticleSystem trailps;
     GameObject sm;
     EffectManager em;
     HitboxInteractionManager him;
@@ -27,6 +28,8 @@ public class AnimationEvents : MonoBehaviour
     [SerializeField] string landingAnimationName;
     [SerializeField] string runAnimationName;
 
+    [SerializeField] List<ObjectToInstantiate> projectiles;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -35,7 +38,6 @@ public class AnimationEvents : MonoBehaviour
         c1 = GetComponent<Control1>();
         rb = GetComponent<Rigidbody2D>();
         pim = GetComponent<PlayerInputManager>();
-        trailps = GetComponent<ParticleSystem>();
         sm = GameObject.Find("SettingsManager");
         em = sm.GetComponent<EffectManager>();
         him = Camera.main.GetComponent<HitboxInteractionManager>();
@@ -59,21 +61,29 @@ public class AnimationEvents : MonoBehaviour
             }
         }
     }
+
     void StartLandingLag(int frameLength) // freezes animator
     {
-        c1.FreezeFrames(0, frameLength, c1);
+        c1.FreezeFrames(0, frameLength);
     }
+
     void StopLandingLag()
     {
-        // THIS NEEDS TO HAVE SOMETHING IN IT OR THIS ISN'T GONNA WORK LOL
+        if (GameManager.Instance.TimeController.GetTimeScale(c1) != 1)
+        {
+            GameManager.Instance.TimeController.RemoveSlows(c1);
+        }
     }
 
     public void ChangeAnimBool(string boolName, bool toSet, bool changeCurrentAnimBool = true) // Sets entered animBool and updates currentAnimBool appropriately
     //Should always be used when changing animBools in order to keep currentAnimBool up to date.
     {
-        if (boolName.ToLower() != "nothing")
+        if (!string.IsNullOrEmpty(boolName))
         {
-            anim.SetBool(boolName, toSet);
+            if (boolName.ToLower() != "nothing")
+            {
+                anim.SetBool(boolName, toSet);
+            }
         }
 
         if (changeCurrentAnimBool)
@@ -97,6 +107,7 @@ public class AnimationEvents : MonoBehaviour
             if (debugMessages) { Debug.Log("Changed animBool, but NOT currentAnimbool to " + boolName + " to " + toSet + " -- frame " + c1.frame); }
         }
     }
+
     public void UseCurrentAnimBoolToSetAnimBool(int truefalse) // calls anim.SetBool with c1.currentAnimBool. If false, sets currentAnimBool to null.
         // called only by LandingLag atm
     {
@@ -134,6 +145,31 @@ public class AnimationEvents : MonoBehaviour
             clm.AddLocker(c1.inAerialAnim);
         }
 
+        ResetDoNotEnable();
+    }
+
+    void ResetDoNotEnable()
+    {
+        List<GameObject> dneCopy = new List<GameObject>(him.doNotEnableHitboxes);
+        foreach (GameObject i in dneCopy)
+        {
+            if (i != null)
+            {
+                i.GetComponent<HitboxInfo>().doNotEnable = false;
+            }
+        }
+        him.doNotEnableHitboxes.Clear();
+    }
+
+    public void StartSpecial()
+    {
+        if (debugMessages)
+        {
+            Debug.Log("Started special and added inanim locker on frame " + c1.frame);
+        }
+
+        clm.AddLocker(c1.inAnim);
+
         foreach (GameObject i in him.doNotEnableHitboxes)
         {
             i.GetComponent<HitboxInfo>().doNotEnable = false;
@@ -149,6 +185,9 @@ public class AnimationEvents : MonoBehaviour
         }
 
         clm.AddLocker(c1.dashing);
+        c1.affectedByGravity = false;
+        c1.ChangeIntangible(true);
+        c1.ignoreFriction = true;
     }
 
     /// <summary>
@@ -161,29 +200,30 @@ public class AnimationEvents : MonoBehaviour
             Debug.Log("stopped animation " + boolToSetFalse + "- frame: " + c1.frame);
         }
 
-        ChangeAnimBool(boolToSetFalse, false, true);
-
-        anim.SetBool("ContinueAttack", false);
-        clm.RemoveLocker(c1.inAnim);
-        clm.RemoveLocker(c1.dashing);
-        clm.RemoveLocker(c1.inAerialAnim);
-        StopLandingLag();
-    }
-    public void StopAnimationButLeaveCurrentAnimBool(string boolToSetFalse) // same as StopAnimation but does not clear the attack bool so it can be checked to apply landing lag.
-        // called only by the start of landing lag atm
-    {
-        if (debugMessages)
+        if (!string.IsNullOrEmpty(boolToSetFalse))
         {
-            Debug.Log("stopped animation " + boolToSetFalse + "- frame: " + c1.frame);
+            ChangeAnimBool(boolToSetFalse, false, true);
         }
 
-        anim.SetBool(boolToSetFalse, false);
+        StopEverything();
+    }
 
+    public void StopEverything() // Clears everything and stops all animations. If called solo, does not clear the attack bool so it can be checked to apply landing lag.
+    {
+        c1.affectedByGravity = true;
         anim.SetBool("ContinueAttack", false);
-        clm.RemoveLocker(c1.inAnim);
-        clm.RemoveLocker(c1.dashing);
-        clm.RemoveLocker(c1.inAerialAnim);
+        anim.SetBool("Movement", false);
+        anim.SetBool("Special", false);
+        anim.SetBool("Jumpsquat", false);
+        clmEx.RemoveAllLockersExcept(clm, c1.allLockers, new StandardControlLocker[] { c1.grounded, c1.airborne });
+        c1.affectedByGravity = true;
+        c1.ChangeIntangible(false);
+        c1.ignoreFriction = false;
         StopLandingLag();
+        c1.permaTrailps.Play();
+        c1.canFastFall = true;
+
+        ResetDoNotEnable();
     }
 
     public void SetAnimBoolTrue(string toSetTrue) // Sets a single animation bool true from the animator, and updates currentAnimBool if it is an attack.
@@ -253,9 +293,53 @@ public class AnimationEvents : MonoBehaviour
 
     public void Dash()
     {
-        rb.AddForce(pim.GetCurrentDirectional().current * c1.dashForce);
+        Debug.Log("dash force: " + gameObject.name);
+
+        Vector2 currentDir = pim.GetCurrentDirectional().current;
+        if (currentDir != Vector2.zero)
+        {
+            rb.AddForce(currentDir * c1.dashForce);
+        }
+        else
+        {
+            rb.AddForce(new Vector2(1 * (c1.facingRight ? 1 : -1), 0) * c1.dashForce);
+        }
+
         StartStopTrail(1);
         clm.RemoveLocker(c1.wallcling);
+    }
+
+    public void SpawnGhostCounterShield()
+    {
+        c1.affectedByGravity = false;
+        c1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        Vector2 currentDir = c1.pim.GetCurrentDirectional().current;
+        float rotationz;
+        if (currentDir != new Vector2(0, 0))
+        {
+            rotationz = Vector2.Angle(new Vector2(1, 0), c1.pim.GetCurrentDirectional().current);
+            if (c1.pim.GetCurrentDirectional().current.y < 0)
+            {
+                rotationz *= -1;
+            }
+        }
+        else
+        {
+            rotationz = c1.facingRight ? 0 : -180;
+        }
+        Vector2 offset = Vector2.zero;
+        if (currentDir == Vector2.zero)
+        {
+            offset.x = c1.facingRight ? 1 : -1;
+        }
+        else
+        {
+            offset = currentDir;
+        }
+
+        Instantiate(c1.counterShield, transform.position + (Vector3) offset, Quaternion.Euler(0, 0, rotationz)).GetComponent<SimpleAnimationEvents>().owner = gameObject;
+
     }
 
     public void SpawnDirectionalSmokeCloud()
@@ -268,10 +352,24 @@ public class AnimationEvents : MonoBehaviour
         em.SpawnDirectionalEffect(name, transform.position, c1.facingRight);
     }
 
+    public void SpawnEffectAtFeet(string name)
+    {
+        em.SpawnDirectionalEffect(name, transform.position + new Vector3 (c1.feetOffset.x * (c1.facingRight ? 1 : -1), c1.feetOffset.y, 0), c1.facingRight);
+    }
+
     public void StartStopTrail(int startstop)
     {
-        if (startstop == 1) { trailps.Play(); }
-        else { trailps.Stop(); }
+        if (c1.dashps != null)
+        {
+            if (startstop == 1)
+            {
+                c1.dashps.Play();
+            }
+            else
+            {
+                c1.dashps.Stop();
+            }
+        }
     }
 
     public void SlowSpeed(float magnitude) // slows speed after a dash finishes; called by animation event. THIS DOES NOT SCALE AUTOMATICALLY; if dash intensity changes a different magnetude must be entered.
@@ -288,6 +386,27 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    public void InstantiateObjectFromAnimation(string name)
+    {
+        foreach (ObjectToInstantiate i in projectiles)
+        {
+            if (i.name == name)
+            {
+                GameObject newProj = Instantiate(i.prefab, transform.position + new Vector3(i.offset.x * (c1.facingRight ? 1 : -1), i.offset.y, 0),
+                    Quaternion.Euler(new Vector3(0, 0, i.angle * (c1.facingRight ? 1 : -1))));
+                Destroy(newProj, i.lifetime * 0.01666666666f);
+
+                if (newProj.TryGetComponent(out SimpleAnimationEvents sae))
+                {
+                    sae.owner = gameObject;
+                }
+
+                return;
+            }
+        }
+        Debug.LogWarning("Tried to spawn " + name + " but " + gameObject.name + " does not have an object with that name in its projectile list.");
+    }
+
     public void ApplyWallJumpForce() // called by walljump animation
     {
         rb.velocity = Vector2.zero;
@@ -301,12 +420,7 @@ public class AnimationEvents : MonoBehaviour
         {
             rb.AddForce(1.4f * c1.initialJumpForce * new Vector2(-0.75f * c1.collidedWallSide, c1.wallJumpVerticalOoOne));
         }
-        clm.RemoveLocker(c1.wallcling);
-        c1.collidedWallSide = 0;
-        c1.touchingWall = false;
-        c1.wallTouching = null;
-
-        // it is ridiculous how many things I have to set here, something about wall mechanics should probably be reworked
+        c1.WallClingEnterExit(false);
     }
 
     public void ApplyJumpForce() // called by jump animation
@@ -331,5 +445,15 @@ public class AnimationEvents : MonoBehaviour
     public void PlaySoundGroupFromAnimator(string name)
     {
         c1.am.PlaySoundGroup(name);
+    }
+
+    [Serializable]
+    public class ObjectToInstantiate
+    {
+        public GameObject prefab;
+        public string name;
+        public float angle;
+        public Vector2 offset;
+        public int lifetime;
     }
 }

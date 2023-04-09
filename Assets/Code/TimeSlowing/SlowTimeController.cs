@@ -167,6 +167,11 @@ namespace TimeSlowing
             {
                 tst.RemoveTargets(identifiable);
             }
+
+            if (targetedSlowSubscribers.TryGetValue(identifiable.Identifier, out TargetedSlowInfo<T> tsi))
+            {
+                tsi.NotSlowed();
+            }
         }
 
         public void Slow(T st)

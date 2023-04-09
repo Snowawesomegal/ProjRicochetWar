@@ -192,23 +192,7 @@ public class PlayerInputManager : MonoBehaviour
     public void InputSpecial(CharacterInput input)
     {
         CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
-        switch (snappedDirection)
-        {
-            case CharacterInput.CardinalDirection.UP:
-                // call up special in player controller
-                break;
-            case CharacterInput.CardinalDirection.DOWN:
-                // call down special in player controller
-                break;
-            case CharacterInput.CardinalDirection.LEFT:
-            case CharacterInput.CardinalDirection.RIGHT:
-            case CharacterInput.CardinalDirection.NONE:
-                // call forward/side special in player controller
-                break;
-            default:
-                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
-                break;
-        }
+        playerController.SpecialResponse(input);
     }
 
     public void OnHeavy(InputAction.CallbackContext ctxt)
@@ -246,23 +230,7 @@ public class PlayerInputManager : MonoBehaviour
     public void InputMovement(CharacterInput input)
     {
         CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
-        switch (snappedDirection)
-        {
-            case CharacterInput.CardinalDirection.UP:
-                // call up movement in player controller
-                break;
-            case CharacterInput.CardinalDirection.DOWN:
-                // call down movement in player controller
-                break;
-            case CharacterInput.CardinalDirection.LEFT:
-            case CharacterInput.CardinalDirection.RIGHT:
-            case CharacterInput.CardinalDirection.NONE:
-                // call forward/side movement in player controller
-                break;
-            default:
-                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
-                break;
-        }
+        playerController.MovementResponse(input);
     }
 
     public bool CanInput(ControlLock.Controls controls, out string debugStr)

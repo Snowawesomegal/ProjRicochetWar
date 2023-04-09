@@ -8,6 +8,7 @@ public class Pogobox : MonoBehaviour
     public GameObject owner;
     AudioManager am;
     public bool facingRight = true;
+    Control1 c1;
 
     [SerializeField] float bounceForce = 1300;
 
@@ -22,13 +23,17 @@ public class Pogobox : MonoBehaviour
     {
         owner = transform.root.gameObject;
         playerrb = owner.GetComponent<Rigidbody2D>();
-        am = owner.GetComponent<Control1>().am;
+        c1 = owner.GetComponent<Control1>();
+        am = c1.am;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Standable") || collision.CompareTag("Player"))
+        if (collision.CompareTag("Ground") || collision.CompareTag("Player") || collision.CompareTag("Platform"))
         {
+            c1.applyFFMultiplier = false;
+            c1.delayFF = 10;
+            
             playerrb.velocity = new Vector2(playerrb.velocity.x, 0);
             playerrb.AddForce(AngleMath.Vector2FromAngle(bounceAngle).normalized * bounceForce);
 

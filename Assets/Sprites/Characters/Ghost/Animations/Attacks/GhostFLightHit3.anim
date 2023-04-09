@@ -21,17 +21,17 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 1851402219, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
-    - time: 0.1
+    - time: 0.083333336
       value: {fileID: -1000462026, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
     - time: 0.2
       value: {fileID: -2095750007, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
     - time: 0.3
       value: {fileID: -1962717366, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
-    - time: 0.4
+    - time: 0.35
       value: {fileID: 1612434122, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
-    - time: 0.5
+    - time: 0.4
       value: {fileID: 1832692613, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
-    - time: 0.6
+    - time: 0.45
       value: {fileID: -303188966, guid: 6debe879c99ab47b294daece57ce6c1b, type: 3}
     attribute: m_Sprite
     path: 
@@ -64,7 +64,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6166667
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -98,21 +98,21 @@ AnimationClip:
     floatParameter: 850
     intParameter: 0
     messageOptions: 0
-  - time: 0.1
+  - time: 0.083333336
     functionName: EnableHitbox
     data: FLightAttackHit3
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.1
+  - time: 0.083333336
     functionName: PlaySoundFromAnimator
     data: SwordSwing4
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6166667
+  - time: 0.5
     functionName: StopAnimation
     data: FLightAttack
     objectReferenceParameter: {fileID: 0}

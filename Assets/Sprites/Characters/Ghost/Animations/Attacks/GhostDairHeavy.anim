@@ -25,11 +25,11 @@ AnimationClip:
       value: {fileID: -1824584582, guid: 40c21b5c99bee46cd903757cd178e4d6, type: 3}
     - time: 0.2
       value: {fileID: 1928427802, guid: 40c21b5c99bee46cd903757cd178e4d6, type: 3}
-    - time: 0.33333334
+    - time: 0.3
       value: {fileID: 177038369, guid: 40c21b5c99bee46cd903757cd178e4d6, type: 3}
-    - time: 0.43333334
+    - time: 0.4
       value: {fileID: 1512955240, guid: 40c21b5c99bee46cd903757cd178e4d6, type: 3}
-    - time: 0.53333336
+    - time: 0.5
       value: {fileID: -1205915461, guid: 40c21b5c99bee46cd903757cd178e4d6, type: 3}
     attribute: m_Sprite
     path: 
@@ -61,7 +61,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6333333
+    m_StopTime: 0.6
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -88,14 +88,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.3
     functionName: EnableMultiHitbox
     data: DairHeavy
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6333333
+  - time: 0.6
     functionName: StopAnimation
     data: DHeavyAttack
     objectReferenceParameter: {fileID: 0}

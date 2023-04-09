@@ -12,3 +12,26 @@ public static class AngleMath
         return new Vector2(Mathf.Cos(Mathf.Deg2Rad * degreeAngle), Mathf.Sin(Mathf.Deg2Rad * degreeAngle));
     }
 }
+
+public static class clmEx
+{
+    public static void RemoveAllLockersExcept(ControlLockManager clm, StandardControlLocker[] allLockers, StandardControlLocker[] except = null)
+    {
+        if (except == null)
+        {
+            clm.activeLockers.Clear();
+        }
+        else
+        {
+            foreach(StandardControlLocker i in allLockers)
+            {
+                if (System.Array.FindIndex(except, x => x == i) > -1)
+                {
+                    continue;
+                }
+
+                clm.RemoveLocker(i);
+            }
+        }
+    }
+}

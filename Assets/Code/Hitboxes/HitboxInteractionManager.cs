@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,16 @@ public class HitboxInteractionManager : MonoBehaviour
 {
     EffectManager em;
 
-    public List<Collider2D> triggersThisFrame = new List<Collider2D>();
+    public List<Pair<Collider2D, Collider2D>> hitboxPlayerCol = new List<Pair<Collider2D, Collider2D>>();
+    public List<Pair<Collider2D, Collider2D>> hitboxHitboxCol = new List<Pair<Collider2D, Collider2D>>();
+    public List<Pair<Collider2D, Collider2D>> hitboxCounterCol = new List<Pair<Collider2D, Collider2D>>();
+    public List<Pair<Collider2D, Collider2D>> grabPlayerCol = new List<Pair<Collider2D, Collider2D>>();
+
     public List<GameObject> doNotEnableHitboxes = new List<GameObject>();
 
     public float hitboxDamageDifferenceToWin = 10;
+
+    public event Action<GameObject> SelfDestructObject;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +36,6 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 if (i.TryGetComponent(out HitboxInfo ihbi))
                 {
-                    Debug.Log("added player to " + ihbi + " as part of a multihitbox");
                     ihbi.playersHitAlready.Add(player);
                 }
             }
@@ -60,10 +66,24 @@ public class HitboxInteractionManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("You just tried to involve a pogobox with a collision or something, code is very broken");
+            Debug.LogWarning("Called GetConnectedHitboxes on an object that is not a hitbox. That's not good.");
         }
 
         return hitboxesToRemove;
+    }
+
+    void DisableHitboxes(GameObject partOfMultipart)
+    {
+        foreach (Transform hitbox in GetConnectedHitboxes(partOfMultipart))
+        {
+            Debug.Log("disable hitbox " + hitbox.name);
+            hitbox.gameObject.SetActive(false);
+            if (hitbox.TryGetComponent(out HitboxInfo hbi2))
+            {
+                hbi2.doNotEnable = true;
+                doNotEnableHitboxes.Add(hitbox.gameObject);
+            }
+        }
     }
 
     public IEnumerator AfterPhysicsUpdate() // Using WaitForFixedUpdate is the only way to run something AFTER the Collision calls
@@ -73,9 +93,13 @@ public class HitboxInteractionManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
 
             RunHitBoxManagement();
-            triggersThisFrame.Clear();
-        }
+            RunGrabManagement();
 
+            hitboxPlayerCol.Clear();
+            hitboxHitboxCol.Clear();
+            hitboxCounterCol.Clear();
+            grabPlayerCol.Clear();
+        }
 
         // Runs through every collider that has collided this frame, and adds them to either hitboxes or hurtboxes
         // Removes inactive hitboxes and deactives touching hitboxes.
@@ -83,122 +107,150 @@ public class HitboxInteractionManager : MonoBehaviour
 
         void RunHitBoxManagement()
         {
+            if (hitboxPlayerCol.Count + hitboxHitboxCol.Count + hitboxCounterCol.Count + grabPlayerCol.Count == 0) { return; }
 
-            if (triggersThisFrame.Count == 0) { return; }
-
-            List<Collider2D> hitboxes = new List<Collider2D>();
-            List<Collider2D> hurtboxes = new List<Collider2D>();
-
-            void DisableAndRemoveHitboxes(GameObject baseBox)
+            // Hitboxes collided with each other this frame. Dealing with hitbox on hitbox interactions:
+            if (hitboxHitboxCol.Count > 0)
             {
-                foreach (Transform hitbox in GetConnectedHitboxes(baseBox))
+                foreach (Pair<Collider2D, Collider2D> hitboxPair in hitboxHitboxCol) // iterate the list of all hitbox on hitbox combinations
                 {
-                    hitbox.gameObject.SetActive(false);
-                    hitboxes.Remove(hitbox.GetComponent<Collider2D>());
-                    if (hitbox.TryGetComponent(out HitboxInfo hbi2))
+                    HitboxInfo leftHBI = hitboxPair.left.GetComponent<HitboxInfo>();
+                    HitboxInfo rightHBI = hitboxPair.right.GetComponent<HitboxInfo>();
+
+                    if (leftHBI.isDestroyable || rightHBI.isDestroyable)
                     {
-                        hbi2.doNotEnable = true;
-                        doNotEnableHitboxes.Add(hitbox.gameObject);
-                    }
-                }
-            }
-
-            foreach(Collider2D i in triggersThisFrame) // Get separate lists of hitboxes and hurtboxes, exclude walls
-            {
-                if (i.TryGetComponent(out HitboxInfo hbi))
-                {
-                    hitboxes.Add(i);
-                }
-                else if (i.TryGetComponent(out Control1 c1)) // THIS WILL BREAK IF WE USE A DIFFERENT SCRIPT FOR CONTROL (or Hit()) //TODO
-                {
-                    hurtboxes.Add(i);
-                }
-            }
-
-            List<Collider2D> hitboxesCopy = new List<Collider2D>(hitboxes);
-
-            // more than one hitbox collided with something this frame. Dealing with hitbox on hitbox interactions:
-            if (hitboxes.Count > 1)
-            {
-                List<List<Collider2D>> allCombinations = new List<List<Collider2D>>(); // List of all combinations of Colliders that collided this frame + are not of the same parent
-                List<Collider2D> newCollider = new List<Collider2D>();
-
-                foreach (Collider2D one in hitboxesCopy) // run through every hitbox that collided this frame
-                {
-                    foreach (Collider2D two in hitboxesCopy) // and other hitbox that collided this frame again
-                    {
-                        if (one == two || one.gameObject == two.gameObject) // if colliders are not the same or from the same parent
+                        if (leftHBI.isDestroyable)
                         {
-                            continue;
-                        }
-
-                        newCollider = new List<Collider2D>() { one, two };
-                        if (!allCombinations.Contains(newCollider)) // add them to a list if they form a unique combination
-                        {
-                            allCombinations.Add(newCollider);
-                        }
-                    }
-                }
-
-                foreach (List<Collider2D> i in allCombinations) // iterate the list of all unique collider combinations
-                {
-                    Collider2D one = i[0];
-                    Collider2D two = i[1];
-
-                    HitboxInfo oneHitboxInfo = one.GetComponent<HitboxInfo>();
-                    HitboxInfo twoHitboxInfo = two.GetComponent<HitboxInfo>();
-
-                    if (one.IsTouching(two))
-                    {
-                        if (Mathf.Abs(oneHitboxInfo.damage - twoHitboxInfo.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to beat out
-                        {
-                            if (oneHitboxInfo.damage > twoHitboxInfo.damage) // disable the weaker hitbox, because it must be much weaker
+                            leftHBI.objectHealth -= rightHBI.damage;
+                            if (leftHBI.objectHealth <= 0)
                             {
-                                DisableAndRemoveHitboxes(one.gameObject);
+                                SelfDestructObject?.Invoke(leftHBI.gameObject);
+                            }
+                        }
+                        else
+                        {
+                            rightHBI.objectHealth -= leftHBI.damage;
+                            if (rightHBI.objectHealth <= 0)
+                            {
+                                SelfDestructObject?.Invoke(rightHBI.gameObject);
+                            }
+                        }
+                    }
+                    else if (leftHBI.owner != rightHBI.owner && !rightHBI.cannotClank && !leftHBI.cannotClank)
+                    {
+                        if (Mathf.Abs(leftHBI.damage - rightHBI.damage) > hitboxDamageDifferenceToWin) // if damage diff > diff to beat out
+                        {
+                            if (leftHBI.damage > rightHBI.damage) // disable the weaker hitbox, because it must be much weaker
+                            {
+                                DisableHitboxes(hitboxPair.left.gameObject);
                             }
                             else
                             {
-                                DisableAndRemoveHitboxes(two.gameObject);
+                                DisableHitboxes(hitboxPair.right.gameObject);
                             }
                         }
                         else // hitboxes are similar damages, disable both
                         {
-                            em.SpawnHitEffectOnContactPoint("ClankEffect1", one, two.bounds.center);
+                            em.SpawnHitEffectOnContactPoint("ClankEffect1", hitboxPair.left, hitboxPair.right.bounds.center);
 
-                            DisableAndRemoveHitboxes(one.gameObject);
-                            DisableAndRemoveHitboxes(two.gameObject);
+                            DisableHitboxes(hitboxPair.left.gameObject);
+                            DisableHitboxes(hitboxPair.right.gameObject);
                         }
                     }
                 }
             }
 
-            List<Pair<GameObject, GameObject>> hitlist = new List<Pair<GameObject, GameObject>>(); // stores all hurtbox/hitbox collision pairs, Hitbox is Left, Hurtbox is Right
-            foreach(Collider2D hurtbox in hurtboxes)
+            if (hitboxCounterCol.Count > 0) // registering counter hits before the hitboxes are registered hitting anything
             {
-                foreach (Collider2D hitbox in hitboxes)
+                foreach (Pair<Collider2D, Collider2D> counterHitboxPair in hitboxCounterCol)
                 {
-                    HitboxInfo hbi = hitbox.GetComponent<HitboxInfo>();
-                    GameObject hurtboxGameObject = hurtbox.gameObject;
+                    HitboxInfo hbi = counterHitboxPair.left.GetComponent<HitboxInfo>();
+                    GameObject counterOwner = counterHitboxPair.right.GetComponent<HitboxInfo>().owner;
 
-                    // if player is touching hitbox, and the hitbox doesn't belong to that player, and that player hasn't already been hit by that hitbox
-                    if (hurtbox.IsTouching(hitbox) && hbi.owner != hurtboxGameObject && !hbi.playersHitAlready.Contains(hurtboxGameObject))
+                    // if counter is touching hitbox, and the hitbox doesn't belong to the same player as the counter, and that player hasn't already been hit by the counter
+                    if (hbi.owner != counterOwner && !counterHitboxPair.right.GetComponent<HitboxInfo>().playersHitAlready.Contains(hbi.owner))
                     {
-                        hitlist.Add(new Pair<GameObject, GameObject>(hitbox.gameObject, hurtbox.gameObject));
+                        DisableHitboxes(counterHitboxPair.left.gameObject);
+                        hbi.owner.GetComponent<Control1>().Hit(counterHitboxPair.right); // this means counters always hit the player, even with projectiles
                     }
                 }
             }
 
-            // order by priority and FINALLY deal damage and knockback
-            hitlist = hitlist.OrderBy(pair => pair.left.GetComponent<HitboxInfo>().priority).ToList();
-            foreach (Pair<GameObject, GameObject> i in hitlist) // hitbox left, hurtbox right
+
+            // order by priority and deal damage and knockback to players hit by hitboxes
+            hitboxPlayerCol = hitboxPlayerCol.OrderBy(pair => pair.left.GetComponent<HitboxInfo>().priority).ToList();
+            foreach (Pair<Collider2D, Collider2D> i in hitboxPlayerCol) // hitbox left, hurtbox right
             {
-                if (!i.left.GetComponent<HitboxInfo>().playersHitAlready.Contains(i.right)) // check if the hitbox has had the player added recently
+                HitboxInfo hbi = i.left.GetComponent<HitboxInfo>();
+                if (!hbi.playersHitAlready.Contains(i.right.gameObject) && i.left.enabled) // check if the hitbox has had the player added during the move already
                 {
-                    i.right.GetComponent<Control1>().Hit(i.left.GetComponent<Collider2D>(), true);
-                    em.SpawnHitEffectOnContactPoint("LightHitEffect", i.left.GetComponent<Collider2D>(), i.right.transform.position);
-                    AddPlayerToConnectedHitboxes(i.left, i.right); // add hit player to connected hitboxes so they cannot also hit them
+                    Control1 hurtboxC1 = i.right.GetComponent<Control1>();
+                    if (hurtboxC1.intangible)
+                    {
+                        continue;
+                    }
+
+                    Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
+                    hurtboxC1.FreezeFrames(0, hbi.hitstopFrames); // apply hitstop defending player
+                    if (!hbi.isProjectile) // is not projectile; apply hitstop attacking player too; if projectile the attacking player is not frozen
+                    {
+                        hitboxC1.FreezeFrames(0, hbi.hitstopFrames);
+                    }
+
+                    if (!string.IsNullOrEmpty(hbi.hitsound)) // play hit sound
+                    {
+                        if (hbi.soundGroupInsteadOfSound)
+                        {
+                            hurtboxC1.am.PlaySoundGroup(hbi.hitsound);
+                        }
+                        else
+                        {
+                            hurtboxC1.am.PlaySound(hbi.hitsound);
+                        }
+                    }
+
+                    hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true); // apply knockback to defending player
+
+                    em.SpawnHitEffectOnContactPoint(GetApproriateEffect(hbi.damage), i.left.GetComponent<Collider2D>(), i.right.transform.position);
+                    AddPlayerToConnectedHitboxes(i.left.gameObject, i.right.gameObject); // add hit player to connected hitboxes so they cannot also hit them
+
+                    SelfDestructObject?.Invoke(i.left.gameObject);
                 }
             }
         }
+
+        void RunGrabManagement()
+        {
+            foreach (Pair<Collider2D, Collider2D> i in grabPlayerCol) // left grab hitbox, right player hitbox
+            {
+                if (i.left.GetComponent<HitboxInfo>().owner != i.right.gameObject)
+                {
+                    i.right.transform.root.GetComponent<Control1>().Grabbed(i.left);
+                    DeathHeavyClawControl dhcc = i.left.transform.root.GetComponent<DeathHeavyClawControl>();
+                    dhcc.grabbedPlayer = i.right.gameObject;
+                    dhcc.grabbedPlayerRB = i.right.GetComponent<Rigidbody2D>();
+                    dhcc.grabbedPlayerRB.velocity = Vector2.zero;
+
+                    em.SpawnHitEffectOnContactPoint(GetApproriateEffect(i.left.GetComponent<HitboxInfo>().damage), i.left.GetComponent<Collider2D>(), i.right.transform.position);
+                }
+            }
+        }
+    }
+
+    public string GetApproriateEffect(float damage)
+    {
+        if (damage < 5)
+        {
+            return "MinorHitEffect";
+        }
+        else if (damage >= 5 && damage < 10)
+        {
+            return "MediumHitEffect1";
+        }
+        else
+        {
+            return "MajorHitEffect1";
+        }
+
     }
 }

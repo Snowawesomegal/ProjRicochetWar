@@ -19,9 +19,10 @@ public class AudioManagerCustomInspector : Editor
             return;
         }
 
-        if (EditorUtility.IsPersistent(myTarget.gameObject))
+        if (EditorUtility.IsPersistent(myTarget.gameObject)) // returns false if object lives in scene
         {
-            EditorGUILayout.HelpBox("Unable to view object further because it is not persistent (instantiated) yet.", MessageType.Info);
+            EditorGUILayout.HelpBox("Unable to view object further because it is not instantiated (in the scene) yet.", MessageType.Info);
+            return;
         }
 
         if (myTarget.musicMap == null || myTarget.soundMap == null || myTarget.soundGroupMap == null)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(PlayerShaderController))]
 public class PlayerShaderControllerInspector : Editor
@@ -11,6 +12,18 @@ public class PlayerShaderControllerInspector : Editor
         base.OnInspectorGUI();
 
         PlayerShaderController myTarget = (PlayerShaderController)target;
+
+        if (EditorSceneManager.IsPreviewScene(myTarget.gameObject.scene))
+        {
+            EditorGUILayout.HelpBox("Unable to initialize shader because you are in preview mode.", MessageType.Info);
+            return;
+        }
+
+        if (EditorUtility.IsPersistent(myTarget.gameObject)) // returns false if object lives in scene
+        {
+            EditorGUILayout.HelpBox("Unable to initialize shader because it is not instantiated (in the scene) yet.", MessageType.Info);
+            return;
+        }
 
         EditorGUILayout.Space(10);
 

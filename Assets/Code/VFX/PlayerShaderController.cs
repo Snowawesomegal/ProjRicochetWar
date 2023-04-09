@@ -6,7 +6,7 @@ public class PlayerShaderController : MonoBehaviour
 {
     public const int NUMBER_COLORS = 10;
 
-    [SerializeField] Renderer renderer;
+    [SerializeField] new Renderer renderer;
     [HideInInspector] Material material;
 
     [HideInInspector] public bool color_selector_dropdown;
@@ -18,6 +18,7 @@ public class PlayerShaderController : MonoBehaviour
     private void Awake()
     {
         ValidateMaterial();
+        RefreshSamplePalette();
     }
 
     // Ensure that the material is present
@@ -42,6 +43,7 @@ public class PlayerShaderController : MonoBehaviour
     {
         // Reset the material being used
         bool removeTossedMaterial = (material != null);
+        Debug.Log("Please ignore the error about leaking materials into the scene. This behavior is understood and taken care of.");
         material = renderer.material;
         // This is called in order to clean up random materials that generated and lost their last reference.
         // Without this, we get a material leak in the editor: https://answers.unity.com/questions/283271/material-leak-in-editor.html

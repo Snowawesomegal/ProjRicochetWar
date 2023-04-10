@@ -6,8 +6,8 @@ using UnityEngine;
 [Serializable]
 public class Pair<L, R>
 {
-    [SerializeField] public L left { get; set; }
-    [SerializeField] public R right { get; set; }
+    [SerializeField] public L left;
+    [SerializeField] public R right;
 
     public Pair(L left, R right)
     {

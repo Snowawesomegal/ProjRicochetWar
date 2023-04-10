@@ -4,57 +4,94 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using System.Drawing;
+using System.Linq;
+using UnityEngine.TextCore.Text;
+using System.Runtime;
+using Unity.VisualScripting;
 
-public class Control1 : MonoBehaviour
+public class Control1 : MonoBehaviour, IIdentifiable
 {
-    //February 14, 2023, 10:08PM
+    // Todo list
+    // add Death's heavy aerials
 
+    private uint id;
+    private bool initializedID;
+    bool IIdentifiable.InitializedID { get { return initializedID; } set { initializedID = value; } }
+    uint IIdentifiable.ID { get { return id; } set { id = value; } }
+
+    public GameObject testCircle;
+    public Vector3 feetOffset;
+    float minimumHitstunFrames = 0;
 
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
     [SerializeField] float fallSpeed = 10;
     [SerializeField] float fallAccel = 10;
     [SerializeField] float friction = 10;
-    [SerializeField] float wallJumpVerticalOoOne = 0.5f;
-    public bool ignoreGravity = false;
+    [SerializeField] float airFriction = 500;
+    public float wallJumpVerticalOoOne = 0.5f;
+    public bool affectedByGravity = true;
     public bool intangible = false;
+    public bool ignoreFriction = false;
+    [SerializeField] float DIStrength = 5;
+    int knockbackTime = 0;
+    Vector2 initialLaunchVelocity;
+    Pair<HitboxInfo, Vector2> queuedKnockback;
+    GameObject runeActive;
+    [SerializeField] bool DLightBounce = true;
+    public bool firstFrameOfHitstun = false;
+    public bool canFastFall = true;
 
     //speeds
-    [SerializeField] float airSpeed = 10;
-    [SerializeField] float airAccel = 10;
-    [SerializeField] float groundSpeed = 10;
+    public float airSpeed = 10;
+    [SerializeField] float airAccel = 50;
+    [SerializeField] float airAccelDuringAerial = 40;
+    public float groundSpeed = 10;
     [SerializeField] float groundAccel = 10;
-    [SerializeField] float initialJumpForce = 10;
+    public float initialJumpForce = 10;
+    public float dashForce = 10;
+    [SerializeField] float overMaxYSpeedAdjustment = 10;
+    [SerializeField] float overMaxXSpeedAdjustment = 10;
+    [SerializeField] float fastFallMultiplier = 1.5f;
+    public bool applyFFMultiplier = false;
+    public int delayFF = 0;
+    Vector2 beforeFreezeSpeed = Vector2.zero;
+    float moveDiMultiplier = 1;
+
+    //Costs
+    [SerializeField] float dashCost = 50;
 
     //windows
-    [SerializeField] float shorthopWindow = 3;
-    [SerializeField] float walljumpShorthopWindow = 3;
-
-    //resources
-    [SerializeField] float maxHealth = 100;
-    [SerializeField] float currentHealth;
-    [SerializeField] float maxDashCharge = 100;
-    [SerializeField] float dashCharge;
-    [SerializeField] float dashForce = 10;
+    public float shorthopWindow = 3;
+    public float walljumpShorthopWindow = 3;
 
     //components
     Rigidbody2D rb;
     Collider2D bc;
     Animator anim;
     SpriteRenderer sr;
-    ControlLockManager clm;
-    PlayerInputManager pim;
+    public ControlLockManager clm;
+    public PlayerInputManager pim;
     ActivateHitbox ah;
     HitboxInteractionManager him;
-    Slider healthBar;
-    ParticleSystem trailps;
-    [SerializeField] AudioManager am;
+    public ParticleSystem dashps;
+    public ParticleSystem permaTrailps;
+    public AudioManager am;
+    public GameObject sm;
+    EffectManager em;
+    InMatchUI imui;
+    AnimationEvents ae;
+    TrailRenderer tr;
+    PlayerShaderController psc;
 
     public PhysicsMaterial2D bouncy;
     public PhysicsMaterial2D notBouncy;
 
     //buffer
-    public int bufferLength = 5; //how long in seconds an input that is not currently valid will wait to be valid
+    public int FFbufferLength = 10; //how long in seconds an input that is not currently valid will wait to be valid
+    int fastFallBuffer = 0;
+
 
     //Control Lockers
     public StandardControlLocker grounded;
@@ -63,23 +100,43 @@ public class Control1 : MonoBehaviour
     public StandardControlLocker inAnim;
     public StandardControlLocker wallcling;
     public StandardControlLocker onlyAttack;
+    public StandardControlLocker dashing;
+    public StandardControlLocker inAerialAnim;
+    public StandardControlLocker inGrab;
+    public StandardControlLocker UNIQUEinMovementAir;
+    public StandardControlLocker UNIQUEinMovementGround;
+    public StandardControlLocker[] allLockers;
 
-    Collider2D wallTouching;
-    bool touchingWall = false;
+    public bool touchingWall = false;
     public float minimumSpeedForHitstun = 50;
     public int framesInHitstun = 0;
     public bool facingRight = true;
+    string currentGroundTag = null;
+
+    [SerializeField] bool spawnSmokeOnDirectionChange;
 
     //Wall Collision
-    int collidedWallSide;
-    float collidedWallSlope;
+    public int collidedWallSide;
+    public float collidedWallSlope;
     [SerializeField] GameObject platformCollider;
+
+    List<Collider2D> currentOverlaps = new List<Collider2D>();
 
     //objects
     public GameObject ball;
+    public GameObject rune;
+    public GameObject counterShield;
 
-    //frame counter
+    //frames
     public int frame = 0;
+    int dropPlatformFrames = 0;
+    [SerializeField] int dropPlatformTotalFrames = 7;
+
+    //Animator
+    public string currentAnimBool = "FHeavyAttack";
+
+    //debug
+    public bool animationDebugMessages = true;
 
     void Start()
     {
@@ -90,19 +147,104 @@ public class Control1 : MonoBehaviour
         pim = GetComponent<PlayerInputManager>();
         clm = GetComponent<ControlLockManager>();
         ah = GetComponent<ActivateHitbox>();
-        healthBar = ((Canvas)GameObject.FindAnyObjectByType(typeof(Canvas))).transform.GetChild(1).GetComponent<Slider>();
-        trailps = GetComponent<ParticleSystem>();
+        sm = GameObject.Find("SettingsManager");
+        am = sm.GetComponent<AudioManager>();
+        imui = GetComponent<InMatchUI>();
+        ae = GetComponent<AnimationEvents>();
+        em = sm.GetComponent<EffectManager>();
+        tr = GetComponent<TrailRenderer>();
+        psc = GetComponent<PlayerShaderController>();
+
+        allLockers = new StandardControlLocker[]
+        { grounded, airborne, hitstun, inAnim, inAerialAnim, wallcling, onlyAttack, dashing, inGrab, UNIQUEinMovementAir, UNIQUEinMovementGround};
 
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
 
-        currentHealth = maxHealth;
-        healthBar.maxValue = maxHealth;
-        dashCharge = maxDashCharge;
-        //_________
+        Physics2D.gravity = Vector2.zero;
 
-        friction /= 100; //adjusting friction to make it smaller because friction's effect is massive
+    }
+
+    private void Awake()
+    {
+        ((IIdentifiable)this).InitializeID();
+        GameManager.Instance.TimeController.SubscribeTargetedSlow(this, OnSlow);
+    }
+
+    public void OnSlow(float speed)
+    {
+        anim.speed = speed;
+
+        if (speed == 0)
+        {
+            beforeFreezeSpeed = rb.velocity;
+
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.isKinematic = true;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.isKinematic = false;
+
+            rb.velocity = beforeFreezeSpeed;
+        }
+    }
+
+    public void FreezeFrames(int framesPerTick, int duration)
+    {
+        GameManager.Instance.TimeController.Slow(framesPerTick, duration, this);
+    }
+
+    void TryBufferFastFall()
+    {
+        if (rb.velocity.y <= 0 && canFastFall)
+        {
+            StartStopFastFall(true);
+        }
+        else
+        {
+            fastFallBuffer = FFbufferLength;
+        }
+    }
+
+    void StartStopFastFall(bool startstop)
+    {
+        if (startstop)
+        {
+            if (applyFFMultiplier == false)
+            {
+                em.SpawnDirectionalEffect("Sparkle1", new Vector3(transform.position.x + (facingRight ? 1f : -1f), transform.position.y - 1.2f, 0), facingRight);
+            }
+            applyFFMultiplier = true;
+            fastFallBuffer = 0;
+
+            if (rb.velocity.y > -fallSpeed * 0.6f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -fallSpeed * 0.6f);
+            }
+        }
+        else
+        {
+            applyFFMultiplier = false;
+        }
+    }
+
+    void ManageFastFall()
+    {
+        if (fastFallBuffer > 0 && canFastFall)
+        {
+            fastFallBuffer -= 1;
+            if (rb.velocity.y <= 0)
+            {
+                StartStopFastFall(true);
+            }
+        }
+        if (delayFF > 0)
+        {
+            delayFF -= 1;
+        }
     }
 
     public void VerticalResponse(CharacterInput input)
@@ -110,154 +252,307 @@ public class Control1 : MonoBehaviour
         if (input.Direction.current.y < -0.5)
         {
             platformCollider.SetActive(false);
-        }
-        else
-        {
-            platformCollider.SetActive(true);
+            if (dropPlatformFrames == 0)
+            {
+                dropPlatformFrames = 1;
+            }
+
+            if (clm.activeLockers.Contains(grounded)) // because this technically triggers on normal ground, not just platforms, edge cases exist
+            {
+                dropPlatformFrames = dropPlatformTotalFrames;
+                if (currentGroundTag == "Platform") // if dropped through a platform, delay the ability to FF for 4 frames
+                {
+                    delayFF = 5;
+                }
+            }
+            else
+            {
+                if (delayFF <= 0)
+                {
+                    TryBufferFastFall();
+                }
+            }
         }
     }
 
     public void HorizontalResponse(CharacterInput input)
     {
-        if (clm.activeLockers.Contains(wallcling))
+        if (!clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
         {
-            if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
+            if (clm.activeLockers.Contains(grounded)) // if grounded: move
             {
-                clm.RemoveLocker(wallcling);
+                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel); // Ground move
             }
-        }
-        else
-        {
-            if (clm.activeLockers.Contains(grounded))
+            else // if in the air
             {
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * groundAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y);
-                //above line caps horizontal speed at groundspeed every frame
-                //this is a placeholder- placing a hard cap on horizontal speed fundamentally restricts future movement and must be changed
-                //best solution is to constantly reduce speed until speed is within desired parameters while touching ground and not in hitstun
-            }
-            else
-            {
-                if (touchingWall)
+                if (clm.activeLockers.Contains(inAerialAnim)) // if using an aerial: reduced air movement
                 {
-                    if (collidedWallSide == pim.GetCurrentDirectional().current.x)
-                    {
-                        clm.AddLocker(wallcling);
-                        rb.velocity = Vector2.zero;
-                    }
+                    rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccelDuringAerial);
                 }
+                else // if in the air but not using an aerial
+                {
+                    if (touchingWall && !clm.activeLockers.Contains(wallcling)) // if touching wall, if holding toward wall and not using an aerial or already wallcling, grab wall
+                    {
+                        if (collidedWallSide == pim.GetCurrentDirectional().current.x)
+                        {
+                            Debug.Log("called wallcling enter via not having grounded locker, and holding toward wall.");
+                            WallClingEnterExit(true);
+                        }
+                    }
 
-                rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel);
-                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -airSpeed, airSpeed), rb.velocity.y);
-                //same as grounded
+                    rb.AddForce(Vector2.right * Mathf.Round(input.Direction.current.x) * airAccel); // Air move
+                }
             }
 
-            Flip(input);
+            if (clm.activeLockers.Contains(wallcling)) // if wallcling and not holding toward wall, unstick from wall
+            {
+                if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
+                {
+                    Debug.Log("called wallcling EXIT via having wallcling locker, touching wall, and holding away.");
+                    WallClingEnterExit(false);
+                }
+            }
+
+            if (!clm.activeLockers.Contains(inAerialAnim))
+            {
+                Flip(input);
+            }
         }
     }
 
     void HitstunResponse()
     {
-        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > 10)
+        if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
+        if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) == 1) // if slow enough and in hitstun for longer than minHitstunFrames and knockback time is over and not in hitstop: stop hitstun
         {
             Hit(null, false);
             framesInHitstun = 0;
+            minimumHitstunFrames = 0;
         }
         framesInHitstun += 1;
+        if (framesInHitstun == 2)
+        {
+            firstFrameOfHitstun = false;
+        }
+
+        if (knockbackTime <= 0)
+        {
+            rb.velocity = Vector2.MoveTowards(rb.velocity, Vector2.zero, initialLaunchVelocity.magnitude / ((0 - knockbackTime * 5) + 10));
+            knockbackTime -= 1;
+        }
+        else
+        {
+            knockbackTime -= 1;
+        }
+
+        // DI IMPLEMENTATION:
+        if (pim.GetCurrentDirectional().current != Vector2.zero)
+        {
+            float inputAngle = Vector2.Angle(Vector2.right, pim.GetCurrentDirectional().current); // angle of input (0 right, -90 bottom, 90 top)
+
+            if (pim.GetCurrentDirectional().current.y < 0)
+            {
+                inputAngle *= -1;
+            }
+
+            float currentMomentumAngle = Vector2.Angle(Vector2.right, rb.velocity);
+
+            if (rb.velocity.y < 0)
+            {
+                currentMomentumAngle *= -1;
+            }
+
+            currentMomentumAngle = Mathf.MoveTowardsAngle(currentMomentumAngle, inputAngle, DIStrength * moveDiMultiplier);
+
+            rb.velocity = AngleMath.Vector2FromAngle(currentMomentumAngle) * rb.velocity.magnitude;
+        }
+    }
+
+    void StartKnockback(float knockbackDistance, float knockbackSpeed, Vector2 angle)
+    {
+        knockbackTime = Mathf.RoundToInt(knockbackDistance / knockbackSpeed);
+
+        initialLaunchVelocity = knockbackSpeed * angle * 100;
+        rb.velocity = initialLaunchVelocity;
+        
+    }
+
+    public void UseRune()
+    {
+        if (runeActive == null)
+        {
+            runeActive = Instantiate(rune, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            transform.position = runeActive.transform.position;
+            Destroy(runeActive);
+        }
     }
 
     public void DashResponse(CharacterInput input)
     {
-        if (dashCharge >= maxDashCharge)
+        if (input.IsHeld() || input.IsPending())
         {
-            clm.AddLocker(inAnim);
-            anim.SetBool("Dash", true);
+            Debug.Log("recognized dash input: " + gameObject.name);
 
-            rb.velocity = Vector2.zero;
-        }
-        else
-        {
-            // sound effect for no dash charge goes here
-        }
-    }
+            if (imui.currentCharge >= dashCost)
+            {
+                if (animationDebugMessages) { Debug.Log("Dash started" + "- frame: " + frame); }
+                ae.StopAnimation(currentAnimBool);
+                ae.ChangeAnimBool("StartDash", true);
+                Hit(null, false);
+                queuedKnockback = null;
+                clm.AddLocker(dashing);
 
-    public void Dash()
-    {
-        rb.AddForce(pim.GetCurrentDirectional().current * dashForce);
-        StartStopTrail(1);
-        clm.RemoveLocker(wallcling);
+                rb.velocity = Vector2.zero;
+                imui.ChangeCharge(-dashCost);
+            }
+            else
+            {
+                // sound effect for trying to dash with no charge goes here
+            }
+        }
     }
 
     public void FLightResponse(CharacterInput input)
     {
         if (input.IsHeld() || input.IsPending())
         {
+            if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
             Flip(input);
 
-            anim.SetBool("FLightAttack", true);
-            clm.AddLocker(inAnim);
+            ae.ChangeAnimBool("FLightAttack", true);
+        }
+    }
+
+    public void NeutralAttackResponse(CharacterInput input)
+    {
+        if (input.IsHeld() || input.IsPending())
+        {
+            if (animationDebugMessages) { Debug.Log("FTilt Response" + "- frame: " + frame); }
+            Flip(input);
+
+            ae.ChangeAnimBool("FLightAttack", true);
         }
     }
 
     public void UpLightResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("UpTilt Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            anim.SetBool("UpLightAttack", true);
-            clm.AddLocker(inAnim);
+            ae.ChangeAnimBool("UpLightAttack", true);
         }
     }
 
-    public void DownLightResponse(CharacterInput input)
+    public void DLightResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("DLight Response" + "- frame: " + frame); }
         if (input.IsHeld() || input.IsPending())
         {
-            anim.SetBool("DownLightAttack", true);
-            clm.AddLocker(inAnim);
+            if (DLightBounce)
+            {
+                if (clm.activeLockers.Contains(grounded))
+                {
+                    delayFF = 10;
+                    rb.AddForce(150 * Vector2.up);
+                }
+            }
+
+            ae.ChangeAnimBool("DLightAttack", true);
+        }
+    }
+
+    public void UpHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("UpHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            Flip(input);
+
+            ae.ChangeAnimBool("UpHeavyAttack", true);
+        }
+    }
+
+    public void FHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("FHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("FHeavyAttack", true);
+        }
+    }
+
+    public void DHeavyResponse(CharacterInput input)
+    {
+        if (animationDebugMessages) { Debug.Log("DHeavy Response" + "- frame: " + frame); }
+        if (input.IsHeld() || input.IsPending())
+        {
+            ae.ChangeAnimBool("DHeavyAttack", true);
         }
     }
 
     public void JumpResponse(CharacterInput input)
     {
+        if (animationDebugMessages) { Debug.Log("Jump Response" + "- frame: " + frame); }
         pim.CacheInput(input);
 
         if (clm.activeLockers.Contains(grounded))
         {
-            clm.AddLocker(inAnim);
-            anim.SetBool("Jumpsquat", true);
+            ae.ChangeAnimBool("Jumpsquat", true);
         }
         else if (clm.activeLockers.Contains(wallcling))
         {
-            clm.AddLocker(inAnim);
-            anim.SetBool("WallJumpSquat", true);
+            ae.ChangeAnimBool("WallJumpSquat", true);
         }
     }
 
-    public void ReduceVelocityByFactor(int factor)
+    public void MovementResponse(CharacterInput input)
     {
-        rb.velocity /= factor;
-    }
+        pim.CacheInput(input);
 
-    public void SlowSpeed(float magnitude)
-    {
-        float relevantSpeed = clm.activeLockers.Contains(grounded) ? groundSpeed : airSpeed / 5;
-
-        if (Mathf.Abs(rb.velocity.x) > relevantSpeed)
+        if (input.IsHeld() || input.IsPending())
         {
-
-            rb.AddForce(new Vector2 (rb.velocity.x / -magnitude, 0));
-        }
-        if (Mathf.Abs(rb.velocity.y) > relevantSpeed)
-        {
-            rb.AddForce(new Vector2 (0, rb.velocity.y / -magnitude));
+            ae.ChangeAnimBool("Movement", true);
         }
     }
 
-    public void SwitchIfAttacking(string newAnimBool)
+    public void SpecialResponse(CharacterInput input)
     {
-        if (pim.BufferInputExists(ControlLock.Controls.ATTACK))
+        if (input.IsHeld() || input.IsPending())
         {
-            anim.SetBool(newAnimBool, true);
+            ae.ChangeAnimBool("Special", true);
+        }
+    }
+
+    public void WallClingEnterExit(bool enterexit)
+    {
+        if (enterexit)
+        {
+            clm.AddLocker(wallcling);
+            anim.SetBool("WallCling", true);
+            Debug.Log("REMOVE airborne locker via enter wallcling");
+            clm.RemoveLocker(airborne);
+            rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            clm.RemoveLocker(wallcling);
+            Debug.Log("addlocker airborne via EXIT wallcling");
+            clm.AddLocker(airborne);
+            anim.SetBool("WallCling", false);
+        }
+    }
+
+    void OnDirectionChange()
+    {
+        if (spawnSmokeOnDirectionChange)
+        {
+            if (clm.activeLockers.Contains(grounded))
+            {
+                ae.SpawnDirectionalSmokeCloud();
+            }
         }
     }
 
@@ -265,67 +560,52 @@ public class Control1 : MonoBehaviour
     {
         if (Mathf.Round(input.Direction.current.x) > 0)
         {
-            facingRight = true;
-            sr.flipX = false;
+            if (!facingRight)
+            {
+                facingRight = true;
+                sr.flipX = false;
+                OnDirectionChange();
+            }
         }
         else if (Mathf.Round(input.Direction.current.x) < 0)
         {
-            facingRight = false;
-            sr.flipX = true;
+            if (facingRight)
+            {
+                facingRight = false;
+                sr.flipX = true;
+                OnDirectionChange();
+            }
         }
 
         bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
     }
 
-    public void ApplyWallJumpForce() // called by walljump animation
+    public void ChangeIntangible(bool enterexit)
     {
-        rb.velocity = Vector2.zero;
-
-        CharacterInput initialJumpInput = pim.GetCachedInput(ControlLock.Controls.JUMP);
-        if ((pim.GetCachedInput(ControlLock.Controls.JUMP).Duration >= walljumpShorthopWindow) && initialJumpInput.IsHeld())
+        if (enterexit)
         {
-            rb.AddForce(1.8f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
+            Debug.Log("intangible");
+            intangible = true;
         }
         else
         {
-            rb.AddForce(1.4f * initialJumpForce * new Vector2(-0.75f * collidedWallSide, wallJumpVerticalOoOne));
+            intangible = false;
         }
-        clm.RemoveLocker(wallcling);
-        collidedWallSide = 0;
-        touchingWall = false;
-        wallTouching = null;
-
-        // it is ridiculous how many things I have to set here, something about wall mechanics should probably be reworked
-    }
-
-    public void ApplyJumpForce() // called by jump animation
-    {
-        CharacterInput initialJumpInput = pim.GetCachedInput(ControlLock.Controls.JUMP);
-
-        if ((initialJumpInput.Duration >= shorthopWindow) && initialJumpInput.IsHeld())
-        {
-            rb.AddForce(1.5f * initialJumpForce * Vector2.up);
-        }
-        else
-        {
-            rb.AddForce(initialJumpForce * Vector2.up);
-        }
-        clm.RemoveLocker(grounded);
-    }
-
-    public void StartStopTrail(int startstop)
-    {
-        if (startstop == 1) { trailps.Play(); }
-        else { trailps.Stop(); }
-
     }
 
     private void FixedUpdate()
     {
+        anim.SetFloat("VerticalInput", pim.GetCurrentDirectional().current.y);
+        anim.SetFloat("HorizontalInput", pim.GetCurrentDirectional().current.x);
+
+        anim.SetFloat("VerticalVelocity", rb.velocity.y);
+        anim.SetFloat("HorizontalVelocity", rb.velocity.x);
+
         frame += 1;
         if (frame > 60) { frame = 1; }
 
-        if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this
+        if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this.
+                                                   // Sets speed to 0 every frame while wall-clinging
             // The reason this is called at all is because stopping all momentum on the frame I grab the wall sometimes just doesn't work
         {
             rb.velocity = Vector2.zero;
@@ -336,136 +616,344 @@ public class Control1 : MonoBehaviour
             HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
         }
 
-        if (healthBar.value != currentHealth)
-        {
-            healthBar.value -= (healthBar.value - currentHealth)/10;
-
-            if (healthBar.value - currentHealth < 0.5f)
-            {
-                healthBar.value = currentHealth;
-            }
-        }
-        
         ManageForces();
 
-        void ManageForces()
-        {
-            if (clm.activeLockers.Contains(grounded))
-            {
-                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) ||  !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
-                    || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded/can't move/not holding the direction of motion;
-                {
-                    if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
-                    {
-                        rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
-                    }
-                }
-            }
-            else
-            {
-                if (!clm.activeLockers.Contains(wallcling) && !ignoreGravity)
-                {
-                    rb.AddForce(Vector2.down * fallAccel);
-                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -fallSpeed, 999999));
-                    //this is a placeholder, see directional response's explanation below
-                }
+        UpdateGrounded();
 
+        ManagePlatformCollider();
+
+        ManageQueuedKnockback();
+
+        ManageFastFall();
+
+        if (psc != null)
+        {
+            if (psc.ShaderStrength > 0)
+            {
+                psc.ShaderStrength -= 0.1f;
+            }
+        }
+
+        if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
+        {
+            Debug.Log("not affected by gravity, not in Movement, and moving downward, so stopped vertical speed: frame " + frame);
+            if (rb.velocity.y < 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
             }
         }
     }
 
-    public void PlaySoundFromAnimator(string name)
+    void ManagePlatformCollider()
     {
-        am.PlaySound(name);
-    }
-
-    public void Hit(Collider2D collider, bool enterOrExitHitstun = true) // add to calculation for direction
-    {
-        if (enterOrExitHitstun)
+        if (clm.activeLockers.Contains(hitstun))
         {
-            clm.AddLocker(hitstun);
-            rb.sharedMaterial = bouncy;
-            HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
-
-            currentHealth -= hi.damage;
-
-            Vector2 angleOfForce;
-            angleOfForce = new Vector2(Mathf.Cos(Mathf.Rad2Deg * hi.angle), Mathf.Sin(Mathf.Rad2Deg * hi.angle));
-            if (hi.facingRight)
-            {
-                angleOfForce.x *= -1;
-            }
-            if (!hi.angleIndependentOfMovement)
-            {
-                Vector2 objectVelocity = hi.owner.GetComponent<Rigidbody2D>().velocity;
-                angleOfForce = (angleOfForce.normalized + objectVelocity.normalized).normalized;
-            }
-            else
-            {
-                angleOfForce = angleOfForce.normalized;
-            }
-
-            Debug.Log(angleOfForce);
-            rb.AddForce(angleOfForce * hi.knockback);
+            platformCollider.SetActive(false);
         }
         else
         {
-            clm.RemoveLocker(hitstun);
-            rb.sharedMaterial = notBouncy;
+            if (dropPlatformFrames <= 0)
+            {
+                platformCollider.SetActive(true);
+                return;
+            }
         }
+
+        dropPlatformFrames -= 1;
+    }
+
+    void ManageForces()
+    {
+        if (!clm.activeLockers.Contains(hitstun))
+        {
+            if (clm.activeLockers.Contains(grounded)) // if grounded + not in hitstun
+            {
+                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || !clm.ControlsAllowed(ControlLock.Controls.HORIZONTAL)
+                    || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0)) //if grounded and: can't move or not holding the direction of motion: apply friction
+                {
+                    if (!ignoreFriction)
+                    {
+                        if (Mathf.Abs(rb.velocity.x) >= friction) //if speed is greater than friction
+                        {
+                            rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * friction, 0); //reduce velocity by friction
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        }
+                    }
+                }
+
+                if (!clm.activeLockers.Contains(dashing))
+                {
+                    rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
+                }
+            }
+            else // if not grounded + not in hitstun
+            {
+                if (Mathf.Round(pim.GetCurrentDirectional().current.x) != Mathf.Sign(rb.velocity.x) || (Mathf.Round(pim.GetCurrentDirectional().current.x) == 0))
+                //if not in hitstun, airborne, and not holding the direction of motion: apply airFriction
+                {
+                    if (!ignoreFriction)
+                    {
+                        if (Mathf.Abs(rb.velocity.x) >= airFriction) //if speed is greater than airFriction
+                        {
+                            rb.velocity -= new Vector2(Mathf.Sign(rb.velocity.x) * airFriction, 0); //reduce velocity by airFriction
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(0, rb.velocity.y); //if speed is < friction, set speed to 0
+                        }
+                    }
+                }
+
+                if (!clm.activeLockers.Contains(wallcling) && affectedByGravity) // if not in hitstun, wallclinging, or ignoreGravity
+                {
+                    rb.AddForce(Vector2.down * fallAccel * (applyFFMultiplier ? fastFallMultiplier : 1)); // Apply gravity
+                }
+
+                if (!ignoreFriction)
+                {
+                    float newXSpeed = rb.velocity.x;
+                    float newYSpeed = rb.velocity.y;
+                    // slow down toward max speeds
+                    if (Mathf.Abs(rb.velocity.x) > airSpeed)
+                    {
+                        newXSpeed = Mathf.MoveTowards(rb.velocity.x, airSpeed * Mathf.Sign(rb.velocity.x), overMaxXSpeedAdjustment);
+                    }
+                    if (rb.velocity.y < -fallSpeed)
+                    {
+                        newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
+                    }
+
+                    Debug.Log(rb.velocity + " changed to " + new Vector2(newXSpeed, newYSpeed) + " by friction.");
+                    rb.velocity = new Vector2(newXSpeed, newYSpeed);
+                }
+
+            }
+        }
+        else // if in hitstun
+        {
+            if (!clm.activeLockers.Contains(wallcling) && affectedByGravity) // if not wallclinging or ignoreGravity
+            {
+                rb.AddForce(Vector2.down * (fallAccel / 2)); // Apply gravity BUT HALVED, BECAUSE YOU'RE IN HITSTUN (should it be the same gravity?)
+            }
+        }
+    }
+
+    void ManageQueuedKnockback()
+    {
+        if (queuedKnockback != null)
+        {
+            if (GameManager.Instance.TimeController.GetTimeScale(this) == 1)
+            {
+                StartKnockback(queuedKnockback.left.kbDistance, queuedKnockback.left.kbSpeedMultiplier, queuedKnockback.right);
+                queuedKnockback = null;
+            }
+        }
+    }
+
+    // Updates grounded condition every frame.
+    void UpdateGrounded()
+    {
+        foreach (Collider2D i in currentOverlaps) // for all colliders the player is currently touching
+        {
+            if (i.CompareTag("Ground") || i.CompareTag("Platform")) // if one is ground/platform
+            {
+                if (!clm.activeLockers.Contains(grounded)) // if not grounded
+                {
+                    if (rb.velocity.y <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) != 0) // if moving downward (and not frozen), become grounded
+                    {
+                        BecomeGrounded(i.tag);
+                    }
+                    else if (i.gameObject.layer != 6) // physics layer 6 is platforms. This WILL break if anyone rearranges the layers
+                    {
+                        BecomeGrounded(i.tag); // if moving upward, but collision is not a platform, become grounded anyway. This breaks if we have standable walls
+                    }
+                }
+                return;
+            }
+        }
+        if (clm.activeLockers.Contains(grounded))
+        {
+            BecomeGrounded(null, false); // it would've returned if any current collisions ground/platform so must not be on the ground
+        }
+
+        void BecomeGrounded(string groundTag, bool enterexit = true)
+        {
+            if (enterexit)
+            {
+                clm.AddLocker(grounded);
+                clm.RemoveLocker(airborne);
+                anim.SetBool("Grounded", true);
+                applyFFMultiplier = false;
+                fastFallBuffer = 0;
+                currentGroundTag = groundTag;
+
+                if (anim.GetBool("Movement"))
+                {
+                    clm.RemoveLocker(UNIQUEinMovementAir);
+                    clm.AddLocker(UNIQUEinMovementGround);
+                }
+                else if (anim.GetBool("Special"))
+                {
+                    clm.RemoveLocker(inAerialAnim);
+                    clm.AddLocker(inAnim);
+                }
+
+                if (!clm.activeLockers.Contains(hitstun))
+                {
+                    gameObject.layer = 9;
+                }
+            }
+            else
+            {
+                clm.RemoveLocker(grounded);
+                clm.AddLocker(airborne);
+                currentGroundTag = null;
+                anim.SetBool("Grounded", false);
+                gameObject.layer = 8;
+            }
+        }
+    }
+
+    public void Hit(Collider2D collider, bool enterOrExitHitstun = true)
+    {
+        if (enterOrExitHitstun) // Deal with being hit:
+        {
+            clm.RemoveLocker(inAnim);
+            clm.RemoveLocker(inAerialAnim);
+            if (!clm.activeLockers.Contains(inGrab))
+            {
+                clm.AddLocker(hitstun);
+                anim.SetBool("Hitstun", true);
+
+                if (!string.IsNullOrEmpty(currentAnimBool))
+                {
+                    ae.ChangeAnimBool(currentAnimBool, false, true);
+                }
+
+                affectedByGravity = true;
+                anim.SetBool("ContinueAttack", false);
+                clm.RemoveLocker(inAnim);
+                clm.RemoveLocker(dashing);
+                clm.RemoveLocker(inAerialAnim);
+                anim.SetBool("Special", false);
+                ChangeIntangible(false);
+                ignoreFriction = false;
+            }
+
+            gameObject.layer = 8;
+            rb.sharedMaterial = bouncy;
+
+            HitboxInfo hi = collider.gameObject.GetComponent<HitboxInfo>();
+            moveDiMultiplier = hi.DiMultiplier;
+
+            framesInHitstun = 0;
+            firstFrameOfHitstun = true;
+
+            em.SpawnHitEffectOnContactPoint("HitExplosion1", collider, bc.bounds.center);
+
+            minimumHitstunFrames = hi.minimumHitstunFrames;
+
+            tr.emitting = true;
+
+            if (psc != null)
+            {
+                psc.ShaderStrength = 1;
+            }
+
+            if (!clm.activeLockers.Contains(inGrab))
+            {
+                ApplyKnockback();
+            }
+
+            imui.ChangeHealth(-hi.damage);
+            void ApplyKnockback()
+            {
+                if (hi.angle == 361)
+                {
+                    int facingRightInt = facingRight ? 1 : -1;
+
+                    Vector3 hiParentPosition = hi.transform.root.position;
+
+                    Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.knockbackGoalPos.x * facingRightInt), hiParentPosition.y + hi.knockbackGoalPos.y);
+                    Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
+
+                    queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
+                }
+                else
+                {
+                    rb.velocity = Vector2.zero;
+                    Vector2 angleOfForce = AngleMath.Vector2FromAngle(hi.angle);
+
+                    if (!hi.facingRight)
+                    {
+                        angleOfForce.x *= -1;
+                    }
+
+                    angleOfForce = angleOfForce.normalized;
+
+                    queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, angleOfForce);
+                }
+            }
+
+        }
+        else // Stop hitstun:
+        {
+            ae.StopAnimation(currentAnimBool);
+
+            if (clm.activeLockers.Contains(grounded))
+            {
+                gameObject.layer = 9;
+            }
+
+            moveDiMultiplier = 1;
+
+            rb.sharedMaterial = notBouncy;
+
+            tr.emitting = false;
+
+            anim.SetBool("Hitstun", false);
+        }
+    }
+
+    public void Grabbed(Collider2D collider)
+    {
+        imui.ChangeHealth(-collider.GetComponent<HitboxInfo>().damage);
+        ae.StopAnimation(currentAnimBool);
+
+        clm.AddLocker(inGrab);
+        anim.SetBool("Hitstun", true);
+    }
+
+    public void ExitGrab()
+    {
+        Hit(null, false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Standable")
-        {
-            if (rb.velocity.y <= 0) // this is 100% a problem. idk how but def a problem
-            {
-                clm.AddLocker(grounded);
-                anim.SetBool("Grounded", true);
-            }
-        }
-        else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
+        if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             collidedWallSide = (int)Mathf.Sign(collision.GetContact(0).point.x - transform.position.x);
             touchingWall = true;
-            wallTouching = collision.collider;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out HitboxInfo _))
+        if (!currentOverlaps.Contains(collision.collider))
         {
-            if (!him.triggersThisFrame.Contains(collision))
-            {
-                him.triggersThisFrame.Add(collision);
-            }
-            if (!him.triggersThisFrame.Contains(bc))
-            {
-                him.triggersThisFrame.Add(bc);
-            }
+            currentOverlaps.Add(collision.collider);
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Standable")
+        if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
-            clm.RemoveLocker(grounded);
-            anim.SetBool("Grounded", false);
-
-        }
-        else if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
-        {
-            clm.RemoveLocker(wallcling);
             collidedWallSide = 0;
             touchingWall = false;
-            wallTouching = null;
         }
+
+        if (currentOverlaps.Contains(collision.collider)) { currentOverlaps.Remove(collision.collider); };
     }
 }

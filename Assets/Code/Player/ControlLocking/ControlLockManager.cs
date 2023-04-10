@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class ControlLockManager : MonoBehaviour
 {
-    // TODO (maybe?): Change StandardControlLocker to ControlLocker... it's StandardControlLocker right now
-    // because that one shows up in the inspector so it's easier to debug, but we should make it
-    // ControlLocker because that's an interface which more classes can easily implement.
-
     /// <summary>
     /// Used to track the active ControlLockers for this manager.
     /// </summary>
@@ -36,7 +32,8 @@ public class ControlLockManager : MonoBehaviour
     /// <param name="cl"> the ControlLocker to add </param>
     public void AddLocker(StandardControlLocker cl)
     {
-        activeLockers.Add(cl);
+        if (!activeLockers.Contains(cl))
+            activeLockers.Add(cl);
     }
 
     /// <summary>

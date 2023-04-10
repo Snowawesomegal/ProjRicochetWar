@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using System;
+using System.Xml.Linq;
 
 public class ActivateHitbox : MonoBehaviour
 {
@@ -10,7 +12,8 @@ public class ActivateHitbox : MonoBehaviour
     public GameObject hitboxPrefab;
     Control1 c1;
     ControlLockManager clm;
-    public Dictionary<GameObject, int> toBeDisabled = new Dictionary<GameObject, int>();
+
+    public Dictionary<Pair<GameObject, Type>, int> toBeDisabled = new Dictionary<Pair<GameObject, Type>, int>();
 
     private void Start()
     {
@@ -18,53 +21,179 @@ public class ActivateHitbox : MonoBehaviour
         c1 = GetComponent<Control1>();
     }
 
-    public void EnableHitbox(string hitboxName)
+    /// <summary>
+    /// Finds by name and enables any box that is a direct child of the object this script is attached to. This function also works for pogoboxes. For any nested children, which should be the case for multipart, multihitbox, and multihit attacks, use EnableMultiHitbox. 
+    /// </summary>
+    /// <param name="hitboxName"></param>
+    public void EnableHitbox(string boxName)
     {
+        GameObject boxObject = null;
 
-        GameObject hitboxObject = null;
-
-        for (int i = 0; i < transform.childCount; i++)
+        if (boxName.Contains('/')) // have to find a parent and then a child within the parent (input is entered as parent/child if hitbox is nested)
         {
-            Transform currentChild = transform.GetChild(i);
-            if (currentChild.name == hitboxName)
+            string[] parentAndHB = boxName.Split('/'); // split and add to array
+
+            foreach (Transform i in transform) // foreach child in player
             {
-                hitboxObject = currentChild.gameObject;
+                if (i.name == parentAndHB[0]) // if that child is the parent we're looking for
+                {
+                    foreach (Transform j in i) // foreach child in that child
+                    {
+                        if (j.gameObject.name == parentAndHB[1]) // if that child is the child we're looking for
+                        {
+                            boxObject = j.gameObject;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else // finding non-nested child in player's transform
+        {
+            foreach (Transform i in transform)
+            {
+                if (i.name == boxName)
+                {
+                    boxObject = i.gameObject;
+                    break;
+                }
+            }
+        }
+
+        if (boxObject == null)
+        {
+            Debug.Log("There is no hitbox object with the name " + boxName + " on " + gameObject.name);
+            return;
+        }
+
+        if (boxObject.TryGetComponent(out HitboxInfo hbi))
+        {
+            if (!hbi.doNotEnable)
+            {
+                boxObject.SetActive(true);
+                CalibrateBox(boxObject);
+            }
+        }
+        else
+        {
+            boxObject.SetActive(true);
+            CalibrateBox(boxObject);
+        }
+    }
+
+    public void EnableMultiHitbox(string hitboxParentName)
+    {
+        List<GameObject> hitboxesToEnable = new List<GameObject>();
+
+        foreach (Transform i in transform)
+        {
+            if (i.name == hitboxParentName)
+            {
+                foreach (Transform j in i)
+                {
+                    hitboxesToEnable.Add(j.gameObject);
+                }
+
                 break;
             }
         }
 
-        if (hitboxObject == null)
+        if (hitboxesToEnable.Count == 0)
         {
-            Debug.Log("There is no hitbox object with the name " + hitboxName + " on " + gameObject.name);
+            Debug.Log("There is no hitbox parent with the name " + hitboxParentName + " on " + gameObject.name);
             return;
         }
 
-        hitboxObject.SetActive(true);
-
-        HitboxInfo HBInfo = hitboxObject.GetComponent<HitboxInfo>();
-
-        HBInfo.owner = gameObject;
-
-        if (HBInfo.owner.GetComponent<Control1>().facingRight != HBInfo.facingRight)
+        foreach (GameObject i in hitboxesToEnable)
         {
-            hitboxObject.transform.localPosition *= new Vector2(-1, 1);
+            if (i.TryGetComponent(out HitboxInfo hbi))
+            {
+                if (!hbi.doNotEnable)
+                {
+                    i.SetActive(true);
+                    CalibrateBox(i);
+                }
+            }
+            else
+            {
+                i.SetActive(true);
+                CalibrateBox(i);
+            }
         }
-        HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
+    }
 
-        HBInfo.activeHitbox = true;
+    void CalibrateBox(GameObject box)
+    {
+        if (box.TryGetComponent(out HitboxInfo HBInfo))
+        {
+            CalibrateHitbox(HBInfo);
+        }
+        else if (box.TryGetComponent(out Pogobox pogobox))
+        {
+            CalibratePogobox(pogobox);
+        }
+        else
+        {
+            CalibrateDefault(box);
+        }
 
-        toBeDisabled.Add(hitboxObject, HBInfo.activeFrames);
+        void CalibrateHitbox(HitboxInfo HBInfo)
+        {
+            if (HBInfo.owner == null)
+            {
+                HBInfo.owner = gameObject;
+            }
+
+            if (HBInfo.owner.TryGetComponent(out Control1 c2))
+            {
+                if (c2.facingRight != HBInfo.facingRight)
+                {
+                    HBInfo.transform.localPosition *= new Vector2(-1, 1);
+                }
+
+                HBInfo.facingRight = HBInfo.owner.GetComponent<Control1>().facingRight;
+            }
+            else
+            {
+                Debug.LogError("Hitbox was activated, but its owner was " + HBInfo.owner + " which does not contain a Control1.");
+            }
+
+            toBeDisabled.Add(new Pair<GameObject, Type>(HBInfo.gameObject, typeof(HitboxInfo)), HBInfo.activeFrames);
+        }
+
+        void CalibratePogobox(Pogobox pogobox)
+        {
+            if (pogobox.owner.GetComponent<Control1>().facingRight != pogobox.facingRight)
+            {
+                pogobox.transform.localPosition *= new Vector2(-1, 1);
+            }
+            pogobox.facingRight = pogobox.owner.GetComponent<Control1>().facingRight;
+
+            toBeDisabled.Add(new Pair<GameObject, Type>(pogobox.gameObject, typeof(Pogobox)), pogobox.activeFrames);
+        }
+
+        void CalibrateDefault(GameObject box)
+        {
+            toBeDisabled.Add(new Pair<GameObject, Type>(box, null), 2);
+        }
     }
 
     private void FixedUpdate()
     {
-        Dictionary<GameObject, int> copyDict = new Dictionary<GameObject, int>(toBeDisabled);
+        Dictionary<Pair<GameObject, Type>, int> copyDict = new Dictionary<Pair<GameObject, Type>, int>(toBeDisabled); // this feels like it's very cost inefficient?
 
-        foreach(KeyValuePair<GameObject, int> i in copyDict)
+        foreach(KeyValuePair<Pair<GameObject, Type>, int> i in copyDict)
         {
             if (i.Value <= 0)
             {
-                i.Key.SetActive(false);
+                i.Key.left.SetActive(false);
+
+                if (i.Key.right == typeof(HitboxInfo))
+                {
+                    i.Key.left.GetComponent<HitboxInfo>().playersHitAlready.Clear();
+                }
+
                 toBeDisabled.Remove(i.Key);
             }
             else
@@ -72,12 +201,5 @@ public class ActivateHitbox : MonoBehaviour
                 toBeDisabled[i.Key] -= 1;
             }
         }
-    }
-
-    public void StopAnimation(string boolToSetFalse)
-    {
-        clm.RemoveLocker(c1.inAnim);
-        anim.SetBool(boolToSetFalse, false);
-        anim.SetBool("ContinueAttack", false);
     }
 }

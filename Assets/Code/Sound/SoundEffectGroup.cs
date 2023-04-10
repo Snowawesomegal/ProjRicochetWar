@@ -13,7 +13,7 @@ public class SoundEffectGroup
         this.groupName = groupName;
     }
     
-    public bool PlaySound()
+    public bool PlaySound(AudioManager am)
     {
         //Debug.Log("Playing sound from group.");
         float totalWeight = 0f;
@@ -28,7 +28,7 @@ public class SoundEffectGroup
         }
 
         if (choices.Count == 0)
-            return ForcePlaySound();
+            return ForcePlaySound(am);
 
         float selection = Random.Range(0, totalWeight);
         float current = 0;
@@ -43,11 +43,11 @@ public class SoundEffectGroup
             }
         }
         //Debug.Log("Sound selected from group: " + (playChoice != null ? playChoice.name : "choice is null with selection val: " + selection));
-        playChoice?.Play();
+        playChoice?.Play(am);
         return playChoice != null;
     }
 
-    public bool ForcePlaySound()
+    public bool ForcePlaySound(AudioManager am)
     {
         //Debug.Log("Forcing sound to be played from some currently playing sound.");
         float totalWeight = 0f;
@@ -68,7 +68,7 @@ public class SoundEffectGroup
                 break;
             }
         }
-        playChoice?.Play();
+        playChoice?.Play(am);
         return playChoice != null;
     }
 }

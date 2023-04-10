@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: InAnimLocker
   m_EditorClassIdentifier: 
   controlLock:
-    locks: -1
+    locks: 223
     priority: 0

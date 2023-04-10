@@ -130,7 +130,6 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void InputDash(CharacterInput input)
     {
-        Debug.Log("dashinput");
         playerController.DashResponse(input);
     }
 
@@ -161,12 +160,11 @@ public class PlayerInputManager : MonoBehaviour
                 if (debugMessages)
                     Debug.Log("Attacking upwards");
                 playerController.UpLightResponse(input);
-                // call up attack in player controller
                 break;
             case CharacterInput.CardinalDirection.DOWN:
                 if (debugMessages)
                     Debug.Log("Attacking down");
-                // call down attack in player controller
+                playerController.DLightResponse(input);
                 break;
             case CharacterInput.CardinalDirection.LEFT:
                 playerController.FLightResponse(input);
@@ -175,6 +173,7 @@ public class PlayerInputManager : MonoBehaviour
                 playerController.FLightResponse(input);
                 break;
             case CharacterInput.CardinalDirection.NONE:
+                playerController.NeutralAttackResponse(input);
                 if (debugMessages)
                     Debug.Log("Attacking sideways " + input.Phase);
                 break;
@@ -193,23 +192,7 @@ public class PlayerInputManager : MonoBehaviour
     public void InputSpecial(CharacterInput input)
     {
         CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
-        switch (snappedDirection)
-        {
-            case CharacterInput.CardinalDirection.UP:
-                // call up special in player controller
-                break;
-            case CharacterInput.CardinalDirection.DOWN:
-                // call down special in player controller
-                break;
-            case CharacterInput.CardinalDirection.LEFT:
-            case CharacterInput.CardinalDirection.RIGHT:
-            case CharacterInput.CardinalDirection.NONE:
-                // call forward/side special in player controller
-                break;
-            default:
-                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
-                break;
-        }
+        playerController.SpecialResponse(input);
     }
 
     public void OnHeavy(InputAction.CallbackContext ctxt)
@@ -223,15 +206,15 @@ public class PlayerInputManager : MonoBehaviour
         switch (snappedDirection)
         {
             case CharacterInput.CardinalDirection.UP:
-                // call up heavy in player controller
+                playerController.UpHeavyResponse(input);
                 break;
             case CharacterInput.CardinalDirection.DOWN:
-                // call down heavy in player controller
+                playerController.DHeavyResponse(input);
                 break;
             case CharacterInput.CardinalDirection.LEFT:
             case CharacterInput.CardinalDirection.RIGHT:
             case CharacterInput.CardinalDirection.NONE:
-                // call forward/side heavy in player controller
+                playerController.FHeavyResponse(input);
                 break;
             default:
                 Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
@@ -247,23 +230,7 @@ public class PlayerInputManager : MonoBehaviour
     public void InputMovement(CharacterInput input)
     {
         CharacterInput.CardinalDirection snappedDirection = input.Direction.GetSnappedStartingDirection(playerVerticalAttackThreshold);
-        switch (snappedDirection)
-        {
-            case CharacterInput.CardinalDirection.UP:
-                // call up movement in player controller
-                break;
-            case CharacterInput.CardinalDirection.DOWN:
-                // call down movement in player controller
-                break;
-            case CharacterInput.CardinalDirection.LEFT:
-            case CharacterInput.CardinalDirection.RIGHT:
-            case CharacterInput.CardinalDirection.NONE:
-                // call forward/side movement in player controller
-                break;
-            default:
-                Debug.LogError("Error - cannot determine snapped cardinal direction from player input: " + input.ToString());
-                break;
-        }
+        playerController.MovementResponse(input);
     }
 
     public bool CanInput(ControlLock.Controls controls, out string debugStr)

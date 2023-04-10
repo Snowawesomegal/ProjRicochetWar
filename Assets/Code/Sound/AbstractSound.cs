@@ -14,9 +14,12 @@ public abstract class AbstractSound
 
     [SerializeField] [Range(0, 1)] public float presetVolume = 1f;
     [SerializeField] [Range(0, 1)] public float volume = 1f;
+    [SerializeField] [Range(0, 1)] protected float currentVolume = 1f;
+    [SerializeField] [Range(0.001f, 0.1f)] protected float stopSpeed = 0.1f;
     [SerializeField] [Range(0.1f, 3)] public float pitch = 1f;
 
     [SerializeField] public bool loop = false;
+    [SerializeField] protected bool stopping = false;
 
     [HideInInspector] public AudioSource source;
 
@@ -44,12 +47,31 @@ public abstract class AbstractSound
 
     public virtual void Play()
     {
+        currentVolume = volume;
+        source.volume = currentVolume;
         source.Play();
     }
 
     public virtual void Stop()
     {
         source.Stop();
+    }
+
+    public virtual void Stopping()
+    {
+        if (stopping)
+        {
+            currentVolume -= stopSpeed;
+            if (currentVolume <= 0)
+                FinishStop();
+            source.volume = currentVolume;
+        }
+    }
+
+    public virtual void FinishStop()
+    {
+        source.Stop();
+        stopping = false;
     }
 
     public virtual void UpdateLoop()

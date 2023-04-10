@@ -71,11 +71,47 @@ namespace TimeSlowing
         }
     }
 
+    public class SlowTimeEvent : IIdentifiable
+    {
+        private bool initializedId;
+        private string identifierName;
+        private uint id;
+        public System.Action trigger;
+        public float timeRemaining;
+
+        bool IIdentifiable.InitializedID { get { return initializedId; } set { initializedId = value; } }
+        uint IIdentifiable.ID { get { return id; } set { id = value; } }
+
+        string IIdentifiable.Identifier { get { return identifierName; } }
+
+        public SlowTimeEvent(System.Action trigger, float timeRemaining)
+        {
+            this.trigger = trigger;
+            this.timeRemaining = timeRemaining;
+            ((IIdentifiable)this).InitializeID();
+            this.identifierName = "SlowTimeEvent" + id;
+        }
+
+        public bool Tick(float time)
+        {
+            timeRemaining -= time;
+            if (timeRemaining <= 0)
+            {
+                trigger.Invoke();
+                return true;
+            }
+            return false;
+        }
+
+    }
+
     public class SlowTimeController <T> where T : SlowTime<T>
     {
         protected List<T> slowTimes;
         protected List<TargetedSlowTime<T>> targetedSlowTimes;
         protected Dictionary<string, TargetedSlowInfo<T>> targetedSlowSubscribers;
+
+        protected List<SlowTimeEvent> slowTimeEvents;
 
         protected SlowUpdateType updateType;
         public SlowUpdateType UpdateType { get { return updateType; } }
@@ -95,6 +131,7 @@ namespace TimeSlowing
             slowTimes = new List<T>();
             targetedSlowTimes = new List<TargetedSlowTime<T>>();
             targetedSlowSubscribers = new Dictionary<string, TargetedSlowInfo<T>>();
+            slowTimeEvents = new List<SlowTimeEvent>();
             this.updateType = updateType;
         }
 
@@ -212,6 +249,13 @@ namespace TimeSlowing
             return TimeScale;
         }
 
+        public void QueueEvent(System.Action action, float activationTime)
+        {
+            SlowTimeEvent slowTimeEvent = new SlowTimeEvent(action, activationTime);
+            SubscribeTargetedSlow(slowTimeEvent);
+            slowTimeEvents.Add(slowTimeEvent);
+        }
+
         public virtual void Tick()
         {
             for (int i = 0; i < slowTimes.Count; i++)
@@ -243,6 +287,16 @@ namespace TimeSlowing
                 }
             }
             UpdateTargetedSlowTimes(updateTargets);
+
+            for (int i = 0; i < slowTimeEvents.Count; i++)
+            {
+                if (slowTimeEvents[i].Tick(GetTimeScale(slowTimeEvents[i])))
+                {
+                    UnsubscribeTargetedSlow(slowTimeEvents[i]);
+                    slowTimeEvents.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
         protected virtual void Update()

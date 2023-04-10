@@ -7,6 +7,9 @@ public interface IIdentifiable
     private static uint nextID;
     public static uint GetNextID()
     {
+        uint result = nextID++;
+        if (nextID >= uint.MaxValue - 1)
+            nextID = uint.MaxValue;
         return nextID++;
     }
 

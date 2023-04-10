@@ -1,5 +1,6 @@
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
@@ -44,34 +45,71 @@ public class AudioManager : MonoBehaviour
     [HideInInspector] public Dictionary<string, SoundEffectGroup> soundGroupMap;
     [HideInInspector] public Dictionary<string, MusicSound> musicMap;
 
+    [SerializeField] public GameObject soundSourceReferenceTarget;
     [SerializeField] public GameObject soundSourceTarget;
     [HideInInspector] public AudioSource musicSource;
     [HideInInspector] public MusicSound currentMusic;
 
     public event System.Action OnUpdateMusic;
 
+    protected bool prepared = false;
+    public bool Prepared { get { PrepareSoundSources(); return prepared; } set { prepared = value; if (!prepared) { ReprepareSoundSources(); } } }
+
     private void Awake()
     {
-        if (instance == null)
+        ForcePrepareSoundSources();
+        if (!prepared)
         {
-            instance = this;
-        } else if (instance != this)
-        {
-            Debug.LogError("Error - AudioManager instance is already set... duplicate AudioManager exists. Destroying duplicate...");
-            Destroy(gameObject);
-            return;
+            Debug.LogError("Liekly missing SoundSourceReferenceTarget for AudioManager -- needed to create audio source target.");
         }
-        if (soundSourceTarget == null)
-        {
-            soundSourceTarget = gameObject;
-        }
+    }
+
+    private void ForcePrepareSoundSources()
+    {
+        if (prepared)
+            ReprepareSoundSources();
+        else
+            PrepareSoundSources();
+    }
+
+    private void ReprepareSoundSources()
+    {
+        if (Application.isPlaying)
+            Destroy(soundSourceTarget);
+        else
+            DestroyImmediate(soundSourceTarget);
+        soundSourceTarget = null;
+        prepared = false;
         PrepareSoundSources();
     }
 
     private void PrepareSoundSources()
     {
+        if (prepared)
+            return;
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Debug.LogError("Error - AudioManager instance is already set... duplicate AudioManager exists. Destroying duplicate...");
+            Destroy(gameObject);
+            return;
+        }
+        if (soundSourceReferenceTarget == null)
+        {
+            return;
+        }
+        else
+        {
+            soundSourceTarget = Instantiate(soundSourceReferenceTarget, transform);
+            soundSourceTarget.name = "Sound Source Target (Don't Inspect)";
+        }
         PrepareMusicSoundSources();
         PrepareEffectSoundSources();
+        prepared = true;
     }
 
     private void PrepareMusicSoundSources()
@@ -184,7 +222,19 @@ public class AudioManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UpdateSounds();
+    }
+
+    public void UpdateSounds()
+    {
+        if (!prepared)
+            return;
         currentMusic?.UpdateLoop();
         OnUpdateMusic?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        EditorApplication.update += () => { if (Application.isEditor) UpdateSounds(); };
     }
 }

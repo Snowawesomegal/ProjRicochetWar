@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerJoiner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    UnityEngine.InputSystem.PlayerInputManager inputManager;
+
+    private void Awake()
     {
-        
+        inputManager = UnityEngine.InputSystem.PlayerInputManager.instance;
+
+        inputManager.onPlayerJoined += AddPlayer;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddPlayer(PlayerInput input)
     {
-        
+        GameManager.Instance.Session.AddPlayer(input);
     }
 }

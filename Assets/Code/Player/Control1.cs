@@ -105,7 +105,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public StandardControlLocker inGrab;
     public StandardControlLocker UNIQUEinMovementAir;
     public StandardControlLocker UNIQUEinMovementGround;
-    public StandardControlLocker[] allLockers;
 
     public bool touchingWall = false;
     public float minimumSpeedForHitstun = 50;
@@ -155,9 +154,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         tr = GetComponent<TrailRenderer>();
         psc = GetComponent<PlayerShaderController>();
 
-        allLockers = new StandardControlLocker[]
-        { grounded, airborne, hitstun, inAnim, inAerialAnim, wallcling, onlyAttack, dashing, inGrab, UNIQUEinMovementAir, UNIQUEinMovementGround};
-
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         rb.sharedMaterial = notBouncy;
@@ -197,7 +193,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         GameManager.Instance.TimeController.Slow(framesPerTick, duration, this);
     }
 
-    void TryBufferFastFall()
+    void TryBufferFastFall() // Tries to fastfall, if can't fastfall, buffers a fastfall
     {
         if (rb.velocity.y <= 0 && canFastFall)
         {
@@ -209,7 +205,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
-    void StartStopFastFall(bool startstop)
+    void StartStopFastFall(bool startstop) // actually starts or stops fastfall
     {
         if (startstop)
         {
@@ -231,7 +227,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
-    void ManageFastFall()
+    void ManageFastFall() // called every frame, manages the buffer for fastfalling
     {
         if (fastFallBuffer > 0 && canFastFall)
         {
@@ -277,7 +273,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void HorizontalResponse(CharacterInput input)
     {
-        if (!clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
+        if (!clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround) && !clm.activeLockers.Contains(hitstun))
         {
             if (clm.activeLockers.Contains(grounded)) // if grounded: move
             {
@@ -295,7 +291,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     {
                         if (collidedWallSide == pim.GetCurrentDirectional().current.x)
                         {
-                            Debug.Log("called wallcling enter via not having grounded locker, and holding toward wall.");
                             WallClingEnterExit(true);
                         }
                     }
@@ -308,7 +303,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 if (Mathf.Round(input.Direction.current.x) != collidedWallSide)
                 {
-                    Debug.Log("called wallcling EXIT via having wallcling locker, touching wall, and holding away.");
                     WallClingEnterExit(false);
                 }
             }
@@ -325,6 +319,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
         if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) == 1) // if slow enough and in hitstun for longer than minHitstunFrames and knockback time is over and not in hitstop: stop hitstun
         {
+            Debug.Log("stop hitstun");
             Hit(null, false);
             framesInHitstun = 0;
             minimumHitstunFrames = 0;
@@ -394,8 +389,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (input.IsHeld() || input.IsPending())
         {
-            Debug.Log("recognized dash input: " + gameObject.name);
-
             if (imui.currentCharge >= dashCost)
             {
                 if (animationDebugMessages) { Debug.Log("Dash started" + "- frame: " + frame); }
@@ -532,14 +525,12 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             clm.AddLocker(wallcling);
             anim.SetBool("WallCling", true);
-            Debug.Log("REMOVE airborne locker via enter wallcling");
             clm.RemoveLocker(airborne);
             rb.velocity = Vector2.zero;
         }
         else
         {
             clm.RemoveLocker(wallcling);
-            Debug.Log("addlocker airborne via EXIT wallcling");
             clm.AddLocker(airborne);
             anim.SetBool("WallCling", false);
         }
@@ -636,7 +627,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
         if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
         {
-            Debug.Log("not affected by gravity, not in Movement, and moving downward, so stopped vertical speed: frame " + frame);
             if (rb.velocity.y < 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -726,7 +716,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
                         newYSpeed = Mathf.MoveTowards(rb.velocity.y, -fallSpeed, overMaxYSpeedAdjustment);
                     }
 
-                    Debug.Log(rb.velocity + " changed to " + new Vector2(newXSpeed, newYSpeed) + " by friction.");
                     rb.velocity = new Vector2(newXSpeed, newYSpeed);
                 }
 
@@ -741,12 +730,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
+    // Queued knockback is not executed if inGrab or if in hitstop
     void ManageQueuedKnockback()
     {
-        if (queuedKnockback != null)
+        if (queuedKnockback != null && !clm.activeLockers.Contains(inGrab))
         {
             if (GameManager.Instance.TimeController.GetTimeScale(this) == 1)
             {
+                Debug.Log("started queued knockback frame: " + frame);
                 StartKnockback(queuedKnockback.left.kbDistance, queuedKnockback.left.kbSpeedMultiplier, queuedKnockback.right);
                 queuedKnockback = null;
             }
@@ -817,17 +808,17 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
+    // Starts hitstun and queues knockback or stops hitstun
     public void Hit(Collider2D collider, bool enterOrExitHitstun = true)
     {
         if (enterOrExitHitstun) // Deal with being hit:
         {
             clm.RemoveLocker(inAnim);
             clm.RemoveLocker(inAerialAnim);
+            clm.AddLocker(hitstun);
+            anim.SetBool("Hitstun", true);
             if (!clm.activeLockers.Contains(inGrab))
             {
-                clm.AddLocker(hitstun);
-                anim.SetBool("Hitstun", true);
-
                 if (!string.IsNullOrEmpty(currentAnimBool))
                 {
                     ae.ChangeAnimBool(currentAnimBool, false, true);
@@ -835,6 +826,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
                 affectedByGravity = true;
                 anim.SetBool("ContinueAttack", false);
+                anim.SetBool("WallCling", false);
                 clm.RemoveLocker(inAnim);
                 clm.RemoveLocker(dashing);
                 clm.RemoveLocker(inAerialAnim);
@@ -863,14 +855,13 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 psc.ShaderStrength = 1;
             }
 
-            if (!clm.activeLockers.Contains(inGrab))
-            {
-                ApplyKnockback();
-            }
+            QueueKnockback();
 
             imui.ChangeHealth(-hi.damage);
-            void ApplyKnockback()
+
+            void QueueKnockback()
             {
+                Debug.Log("Queued knockback: " + frame);
                 if (hi.angle == 361)
                 {
                     int facingRightInt = facingRight ? 1 : -1;
@@ -929,7 +920,16 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void ExitGrab()
     {
-        Hit(null, false);
+        if (queuedKnockback == null)    // if player was not hit during the grab, releases fully;
+        {
+            Debug.Log("no queued knockback, exited grab frame: " + frame);
+            Hit(null, false);
+        }
+        else    // otherwise just disables grab locker so queued knockback will execute the knockback
+        {
+            clm.RemoveLocker(inGrab);
+
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

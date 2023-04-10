@@ -15,7 +15,7 @@ public static class AngleMath
 
 public static class clmEx
 {
-    public static void RemoveAllLockersExcept(ControlLockManager clm, StandardControlLocker[] allLockers, StandardControlLocker[] except = null)
+    public static void RemoveAllLockersExcept(ControlLockManager clm, StandardControlLocker[] except = null)
     {
         if (except == null)
         {
@@ -23,7 +23,8 @@ public static class clmEx
         }
         else
         {
-            foreach(StandardControlLocker i in allLockers)
+            List<StandardControlLocker> activeLockerCopy = new List<StandardControlLocker>(clm.activeLockers);
+            foreach(StandardControlLocker i in activeLockerCopy)
             {
                 if (System.Array.FindIndex(except, x => x == i) > -1)
                 {

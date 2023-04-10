@@ -6062,6 +6062,7 @@ MonoBehaviour:
   DIStrength: 1
   DLightBounce: 1
   firstFrameOfHitstun: 0
+  canFastFall: 1
   airSpeed: 20
   airAccel: 75
   airAccelDuringAerial: 80
@@ -6097,7 +6098,6 @@ MonoBehaviour:
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
   UNIQUEinMovementAir: {fileID: 11400000, guid: 636518d449bb5428cb4202c04d05d357, type: 2}
   UNIQUEinMovementGround: {fileID: 11400000, guid: cbc671def756d454f85b961185b43341, type: 2}
-  allLockers: []
   touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
@@ -7068,8 +7068,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  kbSpeedMultiplier: 0.005
-  kbDistance: 0.1
+  kbSpeedMultiplier: 0.03
+  kbDistance: 0.05
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -7086,7 +7086,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 2, y: 0}
+  knockbackGoalPos: {x: 1.5, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -7152,8 +7152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  kbSpeedMultiplier: 0.005
-  kbDistance: 0.1
+  kbSpeedMultiplier: 0.03
+  kbDistance: 0.05
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -7170,7 +7170,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 2, y: 0}
+  knockbackGoalPos: {x: 1.5, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []

@@ -215,12 +215,16 @@ public class AnimationEvents : MonoBehaviour
         anim.SetBool("Movement", false);
         anim.SetBool("Special", false);
         anim.SetBool("Jumpsquat", false);
-        clmEx.RemoveAllLockersExcept(clm, c1.allLockers, new StandardControlLocker[] { c1.grounded, c1.airborne });
+        clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { c1.grounded, c1.airborne });
         c1.affectedByGravity = true;
         c1.ChangeIntangible(false);
         c1.ignoreFriction = false;
         StopLandingLag();
-        c1.permaTrailps.Play();
+        if (c1.permaTrailps != null)
+        {
+            c1.permaTrailps.Play();
+        }
+
         c1.canFastFall = true;
 
         ResetDoNotEnable();

@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class FighterSelectorButton : MonoBehaviour
 {
     [SerializeField] Image image;
-    [SerializeField] FighterSelection fighter;
+    [SerializeField] public FighterSelection fighter;
+    [SerializeField] public RectTransform rect;
 
     void Awake()
     {
+        if (rect == null)
+            rect = GetComponent<RectTransform>();
         image.sprite = fighter.showcaseSprite;
     }
 }

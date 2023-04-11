@@ -5,12 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerJoiner : MonoBehaviour
 {
-    UnityEngine.InputSystem.PlayerInputManager inputManager;
+    [SerializeField] public UnityEngine.InputSystem.PlayerInputManager inputManager;
 
     private void Awake()
     {
+        if (inputManager == null)
+            inputManager = GetComponent<UnityEngine.InputSystem.PlayerInputManager>();
         inputManager = UnityEngine.InputSystem.PlayerInputManager.instance;
-
         inputManager.onPlayerJoined += AddPlayer;
     }
 

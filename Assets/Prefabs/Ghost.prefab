@@ -7160,7 +7160,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 10
+  minimumHitstunFrames: 24
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10

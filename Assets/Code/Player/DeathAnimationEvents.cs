@@ -93,7 +93,7 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (!eyeExists)
         {
-            GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position, Quaternion.identity);
+            GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position + new Vector3(0.9f * (c1.facingRight ? 1 : -1), 0.2f, 0), Quaternion.identity);
             newLargeEye.GetComponent<EyeControl>().owner = gameObject;
             eyeExists = true;
         }
@@ -161,7 +161,7 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (!eyeExists)
         {
-            GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position, Quaternion.identity);
+            GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position + new Vector3(0.9f * (c1.facingRight ? 1 : -1), 0.2f, 0), Quaternion.identity);
             newMassiveEye.GetComponent<EyeControl>().owner = gameObject;
             eyeExists = true;
         }

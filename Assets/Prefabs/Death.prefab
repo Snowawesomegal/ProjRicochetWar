@@ -1960,7 +1960,8 @@ MonoBehaviour:
   fastFallMultiplier: 2
   applyFFMultiplier: 0
   delayFF: 0
-  dashCost: 1
+  chargeRecoverySpeed: 10
+  dashCost: 100
   shorthopWindow: 2
   walljumpShorthopWindow: 2
   clm: {fileID: 0}

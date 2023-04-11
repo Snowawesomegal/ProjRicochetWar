@@ -58,6 +58,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public int delayFF = 0;
     Vector2 beforeFreezeSpeed = Vector2.zero;
     float moveDiMultiplier = 1;
+    [SerializeField] float chargeRecoverySpeed = 5;
 
     //Costs
     [SerializeField] float dashCost = 50;
@@ -160,6 +161,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
         Physics2D.gravity = Vector2.zero;
 
+        imui.chargeRecoverySpeed = chargeRecoverySpeed;
     }
 
     private void Awake()
@@ -817,6 +819,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             clm.RemoveLocker(inAerialAnim);
             clm.AddLocker(hitstun);
             anim.SetBool("Hitstun", true);
+            WallClingEnterExit(false);
             if (!clm.activeLockers.Contains(inGrab))
             {
                 if (!string.IsNullOrEmpty(currentAnimBool))
@@ -825,8 +828,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 }
 
                 affectedByGravity = true;
+
                 anim.SetBool("ContinueAttack", false);
-                anim.SetBool("WallCling", false);
                 clm.RemoveLocker(inAnim);
                 clm.RemoveLocker(dashing);
                 clm.RemoveLocker(inAerialAnim);

@@ -19,7 +19,9 @@ public class InMatchUI : MonoBehaviour
 
     float chargeDelay;
     [SerializeField] float maxChargeDelay;
-    [SerializeField] float chargeRecoverySpeed = 4;
+
+    // set by player that owns the UI
+    public float chargeRecoverySpeed = 4;
 
 
     void Start()

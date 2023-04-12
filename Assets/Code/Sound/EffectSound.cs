@@ -72,6 +72,9 @@ public class EffectSound : AbstractSound
 
     public override void UpdateLoop()
     {
+        if (source == null)
+            UnsubscribeUpdate();
+
         base.UpdateLoop();
         if ((!Application.isFocused && Application.isPlaying) || stopped)
             return;
@@ -88,12 +91,20 @@ public class EffectSound : AbstractSound
             {
                 loopsLeft--;
                 Play();
-            } else if (subscriber)
+            } else
             {
-                subscriber.OnUpdateMusic -= UpdateLoop;
-                subscriber = null;
-                stopped = true;
+                UnsubscribeUpdate();
             }
+        }
+    }
+
+    private void UnsubscribeUpdate()
+    {
+        if (subscriber)
+        {
+            subscriber.OnUpdateMusic -= UpdateLoop;
+            subscriber = null;
+            stopped = true;
         }
     }
 }

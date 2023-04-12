@@ -43,7 +43,7 @@ public class GameSettings : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.LogError("Error - GameSettings instance is already set... duplicate GameSettings exists. Destroying duplicate...");
+            Debug.LogWarning("Error - GameSettings instance is already set... duplicate GameSettings exists. Destroying duplicate...");
             Destroy(gameObject);
             return;
         }

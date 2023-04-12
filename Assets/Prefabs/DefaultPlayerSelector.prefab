@@ -210,6 +210,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4ede0f5a-d619-4da2-84c9-1ec6996a2a65
     m_ActionName: FalseUI/Submit[/SwitchProControllerHID/buttonEast,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7153590031594527476}
+        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
+        m_MethodName: OnReady
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e709257c-b096-4464-90f2-9e028ed4f775
+    m_ActionName: FalseUI/Ready[/SwitchProControllerHID/select,/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: FalseUI

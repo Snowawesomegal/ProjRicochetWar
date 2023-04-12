@@ -18,6 +18,9 @@ public class FighterSelectionDisplay : MonoBehaviour
 
     [SerializeField] PlayerUIBrowser uiBrowser;
 
+    private bool isReady = false;
+    public bool Ready { get { return isReady; } }
+
     public void AssignPlayer(SessionPlayer player, Sprite defaultSelectionSprite, FighterSelectionManager manager)
     {
         this.player = player;
@@ -30,6 +33,7 @@ public class FighterSelectionDisplay : MonoBehaviour
         Debug.Log("Devices: " + player.Input.devices);
         uiBrowser.NavigateBehavior += NavigateIndicator;
         uiBrowser.SubmitBehavior += SelectFighter;
+        uiBrowser.ReadyBehavior += ReadyUp;
         if (playerDisplay && defaultSelectionSprite)
         {
             playerDisplay.sprite = defaultSelectionSprite;
@@ -43,6 +47,7 @@ public class FighterSelectionDisplay : MonoBehaviour
         uiBrowser = null;
         manager = null;
         player = null;
+        isReady = false;
         if (playerDisplay)
             playerDisplay.sprite = null;
     }
@@ -92,5 +97,14 @@ public class FighterSelectionDisplay : MonoBehaviour
         player.SelectedFighter = manager.possibleButtons[uiBrowser.currentButton].fighter;
         if (playerDisplay)
             playerDisplay.sprite = player.SelectedFighter.showcaseSprite;
+    }
+
+    public void ReadyUp()
+    {
+        if (manager != null && player.SelectedFighter != null) {
+            isReady = !isReady;
+            Debug.Log("Player " + player.PlayerIndex + " is ready!");
+            manager.QueryReady();
+        }
     }
 }

@@ -1180,6 +1180,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ready"",
+                    ""type"": ""Button"",
+                    ""id"": ""e709257c-b096-4464-90f2-9e028ed4f775"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1435,6 +1444,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a2202b1-075d-4f9d-b26e-20cb4901208f"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ready"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04f5fe32-a815-45e6-82ac-044ab2b76a17"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ready"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1501,6 +1532,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_FalseUI_Back = m_FalseUI.FindAction("Back", throwIfNotFound: true);
         m_FalseUI_Navigate = m_FalseUI.FindAction("Navigate", throwIfNotFound: true);
         m_FalseUI_Submit = m_FalseUI.FindAction("Submit", throwIfNotFound: true);
+        m_FalseUI_Ready = m_FalseUI.FindAction("Ready", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1846,6 +1878,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_FalseUI_Back;
     private readonly InputAction m_FalseUI_Navigate;
     private readonly InputAction m_FalseUI_Submit;
+    private readonly InputAction m_FalseUI_Ready;
     public struct FalseUIActions
     {
         private @PlayerControls m_Wrapper;
@@ -1853,6 +1886,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Back => m_Wrapper.m_FalseUI_Back;
         public InputAction @Navigate => m_Wrapper.m_FalseUI_Navigate;
         public InputAction @Submit => m_Wrapper.m_FalseUI_Submit;
+        public InputAction @Ready => m_Wrapper.m_FalseUI_Ready;
         public InputActionMap Get() { return m_Wrapper.m_FalseUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1871,6 +1905,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Submit.started -= m_Wrapper.m_FalseUIActionsCallbackInterface.OnSubmit;
                 @Submit.performed -= m_Wrapper.m_FalseUIActionsCallbackInterface.OnSubmit;
                 @Submit.canceled -= m_Wrapper.m_FalseUIActionsCallbackInterface.OnSubmit;
+                @Ready.started -= m_Wrapper.m_FalseUIActionsCallbackInterface.OnReady;
+                @Ready.performed -= m_Wrapper.m_FalseUIActionsCallbackInterface.OnReady;
+                @Ready.canceled -= m_Wrapper.m_FalseUIActionsCallbackInterface.OnReady;
             }
             m_Wrapper.m_FalseUIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1884,6 +1921,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
+                @Ready.started += instance.OnReady;
+                @Ready.performed += instance.OnReady;
+                @Ready.canceled += instance.OnReady;
             }
         }
     }
@@ -1946,5 +1986,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnBack(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
+        void OnReady(InputAction.CallbackContext context);
     }
 }

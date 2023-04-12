@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
         ForcePrepareSoundSources();
         if (!prepared)
         {
-            Debug.LogError("Liekly missing SoundSourceReferenceTarget for AudioManager -- needed to create audio source target.");
+            Debug.LogError("Audio Manager not prepared - Likely missing SoundSourceReferenceTarget -- reference is needed to create audio source target.");
         }
     }
 
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.LogError("Error - AudioManager instance is already set... duplicate AudioManager exists. Destroying duplicate...");
+            Debug.LogWarning("Error - AudioManager instance is already set... duplicate AudioManager exists. Destroying duplicate...");
             Destroy(gameObject);
             return;
         }

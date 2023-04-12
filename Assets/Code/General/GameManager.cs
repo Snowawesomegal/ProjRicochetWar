@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TimeSlowing;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,12 +31,19 @@ public class GameManager : MonoBehaviour
         // check to see if another GameManager already assigned itself or got assigned
         } else if (instance != this)
         {
-            Debug.LogError("ERROR - Duplicate GameManager instantiated... cannot set static instance to this GameManager. Destroying this GameManager...");
+            Debug.LogWarning("ERROR - Duplicate GameManager instantiated... cannot set static instance to this GameManager. Destroying this GameManager...");
             Destroy(gameObject);
             return;
         }
 
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += (scene, loadMode) =>
+        {
+            if (scene.buildIndex == 2)
+                ResetGame();
+            else
+                CleanupGame();
+        };
     }
 
     private void FixedUpdate()
@@ -65,6 +73,23 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        CleanupGame();
+        SetupGame();
+    }
+
+    public void CleanupGame()
+    {
         timeController = new TickingTimeController(SlowUpdateType.FIXED);
+        Session.DestroyAllPlayers();
+    }
+
+    public void SetupGame()
+    {
+        Session.SpawnAllPlayers(new Vector3[] { new Vector3(-1, 0, 0), new Vector3(1, 0, 0) });
+    }
+
+    public void LoadGameScene()
+    {
+        SceneManager.LoadScene(2);
     }
 }

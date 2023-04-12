@@ -12,6 +12,7 @@ public class PlayerUIBrowser : MonoBehaviour
     public event Action<Vector2> NavigateBehavior;
     public event Action SubmitBehavior;
     public event Action BackBehavior;
+    public event Action ReadyBehavior;
 
     [SerializeField] public float moveSensitivty = 0.1f;
     public Vector2 previousMove = Vector2.zero;
@@ -41,5 +42,11 @@ public class PlayerUIBrowser : MonoBehaviour
     {
         Debug.Log("Player " + playerIndex + " Hit back button");
         BackBehavior?.Invoke();
+    }
+
+    public void OnReady(InputAction.CallbackContext ctxt)
+    {
+        Debug.Log("Player " + playerIndex + " Hit ready button");
+        ReadyBehavior?.Invoke();
     }
 }

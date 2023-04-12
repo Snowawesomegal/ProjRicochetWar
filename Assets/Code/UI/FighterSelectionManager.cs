@@ -74,4 +74,21 @@ public class FighterSelectionManager : MonoBehaviour
             Debug.Log("Enabled joining, player slot(s) are now available.");
         }
     }
+
+    public void QueryReady()
+    {
+        bool notReady = false;
+        foreach (FighterSelectionDisplay fighter in possiblePlayers)
+        {
+            if (fighter.HasPlayer && !fighter.Ready)
+            {
+                notReady = true;
+                break;
+            }
+        }
+        if (notReady)
+            return;
+
+        GameManager.Instance.LoadGameScene();
+    }
 }

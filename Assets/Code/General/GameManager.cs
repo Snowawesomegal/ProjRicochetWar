@@ -40,9 +40,11 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += (scene, loadMode) =>
         {
             if (scene.buildIndex == 2)
-                ResetGame();
-            else
-                CleanupGame();
+                SetupGame();
+        };
+        SceneManager.sceneUnloaded += (scene) =>
+        {
+            CleanupGame();
         };
     }
 

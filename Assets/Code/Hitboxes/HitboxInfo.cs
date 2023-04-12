@@ -21,9 +21,6 @@ public class HitboxInfo : MonoBehaviour
     public int minimumHitstunFrames = 20;
     public bool cannotClank = false;
 
-
-
-
     [Tooltip("Set this to true if the hitbox has multiple hitboxes that are part of the same move as it, and are disabled if it connects. In this case, this object should also be parented to a another gameobject. See Ghost UpHeavy. This is checked by HitboxInteractionManager.")]
     public bool isPartOfMultipart = false;
 

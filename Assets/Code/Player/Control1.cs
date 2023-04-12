@@ -45,6 +45,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] bool DLightBounce = true;
     public bool firstFrameOfHitstun = false;
     public bool canFastFall = true;
+    public bool stopFixedUpdate = false;
 
     //speeds
     public float airSpeed = 10;
@@ -96,7 +97,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public int FFbufferLength = 10; //how long in seconds an input that is not currently valid will wait to be valid
     int fastFallBuffer = 0;
 
-
     //Control Lockers
     public StandardControlLocker grounded;
     public StandardControlLocker airborne;
@@ -121,7 +121,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     //Wall Collision
     public int collidedWallSide;
     public float collidedWallSlope;
-    [SerializeField] GameObject platformCollider;
+    public GameObject platformCollider;
 
     List<Collider2D> currentOverlaps = new List<Collider2D>();
 
@@ -140,6 +140,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     //debug
     public bool animationDebugMessages = true;
+
+    public List<GameObject> temporaryObjects = new List<GameObject>();
 
     void Start()
     {
@@ -608,6 +610,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
         anim.SetFloat("VerticalVelocity", rb.velocity.y);
         anim.SetFloat("HorizontalVelocity", rb.velocity.x);
 
+        if (clm.activeLockers.Contains(hitstun))
+        {
+            HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
+        }
+
         frame += 1;
         if (frame > 60) { frame = 1; }
 
@@ -618,34 +625,32 @@ public class Control1 : MonoBehaviour, IIdentifiable
             rb.velocity = Vector2.zero;
         }
 
-        if (clm.activeLockers.Contains(hitstun))
+        if (!stopFixedUpdate)
         {
-            HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
-        }
+            ManagePlatformCollider();
 
-        ManagePlatformCollider();
+            ManageForces();
 
-        ManageForces();
+            UpdateGrounded();
 
-        UpdateGrounded();
+            ManageQueuedKnockback();
 
-        ManageQueuedKnockback();
+            ManageFastFall();
 
-        ManageFastFall();
-
-        if (psc != null)
-        {
-            if (psc.ShaderStrength > 0)
+            if (psc != null)
             {
-                psc.ShaderStrength -= 0.1f;
+                if (psc.ShaderStrength > 0)
+                {
+                    psc.ShaderStrength -= 0.1f;
+                }
             }
-        }
 
-        if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
-        {
-            if (rb.velocity.y < 0)
+            if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
             {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
+                if (rb.velocity.y < 0)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                }
             }
         }
     }
@@ -942,6 +947,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne, inGrab });
         }
+
+        foreach(GameObject i in temporaryObjects)
+        {
+            Destroy(i);
+        }
+        temporaryObjects.Clear();
+
+        stopFixedUpdate = false;
 
         ChangeIntangible(false);
         ignoreFriction = false;

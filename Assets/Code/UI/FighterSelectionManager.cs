@@ -7,7 +7,6 @@ public class FighterSelectionManager : MonoBehaviour
 {
     [SerializeField] public Sprite defaultSelectionImage;
     [SerializeField] public List<FighterSelectionDisplay> possiblePlayers = new List<FighterSelectionDisplay>();
-    [SerializeField] public List<SessionPlayer> players = new List<SessionPlayer>();
     [SerializeField] public UnityEngine.InputSystem.PlayerInputManager inputManager;
     [SerializeField] public List<FighterSelectorButton> possibleButtons = new List<FighterSelectorButton>();
 
@@ -23,9 +22,20 @@ public class FighterSelectionManager : MonoBehaviour
     private void OnEnable()
     {
         if (HasPlayerSlots())
+        {
             inputManager.EnableJoining();
+            Debug.Log("Joining is enabled.");
+        }
         else
+        {
             inputManager.DisableJoining();
+            Debug.Log("Joining is disabled.");
+        }
+    }
+
+    private void OnDisable()
+    {
+        inputManager.DisableJoining();
     }
 
     public bool HasPlayerSlots()
@@ -38,26 +48,47 @@ public class FighterSelectionManager : MonoBehaviour
 
     public void AddPlayer(PlayerInput input)
     {
-        Debug.Log("Adding player! Input index: " + input.playerIndex);
-        SessionPlayer player = GameManager.Instance.Session.AddPlayer(input);
-        Debug.Log("Checking for next available player slot...");
+        Debug.Log("Adding new player...");
         foreach (FighterSelectionDisplay selection in possiblePlayers)
         {
             if (selection.Unassigned)
             {
-                Debug.Log("Found player slot! Assigning player...");
+                Debug.Log("Assigning player to new player slot!");
+                SessionPlayer player = GameManager.Instance.Session.AddPlayer(input);
                 selection.AssignPlayer(player, defaultSelectionImage, this);
-                players.Add(player);
                 break;
             }
         }
         if (!HasPlayerSlots())
+        {
             inputManager.DisableJoining();
+            Debug.Log("Disabled joining, maximum player count reached.");
+        }
     }
 
     public void RemovePlayer(PlayerInput input)
     {
         if (HasPlayerSlots())
+        {
             inputManager.EnableJoining();
+            Debug.Log("Enabled joining, player slot(s) are now available.");
+        }
+    }
+
+    public void QueryReady()
+    {
+        bool notReady = false;
+        foreach (FighterSelectionDisplay fighter in possiblePlayers)
+        {
+            if (fighter.HasPlayer && !fighter.Ready)
+            {
+                notReady = true;
+                break;
+            }
+        }
+        if (notReady)
+            return;
+
+        GameManager.Instance.LoadGameScene();
     }
 }

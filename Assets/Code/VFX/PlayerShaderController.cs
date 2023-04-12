@@ -19,6 +19,8 @@ public class PlayerShaderController : MonoBehaviour
     {
         ValidateMaterial();
         RefreshSamplePalette();
+        if (targetPalettes.Count > 0)
+            SetTargetPalette(targetPalettes[0]);
     }
 
     // Ensure that the material is present

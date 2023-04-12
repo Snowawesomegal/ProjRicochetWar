@@ -40,4 +40,12 @@ public class SessionSettings
             players[i].SpawnPlayer(spawnPositions[i % spawnPositions.Length]);
         }
     }
+
+    public void DestroyAllPlayers()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].DestroyPlayer();
+        }
+    }
 }

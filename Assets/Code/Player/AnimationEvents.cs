@@ -67,7 +67,7 @@ public class AnimationEvents : MonoBehaviour
         c1.FreezeFrames(0, frameLength);
     }
 
-    void StopLandingLag()
+    public void StopLandingLag()
     {
         if (GameManager.Instance.TimeController.GetTimeScale(c1) != 1)
         {
@@ -145,20 +145,7 @@ public class AnimationEvents : MonoBehaviour
             clm.AddLocker(c1.inAerialAnim);
         }
 
-        ResetDoNotEnable();
-    }
-
-    void ResetDoNotEnable()
-    {
-        List<GameObject> dneCopy = new List<GameObject>(him.doNotEnableHitboxes);
-        foreach (GameObject i in dneCopy)
-        {
-            if (i != null)
-            {
-                i.GetComponent<HitboxInfo>().doNotEnable = false;
-            }
-        }
-        him.doNotEnableHitboxes.Clear();
+        c1.ResetDoNotEnable();
     }
 
     public void StartSpecial()
@@ -205,29 +192,7 @@ public class AnimationEvents : MonoBehaviour
             ChangeAnimBool(boolToSetFalse, false, true);
         }
 
-        StopEverything();
-    }
-
-    public void StopEverything() // Clears everything and stops all animations. If called solo, does not clear the attack bool so it can be checked to apply landing lag.
-    {
-        c1.affectedByGravity = true;
-        anim.SetBool("ContinueAttack", false);
-        anim.SetBool("Movement", false);
-        anim.SetBool("Special", false);
-        anim.SetBool("Jumpsquat", false);
-        clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { c1.grounded, c1.airborne });
-        c1.affectedByGravity = true;
-        c1.ChangeIntangible(false);
-        c1.ignoreFriction = false;
-        StopLandingLag();
-        if (c1.permaTrailps != null)
-        {
-            c1.permaTrailps.Play();
-        }
-
-        c1.canFastFall = true;
-
-        ResetDoNotEnable();
+        c1.StopEverything();
     }
 
     public void SetAnimBoolTrue(string toSetTrue) // Sets a single animation bool true from the animator, and updates currentAnimBool if it is an attack.

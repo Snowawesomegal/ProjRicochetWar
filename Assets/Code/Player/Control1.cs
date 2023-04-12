@@ -815,28 +815,19 @@ public class Control1 : MonoBehaviour, IIdentifiable
     {
         if (enterOrExitHitstun) // Deal with being hit:
         {
-            clm.RemoveLocker(inAnim);
-            clm.RemoveLocker(inAerialAnim);
-            clm.AddLocker(hitstun);
-            anim.SetBool("Hitstun", true);
-            WallClingEnterExit(false);
             if (!clm.activeLockers.Contains(inGrab))
             {
-                if (!string.IsNullOrEmpty(currentAnimBool))
-                {
-                    ae.ChangeAnimBool(currentAnimBool, false, true);
-                }
-
-                affectedByGravity = true;
-
-                anim.SetBool("ContinueAttack", false);
-                clm.RemoveLocker(inAnim);
-                clm.RemoveLocker(dashing);
-                clm.RemoveLocker(inAerialAnim);
-                anim.SetBool("Special", false);
-                ChangeIntangible(false);
-                ignoreFriction = false;
+                StopEverything();
             }
+            else
+            {
+                clm.RemoveLocker(inAnim);
+                clm.RemoveLocker(inAerialAnim);
+                WallClingEnterExit(false);
+            }
+
+            clm.AddLocker(hitstun);
+            anim.SetBool("Hitstun", true);
 
             gameObject.layer = 8;
             rb.sharedMaterial = bouncy;
@@ -912,6 +903,42 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
             anim.SetBool("Hitstun", false);
         }
+    }
+
+    public void StopEverything() // Clears everything and stops all animations. If called solo, does not clear the attack bool so it can be checked to apply landing lag.
+    {
+        affectedByGravity = true;
+        anim.SetBool("ContinueAttack", false);
+        anim.SetBool("Movement", false);
+        anim.SetBool("Special", false);
+        anim.SetBool("Jumpsquat", false);
+        clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne });
+        WallClingEnterExit(false);
+        affectedByGravity = true;
+        ChangeIntangible(false);
+        ignoreFriction = false;
+        ae.StopLandingLag();
+        if (permaTrailps != null)
+        {
+            permaTrailps.Play();
+        }
+
+        canFastFall = true;
+
+        ResetDoNotEnable();
+    }
+
+    public void ResetDoNotEnable()
+    {
+        List<GameObject> dneCopy = new List<GameObject>(him.doNotEnableHitboxes);
+        foreach (GameObject i in dneCopy)
+        {
+            if (i != null)
+            {
+                i.GetComponent<HitboxInfo>().doNotEnable = false;
+            }
+        }
+        him.doNotEnableHitboxes.Clear();
     }
 
     public void Grabbed(Collider2D collider)

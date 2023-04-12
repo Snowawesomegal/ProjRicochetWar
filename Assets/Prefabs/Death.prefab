@@ -1,39 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &51093016328110927
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9034038152016812013}
-  m_Layer: 0
-  m_Name: UpHeavy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9034038152016812013
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51093016328110927}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5324972260176221428}
-  - {fileID: 5324972259403682343}
-  - {fileID: 5324972259917817974}
-  m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232653211781806331
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,7 +34,7 @@ Transform:
   - {fileID: 7969711661929671820}
   - {fileID: 4398956132495226253}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1641580793172911241
 GameObject:
@@ -437,7 +403,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &8751485252511805030
 CapsuleCollider2D:
@@ -468,8 +434,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  kbSpeedMultiplier: 0.1
-  kbDistance: 0.9
+  kbSpeedMultiplier: 0.04
+  kbDistance: 0.3
   hitsound: 
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -486,7 +452,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 0, y: 3}
+  knockbackGoalPos: {x: 0, y: 5}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -605,7 +571,7 @@ Transform:
   - {fileID: 7027356358378458678}
   - {fileID: 4453222615765600128}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3182039222703602913
 GameObject:
@@ -890,7 +856,7 @@ Transform:
   - {fileID: 1008944911504695437}
   - {fileID: 1541577636693107489}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3590874157232770959
 GameObject:
@@ -1007,7 +973,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7179901049484416775
 CapsuleCollider2D:
@@ -1201,90 +1167,6 @@ MonoBehaviour:
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 7
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5324972259403682360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324972259403682343}
-  - component: {fileID: 5324972259403682341}
-  - component: {fileID: 5324972259403682342}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5324972259403682343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259403682360}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9034038152016812013}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5324972259403682341
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259403682360}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.16281082}
-  m_Size: {x: 6.915199, y: 4.950052}
-  m_Direction: 1
---- !u!114 &5324972259403682342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259403682360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 140
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 12
   isCounter: 0
   isProjectile: 0
   isGrab: 0
@@ -1601,174 +1483,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1 &5324972259917817975
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324972259917817974}
-  - component: {fileID: 5324972259917817972}
-  - component: {fileID: 5324972259917817973}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5324972259917817974
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259917817975}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8100224, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9034038152016812013}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5324972259917817972
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259917817975}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.00866437}
-  m_Size: {x: 3.537383, y: 4.716087}
-  m_Direction: 0
---- !u!114 &5324972259917817973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259917817975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 160
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 35
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 11
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5324972260176221429
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324972260176221428}
-  - component: {fileID: 5324972260176221426}
-  - component: {fileID: 5324972260176221427}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5324972260176221428
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972260176221429}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.471652, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9034038152016812013}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5324972260176221426
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972260176221429}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25446296}
-  m_Size: {x: 4.1975527, y: 5.2265096}
-  m_Direction: 0
---- !u!114 &5324972260176221427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972260176221429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 115
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
 --- !u!1 &5324972260535258967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,7 +1530,6 @@ Transform:
   - {fileID: 5324972259666958795}
   - {fileID: 7374218087597074338}
   - {fileID: 2908757286451228426}
-  - {fileID: 9034038152016812013}
   - {fileID: 1291835033694642017}
   - {fileID: 6750890407021335598}
   - {fileID: 6593207629712956153}
@@ -2932,7 +2645,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &1649322387271309086
 ParticleSystemRenderer:
@@ -7829,7 +7542,7 @@ Transform:
   - {fileID: 7152151586041874186}
   - {fileID: 263079827588975649}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8604838333698137753
 GameObject:
@@ -7862,7 +7575,7 @@ Transform:
   - {fileID: 3267544278575473980}
   - {fileID: 3267544280134006567}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8874298777834482489
 GameObject:
@@ -7895,7 +7608,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &7011862576059155537
 ParticleSystemRenderer:

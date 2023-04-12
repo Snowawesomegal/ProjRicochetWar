@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 1554648813
   m_SortingLayer: 2
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: ebf578e1ec6ae48bb89263a6bed4a727, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d0fc29800f4db4895a21a72e556b93e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5288280356838906065}
   - component: {fileID: 3462503817391674470}
   m_Layer: 0
-  m_Name: Background
+  m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,12 +171,12 @@ SpriteRenderer:
   m_SortingLayerID: -4672609
   m_SortingLayer: -3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2d79be5f4b3c6449685143926a617567, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30cad23f340bb41fa8e0ae8a78b9a3c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 40, y: 22.5}
+  m_Size: {x: 6, y: 3.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -497,7 +497,7 @@ SpriteRenderer:
   m_SortingLayerID: -4672609
   m_SortingLayer: -3
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 44ab356a580e94b74888a83e9157629d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 42b3c3a98548f455dbcd5772cdd2c29b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

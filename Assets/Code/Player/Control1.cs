@@ -867,12 +867,14 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 Debug.Log("Queued knockback: " + frame);
                 if (hi.angle == 361)
                 {
-                    int facingRightInt = facingRight ? 1 : -1;
+                    int facingRightInt = hi.facingRight ? 1 : -1;
 
                     Vector3 hiParentPosition = hi.transform.root.position;
 
                     Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.knockbackGoalPos.x * facingRightInt), hiParentPosition.y + hi.knockbackGoalPos.y);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
+
+                    Destroy(Instantiate(testCircle, goalPosition, Quaternion.identity),3);
 
                     queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
                 }

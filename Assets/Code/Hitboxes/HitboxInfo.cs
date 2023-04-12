@@ -48,7 +48,7 @@ public class HitboxInfo : MonoBehaviour
     [Tooltip("LOWER number priority wins; lower priority hitboxes are disabled if two hitboxes from the same move hit a player simultaneously.")]
     public int priority = 1;
 
-    [Tooltip("Set true in all connected hitboxes when a hitbox clanks so that the rest of the hitboxes activated afterward in the same move are not activated.")]
+    [Tooltip("Set true in all connected hitboxes when a hitbox clanks so that the rest of the hitboxes activated afterward in the same move are not activated. If true, also ignores already registered collisions with players. Set back to false by StopEverything in AnimationEvents at the end of any animation.")]
     public bool doNotEnable = false;
 
     public List<GameObject> playersHitAlready;

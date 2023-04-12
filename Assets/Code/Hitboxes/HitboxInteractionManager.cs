@@ -76,11 +76,10 @@ public class HitboxInteractionManager : MonoBehaviour
     {
         foreach (Transform hitbox in GetConnectedHitboxes(partOfMultipart))
         {
-            Debug.Log("disable hitbox " + hitbox.name);
             hitbox.gameObject.SetActive(false);
-            if (hitbox.TryGetComponent(out HitboxInfo hbi2))
+            if (hitbox.TryGetComponent(out HitboxInfo hbi))
             {
-                hbi2.doNotEnable = true;
+                hbi.doNotEnable = true; // if doNotEnable is true, collisions with players will be ignored, and will not be enabled later in the same move
                 doNotEnableHitboxes.Add(hitbox.gameObject);
             }
         }
@@ -182,7 +181,7 @@ public class HitboxInteractionManager : MonoBehaviour
             foreach (Pair<Collider2D, Collider2D> i in hitboxPlayerCol) // hitbox left, hurtbox right
             {
                 HitboxInfo hbi = i.left.GetComponent<HitboxInfo>();
-                if (!hbi.playersHitAlready.Contains(i.right.gameObject) && i.left.enabled) // check if the hitbox has had the player added during the move already
+                if (!hbi.playersHitAlready.Contains(i.right.gameObject) && !hbi.doNotEnable) // check if the hitbox has had the player added during the move already OR deactivated
                 {
                     Control1 hurtboxC1 = i.right.GetComponent<Control1>();
                     if (hurtboxC1.intangible)

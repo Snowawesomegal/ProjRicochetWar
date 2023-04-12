@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495149470519623135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.86, y: -5.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -144,17 +144,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   horizontal: 0
+  grabbyClaw: 0
   grabbedPlayer: {fileID: 0}
   grabbedPlayerRB: {fileID: 0}
   frameAndGrabPosition:
   - left: 54
     right: {x: -0.25, y: 2.85}
   - left: 60
-    right: {x: -0.05, y: 1.84}
+    right: {x: -0.05, y: 2.4}
   - left: 66
-    right: {x: -0.15, y: 0.6}
+    right: {x: -0.15, y: 2}
   - left: 70
-    right: {x: -0.15, y: 0.2}
+    right: {x: -0.15, y: 1.9}
   framesActive: 0
 --- !u!1 &3073611199108729101
 GameObject:
@@ -227,11 +228,16 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 2
   minimumHitstunFrames: 666
+  cannotClank: 0
   isPartOfMultipart: 0
-  hitstopFrames: 10
+  hitstopFrames: 0
   isCounter: 0
   isProjectile: 0
   isGrab: 1
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -259,7 +265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5480937345896250214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.36, y: 1.94, z: 0}
+  m_LocalPosition: {x: -0.06, y: 2.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -5275,14 +5275,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 12
   kbSpeedMultiplier: 1
-  kbDistance: 12
+  kbDistance: 50
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
   angle: 20
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 70
   cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
@@ -5359,14 +5359,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 4
   kbSpeedMultiplier: 1
-  kbDistance: 6
+  kbDistance: 25
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 40
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 50
   cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
@@ -6062,6 +6062,7 @@ MonoBehaviour:
   DIStrength: 1
   DLightBounce: 1
   firstFrameOfHitstun: 0
+  canFastFall: 1
   airSpeed: 20
   airAccel: 75
   airAccelDuringAerial: 80
@@ -6074,7 +6075,8 @@ MonoBehaviour:
   fastFallMultiplier: 2.5
   applyFFMultiplier: 0
   delayFF: 0
-  dashCost: 1
+  chargeRecoverySpeed: 10
+  dashCost: 100
   shorthopWindow: 2
   walljumpShorthopWindow: 2
   clm: {fileID: 0}
@@ -6097,7 +6099,6 @@ MonoBehaviour:
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
   UNIQUEinMovementAir: {fileID: 11400000, guid: 636518d449bb5428cb4202c04d05d357, type: 2}
   UNIQUEinMovementGround: {fileID: 11400000, guid: cbc671def756d454f85b961185b43341, type: 2}
-  allLockers: []
   touchingWall: 0
   minimumSpeedForHitstun: 20
   framesInHitstun: 0
@@ -7068,8 +7069,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  kbSpeedMultiplier: 0.005
-  kbDistance: 0.1
+  kbSpeedMultiplier: 0.03
+  kbDistance: 0.05
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -7086,7 +7087,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 2, y: 0}
+  knockbackGoalPos: {x: 1.5, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -7152,15 +7153,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  kbSpeedMultiplier: 0.005
-  kbDistance: 0.1
+  kbSpeedMultiplier: 0.03
+  kbDistance: 0.05
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 10
+  minimumHitstunFrames: 24
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
@@ -7170,7 +7171,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 2, y: 0}
+  knockbackGoalPos: {x: 1.5, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []

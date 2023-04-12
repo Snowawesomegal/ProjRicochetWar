@@ -81,7 +81,7 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (!horizontalHeavyClawExists)
         {
-            GameObject newHeavyClaw = Instantiate(heavyClaw, transform.position + new Vector3(-1.5f * (c1.facingRight ? 1 : -1), 0.1f, 0),
+            GameObject newHeavyClaw = Instantiate(heavyClaw, transform.position + new Vector3(-0.8f * (c1.facingRight ? 1 : -1), 0.1f, 0),
                 Quaternion.Euler(0f + (c1.facingRight ? 0 : 180), 0, 90 * (c1.facingRight ? -1 : 1)));
             newHeavyClaw.GetComponent<DeathHeavyClawControl>().owner = gameObject;
             newHeavyClaw.GetComponent<DeathHeavyClawControl>().horizontal = true;
@@ -93,7 +93,7 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (!eyeExists)
         {
-            GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position, Quaternion.identity);
+            GameObject newLargeEye = Instantiate(largeEyePrefab, transform.position + new Vector3(0.9f * (c1.facingRight ? 1 : -1), 0.2f, 0), Quaternion.identity);
             newLargeEye.GetComponent<EyeControl>().owner = gameObject;
             eyeExists = true;
         }
@@ -132,13 +132,13 @@ public class DeathAnimationEvents : MonoBehaviour
             c1.clm.AddLocker(c1.UNIQUEinMovementAir);
         }
 
-        c1.intangible = true;
+        c1.ChangeIntangible(true);
         c1.permaTrailps.Stop();
     }
 
     void TransitionToEndSpecial()
     {
-        clmEx.RemoveAllLockersExcept(c1.clm, c1.allLockers, new StandardControlLocker[] { c1.grounded, c1.airborne });
+        clmEx.RemoveAllLockersExcept(c1.clm, new StandardControlLocker[] { c1.grounded, c1.airborne });
         if (c1.grounded)
         {
             c1.clm.AddLocker(c1.inAnim);
@@ -151,7 +151,7 @@ public class DeathAnimationEvents : MonoBehaviour
         anim.SetBool("ContinueAttack", true);
 
         movementAbilityCurrentFrames = 0;
-        c1.intangible = false;
+        c1.ChangeIntangible(false);
         c1.affectedByGravity = true;
         c1.canFastFall = true;
         c1.permaTrailps.Play();
@@ -161,7 +161,7 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (!eyeExists)
         {
-            GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position, Quaternion.identity);
+            GameObject newMassiveEye = Instantiate(massiveEyePrefab, transform.position + new Vector3(0.9f * (c1.facingRight ? 1 : -1), 0.2f, 0), Quaternion.identity);
             newMassiveEye.GetComponent<EyeControl>().owner = gameObject;
             eyeExists = true;
         }

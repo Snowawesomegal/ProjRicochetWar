@@ -19,7 +19,7 @@ public abstract class AbstractSound
     [SerializeField] [Range(0.1f, 3)] public float pitch = 1f;
 
     [SerializeField] public bool loop = false;
-    [SerializeField] protected bool stopping = false;
+    [HideInInspector] protected bool stopping = false;
 
     [HideInInspector] public AudioSource source;
 
@@ -78,6 +78,8 @@ public abstract class AbstractSound
     {
         if (pitch == 0)
             pitch = 1;
+        if (stopSpeed == 0)
+            stopSpeed = 0.005f;
         // :)
     }
 }

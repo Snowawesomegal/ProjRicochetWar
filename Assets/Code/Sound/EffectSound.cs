@@ -72,6 +72,7 @@ public class EffectSound : AbstractSound
 
     public override void UpdateLoop()
     {
+        base.UpdateLoop();
         if ((!Application.isFocused && Application.isPlaying) || stopped)
             return;
         

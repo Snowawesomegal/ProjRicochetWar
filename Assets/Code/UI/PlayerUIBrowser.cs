@@ -7,27 +7,39 @@ using System;
 public class PlayerUIBrowser : MonoBehaviour
 {
     public int currentButton = -1;
+    public int playerIndex = -1;
 
     public event Action<Vector2> NavigateBehavior;
     public event Action SubmitBehavior;
     public event Action BackBehavior;
 
+    [SerializeField] public float moveSensitivty = 0.1f;
+    public Vector2 previousMove = Vector2.zero;
+
     public void OnNavigate(InputAction.CallbackContext ctxt)
     {
         Vector2 vec = ctxt.ReadValue<Vector2>();
-        Debug.Log("Navigating: " + vec);
-        NavigateBehavior?.Invoke(vec);
+        if (Mathf.Abs(vec.x) < moveSensitivty)
+            vec.x = 0;
+        if (Math.Abs(vec.y) < moveSensitivty)
+            vec.y = 0;
+        if (!Utility.EquivalentSigns(vec.x, previousMove.x) || !Utility.EquivalentSigns(vec.y, previousMove.y))
+        {
+            Debug.Log("Player " + playerIndex + " Navigating: " + vec);
+            previousMove = vec;
+            NavigateBehavior?.Invoke(vec);
+        }
     }
 
     public void OnSubmit(InputAction.CallbackContext ctxt)
     {
-        Debug.Log("Submitting");
+        Debug.Log("Player " + playerIndex + " Submitting");
         SubmitBehavior?.Invoke();
     }
 
     public void OnBack(InputAction.CallbackContext ctxt)
     {
-        Debug.Log("Hit back button");
+        Debug.Log("Player " + playerIndex + " Hit back button");
         BackBehavior?.Invoke();
     }
 }

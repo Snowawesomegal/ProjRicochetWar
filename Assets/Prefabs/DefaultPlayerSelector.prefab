@@ -115,51 +115,15 @@ MonoBehaviour:
     m_ActionId: 462e5cf3-ba14-47da-8f47-3004df081109
     m_ActionName: OwenControls/Movement[/Keyboard/o]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7153590031594527476}
-        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
-        m_MethodName: OnBack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: a2384c9f-951a-459d-bcc1-c97d88daaa4d
     m_ActionName: UI/Back[/Keyboard/leftShift]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7153590031594527476}
-        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
-        m_MethodName: OnNavigate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5f29b446-92be-471a-828a-b2ed61ba8085
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7153590031594527476}
-        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
-        m_MethodName: OnSubmit
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 02557698-42e4-4f65-a932-acd6ddc65137
     m_ActionName: UI/Submit[/Keyboard/enter]
   - m_PersistentCalls:
@@ -194,9 +158,61 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1a75c3d8-fa0f-454a-a04b-940c3ea22b1f
     m_ActionName: UI/TrackedDeviceOrientation
-  m_NeverAutoSwitchControlSchemes: 0
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fe2c43f1-bcc4-4b4a-b4ed-162d3cfa8239
+    m_ActionName: UI/Start[/SwitchProControllerHID/start,/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7153590031594527476}
+        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
+        m_MethodName: OnBack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ce06a961-3381-4735-b43b-5e654e11b7a7
+    m_ActionName: FalseUI/Back[/SwitchProControllerHID/buttonSouth,/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7153590031594527476}
+        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
+        m_MethodName: OnNavigate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 60f6ad43-4447-4ee3-a06d-1ac27d8e03b7
+    m_ActionName: FalseUI/Navigate[/SwitchProControllerHID/leftStick/up,/SwitchProControllerHID/rightStick/up,/SwitchProControllerHID/leftStick/down,/SwitchProControllerHID/rightStick/down,/SwitchProControllerHID/leftStick/left,/SwitchProControllerHID/rightStick/left,/SwitchProControllerHID/leftStick/right,/SwitchProControllerHID/rightStick/right,/SwitchProControllerHID/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7153590031594527476}
+        m_TargetAssemblyTypeName: PlayerUIBrowser, Assembly-CSharp
+        m_MethodName: OnSubmit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4ede0f5a-d619-4da2-84c9-1ec6996a2a65
+    m_ActionName: FalseUI/Submit[/SwitchProControllerHID/buttonEast,/Keyboard/space]
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Playing
+  m_DefaultActionMap: FalseUI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &7153590031594527476
@@ -212,3 +228,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentButton: -1
+  playerIndex: -1
+  moveSensitivty: 0.1
+  previousMove: {x: 0, y: 0}

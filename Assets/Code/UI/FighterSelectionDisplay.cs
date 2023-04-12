@@ -24,8 +24,10 @@ public class FighterSelectionDisplay : MonoBehaviour
         this.manager = manager;
         uiBrowser = player.Input.GetComponent<PlayerUIBrowser>();
         uiBrowser.currentButton = 0;
+        uiBrowser.playerIndex = player.PlayerIndex;
         PlaceIndicator(uiBrowser.currentButton);
         Debug.Log("Subscribing navigate");
+        Debug.Log("Devices: " + player.Input.devices);
         uiBrowser.NavigateBehavior += NavigateIndicator;
         uiBrowser.SubmitBehavior += SelectFighter;
         if (playerDisplay && defaultSelectionSprite)

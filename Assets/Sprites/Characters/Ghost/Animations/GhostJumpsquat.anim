@@ -98,7 +98,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.05
-    functionName: StopEverything
+    functionName: StopEverythingFromAnimator
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

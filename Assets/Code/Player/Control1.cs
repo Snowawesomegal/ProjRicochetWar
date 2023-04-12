@@ -9,6 +9,7 @@ using System.Linq;
 using UnityEngine.TextCore.Text;
 using System.Runtime;
 using Unity.VisualScripting;
+using System.Security.Cryptography;
 
 public class Control1 : MonoBehaviour, IIdentifiable
 {
@@ -23,6 +24,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public GameObject testCircle;
     public Vector3 feetOffset;
     float minimumHitstunFrames = 0;
+
+    List<string> animatorBools = new List<string>();
 
     //physics
     //all speeds and accels are used as multipliers when adding or subtracting speed
@@ -82,7 +85,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public GameObject sm;
     EffectManager em;
     InMatchUI imui;
-    AnimationEvents ae;
+    public AnimationEvents ae;
     TrailRenderer tr;
     PlayerShaderController psc;
 
@@ -162,6 +165,17 @@ public class Control1 : MonoBehaviour, IIdentifiable
         Physics2D.gravity = Vector2.zero;
 
         imui.chargeRecoverySpeed = chargeRecoverySpeed;
+
+        AnimatorControllerParameter param;
+        for (int index = 0; index < anim.parameters.Length; index++)
+        {
+            param = anim.GetParameter(index);
+
+            if (param.type == AnimatorControllerParameterType.Bool)
+            {
+                animatorBools.Add(param.name);
+            }
+        }
     }
 
     private void Awake()
@@ -252,7 +266,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             platformCollider.SetActive(false);
             if (dropPlatformFrames == 0)
             {
-                dropPlatformFrames = 1;
+                dropPlatformFrames = 2;
             }
 
             if (clm.activeLockers.Contains(grounded)) // because this technically triggers on normal ground, not just platforms, edge cases exist
@@ -526,7 +540,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (enterexit)
         {
             clm.AddLocker(wallcling);
-            anim.SetBool("WallCling", true);
+            ae.ChangeAnimBool("WallCling", true);
             clm.RemoveLocker(airborne);
             rb.velocity = Vector2.zero;
         }
@@ -534,7 +548,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             clm.RemoveLocker(wallcling);
             clm.AddLocker(airborne);
-            anim.SetBool("WallCling", false);
+            ae.ChangeAnimBool("WallCling", false);
         }
     }
 
@@ -609,11 +623,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
             HitstunResponse(); // if in hitstun, once per frame, check moving slow enough that hitstun is over
         }
 
+        ManagePlatformCollider();
+
         ManageForces();
 
         UpdateGrounded();
-
-        ManagePlatformCollider();
 
         ManageQueuedKnockback();
 
@@ -651,7 +665,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
         }
 
-        dropPlatformFrames -= 1;
+        if (dropPlatformFrames > 0)
+        {
+            dropPlatformFrames -= 1;
+        }
     }
 
     void ManageForces()
@@ -776,9 +793,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             if (enterexit)
             {
+                Debug.Log("Become grounded");
                 clm.AddLocker(grounded);
                 clm.RemoveLocker(airborne);
-                anim.SetBool("Grounded", true);
+                ae.ChangeAnimBool("Grounded", true);
                 applyFFMultiplier = false;
                 fastFallBuffer = 0;
                 currentGroundTag = groundTag;
@@ -801,10 +819,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
             else
             {
+                Debug.Log("Become airborne");
                 clm.RemoveLocker(grounded);
                 clm.AddLocker(airborne);
                 currentGroundTag = null;
-                anim.SetBool("Grounded", false);
+                ae.ChangeAnimBool("Grounded", false);
                 gameObject.layer = 8;
             }
         }
@@ -821,13 +840,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
             else
             {
-                clm.RemoveLocker(inAnim);
-                clm.RemoveLocker(inAerialAnim);
-                WallClingEnterExit(false);
+                StopEverything(false);
             }
 
             clm.AddLocker(hitstun);
-            anim.SetBool("Hitstun", true);
+            ae.ChangeAnimBool("Hitstun", true);
 
             gameObject.layer = 8;
             rb.sharedMaterial = bouncy;
@@ -901,23 +918,35 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
             tr.emitting = false;
 
-            anim.SetBool("Hitstun", false);
+            ae.ChangeAnimBool("Hitstun", false);
         }
     }
 
-    public void StopEverything() // Clears everything and stops all animations. If called solo, does not clear the attack bool so it can be checked to apply landing lag.
+    // This systematically stops EVERYTHING the player could be doing at a given time
+    public void StopEverything(bool exitGrab = true)
     {
-        affectedByGravity = true;
-        anim.SetBool("ContinueAttack", false);
-        anim.SetBool("Movement", false);
-        anim.SetBool("Special", false);
-        anim.SetBool("Jumpsquat", false);
-        clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne });
-        WallClingEnterExit(false);
-        affectedByGravity = true;
+        List<string> trueBoolsCopy = new List<string>(ae.trueAnimBools);
+        foreach (string i in trueBoolsCopy) // set all bools false
+        {
+            if (i != "Grounded" && i != "Airborne")
+            {
+                ae.ChangeAnimBool(i, false);
+            }
+        }
+
+        if (exitGrab) // remove all lockers except grounded and airborne
+        {
+            clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne });
+        }
+        else // don't remove grab if it's 
+        {
+            clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne, inGrab });
+        }
+
         ChangeIntangible(false);
         ignoreFriction = false;
-        ae.StopLandingLag();
+        ae.UnfreezePlayer();
+
         if (permaTrailps != null)
         {
             permaTrailps.Play();
@@ -947,7 +976,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         ae.StopAnimation(currentAnimBool);
 
         clm.AddLocker(inGrab);
-        anim.SetBool("Hitstun", true);
+        ae.ChangeAnimBool("Hitstun", true);
     }
 
     public void ExitGrab()
@@ -960,7 +989,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         else    // otherwise just disables grab locker so queued knockback will execute the knockback
         {
             clm.RemoveLocker(inGrab);
-
         }
     }
 

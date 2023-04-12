@@ -148,7 +148,7 @@ public class DeathAnimationEvents : MonoBehaviour
             c1.clm.AddLocker(c1.inAerialAnim);
         }
 
-        anim.SetBool("ContinueAttack", true);
+        c1.ae.ChangeAnimBool("ContinueAttack", true);
 
         movementAbilityCurrentFrames = 0;
         c1.ChangeIntangible(false);
@@ -171,7 +171,7 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (c1.pim.BufferInputExists(ControlLock.Controls.SPECIAL))
         {
-            anim.SetBool("ContinueAttack", true);
+            c1.ae.ChangeAnimBool("ContinueAttack", true);
         }
     }
 }

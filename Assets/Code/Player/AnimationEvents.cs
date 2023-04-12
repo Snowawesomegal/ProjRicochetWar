@@ -30,6 +30,8 @@ public class AnimationEvents : MonoBehaviour
 
     [SerializeField] List<ObjectToInstantiate> projectiles;
 
+    public List<string> trueAnimBools = new List<string>();
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -62,12 +64,17 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    public void StopEverythingFromAnimator()
+    {
+        c1.StopEverything();
+    }
+
     void StartLandingLag(int frameLength) // freezes animator
     {
         c1.FreezeFrames(0, frameLength);
     }
 
-    public void StopLandingLag()
+    public void UnfreezePlayer()
     {
         if (GameManager.Instance.TimeController.GetTimeScale(c1) != 1)
         {
@@ -84,6 +91,18 @@ public class AnimationEvents : MonoBehaviour
             {
                 anim.SetBool(boolName, toSet);
             }
+        }
+
+        if (toSet)
+        {
+            if (!trueAnimBools.Contains(boolName))
+            {
+                trueAnimBools.Add(boolName);
+            }
+        }
+        else
+        {
+            trueAnimBools.Remove(boolName);
         }
 
         if (changeCurrentAnimBool)
@@ -115,14 +134,14 @@ public class AnimationEvents : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(c1.currentAnimBool))
             {
-                anim.SetBool(c1.currentAnimBool, true);
+                ChangeAnimBool(c1.currentAnimBool, true);
             }
         }
         if (truefalse == 1)
         {
             if (!string.IsNullOrEmpty(c1.currentAnimBool))
             {
-                anim.SetBool(c1.currentAnimBool, false);
+                ChangeAnimBool(c1.currentAnimBool, false);
             }
 
             c1.currentAnimBool = null;
@@ -178,7 +197,7 @@ public class AnimationEvents : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets current attack's bool to false, continueattack to false, removes inAnim locker, clears connected hitboxes, and stops any lag.
+    /// Sets current attack's bool to false and calls StopEverything
     /// </summary>
     public void StopAnimation(string boolToSetFalse = "Nothing")
     {
@@ -217,7 +236,7 @@ public class AnimationEvents : MonoBehaviour
 
     public void StartNewAnimOfMultipart() // Sets ContinueAttack back to false; ContinueAttack is checked from an animation event, and if true, switches to the next part
     {
-        anim.SetBool("ContinueAttack", false);
+        ChangeAnimBool("ContinueAttack", false);
     }
 
     public void SwitchIfAttacking(string newAnimBool) // Sets a bool to true if attack is inputted; in most cases, this is used with ContinueAttack
@@ -229,7 +248,7 @@ public class AnimationEvents : MonoBehaviour
                 Debug.Log("set bool " + newAnimBool + " true. Via SwitchIfNotAttacking." + "- frame: " + c1.frame);
             }
 
-            anim.SetBool(newAnimBool, true);
+            ChangeAnimBool(newAnimBool, true);
         }
     }
 

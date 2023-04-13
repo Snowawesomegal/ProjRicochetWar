@@ -412,7 +412,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 if (animationDebugMessages) { Debug.Log("Dash started" + "- frame: " + frame); }
                 ae.StopAnimation(currentAnimBool);
                 ae.ChangeAnimBool("StartDash", true);
-                Hit(null, false);
                 queuedKnockback = null;
                 clm.AddLocker(dashing);
 
@@ -625,32 +624,29 @@ public class Control1 : MonoBehaviour, IIdentifiable
             rb.velocity = Vector2.zero;
         }
 
-        if (!stopFixedUpdate)
+        ManagePlatformCollider();
+
+        ManageForces();
+
+        UpdateGrounded();
+
+        ManageQueuedKnockback();
+
+        ManageFastFall();
+
+        if (psc != null)
         {
-            ManagePlatformCollider();
-
-            ManageForces();
-
-            UpdateGrounded();
-
-            ManageQueuedKnockback();
-
-            ManageFastFall();
-
-            if (psc != null)
+            if (psc.ShaderStrength > 0)
             {
-                if (psc.ShaderStrength > 0)
-                {
-                    psc.ShaderStrength -= 0.1f;
-                }
+                psc.ShaderStrength -= 0.1f;
             }
+        }
 
-            if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
+        if (!affectedByGravity && !clm.activeLockers.Contains(dashing) && !clm.activeLockers.Contains(UNIQUEinMovementAir) && !clm.activeLockers.Contains(UNIQUEinMovementGround))
+        {
+            if (rb.velocity.y < 0)
             {
-                if (rb.velocity.y < 0)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, 0);
-                }
+                rb.velocity = new Vector2(rb.velocity.x, 0);
             }
         }
     }
@@ -698,7 +694,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                     }
                 }
 
-                if (!clm.activeLockers.Contains(dashing))
+                if (!clm.activeLockers.Contains(dashing) && !ignoreFriction)
                 {
                     rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -groundSpeed, groundSpeed), rb.velocity.y); // cap x speed
                 }
@@ -954,10 +950,9 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
         temporaryObjects.Clear();
 
-        stopFixedUpdate = false;
-
         ChangeIntangible(false);
         ignoreFriction = false;
+        affectedByGravity = true;
         ae.UnfreezePlayer();
 
         if (permaTrailps != null)

@@ -184,7 +184,7 @@ public class DeathAnimationEvents : MonoBehaviour
         c1.clm.AddLocker(c1.inAnim);
         c1.platformCollider.SetActive(false);
 
-        c1.stopFixedUpdate = true;
+        c1.affectedByGravity = false;
 
         rb.velocity = Vector2.zero;
         int numberOfPositions = ((int)dairHeavyDistance / 2) + 2;
@@ -204,7 +204,8 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         c1.ae.ChangeAnimBool("ContinueAttack", true);
         c1.affectedByGravity = true;
-        rb.velocity = new Vector2(0, -20);
+        c1.ignoreFriction = true;
+        rb.velocity = new Vector2(0, -30);
         Debug.Log("chain hit the ground");
     }
 

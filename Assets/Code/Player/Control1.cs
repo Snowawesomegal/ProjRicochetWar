@@ -34,9 +34,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float friction = 10;
     [SerializeField] float airFriction = 500;
     public float wallJumpVerticalOoOne = 0.5f;
-    public bool affectedByGravity = true;
     public bool intangible = false;
-    public bool ignoreFriction = false;
+
     [SerializeField] float DIStrength = 5;
     int knockbackTime = 0;
     Vector2 initialLaunchVelocity;
@@ -44,8 +43,12 @@ public class Control1 : MonoBehaviour, IIdentifiable
     GameObject runeActive;
     [SerializeField] bool DLightBounce = true;
     public bool firstFrameOfHitstun = false;
+
+    // "Do not" booleans
+    public bool doNotUpdatePlatformCollider = false;
     public bool canFastFall = true;
-    public bool stopFixedUpdate = false;
+    public bool ignoreFriction = false;
+    public bool affectedByGravity = true;
 
     //speeds
     public float airSpeed = 10;
@@ -337,7 +340,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (animationDebugMessages) { Debug.Log("hitstun response" + "- frame: " + frame); }
         if (rb.velocity.magnitude < minimumSpeedForHitstun && framesInHitstun > minimumHitstunFrames && knockbackTime <= 0 && GameManager.Instance.TimeController.GetTimeScale(this) == 1) // if slow enough and in hitstun for longer than minHitstunFrames and knockback time is over and not in hitstop: stop hitstun
         {
-            Debug.Log("stop hitstun");
             Hit(null, false);
             framesInHitstun = 0;
             minimumHitstunFrames = 0;
@@ -538,17 +540,24 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void WallClingEnterExit(bool enterexit)
     {
+        if (enterexit == clm.activeLockers.Contains(wallcling))
+        {
+            return;
+        }
+
         if (enterexit)
         {
             clm.AddLocker(wallcling);
             ae.ChangeAnimBool("WallCling", true);
             clm.RemoveLocker(airborne);
+            affectedByGravity = false;
             rb.velocity = Vector2.zero;
         }
         else
         {
             clm.RemoveLocker(wallcling);
             clm.AddLocker(airborne);
+            affectedByGravity = true;
             ae.ChangeAnimBool("WallCling", false);
         }
     }
@@ -617,14 +626,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
         frame += 1;
         if (frame > 60) { frame = 1; }
 
-        if (clm.activeLockers.Contains(wallcling)) // This is an absolutely disgusting thing to have to run, I hope I can change this.
-                                                   // Sets speed to 0 every frame while wall-clinging
-            // The reason this is called at all is because stopping all momentum on the frame I grab the wall sometimes just doesn't work
+        if (!doNotUpdatePlatformCollider)
         {
-            rb.velocity = Vector2.zero;
+            ManagePlatformCollider();
         }
-
-        ManagePlatformCollider();
 
         ManageForces();
 
@@ -794,7 +799,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             if (enterexit)
             {
-                Debug.Log("Become grounded");
                 clm.AddLocker(grounded);
                 clm.RemoveLocker(airborne);
                 ae.ChangeAnimBool("Grounded", true);
@@ -820,7 +824,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
             else
             {
-                Debug.Log("Become airborne");
                 clm.RemoveLocker(grounded);
                 clm.AddLocker(airborne);
                 currentGroundTag = null;
@@ -873,7 +876,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
             void QueueKnockback()
             {
-                Debug.Log("Queued knockback: " + frame);
                 if (hi.angle == 361)
                 {
                     int facingRightInt = hi.facingRight ? 1 : -1;
@@ -882,8 +884,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
                     Vector2 goalPosition = new Vector2(hiParentPosition.x + (hi.knockbackGoalPos.x * facingRightInt), hiParentPosition.y + hi.knockbackGoalPos.y);
                     Vector2 between = new Vector2(goalPosition.x - transform.position.x, goalPosition.y - transform.position.y);
-
-                    Destroy(Instantiate(testCircle, goalPosition, Quaternion.identity),3);
 
                     queuedKnockback = new Pair<HitboxInfo, Vector2>(hi, between);
                 }
@@ -951,8 +951,12 @@ public class Control1 : MonoBehaviour, IIdentifiable
         temporaryObjects.Clear();
 
         ChangeIntangible(false);
+
         ignoreFriction = false;
         affectedByGravity = true;
+        doNotUpdatePlatformCollider = false;
+        canFastFall = true;
+
         ae.UnfreezePlayer();
 
         if (permaTrailps != null)

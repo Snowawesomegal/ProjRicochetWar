@@ -184,6 +184,7 @@ public class DeathAnimationEvents : MonoBehaviour
         c1.clm.AddLocker(c1.inAnim);
         c1.platformCollider.SetActive(false);
 
+        c1.doNotUpdatePlatformCollider = true;
         c1.affectedByGravity = false;
 
         rb.velocity = Vector2.zero;
@@ -191,6 +192,8 @@ public class DeathAnimationEvents : MonoBehaviour
         Debug.Log("distance to ground = " + dairHeavyDistance + " so number of positions is " + numberOfPositions);
 
         currentLineChain = Instantiate(lineChain, transform.position, Quaternion.identity);
+
+        currentLineChain.transform.GetChild(0).GetComponent<HitboxInfo>().owner = gameObject;
 
         c1.temporaryObjects.Add(currentLineChain);
 

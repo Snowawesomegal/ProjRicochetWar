@@ -93,7 +93,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0.1
     functionName: EnableHitbox
-    data: DairHeavy
+    data: DairHeavyLaunch
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

@@ -135,4 +135,11 @@ public class DeathHeavyClawControl : MonoBehaviour
 
         facingRight = c1.facingRight;
     }
+
+    public void OnGrab(GameObject player)
+    {
+        grabbedPlayer = player;
+        grabbedPlayerRB = player.GetComponent<Rigidbody2D>();
+        grabbedPlayerRB.velocity = Vector2.zero;
+    }
 }

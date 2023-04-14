@@ -6056,13 +6056,14 @@ MonoBehaviour:
   friction: 5
   airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
-  affectedByGravity: 1
   intangible: 0
-  ignoreFriction: 0
   DIStrength: 1
   DLightBounce: 1
   firstFrameOfHitstun: 0
+  doNotUpdatePlatformCollider: 0
   canFastFall: 1
+  ignoreFriction: 0
+  affectedByGravity: 1
   airSpeed: 20
   airAccel: 75
   airAccelDuringAerial: 80
@@ -6085,6 +6086,7 @@ MonoBehaviour:
   permaTrailps: {fileID: 0}
   am: {fileID: 0}
   sm: {fileID: 0}
+  ae: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   FFbufferLength: 20
@@ -6114,6 +6116,7 @@ MonoBehaviour:
   dropPlatformTotalFrames: 7
   currentAnimBool: 
   animationDebugMessages: 0
+  temporaryObjects: []
 --- !u!114 &6311728093354438159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6499,6 +6502,7 @@ MonoBehaviour:
   landingAnimationName: GhostLandingLag
   runAnimationName: GhostRun
   projectiles: []
+  trueAnimBools: []
 --- !u!96 &-6832151150410818669
 TrailRenderer:
   serializedVersion: 2

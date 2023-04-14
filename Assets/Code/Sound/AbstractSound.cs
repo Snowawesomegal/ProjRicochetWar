@@ -70,6 +70,7 @@ public abstract class AbstractSound
 
     public virtual void FinishStop()
     {
+        if (source)
         source.Stop();
         stopping = false;
     }

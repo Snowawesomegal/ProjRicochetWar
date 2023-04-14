@@ -44,6 +44,7 @@ public class DeathDairHChainController : MonoBehaviour
                 if (ownerDAE.transform.position.y < temp[1].y) // if player lower than second position, remove first position
                 {
                     allPositions.RemoveAt(0);
+                    lr.positionCount = allPositions.Count();
                     lr.SetPositions(allPositions.ToArray());
                 }
             }
@@ -53,7 +54,6 @@ public class DeathDairHChainController : MonoBehaviour
                 hitTheGround = true;
                 hitbox.gameObject.SetActive(false);
             }
-
         }
     }
 }

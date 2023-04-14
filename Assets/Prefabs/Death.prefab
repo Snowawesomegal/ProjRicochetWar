@@ -518,8 +518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  kbSpeedMultiplier: 0.04
-  kbDistance: 0.3
+  kbSpeedMultiplier: 0.05
+  kbDistance: 0.4
   hitsound: 
   soundGroupInsteadOfSound: 0
   angle: 361
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 3267544278575473978}
   - component: {fileID: 3267544278575473979}
   m_Layer: 0
-  m_Name: FairHeavyAttackSour
+  m_Name: FairHeavyAttackSweet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -650,7 +650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3267544278575473981}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 0, z: 0}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -670,8 +670,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.06645333}
-  m_Size: {x: 3.386515, y: 1.640526}
+  m_Offset: {x: 0, y: 0.41970667}
+  m_Size: {x: 2.0348608, y: 1.6241077}
   m_Direction: 1
 --- !u!114 &3267544278575473979
 MonoBehaviour:
@@ -685,16 +685,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 10
   kbSpeedMultiplier: 1
-  kbDistance: 2
+  kbDistance: 8
   hitsound: 
   soundGroupInsteadOfSound: 0
-  angle: 40
+  angle: 50
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 20
+  activeFrames: 3
+  minimumHitstunFrames: 35
   cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
@@ -705,7 +705,7 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
-  priority: 2
+  priority: 1
   doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3267544280134006568
@@ -720,7 +720,7 @@ GameObject:
   - component: {fileID: 3267544280134006565}
   - component: {fileID: 3267544280134006566}
   m_Layer: 0
-  m_Name: FairHeavyAttackSweet
+  m_Name: FairHeavyAttackSour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -734,7 +734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3267544280134006568}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6, y: 0, z: 0}
+  m_LocalPosition: {x: 1.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -754,8 +754,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.066453144}
-  m_Size: {x: 3.3254151, y: 1.6405604}
+  m_Offset: {x: 0, y: 0.40327466}
+  m_Size: {x: 3.259706, y: 1.6898737}
   m_Direction: 1
 --- !u!114 &3267544280134006566
 MonoBehaviour:
@@ -769,16 +769,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 12
+  damage: 6
   kbSpeedMultiplier: 1
-  kbDistance: 2
+  kbDistance: 7
   hitsound: 
   soundGroupInsteadOfSound: 0
   angle: 20
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 35
+  activeFrames: 3
+  minimumHitstunFrames: 20
   cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
@@ -789,7 +789,7 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
+  priority: 2
   doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3320607318868306268

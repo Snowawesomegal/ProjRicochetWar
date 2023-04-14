@@ -2,6 +2,7 @@ using UnityEngine.Audio;
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -62,6 +63,13 @@ public class AudioManager : MonoBehaviour
         {
             Debug.LogError("Audio Manager not prepared - Likely missing SoundSourceReferenceTarget -- reference is needed to create audio source target.");
         }
+        SceneManager.sceneUnloaded += (scene) =>
+        {
+            foreach (EffectSound sound in soundMap.Values)
+            {
+                sound.FinishStop();
+            }
+        };
     }
 
     private void ForcePrepareSoundSources()
@@ -72,7 +80,7 @@ public class AudioManager : MonoBehaviour
             PrepareSoundSources();
     }
 
-    private void ReprepareSoundSources()
+    private void UnprepareAudioSources()
     {
         if (Application.isPlaying)
             Destroy(soundSourceTarget);
@@ -80,6 +88,11 @@ public class AudioManager : MonoBehaviour
             DestroyImmediate(soundSourceTarget);
         soundSourceTarget = null;
         prepared = false;
+    }
+
+    private void ReprepareSoundSources()
+    {
+        UnprepareAudioSources();
         PrepareSoundSources();
     }
 
@@ -190,6 +203,16 @@ public class AudioManager : MonoBehaviour
         return false;
     }
 
+    public bool StopAllSounds()
+    {
+        foreach (EffectSound sound in soundMap.Values)
+        {
+            sound.FinishStop();
+        }
+        StopMusic();
+        return true;
+    }
+
     public bool PlaySoundGroup(string groupName)
     {
         if (soundGroupMap.TryGetValue(groupName, out SoundEffectGroup group))
@@ -215,7 +238,8 @@ public class AudioManager : MonoBehaviour
 
     public bool StopMusic()
     {
-        currentMusic?.source.Stop();
+        if (currentMusic != null && currentMusic.source != null)
+            currentMusic.source.Stop();
         currentMusic = null;
         return true;
     }
@@ -225,10 +249,25 @@ public class AudioManager : MonoBehaviour
         UpdateSounds();
     }
 
+    private bool VerifyPreparation()
+    {
+        if (soundSourceTarget == null)
+            return false;
+        return true;
+    }
+
+    private void ClearAudioFunction()
+    {
+        StopAllSounds();
+        UnprepareAudioSources();
+    }
+
     public void UpdateSounds()
     {
         if (!prepared)
             return;
+        if (!VerifyPreparation())
+            ClearAudioFunction();
         currentMusic?.UpdateLoop();
         OnUpdateMusic?.Invoke();
     }

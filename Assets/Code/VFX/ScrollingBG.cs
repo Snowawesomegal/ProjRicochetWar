@@ -7,7 +7,6 @@ public class ScrollingBG : MonoBehaviour
     public float scrollSpeed;
 
     private Renderer rend;
-    private Vector2 savedOffset;
 
     void Start()
     {

@@ -26,7 +26,7 @@ public class DeathDairHChainController : MonoBehaviour
     {
         if (setPositions < goalPositionCount) // if chain still extending
         {
-            lr.positionCount = lr.positionCount + 1 ;
+            lr.positionCount++;
             lr.SetPosition(setPositions, lr.GetPosition(setPositions - 1) - new Vector3(0, 2, 0));
             setPositions += 1;
 

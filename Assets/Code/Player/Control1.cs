@@ -310,7 +310,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 {
                     if (touchingWall && !clm.activeLockers.Contains(wallcling)) // if touching wall, if holding toward wall and not using an aerial or already wallcling, grab wall
                     {
-                        if (collidedWallSide == pim.GetCurrentDirectional().current.x)
+                        if (collidedWallSide == Mathf.Sign(pim.GetCurrentDirectional().current.x))
                         {
                             WallClingEnterExit(true);
                         }

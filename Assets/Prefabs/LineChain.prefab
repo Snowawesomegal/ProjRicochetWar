@@ -232,7 +232,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.05
   kbDistance: 0.1
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}

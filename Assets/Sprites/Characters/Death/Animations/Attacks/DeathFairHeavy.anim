@@ -86,6 +86,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.23333333
+    functionName: PlaySoundFromAnimator
+    data: ScytheSliceShort1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.23333333
     functionName: EnableMultiHitbox
     data: FairHeavy
     objectReferenceParameter: {fileID: 0}

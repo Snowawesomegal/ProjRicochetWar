@@ -34,7 +34,7 @@ Transform:
   - {fileID: 7969711661929671820}
   - {fileID: 4398956132495226253}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &659072565516756879
 GameObject:
@@ -67,7 +67,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &5054416292909386498
 CapsuleCollider2D:
@@ -100,7 +100,7 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 14
-  hitsound: 
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
   angle: 67
   owner: {fileID: 0}
@@ -184,7 +184,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 3.25
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 68
   owner: {fileID: 0}
@@ -268,7 +268,7 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 3.2
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 85
   owner: {fileID: 0}
@@ -352,9 +352,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -368,7 +368,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -436,9 +436,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -452,7 +452,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -487,7 +487,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &8751485252511805030
 CapsuleCollider2D:
@@ -520,7 +520,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 0.05
   kbDistance: 0.4
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -604,7 +604,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 3.4
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 8
   owner: {fileID: 0}
@@ -688,7 +688,7 @@ MonoBehaviour:
   damage: 10
   kbSpeedMultiplier: 1
   kbDistance: 8
-  hitsound: 
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
   angle: 50
   owner: {fileID: 0}
@@ -772,7 +772,7 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 7
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 20
   owner: {fileID: 0}
@@ -792,39 +792,6 @@ MonoBehaviour:
   priority: 2
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &3320607318868306268
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6593207629712956153}
-  m_Layer: 0
-  m_Name: DairLight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6593207629712956153
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3320607318868306268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1008944911504695437}
-  - {fileID: 1541577636693107489}
-  m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3590874157232770959
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +856,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2.7
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: -25
   owner: {fileID: 0}
@@ -973,7 +940,7 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 0.1
   kbDistance: 0.7
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 45
   owner: {fileID: 0}
@@ -993,73 +960,6 @@ MonoBehaviour:
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &4593085596669440352
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1541577636693107489}
-  - component: {fileID: 7860269290840603294}
-  - component: {fileID: 2838425080342871455}
-  m_Layer: 10
-  m_Name: DairLightPogobox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1541577636693107489
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593085596669440352}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6593207629712956153}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7860269290840603294
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593085596669440352}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.8333973}
-  m_Size: {x: 1.786559, y: 2.794809}
-  m_Direction: 0
---- !u!114 &2838425080342871455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593085596669440352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23bfe6ff5654b4687b7c54ad379213e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  facingRight: 1
-  bounceForce: 1300
-  bounceAngle: 90
-  soundOnBounce: 
-  activeFrames: 4
 --- !u!1 &4744744023732954280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1024,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
-  hitsound: 
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
   angle: 45
   owner: {fileID: 0}
@@ -1208,7 +1108,7 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 8
-  hitsound: WeaponHit1
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 80
   owner: {fileID: 0}
@@ -1292,7 +1192,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.02
   kbDistance: 0.03
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -1376,7 +1276,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.03
   kbDistance: 0.05
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -1444,8 +1344,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.8, y: -1.4}
-  - {x: 0.8, y: -1.4}
+  - {x: -0.7, y: -1.4}
+  - {x: 0.7, y: -1.4}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -1499,7 +1399,6 @@ Transform:
   - {fileID: 2908757286451228426}
   - {fileID: 1291835033694642017}
   - {fileID: 6750890407021335598}
-  - {fileID: 6593207629712956153}
   - {fileID: 8258166511728164161}
   - {fileID: 1278637643087175155}
   - {fileID: 8357072988152746555}
@@ -2347,7 +2246,7 @@ MonoBehaviour:
   damage: 3
   kbSpeedMultiplier: 0.1
   kbDistance: 0.5
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -2431,9 +2330,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -2447,7 +2346,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -2515,9 +2414,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -2531,7 +2430,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -2599,7 +2498,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &1649322387271309086
 ParticleSystemRenderer:
@@ -7411,7 +7310,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &3997377694067084464
 CapsuleCollider2D:
@@ -7444,7 +7343,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.05
   kbDistance: 3
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -7453,7 +7352,7 @@ MonoBehaviour:
   minimumHitstunFrames: 45
   cannotClank: 0
   isPartOfMultipart: 0
-  hitstopFrames: 5
+  hitstopFrames: 0
   isCounter: 0
   isProjectile: 0
   isGrab: 0
@@ -7461,90 +7360,6 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 0
   knockbackGoalPos: {x: 0, y: -5}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &8488403946447471533
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1008944911504695437}
-  - component: {fileID: 7090746516125117826}
-  - component: {fileID: 136006469123831035}
-  m_Layer: 0
-  m_Name: DairLightHitbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1008944911504695437
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488403946447471533}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6593207629712956153}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7090746516125117826
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488403946447471533}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.83339727}
-  m_Size: {x: 1.7865591, y: 2.794809}
-  m_Direction: 0
---- !u!114 &136006469123831035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488403946447471533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 4
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 65
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 6
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -7580,7 +7395,7 @@ Transform:
   - {fileID: 7152151586041874186}
   - {fileID: 263079827588975649}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8604838333698137753
 GameObject:
@@ -7646,7 +7461,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &7011862576059155537
 ParticleSystemRenderer:

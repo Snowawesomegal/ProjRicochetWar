@@ -1,5 +1,89 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1227314132200225165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4381511826300180319}
+  - component: {fileID: 7119354309839641283}
+  - component: {fileID: 1309844476280278249}
+  m_Layer: 0
+  m_Name: UpAirLightCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4381511826300180319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227314132200225165}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2385519129860500795}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &7119354309839641283
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227314132200225165}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.6105156}
+  m_Size: {x: 3.1341295, y: 3.7262564}
+  m_Direction: 0
+--- !u!114 &1309844476280278249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227314132200225165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  kbSpeedMultiplier: 1
+  kbDistance: 5.4
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
+  angle: 120
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  minimumHitstunFrames: 20
+  cannotClank: 0
+  isPartOfMultipart: 0
+  hitstopFrames: 4
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
+  priority: 1
+  doNotEnable: 0
+  playersHitAlready: []
 --- !u!1 &1440367799329994361
 GameObject:
   m_ObjectHideFlags: 0
@@ -5548,6 +5632,40 @@ MonoBehaviour:
   priority: 2
   doNotEnable: 0
   playersHitAlready: []
+--- !u!1 &3900993306317507064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2385519129860500795}
+  m_Layer: 0
+  m_Name: UpAirLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2385519129860500795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900993306317507064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6690301327492358873}
+  - {fileID: 4381511826300180319}
+  - {fileID: 8534458740864247140}
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4393596211020838063
 GameObject:
   m_ObjectHideFlags: 0
@@ -5749,6 +5867,90 @@ Transform:
   m_Father: {fileID: 6311728093354438148}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4969509868616963337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8534458740864247140}
+  - component: {fileID: 2453872979633504044}
+  - component: {fileID: 4581879391660118612}
+  m_Layer: 0
+  m_Name: UpAirLightRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8534458740864247140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969509868616963337}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.3, y: 1.1400001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2385519129860500795}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2453872979633504044
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969509868616963337}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.027160645}
+  m_Size: {x: 2.3047643, y: 3.5631237}
+  m_Direction: 0
+--- !u!114 &4581879391660118612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969509868616963337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  kbSpeedMultiplier: 1
+  kbDistance: 5.4
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
+  angle: 120
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  minimumHitstunFrames: 20
+  cannotClank: 0
+  isPartOfMultipart: 0
+  hitstopFrames: 4
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
+  priority: 3
+  doNotEnable: 0
+  playersHitAlready: []
 --- !u!1 &5484935819613344735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5845,7 +6047,7 @@ GameObject:
   - component: {fileID: 1139993751467027589}
   - component: {fileID: 8346924978110582722}
   m_Layer: 0
-  m_Name: UpAirLightAttack
+  m_Name: UpAirLightLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5858,13 +6060,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5850729627155256250}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 1.14, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5000002, y: 1.1400001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 7
+  m_Father: {fileID: 2385519129860500795}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1139993751467027589
 CapsuleCollider2D:
@@ -5879,9 +6081,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.08851187}
-  m_Size: {x: 4.5324235, y: 3.3364775}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0.0036160946}
+  m_Size: {x: 2.1908941, y: 3.5015702}
+  m_Direction: 0
 --- !u!114 &8346924978110582722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5896,7 +6098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   kbSpeedMultiplier: 1
-  kbDistance: 2
+  kbDistance: 5.4
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 120
@@ -5906,7 +6108,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   cannotClank: 0
   isPartOfMultipart: 0
-  hitstopFrames: 10
+  hitstopFrames: 4
   isCounter: 0
   isProjectile: 0
   isGrab: 0
@@ -5914,7 +6116,7 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
+  priority: 2
   doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &5872751037901427146
@@ -6024,6 +6226,7 @@ GameObject:
   - component: {fileID: 1881402502247760431}
   - component: {fileID: -6832151150410818669}
   - component: {fileID: -6679137475492885588}
+  - component: {fileID: 5425826175325737683}
   m_Layer: 0
   m_Name: Stanley
   m_TagString: Player
@@ -6050,7 +6253,7 @@ Transform:
   - {fileID: 1124875515081784880}
   - {fileID: 4890383916044957055}
   - {fileID: 4975947780344413096}
-  - {fileID: 6690301327492358873}
+  - {fileID: 2385519129860500795}
   - {fileID: 2435223762841617583}
   - {fileID: 956571472912301886}
   - {fileID: 6435983919889632497}
@@ -6800,6 +7003,28 @@ MonoBehaviour:
   targetPalettes:
   - {fileID: 11400000, guid: 650464a26db2192478b65f047769d637, type: 2}
   - {fileID: 11400000, guid: 5fd932f6d5003114483076083466f770, type: 2}
+--- !u!114 &5425826175325737683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311728093354438150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a019ee9971c904663b127c4b43a04761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stanleyPaperPrefab: {fileID: 1624505542457725676, guid: 7d450aa8220fb46b0ab2f2e5001b9520, type: 3}
+  stanleyPaperInfos:
+  - offset: {x: 2, y: 2}
+    angle: 70
+  - offset: {x: 0, y: 2.5}
+    angle: 90
+  - offset: {x: -2, y: 2}
+    angle: 110
+  stanleyPaperSpeed: 400
+  stanleyPaperLifetime: 0.7
 --- !u!1 &6311728093461558692
 GameObject:
   m_ObjectHideFlags: 0

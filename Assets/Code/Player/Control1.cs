@@ -762,7 +762,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             if (GameManager.Instance.TimeController.GetTimeScale(this) == 1)
             {
-                Debug.Log("started queued knockback frame: " + frame);
                 StartKnockback(queuedKnockback.left.kbDistance, queuedKnockback.left.kbSpeedMultiplier, queuedKnockback.right);
                 queuedKnockback = null;
             }

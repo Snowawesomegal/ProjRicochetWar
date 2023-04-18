@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3643955064164403216}
   - component: {fileID: 2900711077943283253}
   - component: {fileID: 8643461682143370583}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938711375883130445}
   - component: {fileID: 1938711375883130418}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ShipStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938711376003093510}
   - component: {fileID: 1938711376003093505}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GlobalLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938711376515315290}
   - component: {fileID: 1938711376515315285}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BottomWall
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938711376647527562}
   - component: {fileID: 1938711376647527557}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938711376685174272}
   - component: {fileID: 1938711376685174275}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TopWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -640,7 +640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938711376704685776}
   - component: {fileID: 1938711376704685779}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1004,7 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2093533838172108610}
   - component: {fileID: 7869426384156148945}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1088,7 +1088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5385977864228107381}
   - component: {fileID: 1481772529568296488}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ShipStageJustFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

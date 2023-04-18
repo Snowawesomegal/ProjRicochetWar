@@ -51,7 +51,6 @@ public class EyeControl : MonoBehaviour
             reticle = Instantiate(reticlePrefab, currentTarget.transform.position, Quaternion.identity);
         }
 
-
         him.SelfDestructObject += gameObj => SelfDestruct(gameObj);
         hitbox = transform.GetChild(0).gameObject;
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5562672759783829983}
   - component: {fileID: 3805947683508002892}
   - component: {fileID: 357771329229353128}
+  - component: {fileID: 5466457428853932026}
   m_Layer: 0
   m_Name: StanleyPapers_0
   m_TagString: Untagged
@@ -128,6 +129,18 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &5466457428853932026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624505542457725676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505b08a92e5ed43d6b7687edd7abd00d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7128284690024081529
 GameObject:
   m_ObjectHideFlags: 0

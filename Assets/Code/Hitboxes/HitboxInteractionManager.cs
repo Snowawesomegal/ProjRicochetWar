@@ -242,7 +242,7 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             return "MinorHitEffect";
         }
-        else if (damage >= 5 && damage < 10)
+        else if (damage >= 5 && damage < 9)
         {
             return "MediumHitEffect1";
         }

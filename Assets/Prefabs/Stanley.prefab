@@ -72,7 +72,7 @@ MonoBehaviour:
   activeFrames: 2
   minimumHitstunFrames: 20
   cannotClank: 0
-  isPartOfMultipart: 0
+  isPartOfMultipart: 1
   hitstopFrames: 4
   isCounter: 0
   isProjectile: 0
@@ -117,6 +117,39 @@ Transform:
   - {fileID: 8010764724014185516}
   m_Father: {fileID: 6311728093354438148}
   m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1776647612916980539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6808832357223963628}
+  m_Layer: 0
+  m_Name: FairLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6808832357223963628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776647612916980539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2435223762841617583}
+  - {fileID: 3680922761800198245}
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2216999857132954142
 GameObject:
@@ -346,7 +379,7 @@ GameObject:
   - component: {fileID: 3417861264796566491}
   - component: {fileID: 5749955400834724370}
   m_Layer: 0
-  m_Name: FairLightAttack
+  m_Name: FairLight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,14 +392,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3433009867416186590}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 1.14, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.17364816, w: 0.9848078}
+  m_LocalPosition: {x: 1, y: 1.1400001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 6808832357223963628}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 20}
 --- !u!70 &3417861264796566491
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -380,8 +413,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.87436396}
-  m_Size: {x: 3.700844, y: 3.6488082}
+  m_Offset: {x: 0, y: -1.1906154}
+  m_Size: {x: 4.9006248, y: 1.4343694}
   m_Direction: 1
 --- !u!114 &5749955400834724370
 MonoBehaviour:
@@ -403,10 +436,10 @@ MonoBehaviour:
   angle: 13
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
+  activeFrames: 3
   minimumHitstunFrames: 20
   cannotClank: 0
-  isPartOfMultipart: 0
+  isPartOfMultipart: 1
   hitstopFrames: 10
   isCounter: 0
   isProjectile: 0
@@ -5939,7 +5972,7 @@ MonoBehaviour:
   activeFrames: 2
   minimumHitstunFrames: 20
   cannotClank: 0
-  isPartOfMultipart: 0
+  isPartOfMultipart: 1
   hitstopFrames: 4
   isCounter: 0
   isProjectile: 0
@@ -5949,6 +5982,90 @@ MonoBehaviour:
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 3
+  doNotEnable: 0
+  playersHitAlready: []
+--- !u!1 &5201292465685810061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3680922761800198245}
+  - component: {fileID: 7155289065114487993}
+  - component: {fileID: 1617757986555428858}
+  m_Layer: 0
+  m_Name: FairLight2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3680922761800198245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201292465685810061}
+  m_LocalRotation: {x: 0, y: 0, z: 0.08715578, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6808832357223963628}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10}
+--- !u!70 &7155289065114487993
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201292465685810061}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.0045059547}
+  m_Size: {x: 6.5867867, y: 2.137954}
+  m_Direction: 1
+--- !u!114 &1617757986555428858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201292465685810061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  kbSpeedMultiplier: 1
+  kbDistance: 2
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
+  angle: 13
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 3
+  minimumHitstunFrames: 20
+  cannotClank: 0
+  isPartOfMultipart: 1
+  hitstopFrames: 10
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
+  priority: 1
   doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &5484935819613344735
@@ -6107,7 +6224,7 @@ MonoBehaviour:
   activeFrames: 2
   minimumHitstunFrames: 20
   cannotClank: 0
-  isPartOfMultipart: 0
+  isPartOfMultipart: 1
   hitstopFrames: 4
   isCounter: 0
   isProjectile: 0
@@ -6254,7 +6371,7 @@ Transform:
   - {fileID: 4890383916044957055}
   - {fileID: 4975947780344413096}
   - {fileID: 2385519129860500795}
-  - {fileID: 2435223762841617583}
+  - {fileID: 6808832357223963628}
   - {fileID: 956571472912301886}
   - {fileID: 6435983919889632497}
   - {fileID: 1428311444176971118}
@@ -7015,7 +7132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a019ee9971c904663b127c4b43a04761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stanleyPaperPrefab: {fileID: 1624505542457725676, guid: 7d450aa8220fb46b0ab2f2e5001b9520, type: 3}
+  paperPrefab: {fileID: 1624505542457725676, guid: 7d450aa8220fb46b0ab2f2e5001b9520, type: 3}
+  monitorPrefab: {fileID: 8833669593918781031, guid: 1cbe2400f9be14f799710c86d14a24b6, type: 3}
+  monitorLifetime: 7
+  monitorSpeed: 1350
+  activeMonitors: 0
   stanleyPaperInfos:
   - offset: {x: 2, y: 2}
     angle: 70

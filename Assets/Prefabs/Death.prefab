@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 2
   kbDistance: 14
   hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 1.4
   kbDistance: 8
   hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 1.1
   kbDistance: 7
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
@@ -1567,7 +1567,7 @@ MonoBehaviour:
   UNIQUEinMovementAir: {fileID: 11400000, guid: ad6accefa2cc548d9a75f37bdadb14f1, type: 2}
   UNIQUEinMovementGround: {fileID: 11400000, guid: e9ed95adf42a24dcebc9690072fc52da, type: 2}
   touchingWall: 0
-  minimumSpeedForHitstun: 20
+  minimumSpeedForHitstun: 10
   framesInHitstun: 0
   facingRight: 1
   spawnSmokeOnDirectionChange: 0

@@ -141,14 +141,20 @@ public class CharacterInput
             float upMin = verticalThreshold;
             float downMin = -Mathf.PI + verticalThreshold;
             float downMax = -verticalThreshold;
+            CardinalDirection cardinal;
 
             if (rad >= upMin && rad <= upMax)
-                return CardinalDirection.UP;
-            if (rad >= downMin && rad <= downMax)
-                return CardinalDirection.DOWN;
-            if (rad <= Mathf.PI / 2 && rad >= -Mathf.PI / 2)
-                return CardinalDirection.RIGHT;
-            return CardinalDirection.LEFT;
+                cardinal = CardinalDirection.UP;
+            else if (rad >= downMin && rad <= downMax)
+                cardinal = CardinalDirection.DOWN;
+            else if (rad <= Mathf.PI / 2 && rad >= -Mathf.PI / 2)
+                cardinal = CardinalDirection.RIGHT;
+            else
+                cardinal = CardinalDirection.LEFT;
+
+            Debug.Log("Current vector: " + dir + ", radians: " + rad + ", Direction: " + cardinal + ", Threshold: " + ( Mathf.Rad2Deg * verticalThreshold));
+
+            return cardinal;
         }
 
         public CardinalDirection GetSnappedStartingDirection(float verticalThresholdDegrees)

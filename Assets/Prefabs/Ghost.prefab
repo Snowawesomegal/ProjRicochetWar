@@ -197,8 +197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
+  kbSpeedMultiplier: 3
+  kbDistance: 20
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
   angle: 12
@@ -5274,8 +5274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 12
-  kbSpeedMultiplier: 1
-  kbDistance: 50
+  kbSpeedMultiplier: 2
+  kbDistance: 30
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
   angle: 20
@@ -5358,7 +5358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 1.2
   kbDistance: 25
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
@@ -5526,7 +5526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 1.5
   kbDistance: 3
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
@@ -5610,7 +5610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 1.5
   kbDistance: 3
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
@@ -5694,18 +5694,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 12
-  kbSpeedMultiplier: 1
-  kbDistance: 6
+  kbSpeedMultiplier: 2.3
+  kbDistance: 10
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
-  angle: 270
+  angle: 280
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 3
   minimumHitstunFrames: 20
   cannotClank: 0
   isPartOfMultipart: 1
-  hitstopFrames: 25
+  hitstopFrames: 30
   isCounter: 0
   isProjectile: 0
   isGrab: 0
@@ -5862,7 +5862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 1.5
   kbDistance: 4
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
@@ -6102,7 +6102,7 @@ MonoBehaviour:
   UNIQUEinMovementAir: {fileID: 11400000, guid: 636518d449bb5428cb4202c04d05d357, type: 2}
   UNIQUEinMovementGround: {fileID: 11400000, guid: cbc671def756d454f85b961185b43341, type: 2}
   touchingWall: 0
-  minimumSpeedForHitstun: 20
+  minimumSpeedForHitstun: 10
   framesInHitstun: 0
   facingRight: 1
   spawnSmokeOnDirectionChange: 0
@@ -6683,7 +6683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 2
   kbDistance: 10
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
@@ -6767,7 +6767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 2
   kbDistance: 12
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
@@ -6851,7 +6851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  kbSpeedMultiplier: 1
+  kbSpeedMultiplier: 2
   kbDistance: 9
   hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0

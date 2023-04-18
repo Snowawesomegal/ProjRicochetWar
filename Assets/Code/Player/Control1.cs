@@ -949,6 +949,12 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
         temporaryObjects.Clear();
 
+        moveDiMultiplier = 1;
+
+        rb.sharedMaterial = notBouncy;
+
+        tr.emitting = false;
+
         ChangeIntangible(false);
 
         ignoreFriction = false;

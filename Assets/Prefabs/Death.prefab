@@ -1,39 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &51093016328110927
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9034038152016812013}
-  m_Layer: 0
-  m_Name: UpHeavy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9034038152016812013
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51093016328110927}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5324972260176221428}
-  - {fileID: 5324972259403682343}
-  - {fileID: 5324972259917817974}
-  m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232653211781806331
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,8 +34,92 @@ Transform:
   - {fileID: 7969711661929671820}
   - {fileID: 4398956132495226253}
   m_Father: {fileID: 5324972260535258965}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &659072565516756879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8357072988152746555}
+  - component: {fileID: 5054416292909386498}
+  - component: {fileID: 7266765498743550098}
+  m_Layer: 0
+  m_Name: DairHeavyLaunch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8357072988152746555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659072565516756879}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.10000038, y: 1.1400001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5324972260535258965}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &5054416292909386498
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659072565516756879}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.99077284}
+  m_Size: {x: 3.4613497, y: 2.37303}
+  m_Direction: 1
+--- !u!114 &7266765498743550098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659072565516756879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  kbSpeedMultiplier: 1
+  kbDistance: 14
+  hitsound: WeaponHit2
+  soundGroupInsteadOfSound: 0
+  angle: 67
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 6
+  minimumHitstunFrames: 45
+  cannotClank: 0
+  isPartOfMultipart: 0
+  hitstopFrames: 10
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 0
+  knockbackGoalPos: {x: 0, y: 0}
+  priority: 1
+  doNotEnable: 0
+  playersHitAlready: []
 --- !u!1 &1641580793172911241
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +184,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 3.25
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 68
   owner: {fileID: 0}
@@ -218,7 +268,7 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 1
   kbDistance: 3.2
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 85
   owner: {fileID: 0}
@@ -302,9 +352,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -318,7 +368,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -386,9 +436,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -402,7 +452,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -468,9 +518,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  kbSpeedMultiplier: 0.1
-  kbDistance: 0.9
-  hitsound: 
+  kbSpeedMultiplier: 0.05
+  kbDistance: 0.4
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -486,127 +536,10 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 0, y: 3}
+  knockbackGoalPos: {x: 0, y: 5}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &3165081455376329925
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7027356358378458678}
-  - component: {fileID: 934769249556873435}
-  - component: {fileID: 252522371075519185}
-  m_Layer: 0
-  m_Name: DairLightAttackSour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &7027356358378458678
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165081455376329925}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5125355907032034720}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &934769249556873435
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165081455376329925}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.013696194, y: -1.2102957}
-  m_Size: {x: 1.7974215, y: 4.6443396}
-  m_Direction: 0
---- !u!114 &252522371075519185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165081455376329925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 6
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 65
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 6
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 5
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 2
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &3175766936586442947
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5125355907032034720}
-  m_Layer: 0
-  m_Name: DairHeavy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5125355907032034720
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3175766936586442947}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7027356358378458678}
-  - {fileID: 4453222615765600128}
-  m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3182039222703602913
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +604,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 3.4
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 8
   owner: {fileID: 0}
@@ -703,7 +636,7 @@ GameObject:
   - component: {fileID: 3267544278575473978}
   - component: {fileID: 3267544278575473979}
   m_Layer: 0
-  m_Name: FairHeavyAttackSour
+  m_Name: FairHeavyAttackSweet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -717,7 +650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3267544278575473981}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 0, z: 0}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -737,8 +670,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.06645333}
-  m_Size: {x: 3.386515, y: 1.640526}
+  m_Offset: {x: 0, y: 0.41970667}
+  m_Size: {x: 2.0348608, y: 1.6241077}
   m_Direction: 1
 --- !u!114 &3267544278575473979
 MonoBehaviour:
@@ -752,16 +685,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 10
   kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
+  kbDistance: 8
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
-  angle: 40
+  angle: 50
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 20
+  activeFrames: 3
+  minimumHitstunFrames: 35
   cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
@@ -772,7 +705,7 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
-  priority: 2
+  priority: 1
   doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3267544280134006568
@@ -787,7 +720,7 @@ GameObject:
   - component: {fileID: 3267544280134006565}
   - component: {fileID: 3267544280134006566}
   m_Layer: 0
-  m_Name: FairHeavyAttackSweet
+  m_Name: FairHeavyAttackSour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,7 +734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3267544280134006568}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6, y: 0, z: 0}
+  m_LocalPosition: {x: 1.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -821,8 +754,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.066453144}
-  m_Size: {x: 3.3254151, y: 1.6405604}
+  m_Offset: {x: 0, y: 0.40327466}
+  m_Size: {x: 3.259706, y: 1.6898737}
   m_Direction: 1
 --- !u!114 &3267544280134006566
 MonoBehaviour:
@@ -836,16 +769,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 12
+  damage: 6
   kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
+  kbDistance: 7
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 20
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 35
+  activeFrames: 3
+  minimumHitstunFrames: 20
   cannotClank: 0
   isPartOfMultipart: 1
   hitstopFrames: 10
@@ -856,42 +789,9 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
+  priority: 2
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &3320607318868306268
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6593207629712956153}
-  m_Layer: 0
-  m_Name: DairLight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6593207629712956153
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3320607318868306268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1008944911504695437}
-  - {fileID: 1541577636693107489}
-  m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3590874157232770959
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +856,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2.7
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: -25
   owner: {fileID: 0}
@@ -1007,7 +907,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7179901049484416775
 CapsuleCollider2D:
@@ -1040,7 +940,7 @@ MonoBehaviour:
   damage: 4
   kbSpeedMultiplier: 0.1
   kbDistance: 0.7
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 45
   owner: {fileID: 0}
@@ -1060,73 +960,6 @@ MonoBehaviour:
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &4593085596669440352
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1541577636693107489}
-  - component: {fileID: 7860269290840603294}
-  - component: {fileID: 2838425080342871455}
-  m_Layer: 10
-  m_Name: DairLightPogobox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1541577636693107489
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593085596669440352}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6593207629712956153}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7860269290840603294
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593085596669440352}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.8333973}
-  m_Size: {x: 1.786559, y: 2.794809}
-  m_Direction: 0
---- !u!114 &2838425080342871455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593085596669440352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23bfe6ff5654b4687b7c54ad379213e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  facingRight: 1
-  bounceForce: 1300
-  bounceAngle: 90
-  soundOnBounce: 
-  activeFrames: 4
 --- !u!1 &4744744023732954280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,7 +1024,7 @@ MonoBehaviour:
   damage: 5
   kbSpeedMultiplier: 1
   kbDistance: 2
-  hitsound: 
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
   angle: 45
   owner: {fileID: 0}
@@ -1201,90 +1034,6 @@ MonoBehaviour:
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 7
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5324972259403682360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324972259403682343}
-  - component: {fileID: 5324972259403682341}
-  - component: {fileID: 5324972259403682342}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5324972259403682343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259403682360}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9034038152016812013}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5324972259403682341
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259403682360}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.16281082}
-  m_Size: {x: 6.915199, y: 4.950052}
-  m_Direction: 1
---- !u!114 &5324972259403682342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259403682360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 140
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 12
   isCounter: 0
   isProjectile: 0
   isGrab: 0
@@ -1359,7 +1108,7 @@ MonoBehaviour:
   damage: 6
   kbSpeedMultiplier: 1
   kbDistance: 8
-  hitsound: WeaponHit1
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 80
   owner: {fileID: 0}
@@ -1443,7 +1192,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.02
   kbDistance: 0.03
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -1527,7 +1276,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.03
   kbDistance: 0.05
-  hitsound: 
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -1595,180 +1344,12 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.8, y: -1.4}
-  - {x: 0.8, y: -1.4}
+  - {x: -0.7, y: -1.4}
+  - {x: 0.7, y: -1.4}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1 &5324972259917817975
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324972259917817974}
-  - component: {fileID: 5324972259917817972}
-  - component: {fileID: 5324972259917817973}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5324972259917817974
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259917817975}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8100224, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9034038152016812013}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5324972259917817972
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259917817975}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.00866437}
-  m_Size: {x: 3.537383, y: 4.716087}
-  m_Direction: 0
---- !u!114 &5324972259917817973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972259917817975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 160
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 35
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 11
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5324972260176221429
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324972260176221428}
-  - component: {fileID: 5324972260176221426}
-  - component: {fileID: 5324972260176221427}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5324972260176221428
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972260176221429}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.471652, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9034038152016812013}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5324972260176221426
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972260176221429}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25446296}
-  m_Size: {x: 4.1975527, y: 5.2265096}
-  m_Direction: 0
---- !u!114 &5324972260176221427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324972260176221429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 115
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
 --- !u!1 &5324972260535258967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,14 +1397,13 @@ Transform:
   - {fileID: 5324972259666958795}
   - {fileID: 7374218087597074338}
   - {fileID: 2908757286451228426}
-  - {fileID: 9034038152016812013}
   - {fileID: 1291835033694642017}
   - {fileID: 6750890407021335598}
-  - {fileID: 6593207629712956153}
   - {fileID: 8258166511728164161}
+  - {fileID: 1278637643087175155}
+  - {fileID: 8357072988152746555}
   - {fileID: 7739845257151356100}
   - {fileID: 9083376816645746085}
-  - {fileID: 5125355907032034720}
   - {fileID: 8369428215652738657}
   - {fileID: 6081585624172371356}
   m_Father: {fileID: 0}
@@ -1941,13 +1521,14 @@ MonoBehaviour:
   friction: 5
   airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
-  affectedByGravity: 1
   intangible: 0
-  ignoreFriction: 0
   DIStrength: 1
   DLightBounce: 0
   firstFrameOfHitstun: 0
+  doNotUpdatePlatformCollider: 0
   canFastFall: 1
+  ignoreFriction: 0
+  affectedByGravity: 1
   airSpeed: 20
   airAccel: 90
   airAccelDuringAerial: 80
@@ -1970,6 +1551,7 @@ MonoBehaviour:
   permaTrailps: {fileID: 6295798617539834869}
   am: {fileID: 0}
   sm: {fileID: 0}
+  ae: {fileID: 0}
   bouncy: {fileID: 6200000, guid: 60dafa813c24c4310b8e1cf941a57664, type: 2}
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   FFbufferLength: 20
@@ -1999,6 +1581,7 @@ MonoBehaviour:
   dropPlatformTotalFrames: 7
   currentAnimBool: 
   animationDebugMessages: 0
+  temporaryObjects: []
 --- !u!114 &5324972260535258974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2305,6 +1888,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 462e5cf3-ba14-47da-8f47-3004df081109
     m_ActionName: OwenControls/Movement[/Keyboard/o]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2384c9f-951a-459d-bcc1-c97d88daaa4d
+    m_ActionName: UI/Back[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f29b446-92be-471a-828a-b2ed61ba8085
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02557698-42e4-4f65-a932-acd6ddc65137
+    m_ActionName: UI/Submit[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7bc792fd-7591-4f64-a6e7-4953e889b252
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f01cdad9-30d4-4191-9577-db83a379b002
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 29c110d5-6f1b-42f7-ba50-c119254df012
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b542b307-10a5-4aad-b76a-bb3354bfd6c0
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f085cb7f-58de-4747-9209-a160ec8ea333
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7673d6b5-2f86-4f8e-902c-99661c00bcdf
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5b1c0ade-575a-49c8-a696-e6b1f8fbc0b3
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a75c3d8-fa0f-454a-a04b-940c3ea22b1f
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fe2c43f1-bcc4-4b4a-b4ed-162d3cfa8239
+    m_ActionName: UI/Start[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce06a961-3381-4735-b43b-5e654e11b7a7
+    m_ActionName: FalseUI/Back[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 60f6ad43-4447-4ee3-a06d-1ac27d8e03b7
+    m_ActionName: FalseUI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ede0f5a-d619-4da2-84c9-1ec6996a2a65
+    m_ActionName: FalseUI/Submit[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e709257c-b096-4464-90f2-9e028ed4f775
+    m_ActionName: FalseUI/Ready[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Playing
@@ -2409,6 +2056,7 @@ MonoBehaviour:
     angle: 90
     offset: {x: 0, y: -0.5}
     lifetime: 72
+  trueAnimBools: []
 --- !u!96 &4566240962166225602
 TrailRenderer:
   serializedVersion: 2
@@ -2521,6 +2169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heavyClaw: {fileID: 1495149470519623135, guid: 48dd7122d45924632a0dbaf009cad0f0, type: 3}
+  c1: {fileID: 0}
   upwardHeavyClawExists: 0
   horizontalHeavyClawExists: 0
   grabbyClawExists: 0
@@ -2532,6 +2181,7 @@ MonoBehaviour:
   movementAbilityMinFrames: 20
   movementAbilityCurrentFrames: 0
   movementAbilityMaxFrames: 120
+  lineChain: {fileID: 842268672087611617, guid: 4af3cd52c997a4c68ac9536f6053426f, type: 3}
 --- !u!1 &5366513683229172554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2596,7 +2246,7 @@ MonoBehaviour:
   damage: 3
   kbSpeedMultiplier: 0.1
   kbDistance: 0.5
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -2680,9 +2330,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -2696,7 +2346,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -2764,9 +2414,9 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.1
   kbDistance: 0.25
-  hitsound: 
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 362
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 4
@@ -2780,91 +2430,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5940161446798389902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4453222615765600128}
-  - component: {fileID: 25989454760203561}
-  - component: {fileID: 8551891335049153186}
-  m_Layer: 0
-  m_Name: DairLightAttackSweet
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4453222615765600128
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5940161446798389902}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5125355907032034720}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &25989454760203561
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5940161446798389902}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.3154283}
-  m_Size: {x: 0.9151592, y: 1.7284665}
-  m_Direction: 0
---- !u!114 &8551891335049153186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5940161446798389902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 12
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
-  soundGroupInsteadOfSound: 0
-  angle: 270
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 3
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 13
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  knockbackGoalPos: {x: 0, y: 1.1}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -2932,7 +2498,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &1649322387271309086
 ParticleSystemRenderer:
@@ -7713,7 +7279,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1 &8488403946447471533
+--- !u!1 &8450525252861149704
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7721,79 +7287,79 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1008944911504695437}
-  - component: {fileID: 7090746516125117826}
-  - component: {fileID: 136006469123831035}
+  - component: {fileID: 1278637643087175155}
+  - component: {fileID: 3997377694067084464}
+  - component: {fileID: 809245562774325468}
   m_Layer: 0
-  m_Name: DairLightHitbox
+  m_Name: DairHeavyScoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &1008944911504695437
+--- !u!4 &1278637643087175155
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488403946447471533}
+  m_GameObject: {fileID: 8450525252861149704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6593207629712956153}
-  m_RootOrder: 0
+  m_Father: {fileID: 5324972260535258965}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7090746516125117826
+--- !u!70 &3997377694067084464
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488403946447471533}
+  m_GameObject: {fileID: 8450525252861149704}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.83339727}
-  m_Size: {x: 1.7865591, y: 2.794809}
-  m_Direction: 0
---- !u!114 &136006469123831035
+  m_Offset: {x: 0, y: -1.836802}
+  m_Size: {x: 2.3966541, y: 1.737448}
+  m_Direction: 1
+--- !u!114 &809245562774325468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488403946447471533}
+  m_GameObject: {fileID: 8450525252861149704}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
-  kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: 
+  damage: 2
+  kbSpeedMultiplier: 0.05
+  kbDistance: 3
+  hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 65
+  angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 20
+  minimumHitstunFrames: 45
   cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 6
+  isPartOfMultipart: 0
+  hitstopFrames: 0
   isCounter: 0
   isProjectile: 0
   isGrab: 0
   isDestroyable: 0
   objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
+  DiMultiplier: 0
+  knockbackGoalPos: {x: 0, y: -5}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -7862,7 +7428,7 @@ Transform:
   - {fileID: 3267544278575473980}
   - {fileID: 3267544280134006567}
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8874298777834482489
 GameObject:
@@ -7895,7 +7461,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5324972260535258965}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &7011862576059155537
 ParticleSystemRenderer:

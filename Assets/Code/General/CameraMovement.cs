@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -41,6 +42,15 @@ public class CameraMovement : MonoBehaviour
 
     void LateUpdate()
     {
+        List<GameObject> toFollowCopy = new List<GameObject>(toFollow);
+        foreach (GameObject i in toFollowCopy)
+        {
+            if (i == null)
+            {
+                toFollow.Remove(i);
+            }
+        }
+
         if (toFollow.Count == 1)
         {
             Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
@@ -51,7 +61,8 @@ public class CameraMovement : MonoBehaviour
             Vector2 movement = Vector2.MoveTowards(transform.position, toFollow[0].transform.position, Time.deltaTime * scale * baseCameraSpeed);
             transform.position = new Vector3(Mathf.Clamp(movement.x, lowestX, highestX), Mathf.Clamp(movement.y, lowestY, highestY), -10);
 
-            cam.orthographicSize = (minCameraSize + maxCameraSize) / 2;
+            cam.orthographicSize = Mathf.MoveTowards(
+                cam.orthographicSize, (minCameraSize + maxCameraSize) / 2, Time.deltaTime * baseZoomSpeed);
 
         }
         if (toFollow.Count >= 2)

@@ -190,6 +190,8 @@ public class HitboxInteractionManager : MonoBehaviour
                     }
 
                     Control1 hitboxC1 = hbi.owner.GetComponent<Control1>();
+
+                    hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true); // apply knockback to defending player
                     hurtboxC1.FreezeFrames(0, hbi.hitstopFrames); // apply hitstop defending player
                     if (!hbi.isProjectile) // is not projectile; apply hitstop attacking player too; if projectile the attacking player is not frozen
                     {
@@ -208,8 +210,6 @@ public class HitboxInteractionManager : MonoBehaviour
                         }
                     }
 
-                    hurtboxC1.Hit(i.left.GetComponent<Collider2D>(), true); // apply knockback to defending player
-
                     em.SpawnHitEffectOnContactPoint(GetApproriateEffect(hbi.damage), i.left.GetComponent<Collider2D>(), i.right.transform.position);
                     AddPlayerToConnectedHitboxes(i.left.gameObject, i.right.gameObject); // add hit player to connected hitboxes so they cannot also hit them
 
@@ -225,10 +225,10 @@ public class HitboxInteractionManager : MonoBehaviour
                 if (i.left.GetComponent<HitboxInfo>().owner != i.right.gameObject)
                 {
                     i.right.transform.root.GetComponent<Control1>().Grabbed(i.left);
-                    DeathHeavyClawControl dhcc = i.left.transform.root.GetComponent<DeathHeavyClawControl>();
-                    dhcc.grabbedPlayer = i.right.gameObject;
-                    dhcc.grabbedPlayerRB = i.right.GetComponent<Rigidbody2D>();
-                    dhcc.grabbedPlayerRB.velocity = Vector2.zero;
+
+                    Debug.Log("sendmessage " + i.left.transform.root.name + " OnGrab()");
+                    // ALL GRAB OBJECTS MUST INCLUDE ONGRAB() TO RECIEVE THIS CALL ---------------------------
+                    i.left.transform.root.SendMessage("OnGrab", i.right.gameObject);
 
                     em.SpawnHitEffectOnContactPoint(GetApproriateEffect(i.left.GetComponent<HitboxInfo>().damage), i.left.GetComponent<Collider2D>(), i.right.transform.position);
                 }

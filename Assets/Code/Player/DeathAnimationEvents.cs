@@ -8,7 +8,7 @@ public class DeathAnimationEvents : MonoBehaviour
 {
     public GameObject heavyClaw;
     Animator anim;
-    Control1 c1;
+    public Control1 c1;
     Rigidbody2D rb;
     public bool upwardHeavyClawExists = false;
     public bool horizontalHeavyClawExists = false;
@@ -22,6 +22,9 @@ public class DeathAnimationEvents : MonoBehaviour
     public int movementAbilityCurrentFrames = 0;
     public int movementAbilityMaxFrames = 120;
 
+    float dairHeavyDistance;
+    [SerializeField] GameObject lineChain;
+    GameObject currentLineChain;
 
     private void Start()
     {
@@ -148,7 +151,7 @@ public class DeathAnimationEvents : MonoBehaviour
             c1.clm.AddLocker(c1.inAerialAnim);
         }
 
-        anim.SetBool("ContinueAttack", true);
+        c1.ae.ChangeAnimBool("ContinueAttack", true);
 
         movementAbilityCurrentFrames = 0;
         c1.ChangeIntangible(false);
@@ -171,7 +174,64 @@ public class DeathAnimationEvents : MonoBehaviour
     {
         if (c1.pim.BufferInputExists(ControlLock.Controls.SPECIAL))
         {
-            anim.SetBool("ContinueAttack", true);
+            c1.ae.ChangeAnimBool("ContinueAttack", true);
         }
+    }
+
+    public void StartDairHeavy()
+    {
+        dairHeavyDistance = RaycastForGround();
+        c1.clm.AddLocker(c1.inAnim);
+        c1.platformCollider.SetActive(false);
+
+        c1.doNotUpdatePlatformCollider = true;
+        c1.affectedByGravity = false;
+
+        rb.velocity = Vector2.zero;
+        int numberOfPositions = ((int)dairHeavyDistance / 2) + 2;
+        Debug.Log("distance to ground = " + dairHeavyDistance + " so number of positions is " + numberOfPositions);
+
+        currentLineChain = Instantiate(lineChain, transform.position, Quaternion.identity);
+
+        currentLineChain.transform.GetChild(0).GetComponent<HitboxInfo>().owner = gameObject;
+
+        c1.temporaryObjects.Add(currentLineChain);
+
+        DeathDairHChainController newLineChainControl = currentLineChain.GetComponent<DeathDairHChainController>();
+        currentLineChain.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+        newLineChainControl.goalPositionCount = numberOfPositions;
+        newLineChainControl.ownerDAE = this;
+    }
+
+    public void ChainHitTheGround()
+    {
+        c1.ae.ChangeAnimBool("ContinueAttack", true);
+        c1.affectedByGravity = true;
+        c1.ignoreFriction = true;
+        rb.velocity = new Vector2(0, -30);
+        Debug.Log("chain hit the ground");
+    }
+
+    public void DestroyDairHeavyChain()
+    {
+        if (currentLineChain != null)
+        {
+            Destroy(currentLineChain);
+        }
+    }
+
+    public float RaycastForGround()
+    {
+        RaycastHit2D[] collidersBelow = Physics2D.RaycastAll(transform.position, -Vector2.up);
+
+        foreach (RaycastHit2D i in collidersBelow)
+        {
+            if (i.collider.CompareTag("Ground"))
+            {
+                return i.distance;
+            }
+        }
+        Debug.LogWarning("Death used DairHeavy but the raycast never detected the ground!");
+        return 2;
     }
 }

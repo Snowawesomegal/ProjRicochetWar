@@ -20,15 +20,15 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1925362492, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
+      value: {fileID: -1136550209, guid: 07b123d3416574626ac437a42365cce9, type: 3}
     - time: 0.05
-      value: {fileID: 1876399384, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
+      value: {fileID: -477339578, guid: 07b123d3416574626ac437a42365cce9, type: 3}
     - time: 0.18333334
-      value: {fileID: -2017980919, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
+      value: {fileID: 621783569, guid: 07b123d3416574626ac437a42365cce9, type: 3}
     - time: 0.33333334
-      value: {fileID: 1295764709, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
-    - time: 0.48333332
-      value: {fileID: -452313487, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
+      value: {fileID: 1193232431, guid: 07b123d3416574626ac437a42365cce9, type: 3}
+    - time: 0.56666666
+      value: {fileID: 1524318217, guid: 07b123d3416574626ac437a42365cce9, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,17 +48,17 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1925362492, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
-    - {fileID: 1876399384, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
-    - {fileID: -2017980919, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
-    - {fileID: 1295764709, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
-    - {fileID: -452313487, guid: e8ea2f807d31b43c7a0adf7d230d7411, type: 3}
+    - {fileID: -1136550209, guid: 07b123d3416574626ac437a42365cce9, type: 3}
+    - {fileID: -477339578, guid: 07b123d3416574626ac437a42365cce9, type: 3}
+    - {fileID: 621783569, guid: 07b123d3416574626ac437a42365cce9, type: 3}
+    - {fileID: 1193232431, guid: 07b123d3416574626ac437a42365cce9, type: 3}
+    - {fileID: 1524318217, guid: 07b123d3416574626ac437a42365cce9, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.56666666
+    m_StopTime: 0.71666664
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -99,7 +99,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.56666666
+  - time: 0.18333334
+    functionName: PlaySoundFromAnimator
+    data: ScytheSliceLong1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.71666664
     functionName: StopAnimation
     data: UpHeavyAttack
     objectReferenceParameter: {fileID: 0}

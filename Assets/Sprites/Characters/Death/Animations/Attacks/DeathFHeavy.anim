@@ -93,6 +93,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.4
+    functionName: PlaySoundFromAnimator
+    data: SwordSwing2
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.4
     functionName: EnableHitbox
     data: FHeavyAttack1
     objectReferenceParameter: {fileID: 0}

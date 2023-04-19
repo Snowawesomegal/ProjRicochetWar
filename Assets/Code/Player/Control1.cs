@@ -534,7 +534,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             StartStopFastFall(false);
             em.SpawnDirectionalEffect("DoubleJumpRing", transform.position, facingRight);
 
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.velocity = new Vector2(rb.velocity.x, 0.001f);
             rb.AddForce(initialJumpForce * Vector2.up * doubleJumpMultiplier);
         }
     }

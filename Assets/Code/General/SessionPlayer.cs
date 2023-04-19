@@ -22,6 +22,11 @@ public class SessionPlayer
     {
         this.playerIndex = playerInput.playerIndex;
         this.playerInput = playerInput;
+        Debug.Log("Player " + playerIndex + ": " + playerInput.devices);
+        foreach (InputDevice device in playerInput.devices)
+        {
+            Debug.Log("Device: " + device);
+        }
     }
     public bool SpawnPlayer(Vector3 position)
     {

@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   kbSpeedMultiplier: 1
-  kbDistance: 2
+  kbDistance: 6
   hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
   angle: 45
@@ -1540,6 +1540,7 @@ MonoBehaviour:
   overMaxYSpeedAdjustment: 400
   overMaxXSpeedAdjustment: 400
   fastFallMultiplier: 2
+  doubleJumpMultiplier: 1.4
   applyFFMultiplier: 0
   delayFF: 0
   chargeRecoverySpeed: 10

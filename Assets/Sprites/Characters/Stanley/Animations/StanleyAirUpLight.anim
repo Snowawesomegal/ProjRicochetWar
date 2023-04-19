@@ -95,6 +95,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.2
+    functionName: PlaySoundFromAnimator
+    data: WeaponSwing3
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.21666667
     functionName: SpawnPaper
     data: 

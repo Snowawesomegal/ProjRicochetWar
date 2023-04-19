@@ -105,6 +105,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.3
+    functionName: PlaySoundFromAnimator
+    data: SwordSwing2
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.53333336
     functionName: PlaySoundFromAnimator
     data: StaplerClose

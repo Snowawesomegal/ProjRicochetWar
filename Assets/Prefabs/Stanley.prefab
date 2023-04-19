@@ -6510,6 +6510,7 @@ MonoBehaviour:
   overMaxYSpeedAdjustment: 400
   overMaxXSpeedAdjustment: 400
   fastFallMultiplier: 2.5
+  doubleJumpMultiplier: 1.5
   applyFFMultiplier: 0
   delayFF: 0
   chargeRecoverySpeed: 10

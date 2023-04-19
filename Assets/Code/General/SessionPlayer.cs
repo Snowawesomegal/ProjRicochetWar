@@ -38,7 +38,7 @@ public class SessionPlayer
         }
 
         Debug.Log("Spawning player and establishing instanced input.");
-        instancedInput = PlayerInput.Instantiate(selectedFighter.fighter.gameObject, playerIndex, playerInput.currentControlScheme, -1, playerInput.devices.ToArray());
+        instancedInput = PlayerInput.Instantiate(selectedFighter.fighter.gameObject, playerIndex, playerInput.currentControlScheme, playerIndex, playerInput.devices.ToArray());
         fighterInstance = instancedInput.GetComponent<Control1>();
         fighterInstance.transform.position = position;
 

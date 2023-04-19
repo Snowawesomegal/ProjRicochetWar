@@ -534,6 +534,54 @@ MonoBehaviour:
     groupName: 
     groupWeight: 1
     loopsLeft: 0
+  - name: Staple
+    clip: {fileID: 8300000, guid: 0236d00b8e267498f8b01c1e98bde37c, type: 3}
+    presetVolume: 0.851
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.98
+    loop: 0
+    source: {fileID: 1624796418899871395}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StaplerOpen
+    clip: {fileID: 8300000, guid: 79cef170e868546549ace2f0d69aa57b, type: 3}
+    presetVolume: 0.673
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.98
+    loop: 0
+    source: {fileID: 1624796418899871395}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StaplerClose
+    clip: {fileID: 8300000, guid: d55dc0f745a06451095646991baf741c, type: 3}
+    presetVolume: 0.667
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.98
+    loop: 0
+    source: {fileID: 1624796418899871395}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: WeaponHit3
+    clip: {fileID: 8300000, guid: 599a395b5d58543dc97dae5b857e02a4, type: 3}
+    presetVolume: 0.789
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.85
+    loop: 0
+    source: {fileID: 1624796418899871395}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
   music: []
   soundSourceReferenceTarget: {fileID: 5325732006426284127}
   soundSourceTarget: {fileID: 0}

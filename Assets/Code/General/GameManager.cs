@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        if (TimeController == null)
+            Debug.LogWarning("TimeController isn't being properly created on awake.");
 
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += (scene, loadMode) =>

@@ -94,6 +94,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: PlaySoundFromAnimator
+    data: StaplerOpen
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.2
     functionName: EnableHitbox
     data: FairLight/FairLight1
@@ -104,6 +111,13 @@ AnimationClip:
   - time: 0.25
     functionName: EnableHitbox
     data: FairLight/FairLight2
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6
+    functionName: PlaySoundFromAnimator
+    data: StaplerClose
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

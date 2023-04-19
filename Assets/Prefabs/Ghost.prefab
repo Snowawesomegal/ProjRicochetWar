@@ -6057,6 +6057,7 @@ MonoBehaviour:
   airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
   intangible: 0
+  canDoubleJump: 1
   DIStrength: 1
   DLightBounce: 1
   firstFrameOfHitstun: 0
@@ -6091,7 +6092,6 @@ MonoBehaviour:
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   FFbufferLength: 20
   grounded: {fileID: 11400000, guid: 748e80c1e61624f2d9238535930e41fc, type: 2}
-  airborne: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
   hitstun: {fileID: 11400000, guid: 2836bc8b5de41ef418c0cb92db0922e5, type: 2}
   inAnim: {fileID: 11400000, guid: 6e871cd89094bde4a8fd0774148fe9cb, type: 2}
   wallcling: {fileID: 11400000, guid: 9de46684201334b0bb1963733b8bc2b7, type: 2}
@@ -6101,6 +6101,8 @@ MonoBehaviour:
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
   UNIQUEinMovementAir: {fileID: 11400000, guid: 636518d449bb5428cb4202c04d05d357, type: 2}
   UNIQUEinMovementGround: {fileID: 11400000, guid: cbc671def756d454f85b961185b43341, type: 2}
+  airborneWithDJ: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
+  airborneNoDJ: {fileID: 11400000, guid: e3fe17b67d47343b68133fa96804c541, type: 2}
   touchingWall: 0
   minimumSpeedForHitstun: 10
   framesInHitstun: 0
@@ -6173,7 +6175,6 @@ MonoBehaviour:
   debugMessages: 0
   inputBufferDuration: 20
   inputBufferDebugMessages: 0
-  playerVerticalAttackThreshold: 70
 --- !u!114 &6311728093354438154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6423,6 +6424,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 462e5cf3-ba14-47da-8f47-3004df081109
     m_ActionName: OwenControls/Movement[/Keyboard/o]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2384c9f-951a-459d-bcc1-c97d88daaa4d
+    m_ActionName: UI/Back[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f29b446-92be-471a-828a-b2ed61ba8085
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02557698-42e4-4f65-a932-acd6ddc65137
+    m_ActionName: UI/Submit[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7bc792fd-7591-4f64-a6e7-4953e889b252
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f01cdad9-30d4-4191-9577-db83a379b002
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 29c110d5-6f1b-42f7-ba50-c119254df012
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b542b307-10a5-4aad-b76a-bb3354bfd6c0
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f085cb7f-58de-4747-9209-a160ec8ea333
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7673d6b5-2f86-4f8e-902c-99661c00bcdf
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5b1c0ade-575a-49c8-a696-e6b1f8fbc0b3
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a75c3d8-fa0f-454a-a04b-940c3ea22b1f
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fe2c43f1-bcc4-4b4a-b4ed-162d3cfa8239
+    m_ActionName: UI/Start[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce06a961-3381-4735-b43b-5e654e11b7a7
+    m_ActionName: FalseUI/Back[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 60f6ad43-4447-4ee3-a06d-1ac27d8e03b7
+    m_ActionName: FalseUI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ede0f5a-d619-4da2-84c9-1ec6996a2a65
+    m_ActionName: FalseUI/Submit[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e709257c-b096-4464-90f2-9e028ed4f775
+    m_ActionName: FalseUI/Ready[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Playing

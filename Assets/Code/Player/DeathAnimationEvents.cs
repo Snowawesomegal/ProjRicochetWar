@@ -141,7 +141,7 @@ public class DeathAnimationEvents : MonoBehaviour
 
     void TransitionToEndSpecial()
     {
-        clmEx.RemoveAllLockersExcept(c1.clm, new StandardControlLocker[] { c1.grounded, c1.airborne });
+        clmEx.RemoveAllLockersExcept(c1.clm, new StandardControlLocker[] { c1.grounded, c1.airborneWithDJ, c1.airborneNoDJ });
         if (c1.grounded)
         {
             c1.clm.AddLocker(c1.inAnim);

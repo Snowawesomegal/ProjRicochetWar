@@ -1030,7 +1030,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 60
+  minimumHitstunFrames: 20
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 7
@@ -1522,6 +1522,7 @@ MonoBehaviour:
   airFriction: 0.6
   wallJumpVerticalOoOne: 0.5
   intangible: 0
+  canDoubleJump: 1
   DIStrength: 1
   DLightBounce: 0
   firstFrameOfHitstun: 0
@@ -1556,7 +1557,6 @@ MonoBehaviour:
   notBouncy: {fileID: 6200000, guid: 6bc5810bc8900411d9891d9e875227f6, type: 2}
   FFbufferLength: 20
   grounded: {fileID: 11400000, guid: 748e80c1e61624f2d9238535930e41fc, type: 2}
-  airborne: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
   hitstun: {fileID: 11400000, guid: 2836bc8b5de41ef418c0cb92db0922e5, type: 2}
   inAnim: {fileID: 11400000, guid: 6e871cd89094bde4a8fd0774148fe9cb, type: 2}
   wallcling: {fileID: 11400000, guid: 9de46684201334b0bb1963733b8bc2b7, type: 2}
@@ -1566,6 +1566,8 @@ MonoBehaviour:
   inGrab: {fileID: 11400000, guid: 28007d48810c841ae85cd364cb3986c9, type: 2}
   UNIQUEinMovementAir: {fileID: 11400000, guid: ad6accefa2cc548d9a75f37bdadb14f1, type: 2}
   UNIQUEinMovementGround: {fileID: 11400000, guid: e9ed95adf42a24dcebc9690072fc52da, type: 2}
+  airborneWithDJ: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
+  airborneNoDJ: {fileID: 11400000, guid: e3fe17b67d47343b68133fa96804c541, type: 2}
   touchingWall: 0
   minimumSpeedForHitstun: 10
   framesInHitstun: 0
@@ -1638,7 +1640,6 @@ MonoBehaviour:
   debugMessages: 0
   inputBufferDuration: 20
   inputBufferDebugMessages: 0
-  playerVerticalAttackThreshold: 70
 --- !u!114 &5324972260535258971
 MonoBehaviour:
   m_ObjectHideFlags: 0

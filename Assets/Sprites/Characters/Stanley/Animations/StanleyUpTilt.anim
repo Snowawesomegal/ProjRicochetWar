@@ -91,9 +91,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.016666668
+    functionName: PlaySoundFromAnimator
+    data: StaplerOpen
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.3
     functionName: EnableHitbox
     data: UpLightAttack1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.53333336
+    functionName: PlaySoundFromAnimator
+    data: StaplerClose
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

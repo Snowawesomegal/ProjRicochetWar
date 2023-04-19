@@ -35,6 +35,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float airFriction = 500;
     public float wallJumpVerticalOoOne = 0.5f;
     public bool intangible = false;
+    public bool canDoubleJump = true;
 
     [SerializeField] float DIStrength = 5;
     int knockbackTime = 0;
@@ -61,6 +62,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     [SerializeField] float overMaxYSpeedAdjustment = 10;
     [SerializeField] float overMaxXSpeedAdjustment = 10;
     [SerializeField] float fastFallMultiplier = 1.5f;
+    [SerializeField] float doubleJumpMultiplier = 1.4f;
     public bool applyFFMultiplier = false;
     public int delayFF = 0;
     Vector2 beforeFreezeSpeed = Vector2.zero;
@@ -102,7 +104,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     //Control Lockers
     public StandardControlLocker grounded;
-    public StandardControlLocker airborne;
     public StandardControlLocker hitstun;
     public StandardControlLocker inAnim;
     public StandardControlLocker wallcling;
@@ -112,6 +113,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public StandardControlLocker inGrab;
     public StandardControlLocker UNIQUEinMovementAir;
     public StandardControlLocker UNIQUEinMovementGround;
+    public StandardControlLocker airborneWithDJ;
+    public StandardControlLocker airborneNoDJ;
 
     public bool touchingWall = false;
     public float minimumSpeedForHitstun = 50;
@@ -518,6 +521,22 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             ae.ChangeAnimBool("WallJumpSquat", true);
         }
+        else if (clm.activeLockers.Contains(airborneWithDJ))
+        {
+            DoubleJump();
+        }
+
+        void DoubleJump()
+        {
+            clm.RemoveLocker(airborneWithDJ);
+            clm.AddLocker(airborneNoDJ);
+            canDoubleJump = false;
+            StartStopFastFall(false);
+            em.SpawnDirectionalEffect("DoubleJumpRing", transform.position, facingRight);
+
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(initialJumpForce * Vector2.up * doubleJumpMultiplier);
+        }
     }
 
     public void MovementResponse(CharacterInput input)
@@ -549,14 +568,24 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             clm.AddLocker(wallcling);
             ae.ChangeAnimBool("WallCling", true);
-            clm.RemoveLocker(airborne);
+            canDoubleJump = true;
+            clm.RemoveLocker(airborneNoDJ);
+            clm.RemoveLocker(airborneWithDJ);
             affectedByGravity = false;
             rb.velocity = Vector2.zero;
         }
         else
         {
             clm.RemoveLocker(wallcling);
-            clm.AddLocker(airborne);
+            if (canDoubleJump)
+            {
+                clm.AddLocker(airborneWithDJ);
+            }
+            else
+            {
+                clm.AddLocker(airborneNoDJ);
+            }
+
             affectedByGravity = true;
             ae.ChangeAnimBool("WallCling", false);
         }
@@ -799,7 +828,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
             if (enterexit)
             {
                 clm.AddLocker(grounded);
-                clm.RemoveLocker(airborne);
+                clm.RemoveLocker(airborneWithDJ);
+                clm.RemoveLocker(airborneNoDJ);
+
+                canDoubleJump = true;
+
                 ae.ChangeAnimBool("Grounded", true);
                 applyFFMultiplier = false;
                 fastFallBuffer = 0;
@@ -824,7 +857,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
             else
             {
                 clm.RemoveLocker(grounded);
-                clm.AddLocker(airborne);
+                clm.AddLocker(airborneWithDJ);
                 currentGroundTag = null;
                 ae.ChangeAnimBool("Grounded", false);
                 gameObject.layer = 8;
@@ -936,11 +969,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
         if (exitGrab) // remove all lockers except grounded and airborne
         {
-            clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne });
+            clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborneWithDJ, airborneNoDJ });
         }
         else // don't remove grab if it's 
         {
-            clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborne, inGrab });
+            clmEx.RemoveAllLockersExcept(clm, new StandardControlLocker[] { grounded, airborneWithDJ, airborneNoDJ, inGrab });
         }
 
         foreach(GameObject i in temporaryObjects)

@@ -532,6 +532,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
             clm.AddLocker(airborneNoDJ);
             canDoubleJump = false;
             StartStopFastFall(false);
+            Debug.Log("ffdelay set to 5");
+            delayFF = 5;
             em.SpawnDirectionalEffect("DoubleJumpRing", transform.position, facingRight);
 
             rb.velocity = new Vector2(rb.velocity.x, 0);

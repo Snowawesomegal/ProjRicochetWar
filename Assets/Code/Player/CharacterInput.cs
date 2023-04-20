@@ -151,7 +151,7 @@ public class CharacterInput
                 cardinal = CardinalDirection.RIGHT;
             else
                 cardinal = CardinalDirection.LEFT;
-
+            
             Debug.Log("Current vector: " + dir + ", radians: " + rad + ", Direction: " + cardinal + ", Threshold: " + ( Mathf.Rad2Deg * verticalThreshold));
 
             return cardinal;

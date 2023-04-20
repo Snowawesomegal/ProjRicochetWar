@@ -9,6 +9,7 @@ public class SessionSettings
 
     public SessionPlayer AddPlayer(PlayerInput playerInput)
     {
+        Debug.Log("Adding player: " + playerInput.playerIndex);
         SessionPlayer player = new SessionPlayer(playerInput);
         players.Add(player);
         return player;

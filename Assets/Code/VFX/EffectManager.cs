@@ -11,7 +11,7 @@ public class EffectManager : MonoBehaviour
 
     private void Start()
     {
-        sm = GameObject.Find("SettingsManager");
+        sm = GameObject.FindObjectOfType<GameManager>().gameObject;
         am = sm.GetComponent<AudioManager>();
     }
 

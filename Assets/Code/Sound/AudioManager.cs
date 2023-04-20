@@ -80,20 +80,44 @@ public class AudioManager : MonoBehaviour
             PrepareSoundSources();
     }
 
-    private void UnprepareAudioSources()
+    private bool UnprepareAudioSources()
     {
-        if (Application.isPlaying)
-            Destroy(soundSourceTarget);
-        else
-            DestroyImmediate(soundSourceTarget);
-        soundSourceTarget = null;
-        prepared = false;
+        if (this == null)
+        {
+            Debug.LogWarning("AudioManager is destroyed...");
+            prepared = false;
+            soundSourceTarget = null;
+            return false;
+        }
+        try
+        {
+            if (soundSourceTarget == null)
+            {
+                AudioSource src = GetComponentInChildren<AudioSource>();
+                if (src) soundSourceTarget = src.gameObject;
+            }
+            while (soundSourceTarget != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(soundSourceTarget);
+                else
+                    DestroyImmediate(soundSourceTarget);
+                soundSourceTarget = null;
+                AudioSource src = GetComponentInChildren<AudioSource>();
+                if (src) soundSourceTarget = src.gameObject;
+            }
+            prepared = false;
+        } catch (System.Exception e) {
+            Debug.LogWarning("Trying to destroy audio source target: " + e.Message);
+            return false;
+        }
+        return true;
     }
 
     private void ReprepareSoundSources()
     {
-        UnprepareAudioSources();
-        PrepareSoundSources();
+        if (UnprepareAudioSources())
+            PrepareSoundSources();
     }
 
     private void PrepareSoundSources()
@@ -112,6 +136,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
         if (soundSourceReferenceTarget == null)
+        {
+            return;
+        }
+        else if (soundSourceTarget != null)
         {
             return;
         }

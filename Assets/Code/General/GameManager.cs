@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void SetupGame()
     {
-        Session.SpawnAllPlayers(new Vector3[] { new Vector3(-1, 0, 0), new Vector3(1, 0, 0) });
+        Session.SpawnAllPlayers(new Vector3[] { new Vector3(-6, 0, 0), new Vector3(6, 0, 0), new Vector3(-2, 0, 0), new Vector3(2, 0, 0) });
     }
 
     public void LoadGameScene()

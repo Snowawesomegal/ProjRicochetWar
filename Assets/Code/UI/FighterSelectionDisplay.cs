@@ -21,6 +21,10 @@ public class FighterSelectionDisplay : MonoBehaviour
     private bool isReady = false;
     public bool Ready { get { return isReady; } }
 
+    [SerializeField] private Sprite readySprite;
+    [SerializeField] private Sprite notReadySprite;
+    [SerializeField] private Image readyImage;
+
     public void AssignPlayer(SessionPlayer player, Sprite defaultSelectionSprite, FighterSelectionManager manager)
     {
         this.player = player;
@@ -38,6 +42,7 @@ public class FighterSelectionDisplay : MonoBehaviour
         {
             playerDisplay.sprite = defaultSelectionSprite;
         }
+        UpdateReadyImage();
     }
 
     public void RemovePlayer()
@@ -106,5 +111,12 @@ public class FighterSelectionDisplay : MonoBehaviour
             Debug.Log("Player " + player.PlayerIndex + " is ready!");
             manager.QueryReady();
         }
+        UpdateReadyImage();
+    }
+
+    public void UpdateReadyImage()
+    {
+        if (readyImage && readySprite && notReadySprite)
+            readyImage.sprite = isReady ? readySprite : notReadySprite;
     }
 }

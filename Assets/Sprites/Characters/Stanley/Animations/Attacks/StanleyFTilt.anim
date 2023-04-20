@@ -25,7 +25,7 @@ AnimationClip:
       value: {fileID: 545446239, guid: d94992e4deb094a28ab3c9619da58658, type: 3}
     - time: 0.1
       value: {fileID: -1856306191, guid: d94992e4deb094a28ab3c9619da58658, type: 3}
-    - time: 0.16666667
+    - time: 0.15
       value: {fileID: 246389123, guid: d94992e4deb094a28ab3c9619da58658, type: 3}
     - time: 0.3
       value: {fileID: 1317129046, guid: d94992e4deb094a28ab3c9619da58658, type: 3}
@@ -104,14 +104,14 @@ AnimationClip:
     floatParameter: 700
     intParameter: 0
     messageOptions: 0
-  - time: 0.16666667
+  - time: 0.15
     functionName: EnableMultiHitbox
     data: FLight
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.16666667
+  - time: 0.15
     functionName: PlaySoundFromAnimator
     data: SwordSwing2
     objectReferenceParameter: {fileID: 0}

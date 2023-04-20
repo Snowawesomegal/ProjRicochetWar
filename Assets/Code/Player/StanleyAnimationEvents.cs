@@ -37,7 +37,7 @@ public class StanleyAnimationEvents : MonoBehaviour
 
     public void SpawnMonitor()
     {
-        if (activeMonitors < 3)
+        if (activeMonitors < 2)
         {
             Vector2 angleOfForce = c1.pim.GetCurrentDirectional().current;
 

@@ -97,7 +97,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0.2
     functionName: PlaySoundFromAnimator
-    data: WeaponSwing3
+    data: SwordSwing3
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

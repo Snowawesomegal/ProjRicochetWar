@@ -11,7 +11,7 @@ public class EffectManager : MonoBehaviour
 
     private void Start()
     {
-        sm = GameObject.FindObjectOfType<GameManager>().gameObject;
+        sm = GameObject.Find("SettingsManager");
         am = sm.GetComponent<AudioManager>();
     }
 
@@ -33,6 +33,11 @@ public class EffectManager : MonoBehaviour
     public void SpawnHitEffectOnContactPoint(string effectName, Collider2D hitbox, Vector2 hurtboxCenter, float angleAdjustment = 0, float xdisplacement = 0, float ydisplacement = 0)
     {
         VisualEffect effect = GetVisualEffect(effectName);
+
+        if (effect == null)
+        {
+            return;
+        }
 
         if (!string.IsNullOrEmpty(effect.sound))
         {

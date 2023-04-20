@@ -25,9 +25,9 @@ AnimationClip:
       value: {fileID: -1760016139, guid: 83bf37afe157c4bf1bad42ddf558c11e, type: 3}
     - time: 0.06666667
       value: {fileID: 296782036, guid: 83bf37afe157c4bf1bad42ddf558c11e, type: 3}
-    - time: 0.1
+    - time: 0.13333334
       value: {fileID: 1825934837, guid: 83bf37afe157c4bf1bad42ddf558c11e, type: 3}
-    - time: 0.2
+    - time: 0.15
       value: {fileID: 231636287, guid: 83bf37afe157c4bf1bad42ddf558c11e, type: 3}
     - time: 0.3
       value: {fileID: 1533567707, guid: 83bf37afe157c4bf1bad42ddf558c11e, type: 3}
@@ -91,7 +91,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.1
+  - time: 0.15
     functionName: EnableHitbox
     data: DairLight
     objectReferenceParameter: {fileID: 0}

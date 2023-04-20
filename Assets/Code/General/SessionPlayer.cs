@@ -7,7 +7,11 @@ public class SessionPlayer
 {
     private int playerIndex;
     private PlayerInput playerInput;
+    private string playerControlScheme;
+    private InputDevice[] playerDevices;
     public int PlayerIndex { get { return playerIndex; } }
+    public string PlayerControlScheme {  get { return playerControlScheme; } }
+    public InputDevice[] PlayerDevices {  get { return playerDevices; } }
     public PlayerInput Input { get { return playerInput; } }
     
     private FighterSelection selectedFighter = null;
@@ -21,6 +25,8 @@ public class SessionPlayer
     public SessionPlayer(PlayerInput playerInput)
     {
         this.playerIndex = playerInput.playerIndex;
+        this.playerControlScheme = playerInput.currentControlScheme;
+        this.playerDevices = playerInput.devices.ToArray();
         this.playerInput = playerInput;
         Debug.Log("Player " + playerIndex + ": " + playerInput.devices);
         foreach (InputDevice device in playerInput.devices)
@@ -43,7 +49,7 @@ public class SessionPlayer
         }
 
         Debug.Log("Spawning player and establishing instanced input.");
-        instancedInput = PlayerInput.Instantiate(selectedFighter.fighter.gameObject, playerIndex, playerInput.currentControlScheme, playerIndex, playerInput.devices.ToArray());
+        instancedInput = PlayerInput.Instantiate(selectedFighter.fighter.gameObject, playerIndex, playerControlScheme, playerIndex, playerDevices);
         fighterInstance = instancedInput.GetComponent<Control1>();
         fighterInstance.transform.position = position;
 

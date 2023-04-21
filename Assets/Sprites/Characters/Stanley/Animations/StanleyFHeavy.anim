@@ -25,13 +25,13 @@ AnimationClip:
       value: {fileID: 973898196, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
     - time: 0.2
       value: {fileID: 116307471, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - time: 0.3
+    - time: 0.25
       value: {fileID: -2101416316, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - time: 0.4
+    - time: 0.3
       value: {fileID: -723653190, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - time: 0.5
+    - time: 0.4
       value: {fileID: 910626542, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - time: 0.6
+    - time: 0.5
       value: {fileID: 316534350, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
     attribute: m_Sprite
     path: 
@@ -64,7 +64,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.7
+    m_StopTime: 0.6
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -91,14 +91,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.3
+  - time: 0.25
     functionName: EnableHitbox
     data: FHeavy
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.7
+  - time: 0.6
     functionName: StopAnimation
     data: FHeavyAttack
     objectReferenceParameter: {fileID: 0}

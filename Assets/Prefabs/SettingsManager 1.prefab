@@ -494,7 +494,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.98
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.98
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -518,7 +518,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.98
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.85
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -542,7 +542,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.98
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -554,7 +554,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.98
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -566,7 +566,7 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.98
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0
@@ -578,7 +578,31 @@ MonoBehaviour:
     stopSpeed: 0
     pitch: 0.85
     loop: 0
-    source: {fileID: 1624796418899871395}
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: HeavySwing1
+    clip: {fileID: 8300000, guid: d6828851a0505495ba63b22035a7b7d8, type: 3}
+    presetVolume: 1
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.38
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: HeavySwing2
+    clip: {fileID: 8300000, guid: 561b64184974c44c3aa0ff9e996c978a, type: 3}
+    presetVolume: 1
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.47
+    loop: 0
+    source: {fileID: 0}
     groupName: 
     groupWeight: 1
     loopsLeft: 0

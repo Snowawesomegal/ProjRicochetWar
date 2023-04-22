@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundSettings : MonoBehaviour
 {
-    public void ChangeMaster(float v)
+    [SerializeField] Slider master;
+    [SerializeField] Slider music;
+    [SerializeField] Slider sfx;
+
+    public void ChangeMaster()
     {
-        GameSettings.Instance.MasterVolume = v;
+        GameSettings.Instance.MasterVolume = master.value;
     }
 
-    public void ChangeMusic(float v)
+    public void ChangeMusic()
     {
-        GameSettings.Instance.MusicVolume = v;
+        GameSettings.Instance.MusicVolume = music.value;
     }
 
-    public void ChangeSFX(float v)
+    public void ChangeSFX()
     {
-        GameSettings.Instance.EffectVolume = v;
+        GameSettings.Instance.EffectVolume = sfx.value;
     }
 }

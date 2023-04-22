@@ -606,6 +606,30 @@ MonoBehaviour:
     groupName: 
     groupWeight: 1
     loopsLeft: 0
+  - name: StanleyCabinetHit
+    clip: {fileID: 8300000, guid: d2054707cea324aa4bf369dd3c11b13b, type: 3}
+    presetVolume: 0.673
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.98
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StanleyMonitorExplode
+    clip: {fileID: 8300000, guid: 11dd7c41b18224fb0b3a5cb15c61acb9, type: 3}
+    presetVolume: 0.443
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
   music: []
   soundSourceReferenceTarget: {fileID: 5325732006426284127}
   soundSourceTarget: {fileID: 0}
@@ -685,6 +709,16 @@ MonoBehaviour:
     lifetime: 0.3
     prefab: {fileID: 7906149291098545022, guid: f9776a016b25045e7ae6b582ba5ceb96, type: 3}
     sound: 
+    rotationAdjustment: 0
+  - name: DoubleJumpRing
+    lifetime: 0.3
+    prefab: {fileID: 7906149291098545022, guid: f9776a016b25045e7ae6b582ba5ceb96, type: 3}
+    sound: 
+    rotationAdjustment: 0
+  - name: Explosion1
+    lifetime: 0.8
+    prefab: {fileID: 1847233905527608918, guid: 91bf9971b97f2485f913acf3e5aa489e, type: 3}
+    sound: StanleyMonitorExplode
     rotationAdjustment: 0
 --- !u!1 &5325732006426284127
 GameObject:

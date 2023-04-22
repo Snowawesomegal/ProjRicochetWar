@@ -89,7 +89,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public ParticleSystem permaTrailps;
     public AudioManager am;
     public GameObject sm;
-    EffectManager em;
+    public EffectManager em;
     InMatchUI imui;
     public AnimationEvents ae;
     TrailRenderer tr;
@@ -313,8 +313,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 {
                     if (touchingWall && !clm.activeLockers.Contains(wallcling)) // if touching wall, if holding toward wall and not using an aerial or already wallcling, grab wall
                     {
-                        if (collidedWallSide == Mathf.Sign(pim.GetCurrentDirectional().current.x))
+
+                        if (collidedWallSide == Mathf.Sign(pim.GetCurrentDirectional().current.x) && pim.GetCurrentDirectional().current.x != 0)
                         {
+                            Debug.Log("here");
                             WallClingEnterExit(true);
                         }
                     }

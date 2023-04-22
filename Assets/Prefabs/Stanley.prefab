@@ -148,7 +148,7 @@ MonoBehaviour:
   damage: 11
   kbSpeedMultiplier: 1
   kbDistance: 12
-  hitsound: WeaponHit1
+  hitsound: StanleyCabinetHit
   soundGroupInsteadOfSound: 0
   angle: 340
   owner: {fileID: 0}
@@ -5886,7 +5886,7 @@ MonoBehaviour:
   damage: 11
   kbSpeedMultiplier: 1
   kbDistance: 12
-  hitsound: WeaponHit1
+  hitsound: StanleyCabinetHit
   soundGroupInsteadOfSound: 0
   angle: 340
   owner: {fileID: 0}
@@ -6004,7 +6004,7 @@ MonoBehaviour:
   damage: 11
   kbSpeedMultiplier: 1
   kbDistance: 12
-  hitsound: WeaponHit1
+  hitsound: StanleyCabinetHit
   soundGroupInsteadOfSound: 0
   angle: 340
   owner: {fileID: 0}
@@ -8416,7 +8416,7 @@ MonoBehaviour:
   damage: 11
   kbSpeedMultiplier: 1
   kbDistance: 12
-  hitsound: WeaponHit1
+  hitsound: StanleyCabinetHit
   soundGroupInsteadOfSound: 0
   angle: 340
   owner: {fileID: 0}

@@ -6,6 +6,7 @@ public class StanleyMonitorControl : MonoBehaviour
 {
     HitboxInteractionManager him;
     GameObject hitbox;
+    HitboxInfo hbi;
 
     void Start()
     {
@@ -14,16 +15,21 @@ public class StanleyMonitorControl : MonoBehaviour
         him = Camera.main.GetComponent<HitboxInteractionManager>();
 
         him.SelfDestructObject += gameObj => SelfDestruct(gameObj);
+
+        hbi = hitbox.GetComponent<HitboxInfo>();
     }
 
     public void SelfDestruct(GameObject whatObjectIsDestroyed)
     {
         if (whatObjectIsDestroyed == hitbox)
         {
-            hitbox.GetComponent<HitboxInfo>().owner.GetComponent<StanleyAnimationEvents>().activeMonitors -= 1;
+            hbi.owner.GetComponent<StanleyAnimationEvents>().activeMonitors -= 1;
+
+            hbi.owner.GetComponent<Control1>().em.SpawnDirectionalEffect("Explosion1", transform.position, hbi.facingRight);
+
+            him.SelfDestructObject -= SelfDestruct;
 
             Destroy(gameObject);
-            him.SelfDestructObject -= SelfDestruct;
         }
     }
 

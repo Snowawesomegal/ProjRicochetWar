@@ -57,7 +57,7 @@ MonoBehaviour:
   minimumHitstunFrames: 20
   cannotClank: 1
   isPartOfMultipart: 0
-  hitstopFrames: 5
+  hitstopFrames: 8
   isCounter: 0
   isProjectile: 1
   isGrab: 0

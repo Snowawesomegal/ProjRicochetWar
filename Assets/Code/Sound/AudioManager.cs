@@ -1,6 +1,8 @@
 using UnityEngine.Audio;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -302,6 +304,8 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
+#if UNITY_EDITOR
         EditorApplication.update += () => { if (Application.isEditor) UpdateSounds(); };
+#endif
     }
 }

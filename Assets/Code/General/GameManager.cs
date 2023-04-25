@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public const int MENU_SCENE = 0;
+    public const int PLAY_SCENE = 1;
+
     // This class follows a Singleton design pattern
     // a.k.a. EXACTLY ONE instance of this script should be included in the scene.
     // Only one and exactly one game object can have this component attached to it.
@@ -41,7 +44,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += (scene, loadMode) =>
         {
-            if (scene.buildIndex == 2)
+            if (scene.buildIndex == PLAY_SCENE)
                 SetupGame();
         };
         SceneManager.sceneUnloaded += (scene) =>
@@ -94,6 +97,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadGameScene()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(PLAY_SCENE);
     }
 }

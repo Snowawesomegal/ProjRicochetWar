@@ -107,6 +107,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.3
+    functionName: PlaySoundFromAnimator
+    data: SwordSwing3
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.35
     functionName: EnableHitbox
     data: UpHeavy/Hit2
@@ -121,6 +128,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.4
+    functionName: PlaySoundFromAnimator
+    data: SwordSwing2
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.45
     functionName: EnableHitbox
     data: UpHeavy/Hit4
@@ -131,6 +145,13 @@ AnimationClip:
   - time: 0.5
     functionName: EnableMultiHitbox
     data: UpHeavyLaunch
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
+    functionName: PlaySoundFromAnimator
+    data: SwordSwing1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

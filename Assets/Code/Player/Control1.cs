@@ -1058,6 +1058,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
         {
             currentOverlaps.Add(collision.collider);
         }
+
+        if (clm.activeLockers.Contains(hitstun) && collision.gameObject.CompareTag("Wall"))
+        {
+            am.PlaySound("Impact1");
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)

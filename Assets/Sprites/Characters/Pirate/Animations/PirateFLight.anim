@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StanleyFHeavy
+  m_Name: PirateFLight
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,19 +20,17 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1356816852, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+      value: {fileID: 479429166, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     - time: 0.1
-      value: {fileID: 973898196, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+      value: {fileID: -1421652761, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     - time: 0.2
-      value: {fileID: 116307471, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - time: 0.25
-      value: {fileID: -2101416316, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+      value: {fileID: -1912198198, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     - time: 0.3
-      value: {fileID: -723653190, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+      value: {fileID: -658018411, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     - time: 0.4
-      value: {fileID: 910626542, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+      value: {fileID: -1916068501, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     - time: 0.5
-      value: {fileID: 316534350, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+      value: {fileID: -270262987, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -52,13 +50,12 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1356816852, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - {fileID: 973898196, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - {fileID: 116307471, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - {fileID: -2101416316, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - {fileID: -723653190, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - {fileID: 910626542, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
-    - {fileID: 316534350, guid: 9077676d4dfdb4e87b5b8975554884a3, type: 3}
+    - {fileID: 479429166, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+    - {fileID: -1421652761, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+    - {fileID: -1912198198, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+    - {fileID: -658018411, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+    - {fileID: -1916068501, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+    - {fileID: -270262987, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -91,23 +88,9 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
-    functionName: EnableHitbox
-    data: FHeavy
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.25
-    functionName: PlaySoundFromAnimator
-    data: SwordSwing4
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.6
     functionName: StopAnimation
-    data: FHeavyAttack
+    data: FLightAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

@@ -7499,7 +7499,7 @@ MonoBehaviour:
   currentHealth: 100
   maxCharge: 100
   currentCharge: 100
-  ghostBars: {fileID: 7422511886786561567, guid: 64a9efc59909e48acb20c85d893905e9, type: 3}
+  ghostBars: {fileID: 2507211860888125285, guid: ed8fa0246d7974d9f8faa4277dcfb210, type: 3}
   maxChargeDelay: 2
   chargeRecoverySpeed: 5
 --- !u!114 &1881402502247760431

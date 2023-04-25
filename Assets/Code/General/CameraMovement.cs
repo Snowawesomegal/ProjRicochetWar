@@ -12,7 +12,6 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float highestY = 666;
     [SerializeField] float lowestY = -666;
 
-
     [SerializeField] float baseCameraSpeed = 10;
     [SerializeField] float reduceMoveSpeedScaling = 10;
 
@@ -50,8 +49,13 @@ public class CameraMovement : MonoBehaviour
                 toFollow.Remove(i);
             }
         }
-
-        if (toFollow.Count == 1)
+        if (toFollow.Count == 0)
+        {
+            transform.position = new Vector3(0, 0, -10);
+            cam.orthographicSize = Mathf.MoveTowards(
+                cam.orthographicSize, (minCameraSize + maxCameraSize) / 2, Time.deltaTime * baseZoomSpeed);
+        }
+        else if (toFollow.Count == 1)
         {
             Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
 
@@ -65,7 +69,7 @@ public class CameraMovement : MonoBehaviour
                 cam.orthographicSize, (minCameraSize + maxCameraSize) / 2, Time.deltaTime * baseZoomSpeed);
 
         }
-        if (toFollow.Count >= 2)
+        else if (toFollow.Count >= 2)
         {
             Vector2 centerpoint = GetCenter();
             float farthestDistance = GetFarthestDistance();

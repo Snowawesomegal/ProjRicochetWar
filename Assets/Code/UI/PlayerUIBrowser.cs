@@ -17,6 +17,8 @@ public class PlayerUIBrowser : MonoBehaviour
     [SerializeField] public float moveSensitivty = 0.1f;
     public Vector2 previousMove = Vector2.zero;
 
+    [SerializeField] public bool debugMessages = false;
+
     public void OnNavigate(InputAction.CallbackContext ctxt)
     {
         Vector2 vec = ctxt.ReadValue<Vector2>();
@@ -26,7 +28,8 @@ public class PlayerUIBrowser : MonoBehaviour
             vec.y = 0;
         if (!Utility.EquivalentSigns(vec.x, previousMove.x) || !Utility.EquivalentSigns(vec.y, previousMove.y))
         {
-            Debug.Log("Player " + playerIndex + " Navigating: " + vec);
+            if (debugMessages)
+                Debug.Log("Player " + playerIndex + " Navigating: " + vec);
             previousMove = vec;
             NavigateBehavior?.Invoke(vec);
         }
@@ -34,19 +37,22 @@ public class PlayerUIBrowser : MonoBehaviour
 
     public void OnSubmit(InputAction.CallbackContext ctxt)
     {
-        Debug.Log("Player " + playerIndex + " Submitting");
+        if (debugMessages)
+            Debug.Log("Player " + playerIndex + " Submitting");
         SubmitBehavior?.Invoke();
     }
 
     public void OnBack(InputAction.CallbackContext ctxt)
     {
-        Debug.Log("Player " + playerIndex + " Hit back button");
+        if (debugMessages)
+            Debug.Log("Player " + playerIndex + " Hit back button");
         BackBehavior?.Invoke();
     }
 
     public void OnReady(InputAction.CallbackContext ctxt)
     {
-        Debug.Log("Player " + playerIndex + " Hit ready button");
+        if (debugMessages)
+            Debug.Log("Player " + playerIndex + " Hit ready button");
         ReadyBehavior?.Invoke();
     }
 }

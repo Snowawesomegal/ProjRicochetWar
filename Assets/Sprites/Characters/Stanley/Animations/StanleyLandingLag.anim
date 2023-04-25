@@ -82,7 +82,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0
     functionName: PlaySoundFromAnimator
-    data: Land1
+    data: StanleyLand
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

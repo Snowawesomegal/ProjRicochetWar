@@ -2032,6 +2032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1057f21141c4ba6b4f95aaa3d29785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSoundGroup: 0
+  soundGroup: 
   sound: DeathWalk
   toSpawnOnRunStart: []
 --- !u!1101 &3989759727652339327

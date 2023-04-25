@@ -6,17 +6,21 @@ public class ManageRunAudioAndEffects : StateMachineBehaviour
 {
     bool stateActive = true;
     bool currentlyMoving = false;
+    public bool isSoundGroup = false;
+    [SerializeField] string soundGroup;
     [SerializeField] string sound;
     AudioManager am;
     EffectManager em;
     [SerializeField] List<Pair<string, Vector2>> toSpawnOnRunStart;
     bool soundExists;
+    bool soundGroupExists;
 
     private void Awake()
     {
         am = GameObject.Find("SettingsManager").GetComponent<AudioManager>();
         em = am.GetComponent<EffectManager>();
 
+        soundGroupExists = !string.IsNullOrEmpty(soundGroup);
         soundExists = !string.IsNullOrEmpty(sound);
     }
 
@@ -39,9 +43,20 @@ public class ManageRunAudioAndEffects : StateMachineBehaviour
                 {
                     currentlyMoving = true;
 
-                    if (soundExists)
+
+                    if (isSoundGroup)
                     {
-                        am.PlaySound(sound);
+                        if (soundGroupExists)
+                        {
+                            am.PlaySoundGroup(soundGroup);
+                        }
+                    }
+                    else
+                    {
+                        if (soundExists)
+                        {
+                            am.PlaySound(sound);
+                        }
                     }
 
                     foreach (Pair<string, Vector2> i in toSpawnOnRunStart)
@@ -69,9 +84,12 @@ public class ManageRunAudioAndEffects : StateMachineBehaviour
 
     void EndSound()
     {
-        if (soundExists)
+        if (!isSoundGroup)
         {
-            am.StopSound(sound);
+            if (soundExists)
+            {
+                am.StopSound(sound);
+            }
         }
 
         currentlyMoving = false;

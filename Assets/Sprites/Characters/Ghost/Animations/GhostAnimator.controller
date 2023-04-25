@@ -1243,7 +1243,7 @@ AnimatorStateMachine:
     m_Position: {x: -30, y: -30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4967986537153524994}
-    m_Position: {x: 280, y: 20, z: 0}
+    m_Position: {x: 270, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1443957267836062752}
     m_Position: {x: 40, y: -160, z: 0}
@@ -1781,6 +1781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1057f21141c4ba6b4f95aaa3d29785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSoundGroup: 0
+  soundGroup: 
   sound: 
   toSpawnOnRunStart:
   - left: RunSmokeCloud

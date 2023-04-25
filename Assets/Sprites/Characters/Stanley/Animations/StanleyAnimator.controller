@@ -719,8 +719,7 @@ AnimatorState:
   - {fileID: 2748467121792138727}
   - {fileID: 3852633040611299570}
   - {fileID: 4075797181625760452}
-  m_StateMachineBehaviours:
-  - {fileID: 5615816267717312771}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -925,7 +924,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 53c738763f49b48129299087776c5f03, type: 2}
+  m_Motion: {fileID: 7400000, guid: a398f433a4efd4db0966cd12f49dfdbe, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1668,22 +1667,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &5615816267717312771
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce1057f21141c4ba6b4f95aaa3d29785, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sound: 
-  toSpawnOnRunStart:
-  - left: RunSmokeCloud
-    right: {x: -0.26, y: -0.3}
 --- !u!1102 &5789978372271215870
 AnimatorState:
   serializedVersion: 6

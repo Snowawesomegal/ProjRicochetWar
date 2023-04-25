@@ -630,6 +630,90 @@ MonoBehaviour:
     groupName: 
     groupWeight: 1
     loopsLeft: 0
+  - name: StanleyFootstep1
+    clip: {fileID: 8300000, guid: 4f808cd84149b4f5e9fe9e21dd088a51, type: 3}
+    presetVolume: 0.238
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.81
+    loop: 0
+    source: {fileID: 0}
+    groupName: StanleyFootsteps
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StanleyFootstep2
+    clip: {fileID: 8300000, guid: 8e4b8a69ed3924135b9ea72e497f85cb, type: 3}
+    presetVolume: 0.238
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.85
+    loop: 0
+    source: {fileID: 0}
+    groupName: StanleyFootsteps
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StanleyFootstep3
+    clip: {fileID: 8300000, guid: d08d6482f71c64a5f916fb6071b0dac5, type: 3}
+    presetVolume: 0.238
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.84
+    loop: 0
+    source: {fileID: 0}
+    groupName: StanleyFootsteps
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StanleyFootstep4
+    clip: {fileID: 8300000, guid: 887bef0fbfd014010aefcb9bfaa943fe, type: 3}
+    presetVolume: 0.231
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.81
+    loop: 0
+    source: {fileID: 0}
+    groupName: StanleyFootsteps
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StanleyLand
+    clip: {fileID: 8300000, guid: 48c32b5a987f6401cb3e74f531b629d1, type: 3}
+    presetVolume: 0.321
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.79
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: StanleyJump
+    clip: {fileID: 8300000, guid: 48c32b5a987f6401cb3e74f531b629d1, type: 3}
+    presetVolume: 0.289
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 1.44
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: Impact1
+    clip: {fileID: 8300000, guid: 8548bcc56b322403ca4c0ed76ee520a0, type: 3}
+    presetVolume: 0.353
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 0.9
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
   music: []
   soundSourceReferenceTarget: {fileID: 5325732006426284127}
   soundSourceTarget: {fileID: 0}

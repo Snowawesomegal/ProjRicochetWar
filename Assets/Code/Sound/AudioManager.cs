@@ -58,12 +58,19 @@ public class AudioManager : MonoBehaviour
     protected bool prepared = false;
     public bool Prepared { get { PrepareSoundSources(); return prepared; } set { prepared = value; if (!prepared) { ReprepareSoundSources(); } } }
 
+    private bool shouldPrepare = true;
+
     private void Awake()
     {
         ForcePrepareSoundSources();
+        if (!shouldPrepare)
+            return;
         if (!prepared)
         {
-            Debug.LogError("Audio Manager not prepared - Likely missing SoundSourceReferenceTarget -- reference is needed to create audio source target.");
+            Debug.Log("Failed to prepare AudioManager, trying one more time...");
+            PrepareSoundSources();
+            if (!prepared)
+                Debug.LogError("Audio Manager not prepared - Likely missing SoundSourceReferenceTarget -- reference is needed to create audio source target.");
         }
         SceneManager.sceneUnloaded += (scene) =>
         {
@@ -135,6 +142,7 @@ public class AudioManager : MonoBehaviour
         {
             Debug.LogWarning("Error - AudioManager instance is already set... duplicate AudioManager exists. Destroying duplicate...");
             Destroy(gameObject);
+            shouldPrepare = false;
             return;
         }
         if (soundSourceReferenceTarget == null)

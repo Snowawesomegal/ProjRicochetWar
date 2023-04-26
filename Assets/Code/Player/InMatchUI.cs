@@ -31,15 +31,29 @@ public class InMatchUI : MonoBehaviour
 
         ui = FindAnyObjectByType<Canvas>();
 
-        Vector3 flip = new Vector3 (1, 1, 1);
-        if (GameObject.Find("GhostBars(Clone)") != null) // this is obviously a hack
-        {
-            flip = new Vector3(-1, 1, 1);
-        }
+
+        List<GameObject> bars = new List<GameObject>();
 
         GameObject newBars = Instantiate(ghostBars, ui.transform);
 
-        newBars.transform.localScale = flip; // this is also part of the hack
+        foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag("HealthBar"))
+        {
+            bars.Add(fooObj);
+        }
+
+        if (bars.Count == 2) // this is player 2's bar
+        {
+            newBars.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        if (bars.Count == 3) // this is player 3's bar
+        {
+            newBars.transform.localPosition = new Vector3(1, -1, 1);
+        }
+        if (bars.Count == 4) // this is player 4's bar
+        {
+            newBars.transform.localScale = new Vector3(-1, 1, 1);
+            newBars.transform.localPosition = new Vector3(1, -1, 1);
+        }
 
         healthBar = newBars.transform.GetChild(0).GetComponent<Slider>();
         chargeBar = newBars.transform.GetChild(1).GetComponent<Slider>();

@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Platform
   - Ground
+  - HealthBar
   layers:
   - Default
   - TransparentFX

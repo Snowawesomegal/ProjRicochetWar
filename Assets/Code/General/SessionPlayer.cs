@@ -9,10 +9,12 @@ public class SessionPlayer
     private PlayerInput playerInput;
     private string playerControlScheme;
     private InputDevice[] playerDevices;
+    private PlayerUIBrowser uiBrowser;
     public int PlayerIndex { get { return playerIndex; } }
     public string PlayerControlScheme {  get { return playerControlScheme; } }
     public InputDevice[] PlayerDevices {  get { return playerDevices; } }
     public PlayerInput Input { get { return playerInput; } }
+    public PlayerUIBrowser UIBrowser { get { return uiBrowser; } }
     
     private FighterSelection selectedFighter = null;
     public FighterSelection SelectedFighter { get { return selectedFighter; } set { if (instancedInput == null && value != null) selectedFighter = value; } }
@@ -28,6 +30,7 @@ public class SessionPlayer
         this.playerControlScheme = playerInput.currentControlScheme;
         this.playerDevices = playerInput.devices.ToArray();
         this.playerInput = playerInput;
+        this.uiBrowser = playerInput.GetComponent<PlayerUIBrowser>();
         Debug.Log("Player " + playerIndex + ": " + playerInput.devices);
         foreach (InputDevice device in playerInput.devices)
         {

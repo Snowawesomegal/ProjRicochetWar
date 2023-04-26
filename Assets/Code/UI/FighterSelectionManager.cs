@@ -49,15 +49,12 @@ public class FighterSelectionManager : MonoBehaviour
     public void AddPlayer(PlayerInput input)
     {
         Debug.Log("Adding new player...");
-        foreach (FighterSelectionDisplay selection in possiblePlayers)
+        SessionPlayer player = GameManager.Instance.Session.AddPlayer(input);
+        bool createdPlayer = AssignPlayer(player);
+        if (!createdPlayer)
         {
-            if (selection.Unassigned)
-            {
-                Debug.Log("Assigning player to new player slot!");
-                SessionPlayer player = GameManager.Instance.Session.AddPlayer(input);
-                selection.AssignPlayer(player, defaultSelectionImage, this);
-                break;
-            }
+            GameManager.Instance.Session.RemovePlayer(player.PlayerIndex);
+            return;
         }
         if (!HasPlayerSlots())
         {
@@ -66,12 +63,35 @@ public class FighterSelectionManager : MonoBehaviour
         }
     }
 
+    public bool AssignPlayer(SessionPlayer player)
+    {
+        foreach (FighterSelectionDisplay selection in possiblePlayers)
+        {
+            if (selection.Unassigned)
+            {
+                Debug.Log("Assigning player to new player slot!");
+                selection.AssignPlayer(player, defaultSelectionImage, this);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void RemovePlayer(PlayerInput input)
     {
         if (HasPlayerSlots())
         {
             inputManager.EnableJoining();
             Debug.Log("Enabled joining, player slot(s) are now available.");
+        }
+    }
+
+    public void ClearPlayers()
+    {
+        foreach (FighterSelectionDisplay selection in possiblePlayers)
+        {
+            if (selection.HasPlayer)
+                selection.RemovePlayer();
         }
     }
 
@@ -90,5 +110,26 @@ public class FighterSelectionManager : MonoBehaviour
             return;
 
         GameManager.Instance.LoadGameScene();
+    }
+
+    public void CollectSessionPlayers()
+    {
+        ClearPlayers();
+        inputManager.onPlayerJoined -= AddPlayer;
+        SessionPlayer[] currentPlayers = GameManager.Instance.Session.players.ToArray();
+        foreach (SessionPlayer player in currentPlayers)
+        {
+            string devices = "Devices {";
+            foreach (InputDevice device in player.PlayerDevices)
+            {
+                devices += device.ToString() + ", ";
+            }
+            devices = devices.Length > 9 ? devices.Substring(0, devices.Length - 2) + "}" : devices + " }";
+            Debug.Log("-----Found existing session player, reassigning player: " + devices);
+            PlayerInput input = PlayerInput.Instantiate(inputManager.playerPrefab, player.PlayerIndex, player.PlayerControlScheme, player.PlayerIndex, player.PlayerDevices);
+            GameManager.Instance.Session.RemovePlayer(player.PlayerIndex);
+            AddPlayer(input);
+        }
+        inputManager.onPlayerJoined += AddPlayer;
     }
 }

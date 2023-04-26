@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SessionSettings
 {
-    List<SessionPlayer> players = new List<SessionPlayer>();
+    public List<SessionPlayer> players = new List<SessionPlayer>();
 
     public SessionPlayer AddPlayer(PlayerInput playerInput)
     {
@@ -13,6 +13,15 @@ public class SessionSettings
         SessionPlayer player = new SessionPlayer(playerInput);
         players.Add(player);
         return player;
+    }
+
+    public bool RemovePlayer(int playerIndex)
+    {
+        int listIndex = players.FindIndex(player => player.PlayerIndex == playerIndex);
+        if (listIndex < 0)
+            return false;
+        players.RemoveAt(listIndex);
+        return true;
     }
 
     public bool SelectFighter(SessionPlayer sessionPlayer, FighterSelection fighterSelection)

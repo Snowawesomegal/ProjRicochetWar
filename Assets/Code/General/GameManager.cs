@@ -97,6 +97,14 @@ public class GameManager : MonoBehaviour
 
     public void LoadGameScene()
     {
+        Debug.Log("-----Switching to Play Scene-----");
         SceneManager.LoadScene(PLAY_SCENE);
+    }
+
+    public void LoadSelectScene()
+    {
+        Debug.Log("-----Switching to Character Select Menu-----");
+        FighterSelectorMenu.shouldDisableOnStart = false;
+        SceneManager.LoadScene(MENU_SCENE);
     }
 }

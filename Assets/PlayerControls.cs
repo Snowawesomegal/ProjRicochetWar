@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""173aaa0d-db48-4d14-94f0-fa0ea0162c9b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -287,6 +296,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39563529-9649-47eb-9302-5423a27a60c1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a72e164-c5b6-484b-8825-24baa30ba7c0"",
+                    ""path"": ""<Gamepad>/homeButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77d4d25b-609f-4bd7-9a69-0f19cbd1695c"",
+                    ""path"": ""<Gamepad>/home"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9141fbf8-a79f-4b66-a804-ad7279de39d3"",
+                    ""path"": ""<Gamepad>/systemButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1504,6 +1557,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Playing_Dash = m_Playing.FindAction("Dash", throwIfNotFound: true);
         m_Playing_HeavyAttack = m_Playing.FindAction("Heavy Attack", throwIfNotFound: true);
         m_Playing_Movement = m_Playing.FindAction("Movement", throwIfNotFound: true);
+        m_Playing_Exit = m_Playing.FindAction("Exit", throwIfNotFound: true);
         // OwenControls
         m_OwenControls = asset.FindActionMap("OwenControls", throwIfNotFound: true);
         m_OwenControls_Jump = m_OwenControls.FindAction("Jump", throwIfNotFound: true);
@@ -1599,6 +1653,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Playing_Dash;
     private readonly InputAction m_Playing_HeavyAttack;
     private readonly InputAction m_Playing_Movement;
+    private readonly InputAction m_Playing_Exit;
     public struct PlayingActions
     {
         private @PlayerControls m_Wrapper;
@@ -1610,6 +1665,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Playing_Dash;
         public InputAction @HeavyAttack => m_Wrapper.m_Playing_HeavyAttack;
         public InputAction @Movement => m_Wrapper.m_Playing_Movement;
+        public InputAction @Exit => m_Wrapper.m_Playing_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Playing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1640,6 +1696,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayingActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayingActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayingActionsCallbackInterface.OnMovement;
+                @Exit.started -= m_Wrapper.m_PlayingActionsCallbackInterface.OnExit;
+                @Exit.performed -= m_Wrapper.m_PlayingActionsCallbackInterface.OnExit;
+                @Exit.canceled -= m_Wrapper.m_PlayingActionsCallbackInterface.OnExit;
             }
             m_Wrapper.m_PlayingActionsCallbackInterface = instance;
             if (instance != null)
@@ -1665,6 +1724,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Exit.started += instance.OnExit;
+                @Exit.performed += instance.OnExit;
+                @Exit.canceled += instance.OnExit;
             }
         }
     }
@@ -1955,6 +2017,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
     public interface IOwenControlsActions
     {

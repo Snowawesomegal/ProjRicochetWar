@@ -29,12 +29,12 @@ public class FighterSelectionDisplay : MonoBehaviour
     {
         this.player = player;
         this.manager = manager;
-        uiBrowser = player.Input.GetComponent<PlayerUIBrowser>();
+        uiBrowser = player.UIBrowser;
         uiBrowser.currentButton = 0;
         uiBrowser.playerIndex = player.PlayerIndex;
         PlaceIndicator(uiBrowser.currentButton);
         Debug.Log("Subscribing navigate");
-        Debug.Log("Devices: " + player.Input.devices);
+        Debug.Log("Devices: " + player.PlayerDevices);
         uiBrowser.NavigateBehavior += NavigateIndicator;
         uiBrowser.SubmitBehavior += SelectFighter;
         uiBrowser.ReadyBehavior += ReadyUp;
@@ -55,6 +55,7 @@ public class FighterSelectionDisplay : MonoBehaviour
         isReady = false;
         if (playerDisplay)
             playerDisplay.sprite = null;
+        UpdateReadyImage();
     }
 
     private Vector2 InidicatorOffset(int playerIndex)

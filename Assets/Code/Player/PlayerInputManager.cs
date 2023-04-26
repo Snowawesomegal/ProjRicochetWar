@@ -233,6 +233,12 @@ public class PlayerInputManager : MonoBehaviour
         playerController.MovementResponse(input);
     }
 
+    public void OnExit(InputAction.CallbackContext ctxt)
+    {
+        if (ctxt.started)
+            GameManager.Instance.LoadSelectScene();
+    }
+
     public bool CanInput(ControlLock.Controls controls, out string debugStr)
     {
         bool controlsAllowed = controlLockManager.ControlsAllowed(controls);

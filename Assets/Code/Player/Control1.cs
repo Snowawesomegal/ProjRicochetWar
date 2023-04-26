@@ -194,6 +194,11 @@ public class Control1 : MonoBehaviour, IIdentifiable
 
     public void OnSlow(float speed)
     {
+        if (this == null)
+        {
+            return;
+        }
+
         anim.speed = speed;
 
         if (speed == 0)

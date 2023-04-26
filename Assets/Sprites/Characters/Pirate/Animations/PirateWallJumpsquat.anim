@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PirateFairHeavy
+  m_Name: PirateWallJumpsquat
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,25 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 251499565, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
+      value: {fileID: 1823086994, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
+    - time: 0.016666668
+      value: {fileID: -1438528314, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
+    - time: 0.033333335
+      value: {fileID: 1247944999, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
     - time: 0.05
-      value: {fileID: -158127533, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.1
-      value: {fileID: 1955693632, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.15
-      value: {fileID: -1233361204, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.25
-      value: {fileID: -903962120, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.35
-      value: {fileID: -1149936174, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.4
-      value: {fileID: -667424283, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.45
-      value: {fileID: 1266408482, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.55
-      value: {fileID: 283178562, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - time: 0.65
-      value: {fileID: -75874483, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
+      value: {fileID: 1690777477, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -58,22 +46,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 251499565, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: -158127533, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: 1955693632, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: -1233361204, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: -903962120, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: -1149936174, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: -667424283, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: 1266408482, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: 283178562, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
-    - {fileID: -75874483, guid: be5cdd2c86c6a45b590979bc2e4ccc22, type: 3}
+    - {fileID: 1823086994, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
+    - {fileID: -1438528314, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
+    - {fileID: 1247944999, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
+    - {fileID: 1690777477, guid: 97b52871898cd4316bfec35b157fd60e, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.76666665
+    m_StopTime: 0.06666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -100,16 +82,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
-    functionName: TinyBulletCone
+  - time: 0.05
+    functionName: ApplyWallJumpForce
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.76666665
+  - time: 0.05
+    functionName: PlaySoundGroupFromAnimator
+    data: GhostWallJump
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.06666667
     functionName: StopAnimation
-    data: FHeavyAttack
+    data: WallJumpSquat
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

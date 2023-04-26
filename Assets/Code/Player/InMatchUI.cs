@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class InMatchUI : MonoBehaviour
 {
+    GameObject owner;
+
     Slider healthBar;
     Slider chargeBar;
 
@@ -30,7 +32,6 @@ public class InMatchUI : MonoBehaviour
         currentCharge = maxCharge;
 
         ui = FindAnyObjectByType<Canvas>();
-
 
         List<GameObject> bars = new List<GameObject>();
 
@@ -66,6 +67,29 @@ public class InMatchUI : MonoBehaviour
     public void ChangeHealth(float toChangeBy)
     {
         currentHealth += toChangeBy;
+
+        if (currentHealth <= 0)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+            gameObject.SetActive(false);
+
+            if (players.Length == 2)
+            {
+                Debug.Log("start switching");
+
+                players[0].GetComponent<InMatchUI>().StartCoroutine("SwitchToMenu");
+            }
+        }
+    }
+
+    IEnumerator SwitchToMenu()
+    {
+        yield return new WaitForSeconds(3);
+
+        Debug.Log("switch");
+
+        GameManager.Instance.LoadSelectScene();
     }
 
     public void ChangeCharge(float toChangeBy)

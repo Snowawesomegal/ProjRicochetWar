@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(FighterSelectionManager))]
 public class FighterSelectorMenu : MonoBehaviour
 {
-    public static bool shouldDisableOnStart = false;
+    public static bool shouldDisableOnStart = true;
 
     [SerializeField] public GameObject menuCanvas;
     [SerializeField] public List<GameObject> otherMenus = new List<GameObject>();

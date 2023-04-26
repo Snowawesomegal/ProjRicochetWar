@@ -190,9 +190,13 @@ public class AnimationEvents : MonoBehaviour
             Debug.Log("Started dash and added Dashing locker on frame " + c1.frame);
         }
 
+
+
         c1.StopEverything();
 
         clm.AddLocker(c1.dashing);
+
+        c1.ChangeIntangible(true);
     }
 
     /// <summary>

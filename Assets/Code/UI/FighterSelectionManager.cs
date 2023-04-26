@@ -23,19 +23,35 @@ public class FighterSelectionManager : MonoBehaviour
     {
         if (HasPlayerSlots())
         {
-            inputManager.EnableJoining();
-            Debug.Log("Joining is enabled.");
+            if (!inputManager.joiningEnabled)
+            {
+                inputManager.EnableJoining();
+                Debug.Log("Joining is enabled.");
+            }
         }
         else
         {
             inputManager.DisableJoining();
             Debug.Log("Joining is disabled.");
         }
+        foreach (FighterSelectionDisplay player in possiblePlayers)
+        {
+            if (player.HasPlayer)
+            {
+                player.SessionPlayer.UIBrowser.inSelectScreen = true;
+            }
+        }
     }
 
     private void OnDisable()
     {
-        inputManager.DisableJoining();
+        foreach (FighterSelectionDisplay player in possiblePlayers)
+        {
+            if (player.HasPlayer)
+            {
+                player.SessionPlayer.UIBrowser.inSelectScreen = false;
+            }
+        }
     }
 
     public bool HasPlayerSlots()
@@ -109,6 +125,13 @@ public class FighterSelectionManager : MonoBehaviour
         if (notReady)
             return;
 
+        foreach (FighterSelectionDisplay player in possiblePlayers)
+        {
+            if (player.HasPlayer)
+            {
+                player.SessionPlayer.UIBrowser.inSelectScreen = true;
+            }
+        }
         GameManager.Instance.LoadGameScene();
     }
 

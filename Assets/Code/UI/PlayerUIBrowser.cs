@@ -19,8 +19,13 @@ public class PlayerUIBrowser : MonoBehaviour
 
     [SerializeField] public bool debugMessages = false;
 
+    public bool inSelectScreen = true;
+
     public void OnNavigate(InputAction.CallbackContext ctxt)
     {
+        if (!inSelectScreen)
+            return;
+
         Vector2 vec = ctxt.ReadValue<Vector2>();
         if (Mathf.Abs(vec.x) < moveSensitivty)
             vec.x = 0;
@@ -37,6 +42,12 @@ public class PlayerUIBrowser : MonoBehaviour
 
     public void OnSubmit(InputAction.CallbackContext ctxt)
     {
+        if (!inSelectScreen)
+        {
+            MenuNavigator.Menu.Forward();
+            return;
+        }
+
         if (debugMessages)
             Debug.Log("Player " + playerIndex + " Submitting");
         SubmitBehavior?.Invoke();
@@ -44,6 +55,8 @@ public class PlayerUIBrowser : MonoBehaviour
 
     public void OnBack(InputAction.CallbackContext ctxt)
     {
+        MenuNavigator.Menu.Back();
+
         if (debugMessages)
             Debug.Log("Player " + playerIndex + " Hit back button");
         BackBehavior?.Invoke();
@@ -51,6 +64,12 @@ public class PlayerUIBrowser : MonoBehaviour
 
     public void OnReady(InputAction.CallbackContext ctxt)
     {
+        if (!inSelectScreen)
+        {
+            MenuNavigator.Menu.ForwardAlternate();
+            return;
+        }
+
         if (debugMessages)
             Debug.Log("Player " + playerIndex + " Hit ready button");
         ReadyBehavior?.Invoke();

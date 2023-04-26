@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fighterName: Stanley
   fighter: {fileID: 6311728093354438149, guid: 07407f985bdce46ddac5fa230804baa7, type: 3}
-  showcaseSprite: {fileID: 232566832, guid: 0750f28d6c0934b8d89314ce4f46723e, type: 3}
+  showcaseSprite: {fileID: 21300000, guid: ee47b5989ab9545188a9b5d3a5ad1458, type: 3}

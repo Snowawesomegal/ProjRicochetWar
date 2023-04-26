@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PirateFLight
+  m_Name: PirateJumpsquat
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,17 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 479429166, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - time: 0.1
-      value: {fileID: -1421652761, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - time: 0.2
-      value: {fileID: -1912198198, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - time: 0.3
-      value: {fileID: -658018411, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - time: 0.4
-      value: {fileID: -1916068501, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - time: 0.5
-      value: {fileID: -270262987, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+      value: {fileID: 886753056, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
+    - time: 0.016666668
+      value: {fileID: -307435285, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
+    - time: 0.033333335
+      value: {fileID: -229036569, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
+    - time: 0.05
+      value: {fileID: 334125653, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,18 +46,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 479429166, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - {fileID: -1421652761, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - {fileID: -1912198198, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - {fileID: -658018411, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - {fileID: -1916068501, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - {fileID: -270262987, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
+    - {fileID: 886753056, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
+    - {fileID: -307435285, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
+    - {fileID: -229036569, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
+    - {fileID: 334125653, guid: cfc24a2336d184068b5c6b5a83e3c4f1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6
+    m_StopTime: 0.06666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -88,9 +82,30 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
-    functionName: StopAnimation
-    data: FLightAttack
+  - time: 0.033333335
+    functionName: PlaySoundGroupFromAnimator
+    data: GhostJump
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
+    functionName: ApplyJumpForce
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
+    functionName: SpawnBasicDirEffect
+    data: LandJumpSmokeCloud
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.05
+    functionName: StopEverythingFromAnimator
+    data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

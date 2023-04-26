@@ -32,8 +32,92 @@ Transform:
   - {fileID: 6520060711499706787}
   - {fileID: 8010764724014185516}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2101872017089541319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6165210999485550987}
+  - component: {fileID: 184032552836079291}
+  - component: {fileID: 1626223363815128152}
+  m_Layer: 0
+  m_Name: FLightAttackHit1B
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6165210999485550987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101872017089541319}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &184032552836079291
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101872017089541319}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.26765692, y: 1.3723484}
+  m_Size: {x: 3.2389793, y: 1.4617282}
+  m_Direction: 1
+--- !u!114 &1626223363815128152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101872017089541319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  kbSpeedMultiplier: 0.03
+  kbDistance: 0.05
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
+  angle: 361
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 2
+  minimumHitstunFrames: 30
+  cannotClank: 0
+  isPartOfMultipart: 0
+  hitstopFrames: 10
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 0
+  knockbackGoalPos: {x: 1, y: 0}
+  priority: 2
+  doNotEnable: 0
+  playersHitAlready: []
 --- !u!1 &2216999857132954142
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +150,7 @@ Transform:
   - {fileID: 6311728094502531958}
   - {fileID: 6311728094776920359}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2435376815587201073
 GameObject:
@@ -114,8 +198,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.79438245}
-  m_Size: {x: 1.786559, y: 2.7167795}
+  m_Offset: {x: 0.010135174, y: -1.2594926}
+  m_Size: {x: 1.8879175, y: 2.3744364}
   m_Direction: 0
 --- !u!114 &4113411392958667982
 MonoBehaviour:
@@ -166,7 +250,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &9067426906550629974
 CapsuleCollider2D:
@@ -248,7 +332,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3433009867416186590
 GameObject:
@@ -281,7 +365,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &3417861264796566491
 CapsuleCollider2D:
@@ -365,7 +449,7 @@ Transform:
   - {fileID: 1184912076721684956}
   - {fileID: 798564288124584560}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3555088644247553864
 GameObject:
@@ -398,7 +482,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &2139792759199227368
 ParticleSystemRenderer:
@@ -5210,7 +5294,7 @@ Transform:
   - {fileID: 9221109432178896743}
   - {fileID: 2575178362352576209}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3686617930835089017
 GameObject:
@@ -5747,7 +5831,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1139993751467027589
 CapsuleCollider2D:
@@ -5762,8 +5846,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.08851187}
-  m_Size: {x: 4.5324235, y: 3.3364775}
+  m_Offset: {x: 0.60690737, y: -0.61748064}
+  m_Size: {x: 2.872741, y: 2.865836}
   m_Direction: 1
 --- !u!114 &8346924978110582722
 MonoBehaviour:
@@ -5907,6 +5991,7 @@ GameObject:
   - component: {fileID: 1881402502247760431}
   - component: {fileID: -6832151150410818669}
   - component: {fileID: -6679137475492885588}
+  - component: {fileID: 2072468374944451818}
   m_Layer: 0
   m_Name: Pirate
   m_TagString: Player
@@ -5928,6 +6013,7 @@ Transform:
   m_Children:
   - {fileID: 6311728094876046317}
   - {fileID: 6311728095265584956}
+  - {fileID: 6165210999485550987}
   - {fileID: 6311728095304874138}
   - {fileID: 8658070277726799603}
   - {fileID: 6311728095063004484}
@@ -6065,11 +6151,11 @@ MonoBehaviour:
   canFastFall: 1
   ignoreFriction: 0
   affectedByGravity: 1
-  airSpeed: 20
-  airAccel: 75
+  airSpeed: 8
+  airAccel: 60
   airAccelDuringAerial: 80
-  groundSpeed: 25
-  groundAccel: 200
+  groundSpeed: 10
+  groundAccel: 160
   initialJumpForce: 950
   dashForce: 4000
   overMaxYSpeedAdjustment: 400
@@ -6688,6 +6774,22 @@ MonoBehaviour:
   targetPalettes:
   - {fileID: 11400000, guid: 650464a26db2192478b65f047769d637, type: 2}
   - {fileID: 11400000, guid: 5fd932f6d5003114483076083466f770, type: 2}
+--- !u!114 &2072468374944451818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311728093354438150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453ed504abbb04ba7adc03805902e416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tinyBullet: {fileID: 1076762132918252050, guid: 90cbbd81c7eb44e12a769b517e4e0c34, type: 3}
+  tinyBulletSpeed: 1500
+  tinyBulletLifetimeSec: 1
+  smallBullet: {fileID: 574366061576395275, guid: 6c0f9addafd554242b335428789ce632, type: 3}
 --- !u!1 &6311728093461558692
 GameObject:
   m_ObjectHideFlags: 0
@@ -7025,7 +7127,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &6311728095063004482
 CapsuleCollider2D:
@@ -7040,9 +7142,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21857095}
-  m_Size: {x: 4.034669, y: 2.9053376}
-  m_Direction: 1
+  m_Offset: {x: 0.4183855, y: -0.4671235}
+  m_Size: {x: 2.7590904, y: 3.1796465}
+  m_Direction: 0
 --- !u!114 &6311728095063004485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7090,7 +7192,7 @@ GameObject:
   - component: {fileID: 6311728095265584954}
   - component: {fileID: 6311728095265584957}
   m_Layer: 0
-  m_Name: FLightAttackHit1
+  m_Name: FLightAttackHit1A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7124,8 +7226,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.19465256}
-  m_Size: {x: 1.7882371, y: 2.7893095}
+  m_Offset: {x: 0.66379213, y: 0.3873664}
+  m_Size: {x: 1.7454119, y: 3.1747372}
   m_Direction: 0
 --- !u!114 &6311728095265584957
 MonoBehaviour:
@@ -7158,7 +7260,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 1.5, y: 0}
+  knockbackGoalPos: {x: 1, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -7193,7 +7295,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &6311728095304874139
 CapsuleCollider2D:
@@ -7208,8 +7310,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000000047058393, y: 0.039475445}
-  m_Size: {x: 2.749733, y: 2.478954}
+  m_Offset: {x: -0.2831289, y: -0.037914246}
+  m_Size: {x: 2.3241835, y: 2.3241835}
   m_Direction: 1
 --- !u!114 &6311728095304874136
 MonoBehaviour:
@@ -7277,7 +7379,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &4091081409843244300
 CapsuleCollider2D:
@@ -7292,8 +7394,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000000011541417, y: 0.009681643}
-  m_Size: {x: 2.749734, y: 1.754033}
+  m_Offset: {x: -0.69286543, y: -0.22856054}
+  m_Size: {x: 1.3640081, y: 0.9743411}
   m_Direction: 1
 --- !u!114 &2118977599092811163
 MonoBehaviour:
@@ -7361,7 +7463,7 @@ Transform:
   - {fileID: 3686617931327997037}
   - {fileID: 3686617930835089014}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7763369193071403772
 GameObject:
@@ -7409,8 +7511,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.83339727}
-  m_Size: {x: 1.7865591, y: 2.794809}
+  m_Offset: {x: 0, y: -0.8510027}
+  m_Size: {x: 2.5145464, y: 2.5145464}
   m_Direction: 0
 --- !u!114 &2275136286165177770
 MonoBehaviour:

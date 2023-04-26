@@ -714,6 +714,30 @@ MonoBehaviour:
     groupName: 
     groupWeight: 1
     loopsLeft: 0
+  - name: Gunshot1
+    clip: {fileID: 8300000, guid: ec59ef3fa94b24844857d47615242482, type: 3}
+    presetVolume: 0.552
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
+  - name: BlunderbusExplosion1
+    clip: {fileID: 8300000, guid: 12103e7561f474a6c82314d8b3d3658e, type: 3}
+    presetVolume: 0.449
+    volume: 0.1842
+    currentVolume: 0
+    stopSpeed: 0
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    groupName: 
+    groupWeight: 1
+    loopsLeft: 0
   music: []
   soundSourceReferenceTarget: {fileID: 5325732006426284127}
   soundSourceTarget: {fileID: 0}

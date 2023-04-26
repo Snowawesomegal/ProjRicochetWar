@@ -71,7 +71,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
-  cannotClank: 0
+  cannotClank: 1
   isPartOfMultipart: 0
   hitstopFrames: 8
   isCounter: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
-  cannotClank: 0
+  cannotClank: 1
   isPartOfMultipart: 0
   hitstopFrames: 16
   isCounter: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   facingRight: 1
   activeFrames: 6
   minimumHitstunFrames: 20
-  cannotClank: 0
+  cannotClank: 1
   isPartOfMultipart: 0
   hitstopFrames: 8
   isCounter: 0

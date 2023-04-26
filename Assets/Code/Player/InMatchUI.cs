@@ -78,7 +78,10 @@ public class InMatchUI : MonoBehaviour
             {
                 Debug.Log("start switching");
 
-                players[0].GetComponent<InMatchUI>().StartCoroutine("SwitchToMenu");
+                if (players[0].activeSelf)
+                    players[0].GetComponent<InMatchUI>().StartCoroutine("SwitchToMenu");
+                else
+                    players[1].GetComponent<InMatchUI>().StartCoroutine("SwitchToMenu");
             }
         }
     }

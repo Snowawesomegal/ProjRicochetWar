@@ -65,8 +65,8 @@ public class FighterSelectionDisplay : MonoBehaviour
             default:
             case 0: return new Vector2(-squareOffset, squareOffset);
             case 1: return new Vector2(squareOffset, squareOffset);
-            case 2: return new Vector2(squareOffset, -squareOffset);
-            case 3: return new Vector2(-squareOffset, -squareOffset);
+            case 2: return new Vector2(-squareOffset, -squareOffset);
+            case 3: return new Vector2(squareOffset, -squareOffset);
         }
     }
 

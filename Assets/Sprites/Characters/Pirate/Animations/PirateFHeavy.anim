@@ -107,10 +107,17 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.35
-    functionName: TinyBulletCone
-    data: 
+    functionName: PlaySoundFromAnimator
+    data: BlunderbusExplosion1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.35
+    functionName: BlunderbusExplosion
+    data: FHeavy
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 270
     intParameter: 0
     messageOptions: 0
   - time: 0.78333336

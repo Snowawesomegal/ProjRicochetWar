@@ -29,7 +29,7 @@ AnimationClip:
       value: {fileID: -658018411, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     - time: 0.4
       value: {fileID: -1916068501, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
-    - time: 0.5
+    - time: 0.6
       value: {fileID: -270262987, guid: 6882ac4670d0d4413aea71d654b5894d, type: 3}
     attribute: m_Sprite
     path: 
@@ -61,7 +61,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6
+    m_StopTime: 0.75
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -89,6 +89,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.1
+    functionName: PlaySoundFromAnimator
+    data: SwordSwing2
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.1
     functionName: EnableHitbox
     data: FLightAttackHit1B
     objectReferenceParameter: {fileID: 0}
@@ -102,6 +109,69 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.31666666
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.35
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.36666667
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.38333333
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.4
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.41666666
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.43333334
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.45
+    functionName: SwitchIfAttacking
+    data: ContinueAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.46666667
     functionName: SwitchIfAttacking
     data: ContinueAttack
@@ -109,35 +179,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.48333332
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.51666665
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5333333
-    functionName: SwitchIfAttacking
-    data: ContinueAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.6
+  - time: 0.75
     functionName: StopAnimation
     data: FLightAttack
     objectReferenceParameter: {fileID: 0}

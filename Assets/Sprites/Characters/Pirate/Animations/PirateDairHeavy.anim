@@ -110,6 +110,13 @@ AnimationClip:
     floatParameter: 270
     intParameter: 0
     messageOptions: 0
+  - time: 0.35
+    functionName: PlaySoundFromAnimator
+    data: Gunshot1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.8666667
     functionName: StopAnimation
     data: DHeavyAttack

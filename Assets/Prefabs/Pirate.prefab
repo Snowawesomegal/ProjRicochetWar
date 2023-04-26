@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1440367799329994361
+--- !u!1 &1235581387816176457
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,32 +8,82 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 956571472912301886}
+  - component: {fileID: 3004251820877178038}
+  - component: {fileID: 2015486777330214654}
+  - component: {fileID: 300101511151614299}
   m_Layer: 0
-  m_Name: UpAirHeavy
+  m_Name: FairLightAttackFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &956571472912301886
+  m_IsActive: 0
+--- !u!4 &3004251820877178038
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440367799329994361}
+  m_GameObject: {fileID: 1235581387816176457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
+  m_LocalPosition: {x: 0.95, y: 1.1400001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6953410879099358452}
-  - {fileID: 6520060711499706787}
-  - {fileID: 8010764724014185516}
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 12
+  m_Children: []
+  m_Father: {fileID: 7440674906665266365}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2015486777330214654
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235581387816176457}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.69821286}
+  m_Size: {x: 2.3179483, y: 3.296534}
+  m_Direction: 0
+--- !u!114 &300101511151614299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235581387816176457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  kbSpeedMultiplier: 1
+  kbDistance: 7
+  hitsound: WeaponHit1
+  soundGroupInsteadOfSound: 0
+  angle: 25
+  owner: {fileID: 0}
+  facingRight: 1
+  activeFrames: 4
+  minimumHitstunFrames: 20
+  cannotClank: 0
+  isPartOfMultipart: 0
+  hitstopFrames: 10
+  isCounter: 0
+  isProjectile: 0
+  isGrab: 0
+  isDestroyable: 0
+  objectHealth: 0
+  DiMultiplier: 1
+  knockbackGoalPos: {x: 0, y: 0}
+  priority: 1
+  doNotEnable: 0
+  playersHitAlready: []
 --- !u!1 &2101872017089541319
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +148,7 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.03
   kbDistance: 0.05
-  hitsound: WeaponHit1
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
@@ -118,40 +168,6 @@ MonoBehaviour:
   priority: 2
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &2216999857132954142
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7146791057285723836}
-  m_Layer: 0
-  m_Name: UpHeavy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7146791057285723836
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2216999857132954142}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6311728093461558693}
-  - {fileID: 6311728094502531958}
-  - {fileID: 6311728094776920359}
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2435376815587201073
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,90 +235,6 @@ MonoBehaviour:
   bounceAngle: 90
   soundOnBounce: 
   activeFrames: 2
---- !u!1 &2682462411383299805
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1124875515081784880}
-  - component: {fileID: 9067426906550629974}
-  - component: {fileID: 4475598025991643265}
-  m_Layer: 0
-  m_Name: FHeavyAttack1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1124875515081784880
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2682462411383299805}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &9067426906550629974
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2682462411383299805}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.007162623}
-  m_Size: {x: 5.91797, y: 1.4903181}
-  m_Direction: 1
---- !u!114 &4475598025991643265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2682462411383299805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 3
-  kbDistance: 20
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 12
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 0
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
 --- !u!1 &2994046375578313314
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +264,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 15
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3433009867416186590
 GameObject:
@@ -346,7 +278,7 @@ GameObject:
   - component: {fileID: 3417861264796566491}
   - component: {fileID: 5749955400834724370}
   m_Layer: 0
-  m_Name: FairLightAttack
+  m_Name: FairLightAttackTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,13 +291,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3433009867416186590}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 1.14, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.35000038, y: 1.1400001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 11
+  m_Father: {fileID: 7440674906665266365}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &3417861264796566491
 CapsuleCollider2D:
@@ -380,8 +312,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.87436396}
-  m_Size: {x: 3.700844, y: 3.6488082}
+  m_Offset: {x: 0, y: 0.2901556}
+  m_Size: {x: 3.3094144, y: 1.3197839}
   m_Direction: 1
 --- !u!114 &5749955400834724370
 MonoBehaviour:
@@ -395,15 +327,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 8
   kbSpeedMultiplier: 1
-  kbDistance: 2
+  kbDistance: 7
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 13
+  angle: 110
   owner: {fileID: 0}
   facingRight: 1
-  activeFrames: 2
+  activeFrames: 4
   minimumHitstunFrames: 20
   cannotClank: 0
   isPartOfMultipart: 0
@@ -415,7 +347,7 @@ MonoBehaviour:
   objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
+  priority: 2
   doNotEnable: 0
   playersHitAlready: []
 --- !u!1 &3487179807140661261
@@ -449,7 +381,7 @@ Transform:
   - {fileID: 1184912076721684956}
   - {fileID: 798564288124584560}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3555088644247553864
 GameObject:
@@ -482,7 +414,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 14
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &2139792759199227368
 ParticleSystemRenderer:
@@ -5263,7 +5195,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1 &3630832034770303378
+--- !u!1 &3693531314178946218
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5271,32 +5203,32 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6435983919889632497}
+  - component: {fileID: 7440674906665266365}
   m_Layer: 0
-  m_Name: DairHeavy
+  m_Name: FairLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6435983919889632497
+--- !u!4 &7440674906665266365
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3630832034770303378}
+  m_GameObject: {fileID: 3693531314178946218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9221109432178896743}
-  - {fileID: 2575178362352576209}
+  - {fileID: 2435223762841617583}
+  - {fileID: 3004251820877178038}
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3686617930835089017
+--- !u!1 &4304306129698889655
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5304,317 +5236,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3686617930835089014}
-  - component: {fileID: 3686617930835089012}
-  - component: {fileID: 3686617930835089015}
+  - component: {fileID: 6454473325397935045}
+  - component: {fileID: 2951857556747086016}
+  - component: {fileID: 2846406982320442639}
   m_Layer: 0
-  m_Name: FairHeavyAttackSweet
+  m_Name: UpAirLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &3686617930835089014
+--- !u!4 &6454473325397935045
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686617930835089017}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6, y: 0, z: 0}
+  m_GameObject: {fileID: 4304306129698889655}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4890383916044957055}
-  m_RootOrder: 1
+  m_Father: {fileID: 6311728093354438148}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &3686617930835089012
+--- !u!70 &2951857556747086016
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686617930835089017}
+  m_GameObject: {fileID: 4304306129698889655}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.066453144}
-  m_Size: {x: 3.3254151, y: 1.6405604}
+  m_Offset: {x: -0.2348604, y: -0.6041264}
+  m_Size: {x: 2.9939537, y: 2.7590952}
   m_Direction: 1
---- !u!114 &3686617930835089015
+--- !u!114 &2846406982320442639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686617930835089017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 12
-  kbSpeedMultiplier: 2
-  kbDistance: 30
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 20
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 70
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &3686617931327997036
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3686617931327997037}
-  - component: {fileID: 3686617931327997035}
-  - component: {fileID: 3686617931327997034}
-  m_Layer: 0
-  m_Name: FairHeavyAttackSour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &3686617931327997037
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686617931327997036}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4890383916044957055}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &3686617931327997035
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686617931327997036}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.06645333}
-  m_Size: {x: 3.386515, y: 1.640526}
-  m_Direction: 1
---- !u!114 &3686617931327997034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686617931327997036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 4
-  kbSpeedMultiplier: 1.2
-  kbDistance: 25
-  hitsound: WeaponHit1
-  soundGroupInsteadOfSound: 0
-  angle: 40
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 50
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 2
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &3863377767078563220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9221109432178896743}
-  - component: {fileID: 1335650314265960842}
-  - component: {fileID: 2157499711030186880}
-  m_Layer: 0
-  m_Name: DairLightAttackSour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &9221109432178896743
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3863377767078563220}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6435983919889632497}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &1335650314265960842
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3863377767078563220}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.013696194, y: -1.2102957}
-  m_Size: {x: 1.7974215, y: 4.6443396}
-  m_Direction: 0
---- !u!114 &2157499711030186880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3863377767078563220}
+  m_GameObject: {fileID: 4304306129698889655}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 6
-  kbSpeedMultiplier: 1
-  kbDistance: 4
+  kbSpeedMultiplier: 0.8
+  kbDistance: 0.2
   hitsound: WeaponHit1
   soundGroupInsteadOfSound: 0
-  angle: 65
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 6
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 2
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &4393596211020838063
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6953410879099358452}
-  - component: {fileID: 7422596514573504311}
-  - component: {fileID: 649303953667054905}
-  m_Layer: 0
-  m_Name: UpAirHeavyLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6953410879099358452
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393596211020838063}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 956571472912301886}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7422596514573504311
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393596211020838063}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.028390646}
-  m_Size: {x: 3.0004845, y: 3.6661363}
-  m_Direction: 0
---- !u!114 &649303953667054905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393596211020838063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 8
-  kbSpeedMultiplier: 1.5
-  kbDistance: 3
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 160
+  angle: 110
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
@@ -5622,174 +5302,6 @@ MonoBehaviour:
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 2
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &4662223803153955432
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8010764724014185516}
-  - component: {fileID: 444099326645482667}
-  - component: {fileID: 2380814219825821946}
-  m_Layer: 0
-  m_Name: UpAirHeavyRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &8010764724014185516
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4662223803153955432}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 956571472912301886}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &444099326645482667
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4662223803153955432}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.11621845}
-  m_Size: {x: 3.0004845, y: 3.1977212}
-  m_Direction: 0
---- !u!114 &2380814219825821946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4662223803153955432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 8
-  kbSpeedMultiplier: 1.5
-  kbDistance: 3
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 90
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 0
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 3
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5484935819613344735
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2575178362352576209}
-  - component: {fileID: 2174548166141981816}
-  - component: {fileID: 7556955064186006515}
-  m_Layer: 0
-  m_Name: DairLightAttackSweet
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2575178362352576209
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5484935819613344735}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6435983919889632497}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &2174548166141981816
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5484935819613344735}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.4429855}
-  m_Size: {x: 0.9151592, y: 1.9835814}
-  m_Direction: 0
---- !u!114 &7556955064186006515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5484935819613344735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 12
-  kbSpeedMultiplier: 2.3
-  kbDistance: 10
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 280
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 3
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 30
   isCounter: 0
   isProjectile: 0
   isGrab: 0
@@ -5831,7 +5343,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1139993751467027589
 CapsuleCollider2D:
@@ -5865,90 +5377,6 @@ MonoBehaviour:
   kbSpeedMultiplier: 1
   kbDistance: 2
   hitsound: WeaponHit1
-  soundGroupInsteadOfSound: 0
-  angle: 120
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 2
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 0
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &5872751037901427146
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6520060711499706787}
-  - component: {fileID: 5666722509244027782}
-  - component: {fileID: 4109783306272057871}
-  m_Layer: 0
-  m_Name: UpAirHeavyCenter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6520060711499706787
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5872751037901427146}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 956571472912301886}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5666722509244027782
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5872751037901427146}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.2532607}
-  m_Size: {x: 4.557837, y: 2.536126}
-  m_Direction: 1
---- !u!114 &4109783306272057871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5872751037901427146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 1.5
-  kbDistance: 4
-  hitsound: SwordHitHeavy
   soundGroupInsteadOfSound: 0
   angle: 120
   owner: {fileID: 0}
@@ -6017,14 +5445,10 @@ Transform:
   - {fileID: 6311728095304874138}
   - {fileID: 8658070277726799603}
   - {fileID: 6311728095063004484}
-  - {fileID: 7146791057285723836}
-  - {fileID: 1124875515081784880}
-  - {fileID: 4890383916044957055}
+  - {fileID: 6454473325397935045}
   - {fileID: 4975947780344413096}
   - {fileID: 6690301327492358873}
-  - {fileID: 2435223762841617583}
-  - {fileID: 956571472912301886}
-  - {fileID: 6435983919889632497}
+  - {fileID: 7440674906665266365}
   - {fileID: 1428311444176971118}
   - {fileID: 5070460200107637512}
   m_Father: {fileID: 0}
@@ -6787,261 +6211,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tinyBullet: {fileID: 1076762132918252050, guid: 90cbbd81c7eb44e12a769b517e4e0c34, type: 3}
+  blunderbusExplosionPrefab: {fileID: 1756657514230445367, guid: 85491e0b2877542aab502ea929619b53, type: 3}
   tinyBulletSpeed: 1500
   tinyBulletLifetimeSec: 1
+  blunderbusLifetimeSec: 0.5
+  blunderbusPresetList:
+  - offset: {x: 1.1, y: 0.5, z: 0}
+    angle: 0
+    name: FHeavy
+  - offset: {x: -0.4, y: 2, z: 0}
+    angle: 90
+    name: UpHeavy
   smallBullet: {fileID: 574366061576395275, guid: 6c0f9addafd554242b335428789ce632, type: 3}
---- !u!1 &6311728093461558692
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6311728093461558693}
-  - component: {fileID: 6311728093461558691}
-  - component: {fileID: 6311728093461558690}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6311728093461558693
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728093461558692}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.471652, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7146791057285723836}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &6311728093461558691
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728093461558692}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25446296}
-  m_Size: {x: 4.1975527, y: 5.2265096}
-  m_Direction: 0
---- !u!114 &6311728093461558690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728093461558692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 2
-  kbDistance: 10
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 115
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &6311728094502531945
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6311728094502531958}
-  - component: {fileID: 6311728094502531956}
-  - component: {fileID: 6311728094502531959}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6311728094502531958
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728094502531945}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7146791057285723836}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &6311728094502531956
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728094502531945}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.16281082}
-  m_Size: {x: 6.915199, y: 4.950052}
-  m_Direction: 1
---- !u!114 &6311728094502531959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728094502531945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 2
-  kbDistance: 12
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 140
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
---- !u!1 &6311728094776920358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6311728094776920359}
-  - component: {fileID: 6311728094776920357}
-  - component: {fileID: 6311728094776920356}
-  m_Layer: 0
-  m_Name: UpHeavyAttackPart3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6311728094776920359
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728094776920358}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8100224, y: 1.1400001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7146791057285723836}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &6311728094776920357
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728094776920358}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.00866437}
-  m_Size: {x: 3.537383, y: 4.716087}
-  m_Direction: 0
---- !u!114 &6311728094776920356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6311728094776920358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d5d5f480ce8426fa6597fe8834cc34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  kbSpeedMultiplier: 2
-  kbDistance: 9
-  hitsound: SwordHitHeavy
-  soundGroupInsteadOfSound: 0
-  angle: 160
-  owner: {fileID: 0}
-  facingRight: 1
-  activeFrames: 1
-  minimumHitstunFrames: 20
-  cannotClank: 0
-  isPartOfMultipart: 1
-  hitstopFrames: 10
-  isCounter: 0
-  isProjectile: 0
-  isGrab: 0
-  isDestroyable: 0
-  objectHealth: 0
-  DiMultiplier: 1
-  knockbackGoalPos: {x: 0, y: 0}
-  priority: 1
-  doNotEnable: 0
-  playersHitAlready: []
 --- !u!1 &6311728094876046316
 GameObject:
   m_ObjectHideFlags: 0
@@ -7122,7 +6303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6311728095063004487}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.14, z: 0}
+  m_LocalPosition: {x: 0.4, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7142,7 +6323,7 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.4183855, y: -0.4671235}
+  m_Offset: {x: 0, y: -0.4671235}
   m_Size: {x: 2.7590904, y: 3.1796465}
   m_Direction: 0
 --- !u!114 &6311728095063004485
@@ -7328,13 +6509,13 @@ MonoBehaviour:
   damage: 2
   kbSpeedMultiplier: 0.03
   kbDistance: 0.05
-  hitsound: WeaponHit1
+  hitsound: WeaponHit3
   soundGroupInsteadOfSound: 0
   angle: 361
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2
-  minimumHitstunFrames: 24
+  minimumHitstunFrames: 30
   cannotClank: 0
   isPartOfMultipart: 0
   hitstopFrames: 10
@@ -7344,7 +6525,7 @@ MonoBehaviour:
   isDestroyable: 0
   objectHealth: 0
   DiMultiplier: 0
-  knockbackGoalPos: {x: 1.5, y: 0}
+  knockbackGoalPos: {x: 1, y: 0}
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
@@ -7374,7 +6555,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6893162481284236793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7394,7 +6575,7 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.69286543, y: -0.22856054}
+  m_Offset: {x: 0, y: -0.22856054}
   m_Size: {x: 1.3640081, y: 0.9743411}
   m_Direction: 1
 --- !u!114 &2118977599092811163
@@ -7432,39 +6613,6 @@ MonoBehaviour:
   priority: 1
   doNotEnable: 0
   playersHitAlready: []
---- !u!1 &7573752285776330696
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4890383916044957055}
-  m_Layer: 0
-  m_Name: FairHeavy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4890383916044957055
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7573752285776330696}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3686617931327997037}
-  - {fileID: 3686617930835089014}
-  m_Father: {fileID: 6311728093354438148}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7763369193071403772
 GameObject:
   m_ObjectHideFlags: 0
@@ -7528,10 +6676,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 6
   kbSpeedMultiplier: 1
-  kbDistance: 2
-  hitsound: WeaponHit1
+  kbDistance: 4
+  hitsound: WeaponHit2
   soundGroupInsteadOfSound: 0
-  angle: 65
+  angle: 275
   owner: {fileID: 0}
   facingRight: 1
   activeFrames: 2

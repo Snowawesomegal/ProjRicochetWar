@@ -7067,7 +7067,7 @@ MonoBehaviour:
   UNIQUEinMovementGround: {fileID: 11400000, guid: cbc671def756d454f85b961185b43341, type: 2}
   airborneWithDJ: {fileID: 11400000, guid: 89c3de3574e3949448f6eae677a26dc6, type: 2}
   airborneNoDJ: {fileID: 11400000, guid: e3fe17b67d47343b68133fa96804c541, type: 2}
-  touchingWall: 0
+  touchingGrabbableWall: 0
   minimumSpeedForHitstun: 10
   framesInHitstun: 0
   facingRight: 1
@@ -7664,8 +7664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paperPrefab: {fileID: 1624505542457725676, guid: 7d450aa8220fb46b0ab2f2e5001b9520, type: 3}
   monitorPrefab: {fileID: 8833669593918781031, guid: 1cbe2400f9be14f799710c86d14a24b6, type: 3}
-  monitorLifetime: 7
-  monitorSpeed: 1350
+  monitorLifetime: 5
+  monitorSpeed: 800
   activeMonitors: 0
   stanleyPaperInfos:
   - offset: {x: 2, y: 2}

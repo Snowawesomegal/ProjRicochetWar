@@ -74,22 +74,13 @@ public class InMatchUI : MonoBehaviour
 
             gameObject.SetActive(false);
 
-            if (players.Length == 2)
+            if (players.Length <= 2)
             {
                 Debug.Log("start switching");
 
-                players[0].GetComponent<InMatchUI>().StartCoroutine("SwitchToMenu");
+                GameManager.Instance.StartCoroutine("OnMatchEnd");
             }
         }
-    }
-
-    IEnumerator SwitchToMenu()
-    {
-        yield return new WaitForSeconds(3);
-
-        Debug.Log("switch");
-
-        GameManager.Instance.LoadSelectScene();
     }
 
     public void ChangeCharge(float toChangeBy)

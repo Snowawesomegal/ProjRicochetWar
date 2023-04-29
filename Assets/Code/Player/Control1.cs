@@ -116,7 +116,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
     public StandardControlLocker airborneWithDJ;
     public StandardControlLocker airborneNoDJ;
 
-    public bool touchingWall = false;
+    public bool touchingGrabbableWall = false;
     public float minimumSpeedForHitstun = 50;
     public int framesInHitstun = 0;
     public bool facingRight = true;
@@ -316,7 +316,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
                 }
                 else // if in the air but not using an aerial
                 {
-                    if (touchingWall && !clm.activeLockers.Contains(wallcling)) // if touching wall, if holding toward wall and not using an aerial or already wallcling, grab wall
+                    if (touchingGrabbableWall && !clm.activeLockers.Contains(wallcling)) // if touching wall, if holding toward wall and not using an aerial or already wallcling, grab wall
                     {
 
                         if (collidedWallSide == Mathf.Sign(pim.GetCurrentDirectional().current.x) && pim.GetCurrentDirectional().current.x != 0)
@@ -1056,7 +1056,6 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             collidedWallSide = (int)Mathf.Sign(collision.GetContact(0).point.x - transform.position.x);
-            touchingWall = true;
         }
 
         if (!currentOverlaps.Contains(collision.collider))
@@ -1070,12 +1069,23 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
+        {
+            if (collision.GetContact(0).normal.y == 0)
+            {
+                touchingGrabbableWall = true;
+            }
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "LeftWall" || collision.gameObject.name == "RightWall")
         {
             collidedWallSide = 0;
-            touchingWall = false;
+            touchingGrabbableWall = false;
         }
 
         if (currentOverlaps.Contains(collision.collider)) { currentOverlaps.Remove(collision.collider); };

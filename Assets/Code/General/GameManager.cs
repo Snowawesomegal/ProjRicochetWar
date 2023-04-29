@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public static TickingTimeController InstanceTimeController { get { return Instance.TimeController; } }
 
+    [SerializeField] GameObject ThreeTwoOneFight;
+
     private void Awake()
     {
         // Make sure instance is set if it is not already
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
     public void SetupGame()
     {
         Session.SpawnAllPlayers(new Vector3[] { new Vector3(-6, 0, 0), new Vector3(6, 0, 0), new Vector3(-2, 0, 0), new Vector3(2, 0, 0) });
+        StartCoroutine(nameof(OnMatchStart));
     }
 
     public void LoadGameScene()
@@ -106,5 +109,29 @@ public class GameManager : MonoBehaviour
         Debug.Log("-----Switching to Character Select Menu-----");
         FighterSelectorMenu.shouldDisableOnStart = false;
         SceneManager.LoadScene(MENU_SCENE);
+    }
+
+    IEnumerator OnMatchEnd()
+    {
+        yield return new WaitForSeconds(3);
+
+        GameManager.Instance.LoadSelectScene();
+    }
+
+    IEnumerator OnMatchStart() // called by SetupGame. Handles start game animation.
+    {
+        Debug.Log("Freeze");
+        PauseGame(); // freeze characters
+
+        yield return null; // wait a frame
+
+        Destroy(Instantiate(ThreeTwoOneFight), 3.8f); // Start 321 Fight animation
+
+        yield return new WaitForSeconds(3.7f); // wait for end of animation
+
+        Debug.Log("Unfreeze");
+        UnpauseGame(); // unfreeze characters
+
+        yield break; // end coroutine
     }
 }

@@ -5,13 +5,16 @@ using UnityEngine;
 public class ScrollingBG : MonoBehaviour
 {
     public float scrollSpeed;
+    [SerializeField] string layer = "-3";
 
     private Renderer rend;
 
     void Start()
     {
         rend = GetComponent<Renderer>();
-        rend.sortingLayerName = "-3";
+        rend.sortingLayerName = layer;
+
+
     }
 
     void Update()

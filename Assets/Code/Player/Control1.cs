@@ -252,7 +252,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         }
         else
         {
-            applyFFMultiplier = false;
+            applyFFMultiplier = false; 
         }
     }
 
@@ -294,7 +294,10 @@ public class Control1 : MonoBehaviour, IIdentifiable
             {
                 if (delayFF <= 0)
                 {
-                    TryBufferFastFall();
+                    if (input.IsPending() || (!clm.activeLockers.Contains(inAnim) && !clm.activeLockers.Contains(inAerialAnim)))
+                    {
+                        TryBufferFastFall();
+                    }
                 }
             }
         }
@@ -483,6 +486,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
             }
 
             ae.ChangeAnimBool("DLightAttack", true);
+
+            fastFallBuffer = 0;
         }
     }
 
@@ -512,6 +517,8 @@ public class Control1 : MonoBehaviour, IIdentifiable
         if (input.IsHeld() || input.IsPending())
         {
             ae.ChangeAnimBool("DHeavyAttack", true);
+
+            fastFallBuffer = 0;
         }
     }
 

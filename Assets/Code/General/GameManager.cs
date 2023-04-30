@@ -120,6 +120,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator OnMatchStart() // called by SetupGame. Handles start game animation.
     {
+        yield return new WaitForSeconds(1);
+
         Debug.Log("Freeze");
         PauseGame(); // freeze characters
 

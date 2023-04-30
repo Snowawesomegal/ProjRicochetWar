@@ -7021,7 +7021,7 @@ MonoBehaviour:
   intangible: 0
   canDoubleJump: 1
   DIStrength: 1
-  DLightBounce: 1
+  DLightBounce: 0
   firstFrameOfHitstun: 0
   doNotUpdatePlatformCollider: 0
   canFastFall: 1

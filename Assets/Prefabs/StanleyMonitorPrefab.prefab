@@ -62,7 +62,7 @@ MonoBehaviour:
   isProjectile: 1
   isGrab: 0
   isDestroyable: 1
-  objectHealth: 5
+  objectHealth: 0
   DiMultiplier: 1
   knockbackGoalPos: {x: 0, y: 0}
   priority: 1

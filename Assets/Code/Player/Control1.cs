@@ -642,6 +642,7 @@ public class Control1 : MonoBehaviour, IIdentifiable
         bc.offset = new Vector2(0.254f * (facingRight ? -1 : 1), bc.offset.y);
     }
 
+
     public void ChangeIntangible(bool enterexit)
     {
         if (enterexit)
